@@ -1,4 +1,7 @@
 # qwraps2
+
+[![Build Status](https://travis-ci.org/dewittpe/qwraps2.svg?branch=master)](https://travis-ci.org/dewittpe/qwraps2)
+
 A collection of helpful functions for summarizing data and formating results.
 These functions are almost certainly found in other R packages on github.com, or
 on CRAN.  This is a collection of methods I have generated to help with
