@@ -91,6 +91,7 @@ frmtp <- function(x,
   return(rtn)
 }
 
+#' @export   
 frmtp_default <- function(x, digits, case, leading0) { 
   p_cutoff <- 10^-digits
   
@@ -114,6 +115,7 @@ frmtp_default <- function(x, digits, case, leading0) {
          })
 }
 
+#' @export   
 frmtp_pediatric_dentistry <- function(p) { 
   sapply(p, function(x) {
 
