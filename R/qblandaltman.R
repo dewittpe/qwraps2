@@ -87,12 +87,8 @@ qblandaltman_build_data_frame <- function(.data, alpha = getOption("qwraps2_alph
            ) %>% 
     tbl_df
 
-    # attr(rtn, "mean_diff") = mean(rtn$diff)
-    # attr(rtn, "lcl")       = mean(rtn$diff) + qnorm(alpha/2) * sd(rtn$diff)
-    # attr(rtn, "ucl")       = mean(rtn$diff) + qnorm(1 - alpha/2) * sd(rtn$diff)
   attr(rtn, "qwraps2_generated") = TRUE
 
   return(rtn)
 }
-
 
