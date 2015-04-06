@@ -14,6 +14,22 @@
 #' Other functions are used to quickly generate meaningful character strings for
 #' outputting results in .Rnw, .Rmd, or other similar functions.
 #'
+#' @section Options
+#' There are several options which can be set via \code{options} and will be
+#' used via \code{getOption}.  The following lists, in alphabetical order the
+#' different options which are available and what they control.
+#'
+#' \enumerate{
+#'   \item \code{getOptions("qwraps2_frmtp_digits", 2)}  Number of digits to the
+#'     right of the decimal point to report p-values too.  If 
+#'     \code{log10(p-value) < getOptions("qwraps2_frmtp_digits", 2)} then the
+#'     output will be "P < 0.01", to however many digits are correct.  Other
+#'     options control other parts of the output p-value format.
+#'
+#'   \item \code{getOptions("qwraps2_style", "default")} By setting this option
+#'     to a specific journal, p-values and other output, will be formatted to
+#'     meet journal requirements.
+#' }
 #' @docType package
 #' @name qwraps2
 NULL
