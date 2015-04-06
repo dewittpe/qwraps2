@@ -3,3 +3,5 @@
 export(frmt)
 export(frmtp)
 export(n_perc)
+export(qblandaltman)
+export(qblandaltman_build_data_frame)

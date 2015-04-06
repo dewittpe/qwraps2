@@ -14,12 +14,16 @@
 #' Other functions are used to quickly generate meaningful character strings for
 #' outputting results in .Rnw, .Rmd, or other similar functions.
 #'
-#' @section Options
+#' @section Options: 
 #' There are several options which can be set via \code{options} and will be
 #' used via \code{getOption}.  The following lists, in alphabetical order the
 #' different options which are available and what they control.
 #'
-#' \enumerate{
+#' \itemize{
+#'   \item \code{getOptions("qwraps2_alpha", 0.05)} significance level, used for
+#'   generating \code{(1 - getOptions("qwraps2_alpha", 0.05)) * 100}\% confidence
+#'   intervals, and determining significance for p-value <
+#'   \code{getOptions("qwraps2_alpha", 0.05)}.
 #'   \item \code{getOptions("qwraps2_frmtp_digits", 2)}  Number of digits to the
 #'     right of the decimal point to report p-values too.  If 
 #'     \code{log10(p-value) < getOptions("qwraps2_frmtp_digits", 2)} then the
