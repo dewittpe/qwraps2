@@ -36,14 +36,14 @@
 #' auc(data2)
 #' 
 #' # Plotting the ROC from the data set can be done too
-#' qroc(auc_data1)
+#' qroc(data1)
 #' 
 #' # Add the AUC value to the plot title
-#' qroc(auc_data2) + ggtitle(paste("Fit 2\nAUC =", round(auc(data2), 2)))
+#' qroc(data2) + ggtitle(paste("Fit 2\nAUC =", round(auc(data2), 2)))
 #' 
 #' # build a data set for plotting to ROCs on one plot
-#' plot_data <- rbind(cbind(Model = "fit1", auc_data1),
-#'                    cbind(Model = "fit2", auc_data2))
+#' plot_data <- rbind(cbind(Model = "fit1", data1),
+#'                    cbind(Model = "fit2", data2))
 #' qroc(plot_data) + aes(color = Model) 
 #' 
 #' # with AUC in the legend
@@ -51,7 +51,7 @@
 #'                    cbind(Model = paste("Fit2\nauc =", round(auc(data1), 3)), data2))
 #' qroc(plot_data) + 
 #'   theme_bw() + 
-#'   aes(color = model) + 
+#'   aes(color = Model) + 
 #'   theme(legend.position   = "bottom", 
 #'         legend.text.align = 0.5)
 #' 
@@ -130,6 +130,7 @@ auc <- function(x) {
   UseMethod("auc")
 }
 
+#' @export
 auc.qwraps2_generated <- function(x) { 
   attr(x, "auc")
 } 
