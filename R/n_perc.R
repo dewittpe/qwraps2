@@ -23,7 +23,7 @@
 #' @examples
 #' 
 #' n_perc(c(0, 1,1, 1, 0, 0), show_denom = "always")
-#' n_perc(c(0, 1,1, 1, 0, 0, NA), na_rm = T)
+#' n_perc(c(0, 1,1, 1, 0, 0, NA), na_rm = TRUE)
 #' 
 #' n_perc(mtcars$cyl == 6)
 #'
