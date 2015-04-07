@@ -9,4 +9,4 @@ LazyData: true
 Imports:
   dplyr,
   ggplot2,
-  maggrittr
+  magrittr
