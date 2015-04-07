@@ -76,12 +76,11 @@ frmtp <- function(x,
                   case     = getOption("qwraps2_frmtp_case", "upper"), 
                   leading0 = getOption("qwraps2_frmpt_leading0", TRUE), 
                   ...) {  
-  if (style == "default") {
-    rtn <- frmtp_default(x, digits, case, leading0)
-  } else { 
-    f <- match.fun(paste0("frmtp_", style))
-    rtn <- f(x, ...) 
-  }
+
+  rtn <- 
+    switch(style,
+           default             = frmtp_default(x, digits, case, leading0), 
+           pediatric_dentistry = frmtp_pediatric_dentistry(x))
 
   if (markup == "latex") { 
     rtn <- paste0("$", rtn, "$")
