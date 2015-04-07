@@ -8,4 +8,5 @@ License: GPL 2.0
 LazyData: true
 Imports:
   dplyr,
-  ggplot2
+  ggplot2,
+  maggrittr

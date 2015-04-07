@@ -41,6 +41,9 @@ then call \code{qblandaltman}.  This might be helpful if you are putting
 multiple Bland Altman plots together into one ggplot object.  See Examples.
 }
 \examples{
+# load the diamonds data set
+data(diamonds, package = "ggplot2")
+
 # compare a simple regression to random noise
 dat <-
   data.frame(fitted(lm(price ~ poly(carat, 4), data = diamonds)),  # fitted values
