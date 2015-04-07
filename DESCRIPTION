@@ -6,7 +6,6 @@ Description: What the package does (one paragraph)
 Depends: R (>= 3.1.3)
 License: GPL 2.0
 LazyData: true
-Imports:
+Depends:
   dplyr,
-  ggplot2,
-  magrittr
+  ggplot2
