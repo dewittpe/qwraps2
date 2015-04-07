@@ -6,8 +6,10 @@
 #' functions are commonly used wrappers which I have been reusing and modifying
 #' over several years.
 #'
-#' Several wrappers for \pkg{ggplot2} style graphics, such as ROC, AUC, and KM
-#' plots are provided.  Named as \code{\link{qroc}}, \code{\link{qauc}}, and
+#' Several wrappers for \pkg{ggplot2} style graphics, such as ROC, AUC,
+#' Bland-Altman, and KM
+#' plots are provided.  Named as \code{\link{qroc}}, \code{\link{qacf}}, 
+#' \code{\link{qblandaltman}} and
 #' \code{\link{qkmplot}} to pay homage to \code{qplot} form \pkg{ggplot2} and
 #' the standard names for such plots.
 #'
