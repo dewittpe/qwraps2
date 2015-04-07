@@ -61,15 +61,18 @@ qroc <- function(x, n_threshold = 200, ...) {
   UseMethod("qroc") 
 }
 
+#' @export
 qroc.default <- function(x) { 
   qroc_ggplot(x)
 }
 
+#' @export
 qroc.glm <- function(x, n_threshold = 200) { 
   auc_data <- qroc_build_data_frame(x, n_threshold) 
   qroc_ggplot(auc_data)
 }
 
+#' @export
 qroc.qwraps2_generated <- function(x) { 
   qroc_ggplot(x)
 }
