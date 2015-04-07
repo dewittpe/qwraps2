@@ -43,6 +43,7 @@
 #' @param x a vector of P-values to format
 #' @param style a character string indicating a specific journal requirements
 #' for p-value formatting.  
+#' @param digits number of digits to the right of the decimal point.
 #' @param markup a character string indicating if the output should be latex or
 #' markup.
 #' @param case a character string indicating if the output should be upper case
@@ -90,7 +91,6 @@ frmtp <- function(x,
   return(rtn)
 }
 
-#' @export   
 frmtp_default <- function(x, digits, case, leading0) { 
   p_cutoff <- 10^-digits
   
@@ -114,7 +114,6 @@ frmtp_default <- function(x, digits, case, leading0) {
          })
 }
 
-#' @export   
 frmtp_pediatric_dentistry <- function(p) { 
   sapply(p, function(x) {
 

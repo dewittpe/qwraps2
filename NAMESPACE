@@ -2,8 +2,8 @@
 
 export(frmt)
 export(frmtp)
-export(frmtp_default)
-export(frmtp_pediatric_dentistry)
 export(n_perc)
 export(qblandaltman)
 export(qblandaltman_build_data_frame)
+import(dplyr)
+import(ggplot2)

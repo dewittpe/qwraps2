@@ -16,6 +16,8 @@ frmtp(x, style = getOption("qwraps2_journal", "default"),
 \item{style}{a character string indicating a specific journal requirements
 for p-value formatting.}
 
+\item{digits}{number of digits to the right of the decimal point.}
+
 \item{markup}{a character string indicating if the output should be latex or
 markup.}
 

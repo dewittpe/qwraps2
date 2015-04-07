@@ -57,7 +57,7 @@
 #'              cbind(set = "rpois", qblandaltman_build_data_frame(dat2)))
 #' qblandaltman(dat, generate_data = FALSE) + facet_wrap( ~ set)
 #' 
-#'
+#' @import ggplot2 dplyr
 #' @export   
 #' @rdname qblandaltman
 qblandaltman <- function(.data, alpha = getOption("qwraps2_alpha", 0.05), generate_data = TRUE) { 
