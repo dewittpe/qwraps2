@@ -80,13 +80,13 @@ qblandaltman <- function(.data, alpha = getOption("qwraps2_alpha", 0.05), genera
 #' @rdname qblandaltman
 qblandaltman_build_data_frame <- function(.data, alpha = getOption("qwraps2_alpha", 0.05)) { 
   rtn <-
-    data.frame('x1' = .data[[1]], 'x2' = .data[[2]]) %>% 
-    mutate('avg'  = (x1 + x2) / 2, 
-           'diff' = (x2 - x1), 
-           'mean_diff' = mean(diff), 
-           'sd_diff'  = sd(diff), 
-           'lcl'      = mean_diff + qnorm(alpha / 2) * sd_diff,
-           'ucl'      = mean_diff + qnorm(1 - alpha / 2) * sd_diff
+    data.frame(x1 = .data[[1]], x2 = .data[[2]]) %>% 
+    mutate_(avg  = ~ (x1 + x2) / 2, 
+           diff = ~ (x2 - x1), 
+           mean_diff = "mean(diff)", 
+           sd_diff   = "sd(diff)", 
+           lcl       = ~ mean_diff + qnorm(alpha / 2) * sd_diff,
+           ucl       = ~ mean_diff + qnorm(1 - alpha / 2) * sd_diff
            ) %>% 
     tbl_df
 
