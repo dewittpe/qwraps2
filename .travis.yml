@@ -1,14 +1,8 @@
 sudo: required
 language: r
 
-install:
-  - mkdir ~/.R
-  - ./travis-tool.sh install_github jimhester/covr
-
 # whitelist
 branches:
   only:
     - master
 
-after_success:
-  - Rscript -e 'library(covr);coveralls()'
