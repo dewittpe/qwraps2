@@ -1,2 +1,7 @@
 sudo: required
 language: r
+
+# whitelist
+branches:
+  only:
+    - master
