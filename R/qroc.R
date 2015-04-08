@@ -19,7 +19,8 @@
 #'
 #' @examples
 #' \dontrun{
-#' # load the diamonds data set
+#' # load ggplot2 and the diamonds data set
+#' library(ggplot2)
 #' data(diamonds, package = "ggplot2")
 #'
 #' # Create two logistic regression models
