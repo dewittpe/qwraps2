@@ -58,29 +58,29 @@
 #' 
 #' @export   
 #' @rdname qroc
-qroc <- function(x, n_threshold = 200, ...) { 
+qroc <- function(x, ...) { 
   UseMethod("qroc") 
 }
 
 #' @export
-qroc.default <- function(x) { 
+qroc.default <- function(x, ...) { 
   qroc_ggplot(x)
 }
 
 #' @export
-qroc.glm <- function(x, n_threshold = 200) { 
+qroc.glm <- function(x, n_threshold = 200, ...) { 
   auc_data <- qroc_build_data_frame(x, n_threshold) 
   qroc_ggplot(auc_data)
 }
 
 #' @export
-qroc.qwraps2_generated <- function(x) { 
+qroc.qwraps2_generated <- function(x, ...) { 
   qroc_ggplot(x)
 }
 
 qroc_ggplot <- function(.data) { 
   ggplot(.data) + 
-  aes(x = false_positives, y = true_positives) + 
+  aes_string(x = "false_positives", y = "true_positives") + 
   geom_line() + 
   geom_segment(aes(x = 0, y = 0, xend = 1, yend = 1), color = "black", linetype = 2) + 
   xlab("1 - Specificity") + 
