@@ -41,6 +41,7 @@ generated.
 The area under the curve (AUC) is deterined by a trapazoid approximation.
 }
 \examples{
+\dontrun{
 # load the diamonds data set
 data(diamonds, package = "ggplot2")
 
@@ -78,5 +79,6 @@ qroc(plot_data) +
   aes(color = Model) +
   theme(legend.position   = "bottom",
         legend.text.align = 0.5)
+}
 }
 

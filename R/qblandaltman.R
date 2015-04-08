@@ -26,7 +26,7 @@
 #' modify the graphic as desired with ease.
 #'
 #' @examples
-#'
+#' \dontrun{
 #' # load the diamonds data set
 #' data(diamonds, package = "ggplot2")
 #'
@@ -56,7 +56,7 @@
 #' dat <- rbind(cbind(set = "rnorm", qblandaltman_build_data_frame(dat1)), 
 #'              cbind(set = "rpois", qblandaltman_build_data_frame(dat2)))
 #' qblandaltman(dat, generate_data = FALSE) + facet_wrap( ~ set)
-#' 
+#' }
 #' @import ggplot2 dplyr
 #' @export   
 #' @rdname qblandaltman

@@ -18,6 +18,7 @@
 #' modify the graphic as desired with ease.
 #'
 #' @examples
+#' \dontrun{
 #' # load the diamonds data set
 #' data(diamonds, package = "ggplot2")
 #'
@@ -55,7 +56,8 @@
 #'   aes(color = Model) + 
 #'   theme(legend.position   = "bottom", 
 #'         legend.text.align = 0.5)
-#' 
+#' }
+#'
 #' @export   
 #' @rdname qroc
 qroc <- function(x, ...) { 
