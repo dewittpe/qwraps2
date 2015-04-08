@@ -8,7 +8,7 @@ frmtp(x, style = getOption("qwraps2_journal", "default"),
   digits = getOption("qwraps2_frmtp_digits", 2),
   markup = getOption("qwraps2_markup", "latex"),
   case = getOption("qwraps2_frmtp_case", "upper"),
-  leading0 = getOption("qwraps2_frmpt_leading0", TRUE), ...)
+  leading0 = getOption("qwraps2_frmtp_leading0", TRUE), ...)
 }
 \arguments{
 \item{x}{a vector of P-values to format}
@@ -48,9 +48,9 @@ Default settings report the P-value exactly if P >
 \code{getOptions("qwraps2_frmtp_digits", 2)} and reports
 P < \code{10^-(getOptions("qwraps2_frmtp_digits", 2))} otherwise.  By the
 leading zero is controlled via
-\code{getOptions("qwraps2_frmpt_leading0", TRUE)}
+\code{getOptions("qwraps2_frmtp_leading0", TRUE)}
 and a upper or lower case P is controlled by
-\code{getOptions("qwraps2_frmpt_case", "upper")}.  These options are ignored
+\code{getOptions("qwraps2_frmtp_case", "upper")}.  These options are ignored
 if \code{style != "default"}.
 
 Journals with predefined P-value formatting
