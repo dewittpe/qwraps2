@@ -52,10 +52,6 @@ mean_sd <- function(x,
     rtn <- gsub("\\$\\\\pm\\$\\s(.*)", "\\(\\1\\)", rtn)
   }
 
-  # if (markup == "latex") { 
-  #   rtn <- gsub("%", "\\\\%", rtn)
-  # } 
-
   return(rtn)
 }
 
