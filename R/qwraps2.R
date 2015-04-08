@@ -1,10 +1,10 @@
-#' A collection of wrapper functions for aiding the authoring of reproducible
+#' A collection of wrapper functions aimed at for aiding the authoring of reproducible
 #' reports.
 #'
-#' \pkg{qwraps2} is a collection of functions I have found very useful when
-#' working on a varied collection of different analysis reports.  These
-#' functions are commonly used wrappers which I have been reusing and modifying
-#' over several years.
+#' \pkg{qwraps2} is a collection of helpful functions when
+#' working on a varied collection of different analysis reports.  There are two
+#' types of functions, helpful data summary functions, formatting results from
+#' regression models, and \pkg{ggplot2} wrappers.
 #'
 #' Several wrappers for \pkg{ggplot2} style graphics, such as ROC, AUC,
 #' Bland-Altman, and KM
@@ -26,11 +26,32 @@
 #'   generating \code{(1 - getOptions("qwraps2_alpha", 0.05)) * 100}\% confidence
 #'   intervals, and determining significance for p-value <
 #'   \code{getOptions("qwraps2_alpha", 0.05)}.
+#'
+#'   \item \code{getOptions("qwraps2_frmt_digits", 2)}  Number of digits to the
+#'   right of the decimal point for any value other than p-values.
+#'
+#'   \item \code{getOptions("qwraps2_frmtp_case", "upper")} set to either
+#'   'upper' or 'lower' for the case of the 'P' for reporting p-values.
+#'
 #'   \item \code{getOptions("qwraps2_frmtp_digits", 2)}  Number of digits to the
 #'     right of the decimal point to report p-values too.  If 
 #'     \code{log10(p-value) < getOptions("qwraps2_frmtp_digits", 2)} then the
 #'     output will be "P < 0.01", to however many digits are correct.  Other
 #'     options control other parts of the output p-value format.
+#'
+#'   \item \code{getOptions("qwraps2_frmtp_leading0", TRUE)} to display or not
+#'   to display the leading zero in p-values, i.e., if TRUE p-values are
+#'   reported as 0.02 versus when FALSE p-values are reported as .02.
+#'
+#'   \item \code{getOptions("qwraps2_journal", "default")} if a journal has
+#'   specific formating for p-values or other statistics, this option will
+#'   control the output.  Many other options are ignored if this is any other
+#'   than default.  Check the github wiki for current lists of implimented
+#'   journal sytle methods.
+#'
+#'   \item \code{getOPtions("qwraps2_markup", latex)} value set to 'latex' or
+#'   to 'markdow'.  Output is formatted to meet requirements of either markup
+#'   language.
 #'
 #'   \item \code{getOptions("qwraps2_style", "default")} By setting this option
 #'     to a specific journal, p-values and other output, will be formatted to

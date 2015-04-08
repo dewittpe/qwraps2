@@ -26,7 +26,7 @@
 #' modify the graphic as desired with ease.
 #'
 #' @examples
-#'
+#' \dontrun{
 #' # load the diamonds data set
 #' data(diamonds, package = "ggplot2")
 #'
@@ -56,7 +56,7 @@
 #' dat <- rbind(cbind(set = "rnorm", qblandaltman_build_data_frame(dat1)), 
 #'              cbind(set = "rpois", qblandaltman_build_data_frame(dat2)))
 #' qblandaltman(dat, generate_data = FALSE) + facet_wrap( ~ set)
-#' 
+#' }
 #' @import ggplot2 dplyr
 #' @export   
 #' @rdname qblandaltman
@@ -69,11 +69,11 @@ qblandaltman <- function(.data, alpha = getOption("qwraps2_alpha", 0.05), genera
   }
 
   ggplot(.data) + 
-  aes(x = avg, y = diff) + 
+  aes_string(x = 'avg', y = 'diff') + 
   geom_point() + 
-  geom_hline(aes(yintercept = lcl), lty = 2) + 
-  geom_hline(aes(yintercept = ucl), lty = 2) + 
-  geom_hline(aes(yintercept = mean_diff), lty = 3) 
+  geom_hline(aes_string(yintercept = 'lcl'), lty = 2) + 
+  geom_hline(aes_string(yintercept = 'ucl'), lty = 2) + 
+  geom_hline(aes_string(yintercept = 'mean_diff'), lty = 3) 
 }
 
 #' @export
@@ -81,12 +81,12 @@ qblandaltman <- function(.data, alpha = getOption("qwraps2_alpha", 0.05), genera
 qblandaltman_build_data_frame <- function(.data, alpha = getOption("qwraps2_alpha", 0.05)) { 
   rtn <-
     data.frame(x1 = .data[[1]], x2 = .data[[2]]) %>% 
-    mutate(avg  = (x1 + x2) / 2, 
-           diff = (x2 - x1), 
-           mean_diff = mean(diff), 
-           sd_diff   = sd(diff), 
-           lcl       = mean_diff + qnorm(alpha / 2) * sd_diff,
-           ucl       = mean_diff + qnorm(1 - alpha / 2) * sd_diff
+    mutate_(avg  = ~ (x1 + x2) / 2, 
+           diff = ~ (x2 - x1), 
+           mean_diff = "mean(diff)", 
+           sd_diff   = "sd(diff)", 
+           lcl       = ~ mean_diff + qnorm(alpha / 2) * sd_diff,
+           ucl       = ~ mean_diff + qnorm(1 - alpha / 2) * sd_diff
            ) %>% 
     tbl_df
 

@@ -38,5 +38,10 @@ n_perc(c(0, 1,1, 1, 0, 0), show_denom = "always")
 n_perc(c(0, 1,1, 1, 0, 0, NA), na_rm = TRUE)
 
 n_perc(mtcars$cyl == 6)
+
+set.seed(42)
+x <- rbinom(4269, 1, 0.314)
+n_perc(x)
+n_perc(x, show_denom = "always")
 }
 
