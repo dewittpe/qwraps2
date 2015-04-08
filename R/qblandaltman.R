@@ -27,7 +27,8 @@
 #'
 #' @examples
 #' \dontrun{
-#' # load the diamonds data set
+#' # load ggplot2 and the diamonds data set
+#' library(ggplot2)
 #' data(diamonds, package = "ggplot2")
 #'
 #' # compare a simple regression to random noise
@@ -68,27 +69,26 @@ qblandaltman <- function(.data, alpha = getOption("qwraps2_alpha", 0.05), genera
     }
   }
 
-  ggplot(.data) + 
-  aes_string(x = 'avg', y = 'diff') + 
-  geom_point() + 
-  geom_hline(aes_string(yintercept = 'lcl'), lty = 2) + 
-  geom_hline(aes_string(yintercept = 'ucl'), lty = 2) + 
-  geom_hline(aes_string(yintercept = 'mean_diff'), lty = 3) 
+  ggplot2::ggplot(.data) + 
+  ggplot2::aes_string(x = 'avg', y = 'diff') + 
+  ggplot2::geom_point() + 
+  ggplot2::geom_hline(ggplot2::aes_string(yintercept = 'lcl'), lty = 2) + 
+  ggplot2::geom_hline(ggplot2::aes_string(yintercept = 'ucl'), lty = 2) + 
+  ggplot2::geom_hline(ggplot2::aes_string(yintercept = 'mean_diff'), lty = 3) 
 }
 
 #' @export
 #' @rdname qblandaltman
 qblandaltman_build_data_frame <- function(.data, alpha = getOption("qwraps2_alpha", 0.05)) { 
   rtn <-
-    data.frame(x1 = .data[[1]], x2 = .data[[2]]) %>% 
-    mutate_(avg  = ~ (x1 + x2) / 2, 
-           diff = ~ (x2 - x1), 
-           mean_diff = "mean(diff)", 
-           sd_diff   = "sd(diff)", 
-           lcl       = ~ mean_diff + qnorm(alpha / 2) * sd_diff,
-           ucl       = ~ mean_diff + qnorm(1 - alpha / 2) * sd_diff
-           ) %>% 
-    tbl_df
+    dplyr::mutate_(data.frame(x1 = .data[[1]], x2 = .data[[2]]),
+                   avg  = ~ (x1 + x2) / 2, 
+                   diff = ~ (x2 - x1), 
+                   mean_diff = "mean(diff)", 
+                   sd_diff   = "sd(diff)", 
+                   lcl       = ~ mean_diff + qnorm(alpha / 2) * sd_diff,
+                   ucl       = ~ mean_diff + qnorm(1 - alpha / 2) * sd_diff) 
+  rtn <- tbl_df(rtn)
 
   attr(rtn, "qwraps2_generated") = TRUE
 

@@ -81,12 +81,12 @@ qroc.qwraps2_generated <- function(x, ...) {
 }
 
 qroc_ggplot <- function(.data) { 
-  ggplot(.data) + 
-  aes_string(x = "false_positives", y = "true_positives") + 
-  geom_line() + 
-  geom_segment(aes(x = 0, y = 0, xend = 1, yend = 1), color = "black", linetype = 2) + 
-  xlab("1 - Specificity") + 
-  ylab("Sensitivity")
+  ggplot2::ggplot(.data) + 
+  ggplot2::aes_string(x = "false_positives", y = "true_positives") + 
+  ggplot2::geom_line() + 
+  ggplot2::geom_segment(ggplot2::aes(x = 0, y = 0, xend = 1, yend = 1), color = "black", linetype = 2) + 
+  ggplot2::xlab("1 - Specificity") + 
+  ggplot2::ylab("Sensitivity")
 }
 
 #' @export
