@@ -32,6 +32,7 @@ extract_fstat.lm <- function(x) {
 }
 
 #' @export
+#' @return formatted p-value from the F-test
 extract_fpvalue <- function(x) { 
   UseMethod("extract_fpvalue")
 }
