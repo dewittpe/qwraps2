@@ -1,8 +1,10 @@
 Package: qwraps2
-Title: Helpful wrappers for summarizing and formating data into reports.
+Title: Quick Wraps 2
 Version: 0.1
 Authors@R: person("Peter", "DeWitt", , "dewittpe@gmail.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph)
+Description: A collection of functions used to quickly summarize data, format
+    output for inputting into reports, and construction of ggplot2 graphics without
+    a defined geom such as ROC curves.
 Depends: R (>= 3.1.3)
 License: GPL-2
 LazyData: true

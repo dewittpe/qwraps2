@@ -4,13 +4,13 @@
 \name{qwraps2}
 \alias{qwraps2}
 \alias{qwraps2-package}
-\title{A collection of wrapper functions for aiding the authoring of reproducible
+\title{A collection of wrapper functions aimed at for aiding the authoring of reproducible
 reports.}
 \description{
-\pkg{qwraps2} is a collection of functions I have found very useful when
-working on a varied collection of different analysis reports.  These
-functions are commonly used wrappers which I have been reusing and modifying
-over several years.
+\pkg{qwraps2} is a collection of helpful functions when
+working on a varied collection of different analysis reports.  There are two
+types of functions, helpful data summary functions, formatting results from
+regression models, and \pkg{ggplot2} wrappers.
 }
 \details{
 Several wrappers for \pkg{ggplot2} style graphics, such as ROC, AUC,
