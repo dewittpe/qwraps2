@@ -1,6 +1,6 @@
 Package: qwraps2
 Title: Quick Wraps 2
-Version: 0.1
+Version: 0.1.1
 Authors@R: person("Peter", "DeWitt", , "dewittpe@gmail.com", role = c("aut", "cre"))
 Description: A collection of functions used to quickly summarize data, format
     output for inputting into reports, and construction of ggplot2 graphics without
