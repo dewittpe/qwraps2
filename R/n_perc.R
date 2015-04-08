@@ -27,6 +27,11 @@
 #' 
 #' n_perc(mtcars$cyl == 6)
 #'
+#' set.seed(42)
+#' x <- rbinom(4269, 1, 0.314)
+#' n_perc(x)
+#' n_perc(x, show_denom = "always")
+#'
 #' @export   
 n_perc <- function(x, 
                    digits = getOption("qwraps2_frmt_digits", 2), 
@@ -38,9 +43,9 @@ n_perc <- function(x,
   p <- frmt(100 * n/d, digits)
 
   if (show_denom =="always" | any(is.na(x))) { 
-    rtn <- paste0(as.integer(n), "/", as.integer(d), " (", p, "%)")
+    rtn <- paste0(frmt(as.integer(n)), "/", frmt(as.integer(d)), " (", p, "%)")
   } else { 
-    rtn <- paste0(as.integer(n), " (", p, "%)")
+    rtn <- paste0(frmt(as.integer(n)), " (", p, "%)")
   }
 
   if (markup == "latex") { 
