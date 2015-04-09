@@ -43,9 +43,9 @@ mean_sd <- function(x,
   s <- sd(x, na.rm = na_rm)
 
   if (show_n =="always" | any(is.na(x))) { 
-    rtn <- paste0(frmt(as.integer(n), digits), "; ", frmt(m, digits), " $\\pm$ ", frmt(s))
+    rtn <- paste0(frmt(as.integer(n), digits), "; ", frmt(m, digits), " $\\pm$ ", frmt(s, digits))
   } else { 
-    rtn <- paste0(frmt(m, digits), " $\\pm$ ", frmt(s))
+    rtn <- paste0(frmt(m, digits), " $\\pm$ ", frmt(s, digits))
   }
 
   if (denote_sd == "paren") { 
