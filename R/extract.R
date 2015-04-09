@@ -18,6 +18,7 @@
 #' # TODO
 #'
 #' @export   
+#' @rdname extract
 extract_fstat <- function(x) {
   UseMethod("extract_fstat")
 }
@@ -33,11 +34,13 @@ extract_fstat.lm <- function(x) {
 
 #' @export
 #' @return formatted p-value from the F-test
+#' @rdname extract
 extract_fpvalue <- function(x) { 
   UseMethod("extract_fpvalue")
 }
 
 #' @export
+#' @rdname extract
 extract_fpvalue.lm <- function(x) { 
   fstat <- summary(x)$fstatistic
   frmtp(pf(fstat[1L], fstat[2L], fstat[3L], lower.tail = FALSE))
