@@ -41,9 +41,9 @@ different options which are available and what they control.
   \item \code{getOptions("qwraps2_frmtp_case", "upper")} set to either
   'upper' or 'lower' for the case of the 'P' for reporting p-values.
 
-  \item \code{getOptions("qwraps2_frmtp_digits", 2)}  Number of digits to the
+  \item \code{getOptions("qwraps2_frmtp_digits", 4)}  Number of digits to the
     right of the decimal point to report p-values too.  If
-    \code{log10(p-value) < getOptions("qwraps2_frmtp_digits", 2)} then the
+    \code{log10(p-value) < getOptions("qwraps2_frmtp_digits", 4)} then the
     output will be "P < 0.01", to however many digits are correct.  Other
     options control other parts of the output p-value format.
 
@@ -64,6 +64,39 @@ different options which are available and what they control.
   \item \code{getOptions("qwraps2_style", "default")} By setting this option
     to a specific journal, p-values and other output, will be formatted to
     meet journal requirements.
+}
+}
+
+\section{Journals with predefined formatting}{
+
+
+\itemize{
+  \item Obsetrics \& Gynecology
+  \itemize{
+     \item \url{http://www.editorialmanager.com/ong/default.aspx}
+     \item \code{options(qwraps2_journal = "obstetrics_gynecology")}
+     \item P-value formating as of April 2015:
+
+      Express P values to no more than three decimal places.
+
+      Based on observations of published work, leading 0 will be omitted.
+   }
+
+  \item Pediatric Dentistry:
+  \itemize{
+    \item \url{http://www.aapd.org/publications/}
+    \item \code{options(qwraps2_journal = "pediatric_dentistry")}
+    \item P-value formating  as of March 2015.
+
+    If P > .01, the actual value for
+    P should be expressed to 2 digits.  Non-significant values should not be
+    expressed as "NS" whether or note P is significant, unless rounding a
+    significant P-value expressed to 3 digits would make it non significant (ie
+    P=.049, not P=.05).  If P<.01, it should be express to 3 digits (eg, P=.003,
+    not P<.05).  Actual P-values should be expressed unless P<.001, in which case
+    they should be so designated.
+  }
+
 }
 }
 
