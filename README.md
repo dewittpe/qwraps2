@@ -21,7 +21,11 @@ the repo, add the feature, and send me a pull request.
 
 ## Install
 
-Install the development version of `qwraps2`, via the 
+Version 0.1 is on [CRAN](http://cran.r-project.org/) and can be installed via:
+
+    install.packages("qwraps2", repo = "http://cran.rstudio.com")
+
+Install the development version (version x.y.z.9000) of `qwraps2`, via the 
 [`devtools`](https://github.com/hadley/devtools) package:
 
     # install.packages("devtools")
