@@ -32,6 +32,6 @@ numbers <- c(0.1234, 0.1, 1234.4321, 0.365, 0.375)
 frmt(numbers)
 }
 \seealso{
-\code{\link{frmtp}} \code{link{formatC}}
+\code{\link{frmtp}} \code{\link{formatC}}
 }
 

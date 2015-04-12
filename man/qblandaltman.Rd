@@ -42,7 +42,8 @@ multiple Bland Altman plots together into one ggplot object.  See Examples.
 }
 \examples{
 \dontrun{
-# load the diamonds data set
+# load ggplot2 and the diamonds data set
+library(ggplot2)
 data(diamonds, package = "ggplot2")
 
 # compare a simple regression to random noise
