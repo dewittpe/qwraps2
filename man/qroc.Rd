@@ -42,7 +42,8 @@ The area under the curve (AUC) is deterined by a trapazoid approximation.
 }
 \examples{
 \dontrun{
-# load the diamonds data set
+# load ggplot2 and the diamonds data set
+library(ggplot2)
 data(diamonds, package = "ggplot2")
 
 # Create two logistic regression models

@@ -23,12 +23,13 @@ the repo, add the feature, and send me a pull request.
 
 ### From CRAN
 [Version 0.1](http://cran.r-project.org/web/packages/qwraps2/index.html) is on
-The Comprehensive R Archive Network (CRAN).  You can install this version via
+[The Comprehensive R Archive Network (CRAN)](http://cran.r-project.org/). You
+can install this version via
 
     install.packages("qwraps2", repo = "cran.rstudio.com")
 
 ### Developmental
-Install the development version of `qwraps2`, via the 
+Install the development version (version x.y.z.9000) of `qwraps2`, via the 
 [`devtools`](https://github.com/hadley/devtools) package:
 
     # install.packages("devtools")

@@ -7,7 +7,7 @@
 #' This function is really just a wrapper for the \code{formatC}.
 #'
 #' @seealso
-#' \code{\link{frmtp}} \code{link{formatC}}
+#' \code{\link{frmtp}} \code{\link{formatC}}
 #'
 #' @param x a vector of numbers to format
 #' @param digits number of digits, including trailing zeros, to the right of the
