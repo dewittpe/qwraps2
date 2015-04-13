@@ -52,6 +52,10 @@ mean_sd <- function(x,
     rtn <- gsub("\\$\\\\pm\\$\\s(.*)", "\\(\\1\\)", rtn)
   }
 
+  if (markup == "markdown") { 
+    rtn <- gsub("\\$\\\\pm\\$", "&plusmn;", rtn)
+  }
+
   return(rtn)
 }
 
