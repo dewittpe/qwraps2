@@ -11,7 +11,7 @@ Description: A collection of (wrapper) functions the creator found useful for
     https://github.com/dewittpe/qwraps.  The implementation and limited scope of the
     functions within 'qwraps2' (https://github.com/dewittpe/qwraps2) is fundamentally
     different from 'qwraps'.  
-Depends: R (>= 3.1.3)
+Depends: R (>= 3.0.2)
 License: GPL-2
 LazyData: true
 Imports:
