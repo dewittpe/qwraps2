@@ -14,6 +14,7 @@
 
 * Set R dependence to 3.0.2 to match the dependence noted for dplyr
 * Default setting for the qwraps2_frmtp_digits is 4 instead of 2.
+* Spelling and grammar fixes in documentation (#21)
 
 ## Bug fixes
 
