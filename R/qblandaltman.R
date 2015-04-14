@@ -26,9 +26,12 @@
 #' modify the graphic as desired with ease.
 #'
 #' @references
-#'   @bibliography references.bib
-#'   @cite altman1983measurement
-#'   @cite bland1986statistical
+#' Altman, Douglas G., and J. Martin Bland. "Measurement in medicine: the analysis
+#' of method comparison studies." The statistician (1983): 307-317.
+#' 
+#' Bland, J. Martin, and DouglasG Altman. "Statistical methods for assessing
+#' agreement between two methods of clinical measurement." The lancet 327, no. 8476
+#' (1986): 307-310.
 #'
 #' @examples
 #' \dontrun{

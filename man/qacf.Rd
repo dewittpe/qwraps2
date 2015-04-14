@@ -9,7 +9,7 @@ qacf(x, ...)
 \arguments{
 \item{x}{object}
 
-\item{...}{other arguments pased to stats::acf}
+\item{...}{Other arguments passed to stats::acf}
 }
 \value{
 a ggplot.

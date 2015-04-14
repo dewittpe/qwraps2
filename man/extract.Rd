@@ -21,7 +21,7 @@ a character vector of the formatted numbers
 formatted p-value from the F-test
 }
 \description{
-A collectin of functions for extracting summary statistics and
+A collection of functions for extracting summary statistics and
 reporting regression results from \code{lm}, \code{glm} and other regression
 objects.
 }
