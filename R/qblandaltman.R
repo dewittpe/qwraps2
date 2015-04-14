@@ -22,8 +22,13 @@
 #' FALSE, then you should explicitly call \code{qblandaltman_build_data_frame}
 #' before calling \code{qblandaltman}.
 #'
-#' @return a ggplot.  Minimula aesthetics have been used so that the user may
+#' @return a ggplot.  Minimal aesthetics have been used so that the user may
 #' modify the graphic as desired with ease.
+#'
+#' @references
+#'   @bibliography references.bib
+#'   @cite altman1983measurement
+#'   @cite bland1986statistical
 #'
 #' @examples
 #' \dontrun{

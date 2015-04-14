@@ -1,6 +1,6 @@
 #' @title Extract Summary stats from regression objects
 #'
-#' @description A collectin of functions for extracting summary statistics and
+#' @description A collection of functions for extracting summary statistics and
 #' reporting regression results from \code{lm}, \code{glm} and other regression
 #' objects.
 #'

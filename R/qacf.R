@@ -6,7 +6,7 @@
 #' TO DO
 #'
 #' @param x object
-#' @param ... other arguments pased to stats::acf
+#' @param ... Other arguments passed to stats::acf
 #'
 #' @return a ggplot.  
 #' 
