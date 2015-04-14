@@ -14,7 +14,7 @@
 #' @param n_threshold number of thresholds to test against. 
 #' @param ... ignored
 #'
-#' @return a ggplot.  Minimula aesthetics have been used so that the user may
+#' @return a ggplot.  Minimal aesthetics have been used so that the user may
 #' modify the graphic as desired with ease.
 #'
 #' @examples
@@ -51,7 +51,7 @@
 #' 
 #' # with AUC in the legend
 #' plot_data <- rbind(cbind(Model = paste("Fit1\nauc =", round(auc(data1), 3)), data1),
-#'                    cbind(Model = paste("Fit2\nauc =", round(auc(data1), 3)), data2))
+#'                    cbind(Model = paste("Fit2\nauc =", round(auc(data2), 3)), data2))
 #' qroc(plot_data) + 
 #'   theme_bw() + 
 #'   aes(color = Model) + 
