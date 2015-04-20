@@ -54,8 +54,7 @@
 #'                    cbind(Model = paste("Fit2\nauc =", round(auc(data2), 3)), data2))
 #' qroc(plot_data) + 
 #'   theme_bw() + 
-#'   aes(color = Model) + 
-#'   aes(linetype = Model) +
+#'   aes(color = Model, linetype = Model) +
 #'   theme(legend.position   = "bottom", 
 #'         legend.text.align = 0.5)
 #' }

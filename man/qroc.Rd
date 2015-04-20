@@ -77,7 +77,7 @@ plot_data <- rbind(cbind(Model = paste("Fit1\\nauc =", round(auc(data1), 3)), da
                    cbind(Model = paste("Fit2\\nauc =", round(auc(data2), 3)), data2))
 qroc(plot_data) +
   theme_bw() +
-  aes(color = Model) +
+  aes(color = Model, linetype = Model) +
   theme(legend.position   = "bottom",
         legend.text.align = 0.5)
 }
