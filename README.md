@@ -21,7 +21,7 @@ the repo, add the feature, and send me a pull request.
 
 ## Install
 
-Version 0.1 is on [CRAN](http://cran.r-project.org/) and can be installed via:
+Version 0.1.1 is on [CRAN](http://cran.r-project.org/) and can be installed via:
 
     install.packages("qwraps2", repo = "http://cran.rstudio.com")
 
