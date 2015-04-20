@@ -55,6 +55,7 @@
 #' qroc(plot_data) + 
 #'   theme_bw() + 
 #'   aes(color = Model) + 
+#'   aes(linetype = Model) +
 #'   theme(legend.position   = "bottom", 
 #'         legend.text.align = 0.5)
 #' }
