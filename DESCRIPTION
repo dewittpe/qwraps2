@@ -1,6 +1,6 @@
 Package: qwraps2
 Title: Quick Wraps 2
-Version: 0.1.0.9000
+Version: 0.1.1
 Authors@R: person("Peter", "DeWitt", , "dewittpe@gmail.com", role = c("aut", "cre"))
 Description: A collection of (wrapper) functions the creator found useful for 
     quickly placing data summaries and formatted regression results into .Rnw or
