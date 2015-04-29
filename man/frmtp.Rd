@@ -27,7 +27,7 @@ or lower case.}
 \item{leading0}{boolean, whether or not the p-value should be reported as
 0.0123 (TRUE, default), or .0123 (FALSE).}
 
-\item{...}{not currently implemented.}
+\item{...}{Not currently implemented.}
 }
 \value{
 a character vector of the formatted p-values

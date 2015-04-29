@@ -1,12 +1,12 @@
 Package: qwraps2
 Title: Quick Wraps 2
-Version: 0.1.0.9000
+Version: 0.1.1
 Authors@R: person("Peter", "DeWitt", , "dewittpe@gmail.com", role = c("aut", "cre"))
 Description: A collection of (wrapper) functions the creator found useful for 
     quickly placing data summaries and formatted regression results into .Rnw or
     .Rmd files.  Functions for generating commonly used graphics, such as receiver
     operating curves or Bland-Altman plots, are also provided by 'qwraps2'.
-    'qwraps2' is a updated version of an package 'qwraps'.  The original version
+    'qwraps2' is a updated version of a package 'qwraps'.  The original version
     'qwraps' was never submitted to CRAN but can be found at
     https://github.com/dewittpe/qwraps.  The implementation and limited scope of the
     functions within 'qwraps2' (https://github.com/dewittpe/qwraps2) is fundamentally

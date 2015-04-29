@@ -21,8 +21,9 @@ the repo, add the feature, and send me a pull request.
 
 ## Install
 
+<<<<<<< HEAD
 ### From CRAN
-[Version 0.1](http://cran.r-project.org/web/packages/qwraps2/index.html) is on
+[Version 0.1.1](http://cran.r-project.org/web/packages/qwraps2/index.html) is on
 [The Comprehensive R Archive Network (CRAN)](http://cran.r-project.org/). You
 can install this version via
 

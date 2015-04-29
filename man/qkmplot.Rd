@@ -9,7 +9,7 @@ qkmplot(x, ...)
 \arguments{
 \item{x}{object}
 
-\item{...}{other arguments pased to survival::plot.survfit}
+\item{...}{Other arguments passed to survival::plot.survfit}
 }
 \value{
 a ggplot.

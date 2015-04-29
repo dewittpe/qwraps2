@@ -54,11 +54,11 @@ different options which are available and what they control.
   \item \code{getOptions("qwraps2_journal", "default")} if a journal has
   specific formating for p-values or other statistics, this option will
   control the output.  Many other options are ignored if this is any other
-  than default.  Check the github wiki for current lists of implimented
-  journal sytle methods.
+  than default.  Check the github wiki, or this file,  for current lists of
+  implemented journal style methods.
 
-  \item \code{getOPtions("qwraps2_markup", latex)} value set to 'latex' or
-  to 'markdow'.  Output is formatted to meet requirements of either markup
+  \item \code{getOptions("qwraps2_markup", latex)} value set to 'latex' or
+  to 'markdowm'.  Output is formatted to meet requirements of either markup
   language.
 
   \item \code{getOptions("qwraps2_style", "default")} By setting this option
@@ -71,7 +71,7 @@ different options which are available and what they control.
 
 
 \itemize{
-  \item Obsetrics \& Gynecology
+  \item Obstetrics \& Gynecology
   \itemize{
      \item \url{http://www.editorialmanager.com/ong/default.aspx}
      \item \code{options(qwraps2_journal = "obstetrics_gynecology")}

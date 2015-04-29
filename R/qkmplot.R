@@ -6,7 +6,7 @@
 #' TO DO
 #'
 #' @param x object
-#' @param ... other arguments pased to survival::plot.survfit
+#' @param ... Other arguments passed to survival::plot.survfit
 #'
 #' @return a ggplot.  
 #' 
