@@ -1,4 +1,23 @@
+# qwraps 0.1.1.9000
+
+## New features
+
+* `median_iqr` returns a formatted string with the median and IQR of a data vector.
+
+## New vignettes
+
+*
+
+## Minor improvements
+
+*
+
+## Bug fixes
+
+*
+
 # qwraps 0.1.1
+Pushed to CRAN on 20 April 2015.
 
 ## New features
 
