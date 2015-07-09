@@ -33,6 +33,7 @@
 #' n_perc(x, show_denom = "always")
 #'
 #' @export   
+#' @rdname n_perc
 n_perc <- function(x, 
                    digits = getOption("qwraps2_frmt_digits", 2), 
                    na_rm = FALSE, 
@@ -46,6 +47,30 @@ n_perc <- function(x,
     rtn <- paste0(frmt(as.integer(n)), "/", frmt(as.integer(d)), " (", p, "%)")
   } else { 
     rtn <- paste0(frmt(as.integer(n)), " (", p, "%)")
+  }
+
+  if (markup == "latex") { 
+    rtn <- gsub("%", "\\\\%", rtn)
+  } 
+
+  return(rtn)
+}
+
+#' @export
+#' @rdname n_perc
+perc_n <- function(x, 
+                   digits = getOption("qwraps2_frmt_digits", 2), 
+                   na_rm = FALSE, 
+                   show_denom = "ifNA", 
+                   markup = getOption("qwraps2_markup", "latex")) { 
+  d <- sum(!is.na(x))
+  n <- sum(x, na.rm = na_rm)
+  p <- frmt(100 * n/d, digits)
+
+  if (show_denom =="always" | any(is.na(x))) { 
+    rtn <- paste0(p, "% (n = ", frmt(as.integer(n)), "/", frmt(as.integer(d)), ")") 
+  } else { 
+    rtn <- paste0(p, "% (n = ", frmt(as.integer(n)), ")")
   }
 
   if (markup == "latex") { 

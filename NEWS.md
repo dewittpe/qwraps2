@@ -3,6 +3,7 @@
 ## New features
 
 * `median_iqr` returns a formatted string with the median and IQR of a data vector.
+* `perc_n` similar to the `n_perc` but returns a string of the form `p% (n = N)`.
 
 ## New vignettes
 

@@ -2,9 +2,13 @@
 % Please edit documentation in R/n_perc.R
 \name{n_perc}
 \alias{n_perc}
+\alias{perc_n}
 \title{Count and Percentage}
 \usage{
 n_perc(x, digits = getOption("qwraps2_frmt_digits", 2), na_rm = FALSE,
+  show_denom = "ifNA", markup = getOption("qwraps2_markup", "latex"))
+
+perc_n(x, digits = getOption("qwraps2_frmt_digits", 2), na_rm = FALSE,
   show_denom = "ifNA", markup = getOption("qwraps2_markup", "latex"))
 }
 \arguments{
