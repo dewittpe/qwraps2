@@ -32,8 +32,8 @@
 #' n_perc(x)
 #' n_perc(x, show_denom = "always")
 #'
-#' @export   
 #' @rdname n_perc
+#' @export   
 n_perc <- function(x, 
                    digits = getOption("qwraps2_frmt_digits", 2), 
                    na_rm = FALSE, 
@@ -56,8 +56,8 @@ n_perc <- function(x,
   return(rtn)
 }
 
-#' @export
 #' @rdname n_perc
+#' @export
 perc_n <- function(x, 
                    digits = getOption("qwraps2_frmt_digits", 2), 
                    na_rm = FALSE, 
