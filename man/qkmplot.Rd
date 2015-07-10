@@ -2,9 +2,12 @@
 % Please edit documentation in R/qkmplot.R
 \name{qkmplot}
 \alias{qkmplot}
+\alias{qkmplot_bulid_data_frame}
 \title{Kaplan-Meier Plot}
 \usage{
 qkmplot(x, ...)
+
+qkmplot_bulid_data_frame(x)
 }
 \arguments{
 \item{x}{object}
@@ -19,5 +22,11 @@ TO BE CONSTRUCTED
 }
 \details{
 TO DO
+}
+\examples{
+leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x, data = survival::aml)
+survival:::plot.survfit(leukemia.surv, conf.int = TRUE, lty = 2:3, col = 1:2)
+
+qkmplot(leukemia.surv)
 }
 

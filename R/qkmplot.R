@@ -11,13 +11,12 @@
 #' @return a ggplot.  
 #' 
 #' @examples
-
- library(survival)
- fit <- leukemia.surv <- survfit(Surv(time, status) ~ x, data = aml) 
- plot(leukemia.surv, conf.int = T, lty = 2:3, col = 1:2)
-
- qkmplot(leukemia.surv) 
-
+#' 
+#' leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x, data = survival::aml) 
+#' survival:::plot.survfit(leukemia.surv, conf.int = TRUE, lty = 2:3, col = 1:2)
+#' 
+#' qkmplot(leukemia.surv) 
+#' 
 #'
 #'
 #' 
@@ -48,7 +47,7 @@ qkmplot_ggplot <- function(.data, ...) {
   ggplot2::geom_step() + 
   ggplot2::ylim(c(0, 1)) + 
   ggplot2::ylab("Survivial") + 
-  ggplot2::geom_point(data = dplyr::filter(.data, n.censor > 0), shape = 3, alpha = 0.9) 
+  ggplot2::geom_point(data = dplyr::filter_(.data, "n.censor" > 0), shape = 3, alpha = 0.9) 
 }
 
 #' @export   

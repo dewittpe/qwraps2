@@ -16,4 +16,5 @@ License: GPL-2
 LazyData: true
 Imports:
   dplyr,
-  ggplot2
+  ggplot2,
+  survival
