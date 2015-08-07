@@ -16,6 +16,7 @@
 #' percentage estimate.
 #' @param na_rm if true, omit NA values
 #' @param show_denom defaults to "ifNA".  Other options are "always" or "never".
+#' @param show_symbol if TRUE (default) the percent symbol is shown, else it is supressed.
 #' @param markup latex or markdown
 #'
 #' @return a character vector of the formatted values
@@ -31,6 +32,7 @@
 #' x <- rbinom(4269, 1, 0.314)
 #' n_perc(x)
 #' n_perc(x, show_denom = "always")
+#' n_perc(x, show_symbol = FALSE)
 #'
 #' @rdname n_perc
 #' @export   
@@ -38,15 +40,20 @@ n_perc <- function(x,
                    digits = getOption("qwraps2_frmt_digits", 2), 
                    na_rm = FALSE, 
                    show_denom = "ifNA", 
+                   show_symbol = TRUE,
                    markup = getOption("qwraps2_markup", "latex")) { 
   d <- sum(!is.na(x))
   n <- sum(x, na.rm = na_rm)
   p <- frmt(100 * n/d, digits)
 
-  if (show_denom =="always" | any(is.na(x))) { 
-    rtn <- paste0(frmt(as.integer(n)), "/", frmt(as.integer(d)), " (", p, "%)")
-  } else { 
+  if (show_denom == "never") { 
     rtn <- paste0(frmt(as.integer(n)), " (", p, "%)")
+  } else { 
+    if (show_denom =="always" | any(is.na(x))) { 
+      rtn <- paste0(frmt(as.integer(n)), "/", frmt(as.integer(d)), " (", p, "%)")
+    } else { 
+      rtn <- paste0(frmt(as.integer(n)), " (", p, "%)")
+    }
   }
 
   if (markup == "latex") { 
@@ -67,10 +74,14 @@ perc_n <- function(x,
   n <- sum(x, na.rm = na_rm)
   p <- frmt(100 * n/d, digits)
 
-  if (show_denom =="always" | any(is.na(x))) { 
-    rtn <- paste0(p, "% (n = ", frmt(as.integer(n)), "/", frmt(as.integer(d)), ")") 
+  if (show_denom == "never") { 
+    rtn <- paste0(frmt(as.integer(n)), " (", p, "%)")
   } else { 
-    rtn <- paste0(p, "% (n = ", frmt(as.integer(n)), ")")
+    if (show_denom =="always" | any(is.na(x))) { 
+      rtn <- paste0(frmt(as.integer(n)), "/", frmt(as.integer(d)), " (", p, "%)")
+    } else { 
+      rtn <- paste0(frmt(as.integer(n)), " (", p, "%)")
+    }
   }
 
   if (markup == "latex") { 

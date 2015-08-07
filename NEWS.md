@@ -1,9 +1,10 @@
-# qwraps 0.1.1.9002
+# qwraps 0.1.1.9003
 
 ## New features
 
 * `median_iqr` returns a formatted string with the median and IQR of a data vector.
 * `perc_n` similar to the `n_perc` but returns a string of the form `p% (n = N)`.
+* `n_perc` has option to supress the percent symbol
 * `qkmplot` is under development
 
 ## New vignettes

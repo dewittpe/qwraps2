@@ -6,7 +6,8 @@
 \title{Count and Percentage}
 \usage{
 n_perc(x, digits = getOption("qwraps2_frmt_digits", 2), na_rm = FALSE,
-  show_denom = "ifNA", markup = getOption("qwraps2_markup", "latex"))
+  show_denom = "ifNA", show_symbol = TRUE,
+  markup = getOption("qwraps2_markup", "latex"))
 
 perc_n(x, digits = getOption("qwraps2_frmt_digits", 2), na_rm = FALSE,
   show_denom = "ifNA", markup = getOption("qwraps2_markup", "latex"))
@@ -20,6 +21,8 @@ percentage estimate.}
 \item{na_rm}{if true, omit NA values}
 
 \item{show_denom}{defaults to "ifNA".  Other options are "always" or "never".}
+
+\item{show_symbol}{if TRUE (default) the percent symbol is shown, else it is supressed.}
 
 \item{markup}{latex or markdown}
 }
@@ -47,5 +50,6 @@ set.seed(42)
 x <- rbinom(4269, 1, 0.314)
 n_perc(x)
 n_perc(x, show_denom = "always")
+n_perc(x, show_symbol = FALSE)
 }
 
