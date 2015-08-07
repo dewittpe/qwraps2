@@ -56,6 +56,11 @@ n_perc <- function(x,
     }
   }
 
+  if (!show_symbol) { 
+    rtn <- gsub("%", "", rtn)
+  }
+
+
   if (markup == "latex") { 
     rtn <- gsub("%", "\\\\%", rtn)
   } 
