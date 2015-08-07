@@ -2,8 +2,7 @@
 #'
 #' @description A function for calculating and formatting the median and 
 #' inner quartile range of a data vector.
-#'
-#' @details
+#' #' @details
 #' Given a numeric vector, \code{median_iqr} will return a character string with
 #' the median and IQR.  Formating of the output will be extended in
 #' future versions.
@@ -42,7 +41,7 @@ median_iqr <- function(x,
   rtn <- paste0(qwraps2::frmt(m, digits), " (",
                 qwraps2::frmt(qs[1L], digits), ", ", 
                 qwraps2::frmt(qs[2L], digits), ")")
-  if (show_n =="always" | any(is.na(x))) { 
+  if (any(show_n %in% c("always", "ifNA"))) { 
     rtn <- paste0(qwraps2::frmt(as.integer(n), digits), "; ", rtn)
   } 
 
