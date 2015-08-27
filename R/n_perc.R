@@ -9,6 +9,9 @@
 #' can be controlled by setting \code{na.rm = TRUE}.  In this case, the number
 #' of non-missing values will be reported by default.  Omission of the
 #' non-missing values can be controlled by setting \code{show_denom = "never"}.
+#'
+#' The function n_perc0 uses a set of default arguments which may be
+#' advantageous for use in building tables. 
 #' 
 #'
 #' @param x a 0:1 or boolean vector
@@ -33,6 +36,10 @@
 #' n_perc(x)
 #' n_perc(x, show_denom = "always")
 #' n_perc(x, show_symbol = FALSE)
+#'
+#' # n_perc0 examples
+#' n_perc0(c(0, 1,1, 1, 0, 0))
+#' n_perc0(mtcars$cyl == 6)
 #'
 #' @rdname n_perc
 #' @export   
@@ -94,5 +101,16 @@ perc_n <- function(x,
   } 
 
   return(rtn)
+}
+
+#' @rdname n_perc
+#' @export   
+n_perc0 <- function(x, 
+                   digits = 0,
+                   na_rm = FALSE, 
+                   show_denom = "never", 
+                   show_symbol = FALSE,
+                   markup = getOption("qwraps2_markup", "latex")) { 
+  n_perc(x, digits, na_rm, show_denom, show_symbol, markup)
 }
 

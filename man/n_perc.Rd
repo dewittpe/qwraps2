@@ -2,6 +2,7 @@
 % Please edit documentation in R/n_perc.R
 \name{n_perc}
 \alias{n_perc}
+\alias{n_perc0}
 \alias{perc_n}
 \title{Count and Percentage}
 \usage{
@@ -11,6 +12,9 @@ n_perc(x, digits = getOption("qwraps2_frmt_digits", 2), na_rm = FALSE,
 
 perc_n(x, digits = getOption("qwraps2_frmt_digits", 2), na_rm = FALSE,
   show_denom = "ifNA", markup = getOption("qwraps2_markup", "latex"))
+
+n_perc0(x, digits = 0, na_rm = FALSE, show_denom = "never",
+  show_symbol = FALSE, markup = getOption("qwraps2_markup", "latex"))
 }
 \arguments{
 \item{x}{a 0:1 or boolean vector}
@@ -39,6 +43,9 @@ Default behavior will return the count of successes and the percentage as "N
 can be controlled by setting \code{na.rm = TRUE}.  In this case, the number
 of non-missing values will be reported by default.  Omission of the
 non-missing values can be controlled by setting \code{show_denom = "never"}.
+
+The function n_perc0 uses a set of default arguments which may be
+advantageous for use in building tables.
 }
 \examples{
 n_perc(c(0, 1,1, 1, 0, 0), show_denom = "always")
@@ -51,5 +58,9 @@ x <- rbinom(4269, 1, 0.314)
 n_perc(x)
 n_perc(x, show_denom = "always")
 n_perc(x, show_symbol = FALSE)
+
+# n_perc0 examples
+n_perc0(c(0, 1,1, 1, 0, 0))
+n_perc0(mtcars$cyl == 6)
 }
 
