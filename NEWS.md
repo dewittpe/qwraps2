@@ -1,4 +1,4 @@
-# qwraps 0.1.1.9004
+# qwraps 0.1.1.9005
 
 ## New features
 
@@ -7,6 +7,8 @@
 * `n_perc` has option to suppress the percent symbol
 * `n_perc0` added in 0.1.1.9004 sets defaults which may be preferred for tables.
 * `qkmplot` is under development
+* `qable` creates `knitr::kable` tables with row groups and names similar to
+  `hmisc::latex` or `htmlTable::htmlTable`.
 
 ## New vignettes
 
