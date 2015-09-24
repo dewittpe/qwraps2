@@ -20,10 +20,7 @@
 #' @return a character vector of the formatted numbers
 #'
 #' @examples
-#' library(qwraps2)
-#' library(magrittr)
 #' library(dplyr)
-#' mtcars %<>% tbl_df
 #' 
 #' this_summary <- function(.data) { 
 #'   summarize(.data, 
@@ -38,7 +35,7 @@
 #' mtcars$cyl_factor <- factor(mtcars$cyl, levels = c(4, 6, 8))
 #' 
 #' tab <- cbind(mtcars %>% this_summary %>% t,
-#'              mtcars %>% group_by(cyl_factor) %>% this_summary %>% t %>% magrittr::extract(-1, ))
+#'              mtcars %>% group_by(cyl_factor) %>% this_summary %>% t %>% {.[-1, ]})
 #' 
 #' rwgrp <- c("Miles Per Gallon" = 3, "Horse Power" = 2, "Weight" = 1)
 #' rwnms <- c("Min MPG", "Median MPG", "Max MPG", "Min HP", "Max HP", "Mean Weight")

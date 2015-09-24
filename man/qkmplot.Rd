@@ -26,6 +26,7 @@ TO BE CONSTRUCTED
 TO DO
 }
 \examples{
+require(survival)
 leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x, data = survival::aml)
 survival:::plot.survfit(leukemia.surv, conf.int = TRUE, lty = 2:3, col = 1:2)
 
