@@ -6,6 +6,7 @@
 #' TO DO
 #'
 #' @param x object
+#' @param conf_int logical if TRUE show the CI
 #' @param ... Other arguments passed to survival::plot.survfit
 #'
 #' @return a ggplot.  
@@ -15,7 +16,7 @@
 #' leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x, data = survival::aml) 
 #' survival:::plot.survfit(leukemia.surv, conf.int = TRUE, lty = 2:3, col = 1:2)
 #' 
-#' qkmplot(leukemia.surv) 
+#' qkmplot(leukemia.surv, conf_int = TRUE) 
 #' 
 #'
 #'
@@ -41,13 +42,19 @@ qkmplot.qwraps2_generated <- function(x, ...) {
   qkmplot_ggplot(x, ...)
 }
 
-qkmplot_ggplot <- function(.data, ...) { 
-  ggplot2::ggplot(.data) + 
-  ggplot2::aes_string(x = "time", y = "surv", colour = "strata", fill = "strata") + 
-  ggplot2::geom_step() + 
-  ggplot2::ylim(c(0, 1)) + 
-  ggplot2::ylab("Survivial") + 
-  ggplot2::geom_point(data = dplyr::filter_(.data, "n.censor" > 0), shape = 3, alpha = 0.9) 
+qkmplot_ggplot <- function(.data, conf_int = FALSE, ...) { 
+  layers <- list(ggplot2::aes_string(x = "time", y = "surv", colour = "strata", fill = "strata"),
+                 ggplot2::geom_step(),
+                 ggplot2::ylim(c(0, 1)),
+                 ggplot2::ylab("Survivial"),
+                 ggplot2::geom_point(data = dplyr::filter_(.data, "n.censor" > 0), shape = 3, alpha = 0.9)
+                 )
+  if (conf_int) {
+    layers[[length(layers) + 1L]] <- 
+      ggplot2::geom_ribbon(ggplot2::aes(ymin = lower, ymax = upper), alpha = 0.2) 
+  }
+
+  ggplot2::ggplot(.data) + layers
 }
 
 #' @export   
@@ -71,6 +78,8 @@ qkmplot_bulid_data_frame <- function(x) {
   first_data$lower <- 1
   first_data$upper <- 1
 
-  rbind(plot_data, first_data)
+  dat <- rbind(plot_data, first_data)
+  class(dat) <- "qwraps2_generated"
+  dat
 } 
 
