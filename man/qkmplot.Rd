@@ -13,6 +13,8 @@ qkmplot_bulid_data_frame(x)
 \item{x}{object}
 
 \item{...}{Other arguments passed to survival::plot.survfit}
+
+\item{conf_int}{logical if TRUE show the CI}
 }
 \value{
 a ggplot.
@@ -27,6 +29,6 @@ TO DO
 leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x, data = survival::aml)
 survival:::plot.survfit(leukemia.surv, conf.int = TRUE, lty = 2:3, col = 1:2)
 
-qkmplot(leukemia.surv)
+qkmplot(leukemia.surv, conf_int = TRUE)
 }
 
