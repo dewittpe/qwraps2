@@ -5,16 +5,16 @@
 \alias{qkmplot_bulid_data_frame}
 \title{Kaplan-Meier Plot}
 \usage{
-qkmplot(x, ...)
+qkmplot(x, conf_int = FALSE, ...)
 
 qkmplot_bulid_data_frame(x)
 }
 \arguments{
 \item{x}{object}
 
-\item{...}{Other arguments passed to survival::plot.survfit}
-
 \item{conf_int}{logical if TRUE show the CI}
+
+\item{...}{Other arguments passed to survival::plot.survfit}
 }
 \value{
 a ggplot.

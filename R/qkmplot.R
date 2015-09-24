@@ -23,22 +23,22 @@
 #' 
 #' @export   
 #' @rdname qkmplot
-qkmplot <- function(x, ...) { 
+qkmplot <- function(x, conf_int = FALSE, ...) { 
   UseMethod("qkmplot") 
 }
 
 #' @export
-qkmplot.default <- function(x, ...) { 
+qkmplot.default <- function(x, conf_int = FALSE, ...) { 
   qkmplot_ggplot(x, ...)
 }
 
 #' @export
-qkmplot.survfit <- function(x, ...) { 
+qkmplot.survfit <- function(x, conf_int = FALSE, ...) { 
   qkmplot_ggplot(qkmplot_bulid_data_frame(x), ...)
 }
 
 #' @export
-qkmplot.qwraps2_generated <- function(x, ...) { 
+qkmplot.qwraps2_generated <- function(x, conf_int = FALSE, ...) { 
   qkmplot_ggplot(x, ...)
 }
 
@@ -51,7 +51,7 @@ qkmplot_ggplot <- function(.data, conf_int = FALSE, ...) {
                  )
   if (conf_int) {
     layers[[length(layers) + 1L]] <- 
-      ggplot2::geom_ribbon(ggplot2::aes(ymin = lower, ymax = upper), alpha = 0.2) 
+      ggplot2::geom_ribbon(ggplot2::aes_string(ymin = "lower", ymax = "upper"), alpha = 0.2) 
   }
 
   ggplot2::ggplot(.data) + layers
@@ -79,7 +79,7 @@ qkmplot_bulid_data_frame <- function(x) {
   first_data$upper <- 1
 
   dat <- rbind(plot_data, first_data)
-  class(dat) <- "qwraps2_generated"
+  class(dat) <- c(class(dat), "qwraps2_generated")
   dat
 } 
 

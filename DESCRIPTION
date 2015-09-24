@@ -20,6 +20,4 @@ LazyData: true
 Imports:
   dplyr,
   ggplot2,
-  knitr, 
-  magrittr,
-  survival
+  knitr
