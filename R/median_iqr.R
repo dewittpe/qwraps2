@@ -9,7 +9,7 @@
 #'
 #' @param x a numeric vector
 #' @param digits digits to the right of the decimal point to return.
-#' @param na_rm if true, omit NA values
+#' @param na_rm if true, omit NA values (NOT CURRENTLY IMPLEMENTED)
 #' @param show_n defaults to "ifNA".  Other options are "always" or "never".
 #' @param markup latex or markdown
 #'
@@ -41,9 +41,9 @@ median_iqr <- function(x,
   rtn <- paste0(qwraps2::frmt(m, digits), " (",
                 qwraps2::frmt(qs[1L], digits), ", ", 
                 qwraps2::frmt(qs[2L], digits), ")")
-  if (any(show_n %in% c("always", "ifNA"))) { 
-    rtn <- paste0(qwraps2::frmt(as.integer(n), digits), "; ", rtn)
-  } 
+  # if (any(show_n %in% c("always", "ifNA"))) { 
+  #   rtn <- paste0(qwraps2::frmt(as.integer(n), digits), "; ", rtn)
+  # } 
 
   return(rtn)
 }
