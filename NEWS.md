@@ -1,7 +1,9 @@
-# qwraps 0.1.1.9006
+# qwraps 0.1.2
 
 ## New features
 
+* methods for finding the sensitivity and specificity of confusion matrices
+  (contingency tables) added.
 * `median_iqr` returns a formatted string with the median and IQR of a data vector.
 * `perc_n` similar to the `n_perc` but returns a string of the form `p% (n = N)`.
 * `n_perc` has option to suppress the percent symbol
@@ -9,18 +11,6 @@
 * `qkmplot` for plotting kaplan meier curves
 * `qable` creates `knitr::kable` tables with row groups and names similar to
   `hmisc::latex` or `htmlTable::htmlTable`.
-
-## New vignettes
-
-*
-
-## Minor improvements
-
-*
-
-## Bug fixes
-
-*
 
 # qwraps 0.1.1
 Pushed to CRAN on 20 April 2015.
