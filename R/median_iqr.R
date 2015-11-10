@@ -35,8 +35,8 @@ median_iqr <- function(x,
                        show_n = "ifNA", 
                        markup = getOption("qwraps2_markup", "latex")) { 
   n <- sum(!is.na(x))
-  m <- median(x, na.rm = na_rm)
-  qs <- quantile(x, probs = c(1, 3) / 4, na.rm = na_rm)
+  m <- stats::median(x, na.rm = na_rm)
+  qs <- stats::quantile(x, probs = c(1, 3) / 4, na.rm = na_rm)
 
   rtn <- paste0(qwraps2::frmt(m, digits), " (",
                 qwraps2::frmt(qs[1L], digits), ", ", 

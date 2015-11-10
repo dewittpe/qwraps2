@@ -43,6 +43,6 @@ extract_fpvalue <- function(x) {
 #' @rdname extract
 extract_fpvalue.lm <- function(x) { 
   fstat <- summary(x)$fstatistic
-  frmtp(pf(fstat[1L], fstat[2L], fstat[3L], lower.tail = FALSE))
+  frmtp(stats::pf(fstat[1L], fstat[2L], fstat[3L], lower.tail = FALSE))
 }
 

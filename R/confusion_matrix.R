@@ -119,7 +119,7 @@ specificity.ftable <- function(tab, ...) {
 
 #' @export
 specificity.formula <- function(formula, data, ...) { 
-  ftab <- ftable(formula, data)
+  ftab <- stats::ftable(formula, data)
   specificity.ftable(ftab)
 }
 
@@ -128,7 +128,7 @@ specificity.formula <- function(formula, data, ...) {
 #' @rdname confusion_matrix
 confusion_matrix <- function(formula, data, boot = FALSE, boot_samples = 1000L, alpha = 0.05) { 
 
-  ftab <- ftable(formula, data)
+  ftab <- stats::ftable(formula, data)
   sp   <- specificity(ftab)
   sn   <- sensitivity(ftab)
 
@@ -136,7 +136,7 @@ confusion_matrix <- function(formula, data, boot = FALSE, boot_samples = 1000L, 
     rows <- replicate(boot_samples, 
                       sample(seq(1, nrow(data), by = 1), nrow(data), replace = TRUE), 
                       simplify = FALSE)
-    tabs <- lapply(rows, function(x) { ftable(formula, data[x, ]) })
+    tabs <- lapply(rows, function(x) { stats::ftable(formula, data[x, ]) })
     sps  <- do.call(c, lapply(tabs, specificity))
     sns  <- do.call(c, lapply(tabs, sensitivity))
   }
@@ -145,8 +145,8 @@ confusion_matrix <- function(formula, data, boot = FALSE, boot_samples = 1000L, 
     list(tab            = ftab,
          specificity    = sp, 
          sensitivity    = sn,
-         specificity_ci = if (boot) quantile(sps, probs = c(alpha / 2, 1 - alpha / 2)) else NA,
-         sensitivity_ci = if (boot) quantile(sns, probs = c(alpha / 2, 1 - alpha / 2)) else NA)
+         specificity_ci = if (boot) stats::quantile(sps, probs = c(alpha / 2, 1 - alpha / 2)) else NA,
+         sensitivity_ci = if (boot) stats::quantile(sns, probs = c(alpha / 2, 1 - alpha / 2)) else NA)
 
   class(rtn) <- c("confusion_matrix", class(rtn))
   attr(rtn, "boot") <- boot

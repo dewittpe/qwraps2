@@ -96,7 +96,7 @@ qroc_ggplot <- function(.data) {
 qroc_build_data_frame <- function(fit, n_threshold = 200) { 
 
   # find the predicted values
-  pred_vals <- predict(fit, type = "response")
+  pred_vals <- stats::predict(fit, type = "response")
 
   true_pos <- function(threshold){ sum((pred_vals >= threshold) &  (fit$y)) }
   true_neg <- function(threshold){ sum((pred_vals <  threshold) & !(fit$y)) }
