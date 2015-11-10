@@ -101,7 +101,7 @@ sensitivity.ftable <- function(tab, ...) {
 
 #' @export
 sensitivity.formula <- function(formula, data, ...) { 
-  ftab <- ftable(formula, data)
+  ftab <- stats::ftable(formula, data)
   sensitivity.ftable(ftab)
 } 
 
