@@ -8,13 +8,15 @@
 \usage{
 sensitivity(tab, ...)
 
-specificity(tab)
+specificity(tab, ...)
 
 confusion_matrix(formula, data, boot = FALSE, boot_samples = 1000L,
   alpha = 0.05)
 }
 \arguments{
 \item{tab}{A 2-by-2 confusion_matrix matrix or ftable}
+
+\item{...}{not currently used}
 
 \item{formula}{column ~ row for building the confusion matrix}
 
@@ -88,7 +90,10 @@ confusion_matrix(I(price > 5000) ~ I(carat > 1.5), data = diamonds)
 print(confusion_matrix(I(price > 5000) ~ I(carat > 1.5), data = diamonds), digits = 4)
 
 \donttest{
-x <- confusion_matrix(I(price > 5000) ~ I(carat > 1.5), data = diamonds, boot = TRUE, boot_samples = 100L)
+x <- confusion_matrix(I(price > 5000) ~ I(carat > 1.5),
+                      data = diamonds,
+                      boot = TRUE,
+                      boot_samples = 100L)
 print(x, digits = 4)
 }
 }

@@ -13,6 +13,7 @@
 #' 1000L.  Ignored if \code{boot == FALSE}.
 #' @param alpha 100(1-alpha)% confidence intervals for specificity and
 #' sensitivity.  Ignored if \code{boot == FALSE}.
+#' @param ... not currently used
 #'
 #' @details
 #' Sensitivity and Specificity:
@@ -67,7 +68,10 @@
 #' print(confusion_matrix(I(price > 5000) ~ I(carat > 1.5), data = diamonds), digits = 4)
 #' 
 #' \donttest{
-#' x <- confusion_matrix(I(price > 5000) ~ I(carat > 1.5), data = diamonds, boot = TRUE, boot_samples = 100L)
+#' x <- confusion_matrix(I(price > 5000) ~ I(carat > 1.5), 
+#'                       data = diamonds, 
+#'                       boot = TRUE, 
+#'                       boot_samples = 100L)
 #' print(x, digits = 4)
 #' }
 #' 
@@ -79,42 +83,42 @@ sensitivity <- function(tab, ...) {
 }
 #' @export
 #' @rdname confusion_matrix 
-specificity <- function(tab) { 
+specificity <- function(tab, ...) { 
   UseMethod("specificity")
 }
 
 #' @export
-sensitivity.default <- function(tab) { 
+sensitivity.default <- function(tab, ...) { 
   if (length(dim(tab)) != 2 | any(dim(tab) != 2)) { stop("Incorrect dim(tab)") } 
   as.numeric(tab[2, 2] / sum(tab[, 2]))
 }
 
 #' @export
-sensitivity.ftable <- function(tab) { 
+sensitivity.ftable <- function(tab, ...) { 
   if (any(dim(tab) != 2)) { stop("Incorrect dim(tab)") } 
   as.numeric(tab[2, 2] / sum(tab[, 1]))
 }
 
 #' @export
-sensitivity.formula <- function(formula, data) { 
+sensitivity.formula <- function(formula, data, ...) { 
   ftab <- ftable(formula, data)
   sensitivity.ftable(ftab)
 } 
 
 #' @export
-specificity.default <- function(tab) { 
+specificity.default <- function(tab, ...) { 
   if (length(dim(tab)) != 2 | any(dim(tab) != 2)) { stop("Incorrect dim(tab)") } 
   as.numeric(tab[1, 1] / sum(tab[, 1]))
 }
 
 #' @export
-specificity.ftable <- function(tab) {
+specificity.ftable <- function(tab, ...) {
   if (any(dim(tab) != 2)) { stop("Incorrect dim(tab)") } 
   as.numeric(tab[1, 1] / sum(tab[, 1]))
 }
 
 #' @export
-specificity.formula <- function(formula, data) { 
+specificity.formula <- function(formula, data, ...) { 
   ftab <- ftable(formula, data)
   specificity.ftable(ftab)
 }
