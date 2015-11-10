@@ -83,31 +83,37 @@ specificity <- function(tab) {
   UseMethod("specificity")
 }
 
+#' @export
 sensitivity.default <- function(tab) { 
   if (length(dim(tab)) != 2 | any(dim(tab) != 2)) { stop("Incorrect dim(tab)") } 
   as.numeric(tab[2, 2] / sum(tab[, 2]))
 }
 
+#' @export
 sensitivity.ftable <- function(tab) { 
   if (any(dim(tab) != 2)) { stop("Incorrect dim(tab)") } 
   as.numeric(tab[2, 2] / sum(tab[, 1]))
 }
 
+#' @export
 sensitivity.formula <- function(formula, data) { 
   ftab <- ftable(formula, data)
   sensitivity.ftable(ftab)
 } 
 
+#' @export
 specificity.default <- function(tab) { 
   if (length(dim(tab)) != 2 | any(dim(tab) != 2)) { stop("Incorrect dim(tab)") } 
   as.numeric(tab[1, 1] / sum(tab[, 1]))
 }
 
+#' @export
 specificity.ftable <- function(tab) {
   if (any(dim(tab) != 2)) { stop("Incorrect dim(tab)") } 
   as.numeric(tab[1, 1] / sum(tab[, 1]))
 }
 
+#' @export
 specificity.formula <- function(formula, data) { 
   ftab <- ftable(formula, data)
   specificity.ftable(ftab)
