@@ -1,4 +1,4 @@
-#' @title Receiver Operating Curves
+#' @title Receiver Operator Curves
 #'
 #' @description Construction of ROC curves.
 #'
@@ -117,7 +117,7 @@ qroc_build_data_frame <- function(fit, n_threshold = 200) {
   roc_data <- data.frame(false_positives = 1 - specificity, 
                          true_positives  = sensitivity)
 
-  # trapazoid rule approximation for the area under the curve
+  # trapezoid rule approximation for the area under the curve
   auc <- sum((roc_data[2:n_threshold, 1] - roc_data[1:(n_threshold-1), 1]) * 1/2 * 
              (roc_data[2:n_threshold, 2] + roc_data[1:(n_threshold-1), 2]))
 
