@@ -1,5 +1,6 @@
 # qwraps2
 
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/qwraps2)](http://cran.r-project.org/package=qwraps2)
 [![Build Status](https://travis-ci.org/dewittpe/qwraps2.svg?branch=master)](https://travis-ci.org/dewittpe/qwraps2)
 
 A collection of helpful functions for summarizing data and formating results.
@@ -21,16 +22,21 @@ the repo, add the feature, and send me a pull request.
 
 ## Install
 
-Version 0.1 is on [CRAN](http://cran.r-project.org/) and can be installed via:
+### From CRAN
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/qwraps2)](http://cran.r-project.org/package=qwraps2)
+is on
+[The Comprehensive R Archive Network (CRAN)](http://cran.r-project.org/). You
+can install this version via
 
     install.packages("qwraps2", repo = "http://cran.rstudio.com")
 
+### Developmental
 Install the development version (version x.y.z.9000) of `qwraps2`, via the 
 [`devtools`](https://github.com/hadley/devtools) package:
 
     # install.packages("devtools")
     library(devtools)
-    install_github("qwraps2", username = "dewittpe")
+    install_github("dewittpe/qwraps2")
 
 If you are working on a Windows machine you will need to download and install
 [`Rtools`](http://cran.r-project.org/bin/windows/Rtools/) before `devtools` will

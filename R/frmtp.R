@@ -36,7 +36,7 @@
 #' or lower case.
 #' @param leading0 boolean, whether or not the p-value should be reported as
 #' 0.0123 (TRUE, default), or .0123 (FALSE).
-#' @param ... not currently implemented.
+#' @param ... Not currently implemented.
 #'
 #' @return a character vector of the formatted p-values
 #'

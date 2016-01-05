@@ -22,8 +22,16 @@
 #' FALSE, then you should explicitly call \code{qblandaltman_build_data_frame}
 #' before calling \code{qblandaltman}.
 #'
-#' @return a ggplot.  Minimula aesthetics have been used so that the user may
+#' @return a ggplot.  Minimal aesthetics have been used so that the user may
 #' modify the graphic as desired with ease.
+#'
+#' @references
+#' Altman, Douglas G., and J. Martin Bland. "Measurement in medicine: the analysis
+#' of method comparison studies." The statistician (1983): 307-317.
+#' 
+#' Bland, J. Martin, and DouglasG Altman. "Statistical methods for assessing
+#' agreement between two methods of clinical measurement." The lancet 327, no. 8476
+#' (1986): 307-310.
 #'
 #' @examples
 #' \dontrun{

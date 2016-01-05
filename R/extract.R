@@ -1,6 +1,6 @@
 #' @title Extract Summary stats from regression objects
 #'
-#' @description A collectin of functions for extracting summary statistics and
+#' @description A collection of functions for extracting summary statistics and
 #' reporting regression results from \code{lm}, \code{glm} and other regression
 #' objects.
 #'
@@ -43,6 +43,6 @@ extract_fpvalue <- function(x) {
 #' @rdname extract
 extract_fpvalue.lm <- function(x) { 
   fstat <- summary(x)$fstatistic
-  frmtp(pf(fstat[1L], fstat[2L], fstat[3L], lower.tail = FALSE))
+  frmtp(stats::pf(fstat[1L], fstat[2L], fstat[3L], lower.tail = FALSE))
 }
 

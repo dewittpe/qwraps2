@@ -40,7 +40,7 @@ mean_sd <- function(x,
                     markup = getOption("qwraps2_markup", "latex")) { 
   n <- sum(!is.na(x))
   m <- mean(x, na.rm = na_rm)
-  s <- sd(x, na.rm = na_rm)
+  s <- stats::sd(x, na.rm = na_rm)
 
   if (show_n =="always" | any(is.na(x))) { 
     rtn <- paste0(frmt(as.integer(n), digits), "; ", frmt(m, digits), " $\\pm$ ", frmt(s, digits))
@@ -50,6 +50,10 @@ mean_sd <- function(x,
 
   if (denote_sd == "paren") { 
     rtn <- gsub("\\$\\\\pm\\$\\s(.*)", "\\(\\1\\)", rtn)
+  }
+
+  if (markup == "markdown") { 
+    rtn <- gsub("\\$\\\\pm\\$", "&plusmn;", rtn)
   }
 
   return(rtn)
