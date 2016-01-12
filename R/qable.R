@@ -15,7 +15,7 @@
 #' @param rnames a character vector of the row names
 #' @param cnames column names
 #' @param markup the markup language to use
-#' @param ... additional arguments passed to \code{knitr::table}
+#' @param ... additional arguments passed to \code{knitr::kable}
 #'
 #' @return a character vector of the formatted numbers
 #'
