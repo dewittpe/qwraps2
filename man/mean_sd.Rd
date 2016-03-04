@@ -22,6 +22,9 @@ percentage estimate.}
 \eqn{\pm} sd' or 'mean (sd)'}
 
 \item{markup}{latex or markdown}
+
+\item{logged}{if TRUE the \code{x} is assumed to already by log transformed.
+If FALSE the data will be transformed.}
 }
 \value{
 a character vector of the formatted values
@@ -33,7 +36,9 @@ standard deviations.
 \details{
 Given a numeric vector, \code{mean_sd} will return a character string with
 the mean and standard deviation.  Formating of the output will be extended in
-future versions.
+future versions.  
+
+\code{gmean_sd} returns the geometric mean and geometric standard deviation.
 }
 \examples{
 set.seed(42)

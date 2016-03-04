@@ -1,3 +1,8 @@
+# qwraps 0.1.2.9000
+
+## New features
+* `gmean_sd` returns the geometric mean and standard deviation 
+
 # qwraps 0.1.2
 
 ## New features

@@ -6,7 +6,9 @@
 #' @details
 #' Given a numeric vector, \code{mean_sd} will return a character string with
 #' the mean and standard deviation.  Formating of the output will be extended in
-#' future versions.
+#' future versions.  
+#'
+#' \code{gmean_sd} returns the geometric mean and geometric standard deviation.
 #'
 #' @param x a numeric vector
 #' @param digits digits to the right of the decimal point to return in the
@@ -16,6 +18,8 @@
 #' @param denote_sd a character string set to either "pm" or "paren" for reporting 'mean
 #' \eqn{\pm} sd' or 'mean (sd)'
 #' @param markup latex or markdown
+#' @param logged if TRUE the \code{x} is assumed to already by log transformed.
+#' If FALSE the data will be transformed.
 #'
 #' @return a character vector of the formatted values
 #'
@@ -59,3 +63,37 @@ mean_sd <- function(x,
   return(rtn)
 }
 
+#' @export   
+gmean_sd <- function(x, 
+                     logged = FALSE,
+                     digits = getOption("qwraps2_frmt_digits", 2), 
+                     na_rm = FALSE, 
+                     show_n = "ifNA", 
+                     denote_sd = "pm", 
+                     markup = getOption("qwraps2_markup", "latex")) { 
+  n <- sum(!is.na(x))
+
+  if (logged) {
+    m <- exp(mean(x, na.rm = na_rm))
+    s <- sqrt(sum(exp(x)/m, na.rm = na_rm) / n)
+  } else { 
+    m <- exp(mean(log(x), na.rm = na_rm))
+    s <- sqrt(sum(x/m) / n)
+  }
+
+  if (show_n =="always" | any(is.na(x))) { 
+    rtn <- paste0(frmt(as.integer(n), digits), "; ", frmt(m, digits), " $\\pm$ ", frmt(s, digits))
+  } else { 
+    rtn <- paste0(frmt(m, digits), " $\\pm$ ", frmt(s, digits))
+  }
+
+  if (denote_sd == "paren") { 
+    rtn <- gsub("\\$\\\\pm\\$\\s(.*)", "\\(\\1\\)", rtn)
+  }
+
+  if (markup == "markdown") { 
+    rtn <- gsub("\\$\\\\pm\\$", "&plusmn;", rtn)
+  }
+
+  return(rtn)
+}
