@@ -18,8 +18,6 @@
 #' @param denote_sd a character string set to either "pm" or "paren" for reporting 'mean
 #' \eqn{\pm} sd' or 'mean (sd)'
 #' @param markup latex or markdown
-#' @param logged if TRUE the \code{x} is assumed to already by log transformed.
-#' If FALSE the data will be transformed.
 #'
 #' @return a character vector of the formatted values
 #'
@@ -63,7 +61,10 @@ mean_sd <- function(x,
   return(rtn)
 }
 
+#' @rdname mean_sd
 #' @export   
+#' @param logged if TRUE the \code{x} is assumed to already by log transformed.
+#' If FALSE the data will be transformed.
 gmean_sd <- function(x, 
                      logged = FALSE,
                      digits = getOption("qwraps2_frmt_digits", 2), 
