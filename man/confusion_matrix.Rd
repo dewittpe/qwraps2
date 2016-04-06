@@ -10,8 +10,7 @@ sensitivity(tab, ...)
 
 specificity(tab, ...)
 
-confusion_matrix(formula, data, boot = FALSE, boot_samples = 1000L,
-  alpha = 0.05)
+confusion_matrix(x, ...)
 }
 \arguments{
 \item{tab}{A 2-by-2 confusion_matrix matrix or ftable}
@@ -92,6 +91,12 @@ print(confusion_matrix(I(price > 5000) ~ I(carat > 1.5), data = diamonds), digit
 \donttest{
 x <- confusion_matrix(I(price > 5000) ~ I(carat > 1.5), 
                       data = diamonds, 
+                      boot = TRUE, 
+                      boot_samples = 100L)
+print(x, digits = 4)
+
+x <- confusion_matrix(x = I(diamonds$carat > 1.5), 
+                      y = I(diamonds$price > 5000),
                       boot = TRUE, 
                       boot_samples = 100L)
 print(x, digits = 4)

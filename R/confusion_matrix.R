@@ -73,6 +73,12 @@
 #'                       boot = TRUE, 
 #'                       boot_samples = 100L)
 #' print(x, digits = 4)
+#'
+#' x <- confusion_matrix(x = I(diamonds$carat > 1.5), 
+#'                       y = I(diamonds$price > 5000),
+#'                       boot = TRUE, 
+#'                       boot_samples = 100L)
+#' print(x, digits = 4)
 #' }
 #' 
 #'
@@ -123,10 +129,19 @@ specificity.formula <- function(formula, data, ...) {
   specificity.ftable(ftab)
 }
 
-
 #' @export
 #' @rdname confusion_matrix
-confusion_matrix <- function(formula, data, boot = FALSE, boot_samples = 1000L, alpha = 0.05) { 
+confusion_matrix <- function(x, ...) { 
+  UseMethod("confusion_matrix")
+}
+
+#' @export
+confusion_matrix.default <- function(x, y, boot = FALSE, boot_samples = 1000L, alpha = 0.05) { 
+  confusion_matrix.formula( y ~ x, data = data.frame(x = x, y = y), boot, boot_samples, alpha)
+}
+
+#' @export
+confusion_matrix.formula <- function(formula, data, boot = FALSE, boot_samples = 1000L, alpha = 0.05) { 
 
   ftab <- stats::ftable(formula, data)
   sp   <- specificity(ftab)
