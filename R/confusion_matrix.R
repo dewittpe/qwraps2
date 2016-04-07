@@ -1,11 +1,12 @@
-#' @title Sensitivity, Specificity, and Confusion Matrices (Contingency Tables)
+#' @title Confusion Matrices (Contingency Tables)
 #'
-#' @description Functions for calculating the sensitivity and specificity, along
-#' with bootstrapped confidence intervals, of confusion matrices (contingency
-#' tables).
+#' @description Construction of confusion matrices, accuracy, sensitivity,
+#' specificity, confidence intervals (Wilson's method and (optional
+#' bootstrapping)).
 #'
-#' @param tab A 2-by-2 confusion_matrix matrix or ftable
-#' @param formula column ~ row for building the confusion matrix
+#' @param x prediction vector
+#' @param y True Condition vector
+#' @param formula column (known) ~ row (test) for building the confusion matrix
 #' @param data environment containing the variables listed in the formula
 #' @param boot boolean, should bootstrapped confidence intervals for the
 #' sensitivity and specificity be computed?  Defaults to FALSE.
@@ -51,84 +52,24 @@
 #' }
 #'
 #' @examples
-#' ## Does knowing if a diamond is more than 1.5 carats in weight tell us if the
-#' ## price is more than $5,000?
-#' 
-#' data("diamonds", package = "ggplot2")
-#' 
-#' x <- ftable(I(price > 5000) ~ I(carat > 1.5), data = diamonds)
-#' 
-#' sensitivity(x)
-#' specificity(x)
-#' 
-#' sensitivity(I(price > 5000) ~ I(carat > 1.5), data = diamonds)
-#' specificity(I(price > 5000) ~ I(carat > 1.5), data = diamonds)
-#' 
-#' confusion_matrix(I(price > 5000) ~ I(carat > 1.5), data = diamonds)
-#' print(confusion_matrix(I(price > 5000) ~ I(carat > 1.5), data = diamonds), digits = 4)
-#' 
+#' ## Example taken from caret::confusionMatrix
 #' \donttest{
-#' x <- confusion_matrix(I(price > 5000) ~ I(carat > 1.5), 
-#'                       data = diamonds, 
-#'                       boot = TRUE, 
-#'                       boot_samples = 100L)
-#' print(x, digits = 4)
-#'
-#' x <- confusion_matrix(x = I(diamonds$carat > 1.5), 
-#'                       y = I(diamonds$price > 5000),
-#'                       boot = TRUE, 
-#'                       boot_samples = 100L)
-#' print(x, digits = 4)
+#' lvs <- c("normal", "abnormal")
+#' truth <- factor(rep(lvs, times = c(86, 258)),
+#'                 levels = rev(lvs))
+#' pred <- factor(c(rep(lvs, times = c(54, 32)),
+#'                  rep(lvs, times = c(27, 231))),               
+#'                levels = rev(lvs))
+#' 
+#' confusion_matrix(pred, truth)
+#' confusion_matrix(pred, truth)$stats
+#' 
+#' temp <- confusion_matrix(pred, truth, boot = TRUE)
+#' temp$stats
+#' temp$boot_stats
 #' }
 #' 
 #'
-#' @export   
-#' @rdname confusion_matrix 
-sensitivity <- function(tab, ...) { 
-  UseMethod("sensitivity")
-}
-#' @export
-#' @rdname confusion_matrix 
-specificity <- function(tab, ...) { 
-  UseMethod("specificity")
-}
-
-#' @export
-sensitivity.default <- function(tab, ...) { 
-  if (length(dim(tab)) != 2 | any(dim(tab) != 2)) { stop("Incorrect dim(tab)") } 
-  as.numeric(tab[2, 2] / sum(tab[, 2]))
-}
-
-#' @export
-sensitivity.ftable <- function(tab, ...) { 
-  if (any(dim(tab) != 2)) { stop("Incorrect dim(tab)") } 
-  as.numeric(tab[2, 2] / sum(tab[, 1]))
-}
-
-#' @export
-sensitivity.formula <- function(formula, data, ...) { 
-  ftab <- stats::ftable(formula, data)
-  sensitivity.ftable(ftab)
-} 
-
-#' @export
-specificity.default <- function(tab, ...) { 
-  if (length(dim(tab)) != 2 | any(dim(tab) != 2)) { stop("Incorrect dim(tab)") } 
-  as.numeric(tab[1, 1] / sum(tab[, 1]))
-}
-
-#' @export
-specificity.ftable <- function(tab, ...) {
-  if (any(dim(tab) != 2)) { stop("Incorrect dim(tab)") } 
-  as.numeric(tab[1, 1] / sum(tab[, 1]))
-}
-
-#' @export
-specificity.formula <- function(formula, data, ...) { 
-  ftab <- stats::ftable(formula, data)
-  specificity.ftable(ftab)
-}
-
 #' @export
 #' @rdname confusion_matrix
 confusion_matrix <- function(x, ...) { 
@@ -137,50 +78,80 @@ confusion_matrix <- function(x, ...) {
 
 #' @export
 confusion_matrix.default <- function(x, y, boot = FALSE, boot_samples = 1000L, alpha = 0.05) { 
-  confusion_matrix.formula( y ~ x, data = data.frame(x = x, y = y), boot, boot_samples, alpha)
+  confusion_matrix.formula(Known ~ Predicted, 
+                           data = data.frame(Predicted = x, Known = y), 
+                           boot, boot_samples, alpha)
 }
 
 #' @export
 confusion_matrix.formula <- function(formula, data, boot = FALSE, boot_samples = 1000L, alpha = 0.05) { 
 
-  ftab <- stats::ftable(formula, data)
-  sp   <- specificity(ftab)
-  sn   <- sensitivity(ftab)
+  ftab <- stats::ftable(formula, data) 
+
+  acc <- accuracy(ftab)
+  sen <- sensitivity(ftab)
+  spe <- specificity(ftab)
+
+  cis <- lapply(list(acc, sen, spe), 
+                wilson_score_interval,
+                n = nrow(data), alpha = alpha)
+
+  stats <- cbind(c(Accuracy = acc, Sensitivity = sen, Specificity = spe), 
+                 do.call(rbind, cis))
+  colnames(stats) <- c("Est", "LCL", "UCL")
 
   if (boot) { 
     rows <- replicate(boot_samples, 
                       sample(seq(1, nrow(data), by = 1), nrow(data), replace = TRUE), 
                       simplify = FALSE)
     tabs <- lapply(rows, function(x) { stats::ftable(formula, data[x, ]) })
+    acs  <- do.call(c, lapply(tabs, accuracy))
     sps  <- do.call(c, lapply(tabs, specificity))
     sns  <- do.call(c, lapply(tabs, sensitivity))
+
+    boot_stats <- lapply(list(acs, sns, sps), 
+                         function(x) {
+                           c(mean(x), stats::quantile(x, probs = c(alpha / 2, 1 - alpha / 2)))
+                         }) 
+    boot_stats <- do.call(rbind, boot_stats)
+    colnames(boot_stats) <- c("Boot Est", "Boot LCL", "Boot UCL")
+    rownames(boot_stats) <- c("Accuracy", "Sensitivity", "Specificity")
+
+    stats <- cbind(stats, boot_stats)
   }
 
-  rtn <- 
-    list(tab            = ftab,
-         specificity    = sp, 
-         sensitivity    = sn,
-         specificity_ci = if (boot) stats::quantile(sps, probs = c(alpha / 2, 1 - alpha / 2)) else NA,
-         sensitivity_ci = if (boot) stats::quantile(sns, probs = c(alpha / 2, 1 - alpha / 2)) else NA)
+  rtn <- list(tab   = ftab, stats = stats)
 
   class(rtn) <- c("confusion_matrix", class(rtn))
   attr(rtn, "boot") <- boot
+  attr(rtn, "alpha") <- alpha
 
-  return(rtn)
+  rtn 
 }
 
+#' @export
 print.confusion_matrix <- function(x, ...) { 
-  print(x$tab)
+  stats:::print.ftable(x$tab) 
+  print(x$stats) 
+  invisible(x) 
+}
 
-  if (attr(x, "boot")) { 
-    cat("\n",
-        "Sensitivity: ", qwraps2::frmt(x$sensitivity, ...), " (", paste(qwraps2::frmt(x$sensitivity_ci, ...), collapse = ", "), ")\n",
-        "Specificity: ", qwraps2::frmt(x$specificity, ...), " (", paste(qwraps2::frmt(x$specificity_ci, ...), collapse = ", "), ")\n\n",
-        sep = "") 
-  } else { 
-    cat("\n",
-        "Sensitivity: ", qwraps2::frmt(x$sensitivity, ...), "\n",
-        "Specificity: ", qwraps2::frmt(x$specificity, ...), "\n\n",
-        sep = "") 
-  } 
+accuracy <- function(tab) { 
+  if (any(dim(tab) != 2)) { stop("Incorrect dim(tab)") } 
+  as.numeric(sum(diag(tab)) / sum(tab))
+}
+
+sensitivity <- function(tab) { 
+  if (any(dim(tab) != 2)) { stop("Incorrect dim(tab)") } 
+  as.numeric(tab[1, 1] / sum(tab[, 1]))
+}
+
+specificity <- function(tab, ...) { 
+  if (length(dim(tab)) != 2 | any(dim(tab) != 2)) { stop("Incorrect dim(tab)") } 
+  as.numeric(tab[2, 2] / sum(tab[, 2]))
+}
+
+wilson_score_interval <- function(p, n, alpha = 0.05) { 
+  z <- qnorm(1 - alpha/2) 
+  1 / (1 + 1/n * z^2) * (p + 1 / (2 * n) * z^2 + c(-z, z) * sqrt( 1 / n * p * (1 - p) + 1 / (4 * n^2) * z^2)) 
 }
