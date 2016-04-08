@@ -2,20 +2,34 @@
 % Please edit documentation in R/confusion_matrix.R
 \name{confusion_matrix}
 \alias{confusion_matrix}
+\alias{confusion_matrix.default}
+\alias{confusion_matrix.formula}
+\alias{is.confusion_matrix}
+\alias{print.confusion_matrix}
 \title{Confusion Matrices (Contingency Tables)}
 \usage{
 confusion_matrix(x, ...)
+
+\method{confusion_matrix}{default}(x, y, positive, boot = FALSE,
+  boot_samples = 1000L, alpha = 0.05, ...)
+
+\method{confusion_matrix}{formula}(formula, data = parent.frame(), positive,
+  boot = FALSE, boot_samples = 1000L, alpha = 0.05, ...)
+
+is.confusion_matrix(x)
+
+\method{print}{confusion_matrix}(x, ...)
 }
 \arguments{
-\item{x}{prediction vector}
+\item{x}{prediction condition vector, a two level factor variable or a
+variable that can be converted to one.}
 
 \item{...}{not currently used}
 
-\item{y}{True Condition vector}
+\item{y}{True Condition vector with the same possible values as x.}
 
-\item{formula}{column (known) ~ row (test) for building the confusion matrix}
-
-\item{data}{environment containing the variables listed in the formula}
+\item{positive}{the level of x and y which is the positive outcome.  If
+missing the first level of factor(y) will be used as the positive level.}
 
 \item{boot}{boolean, should bootstrapped confidence intervals for the
 sensitivity and specificity be computed?  Defaults to FALSE.}
@@ -25,16 +39,17 @@ sensitivity and specificity be computed?  Defaults to FALSE.}
 
 \item{alpha}{100(1-alpha)% confidence intervals for specificity and
 sensitivity.  Ignored if \code{boot == FALSE}.}
+
+\item{formula}{column (known) ~ row (test) for building the confusion matrix}
+
+\item{data}{environment containing the variables listed in the formula}
 }
 \value{
 The sensitivity and specificity functions return numeric values.
 \code{confusion_matrix} returns a list with elements:
 \itemize{
   \item tab the confusion matrix,
-  \item specificity point estimate for specificity,
-  \item sensitivity point estimate for sensitivity, 
-  \item specificity_ci bootstrapped confidence interval for specificity, and
-  \item sensitivity_ci bootstrapped confidence interval for sensitivity.
+  \item stats a matrix of summary statistics and confidence intervals.
 }
 }
 \description{
@@ -49,27 +64,29 @@ matrix (contingency table) to be of the form:
 
 \tabular{lccc}{
                     \tab      \tab True \tab Condition \cr
-                    \tab      \tab -    \tab +         \cr
-Predicted Condition \tab -    \tab TN   \tab FN        \cr
-Predicted Condition \tab +    \tab FP   \tab TP        \cr
+                    \tab      \tab +    \tab -         \cr
+Predicted Condition \tab +    \tab TP   \tab FP        \cr
+Predicted Condition \tab -    \tab FN   \tab TN        \cr
 }
 where
 \itemize{
-  \item TN: True Negative,
-  \item FP: False Positive, 
   \item FN: False Negative, and
+  \item FP: False Positive, 
+  \item TN: True Negative,
   \item TP: True Positive.
 }
 
-sensitivity = TP / (TP + FN)
-specificity = TN / (TN + FP) 
-
-This table set up is the result of using 0/1 or boolean variables. See
-examples.
+Recall: 
+\itemize{
+  \item sensitivity = TP / (TP + FN)
+  \item specificity = TN / (TN + FP) 
+  \item positive predictive value (PPV) = TP / (TP + FP)
+  \item negative predictive value (NPV) = TN / (TN + FN)
+}
 }
 \examples{
 ## Example taken from caret::confusionMatrix
-\donttest{
+\donttest{ 
 lvs <- c("normal", "abnormal")
 truth <- factor(rep(lvs, times = c(86, 258)),
                 levels = rev(lvs))
@@ -80,11 +97,14 @@ pred <- factor(c(rep(lvs, times = c(54, 32)),
 confusion_matrix(pred, truth)
 confusion_matrix(pred, truth)$stats
 
-temp <- confusion_matrix(pred, truth, boot = TRUE)
-temp$stats
-temp$boot_stats
-}
+confusion_matrix(pred, truth, boot = TRUE)
+confusion_matrix(pred, truth, positive = "normal", boot = TRUE)
 
+# Using formulas
+test_data <- data.frame(xyz = pred, yyy = truth)
+confusion_matrix(yyy ~ xyz, test_data)
+confusion_matrix(yyy ~ xyz, test_data, positive = "normal") 
+}
 
 }
 
