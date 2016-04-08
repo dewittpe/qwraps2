@@ -6,17 +6,6 @@
 #'
 #' @param x prediction condition vector, a two level factor variable or a
 #' variable that can be converted to one.
-#' @param y True Condition vector with the same possible values as x.
-#' @param formula column (known) ~ row (test) for building the confusion matrix
-#' @param data environment containing the variables listed in the formula
-#' @param positive the level of x and y which is the positive outcome.  If
-#' missing the first level of factor(y) will be used as the positive level.
-#' @param boot boolean, should bootstrapped confidence intervals for the
-#' sensitivity and specificity be computed?  Defaults to FALSE.
-#' @param boot_samples number of bootstrapping sample to generate, defaults to
-#' 1000L.  Ignored if \code{boot == FALSE}.
-#' @param alpha 100(1-alpha)% confidence intervals for specificity and
-#' sensitivity.  Ignored if \code{boot == FALSE}.
 #' @param ... not currently used
 #'
 #' @details
@@ -81,14 +70,27 @@ confusion_matrix <- function(x, ...) {
   UseMethod("confusion_matrix")
 }
 
+#' @param y True Condition vector with the same possible values as x.
+#' @param positive the level of x and y which is the positive outcome.  If
+#' missing the first level of factor(y) will be used as the positive level.
+#' @param boot boolean, should bootstrapped confidence intervals for the
+#' sensitivity and specificity be computed?  Defaults to FALSE.
+#' @param boot_samples number of bootstrapping sample to generate, defaults to
+#' 1000L.  Ignored if \code{boot == FALSE}.
+#' @param alpha 100(1-alpha)% confidence intervals for specificity and
+#' sensitivity.  Ignored if \code{boot == FALSE}.
 #' @export
-confusion_matrix.default <- function(x, y, positive, boot = FALSE, boot_samples = 1000L, alpha = 0.05) { 
+#' @rdname confusion_matrix
+confusion_matrix.default <- function(x, y, positive, boot = FALSE, boot_samples = 1000L, alpha = 0.05, ...) { 
   confusion_matrix.formula(y ~ x, data = data.frame(x = x, y = y), positive,
                            boot, boot_samples, alpha)
 }
 
+#' @param formula column (known) ~ row (test) for building the confusion matrix
+#' @param data environment containing the variables listed in the formula
 #' @export
-confusion_matrix.formula <- function(formula, data = parent.frame(), positive, boot = FALSE, boot_samples = 1000L, alpha = 0.05) { 
+#' @rdname confusion_matrix
+confusion_matrix.formula <- function(formula, data = parent.frame(), positive, boot = FALSE, boot_samples = 1000L, alpha = 0.05, ...) { 
 
   .data <- model.frame(formula, data)
 
@@ -149,9 +151,11 @@ confusion_matrix.formula <- function(formula, data = parent.frame(), positive, b
   rtn 
 }
 
+#' @rdname confusion_matrix
 #' @export
 is.confusion_matrix <- function(x) inherits(x, "confusion_matrix")
 
+#' @rdname confusion_matrix
 #' @export
 print.confusion_matrix <- function(x, ...) { 
   print.table(x$tab) 
