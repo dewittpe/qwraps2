@@ -92,12 +92,12 @@ confusion_matrix.default <- function(x, y, positive, boot = FALSE, boot_samples 
 #' @rdname confusion_matrix
 confusion_matrix.formula <- function(formula, data = parent.frame(), positive, boot = FALSE, boot_samples = 1000L, alpha = 0.05, ...) { 
 
-  .data <- model.frame(formula, data)
+  .data <- stats::model.frame(formula, data)
 
   if (!missing(positive)) {
     # Add error handing here
-    .data[, 1] <- relevel(.data[, 1], positive)
-    .data[, 2] <- relevel(.data[, 2], positive) 
+    .data[, 1] <- stats::relevel(.data[, 1], positive)
+    .data[, 2] <- stats::relevel(.data[, 2], positive) 
   }
 
   if (nlevels(.data$x) != nlevels(.data$y) | nlevels(.data$x) != 2) { 
@@ -187,6 +187,6 @@ specificity <- function(tab, ...) {
 }
 
 wilson_score_interval <- function(p, n, alpha = 0.05) { 
-  z <- qnorm(1 - alpha/2) 
+  z <- stats::qnorm(1 - alpha/2) 
   1 / (1 + 1/n * z^2) * (p + 1 / (2 * n) * z^2 + c(-z, z) * sqrt( 1 / n * p * (1 - p) + 1 / (4 * n^2) * z^2)) 
 }

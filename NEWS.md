@@ -3,6 +3,11 @@
 ## New features
 * `gmean_sd` returns the geometric mean and standard deviation 
 
+## Notable Changes
+* The `confusion_matrix` method has been modified.  Please read the
+  documentation.  If you used version 0.1.2 these changes will affect your work.
+  The `confusion_matrix` is now an S3 generic.
+
 # qwraps 0.1.2
 
 ## New features
