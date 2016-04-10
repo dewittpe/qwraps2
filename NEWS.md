@@ -1,3 +1,10 @@
+# qwraps 0.1.4
+
+## Bug Fixes:
+* `confusion_matrix.formula` no longer uses named columns.  The function only
+  worked when called from `confusion_matrix.default`.  Fix allows the function
+  to be used as intended.
+
 # qwraps 0.1.3
 
 ## New features
