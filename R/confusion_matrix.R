@@ -93,6 +93,8 @@ confusion_matrix.default <- function(x, y, positive, boot = FALSE, boot_samples 
 confusion_matrix.formula <- function(formula, data = parent.frame(), positive, boot = FALSE, boot_samples = 1000L, alpha = 0.05, ...) { 
 
   .data <- stats::model.frame(formula, data)
+  .data[, 1] <- factor(.data[, 1])
+  .data[, 2] <- factor(.data[, 2]) 
 
   if (!missing(positive)) {
     # Add error handing here
@@ -100,11 +102,15 @@ confusion_matrix.formula <- function(formula, data = parent.frame(), positive, b
     .data[, 2] <- stats::relevel(.data[, 2], positive) 
   }
 
-  if (nlevels(.data$x) != nlevels(.data$y) | nlevels(.data$x) != 2) { 
+  if (nlevels(.data[, 1]) != nlevels(.data[, 2]) | nlevels(.data[, 1]) != 2) { 
     stop("qwraps2::confusion_matrix only supports factors with two levels.")
   }
 
-  tab <- table(.data$x, .data$y, dnn = names(.data))
+  if (!all(levels(.data[, 1]) %in% levels(.data[, 2]))) { 
+    stop("qwraps2::confusion_matrix expectes the same levels for the factors.")
+  } 
+
+  tab <- table(.data[, 1], .data[, 2], dnn = names(.data))
 
   stats <- rbind(Accuracy = accuracy(tab), 
                  Sensitivity = sensitivity(tab),
