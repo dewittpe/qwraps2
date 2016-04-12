@@ -1,3 +1,13 @@
+# qwraps 0.1.4.9000
+
+## Bug Fixes:
+* `confusion_matrix` produces the correct confusion matrix.  Prior version could
+  transpose the result.
+
+## New Features
+* `print.confusion_matrix` provides more detail to make it clear which variable
+  is the Truth and which is the Prediction.
+
 # qwraps 0.1.4
 
 ## Bug Fixes:
