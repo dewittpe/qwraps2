@@ -82,7 +82,9 @@ confusion_matrix <- function(x, ...) {
 #' @export
 #' @rdname confusion_matrix
 confusion_matrix.default <- function(x, y, positive, boot = FALSE, boot_samples = 1000L, alpha = 0.05, ...) { 
-  confusion_matrix.formula(y ~ x, data = data.frame(x = x, y = y), positive,
+  confusion_matrix.formula(as.formula(paste(deparse(substitute(y)), deparse(substitute(x)), sep = "~")),
+                           data = setNames(data.frame(x,  y), c(deparse(substitute(x)), deparse(substitute(y)))),
+                           positive,
                            boot, boot_samples, alpha)
 }
 
@@ -93,24 +95,24 @@ confusion_matrix.default <- function(x, y, positive, boot = FALSE, boot_samples 
 confusion_matrix.formula <- function(formula, data = parent.frame(), positive, boot = FALSE, boot_samples = 1000L, alpha = 0.05, ...) { 
 
   .data <- stats::model.frame(formula, data)
-  .data[, 1] <- factor(.data[, 1])
-  .data[, 2] <- factor(.data[, 2]) 
+  .data[[1]] <- factor(.data[[1]])
+  .data[[2]] <- factor(.data[[2]]) 
 
   if (!missing(positive)) {
     # Add error handing here
-    .data[, 1] <- stats::relevel(.data[, 1], positive)
-    .data[, 2] <- stats::relevel(.data[, 2], positive) 
+    .data[[1]] <- stats::relevel(.data[[1]], positive)
+    .data[[2]] <- stats::relevel(.data[[2]], positive) 
   }
 
-  if (nlevels(.data[, 1]) != nlevels(.data[, 2]) | nlevels(.data[, 1]) != 2) { 
+  if (nlevels(.data[[1]]) != nlevels(.data[[2]]) | nlevels(.data[[1]]) != 2) { 
     stop("qwraps2::confusion_matrix only supports factors with two levels.")
   }
 
-  if (!all(levels(.data[, 1]) %in% levels(.data[, 2]))) { 
+  if (!all(levels(.data[[1]]) %in% levels(.data[[2]]))) { 
     stop("qwraps2::confusion_matrix expectes the same levels for the factors.")
   } 
 
-  tab <- table(.data[, 1], .data[, 2], dnn = names(.data))
+  tab <- table(.data[[2]], .data[[1]], dnn = c("Prediction", "Truth"))#rev(names(.data)))
 
   stats <- rbind(Accuracy = accuracy(tab), 
                  Sensitivity = sensitivity(tab),
@@ -153,6 +155,7 @@ confusion_matrix.formula <- function(formula, data = parent.frame(), positive, b
   class(rtn) <- c("confusion_matrix", class(rtn))
   attr(rtn, "boot") <- boot
   attr(rtn, "alpha") <- alpha
+  attr(rtn, "var_names") <- setNames(as.list(names(.data)), c("Truth", "Prediction"))
 
   rtn 
 }
@@ -164,6 +167,8 @@ is.confusion_matrix <- function(x) inherits(x, "confusion_matrix")
 #' @rdname confusion_matrix
 #' @export
 print.confusion_matrix <- function(x, ...) { 
+  cat("\nTruth:      ", attr(x, "var_names")[[1]], 
+      "\nPrediction: ", attr(x, "var_names")[[2]], "\n\n")
   print.table(x$tab) 
   print(x$stats) 
   invisible(x) 
