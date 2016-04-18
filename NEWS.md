@@ -1,4 +1,4 @@
-# qwraps 0.1.4.9000
+# qwraps 0.1.4.9001
 
 ## Bug Fixes:
 * `confusion_matrix` produces the correct confusion matrix.  Prior version could
@@ -7,6 +7,8 @@
 ## New Features
 * `print.confusion_matrix` provides more detail to make it clear which variable
   is the Truth and which is the Prediction.
+
+* `ggplot2_extract_legend` added (#6)
 
 # qwraps 0.1.4
 
