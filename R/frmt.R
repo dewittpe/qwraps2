@@ -41,15 +41,6 @@
 #' @param x a vector of numbers or a numeric matrix to format.
 #' @param digits number of digits, including trailing zeros, to the right of the
 #' decimal point.  This option is ignored if \code{is.integer(x) == TRUE)}.
-#' @param style a character string indicating a specific journal requirements
-#' for p-value formatting.  
-#' @param markup a character string indicating if the output should be latex or
-#' markup.
-#' @param case a character string indicating if the output should be upper case
-#' or lower case.
-#' @param leading0 boolean, whether or not the p-value should be reported as
-#' 0.0123 (TRUE, default), or .0123 (FALSE).
-#' @param ... Not currently implemented.
 #'
 #' @return a character vector of the formatted numbers
 #'
@@ -94,13 +85,20 @@ frmt <- function(x, digits = getOption("qwraps2_frmt_digits", 2)) {
 
 #' @export   
 #' @rdname frmt
+#' @param style a character string indicating a specific journal requirements
+#' for p-value formatting.  
+#' @param markup a character string indicating if the output should be latex or
+#' markup.
+#' @param case a character string indicating if the output should be upper case
+#' or lower case.
+#' @param leading0 boolean, whether or not the p-value should be reported as
+#' 0.0123 (TRUE, default), or .0123 (FALSE).
 frmtp <- function(x,
                   style    = getOption("qwraps2_journal", "default"), 
                   digits   = getOption("qwraps2_frmtp_digits", 4), 
                   markup   = getOption("qwraps2_markup", "latex"),
                   case     = getOption("qwraps2_frmtp_case", "upper"), 
-                  leading0 = getOption("qwraps2_frmtp_leading0", TRUE), 
-                  ...) {  
+                  leading0 = getOption("qwraps2_frmtp_leading0", TRUE)) {  
 
   rtn <- 
     switch(style,
@@ -166,3 +164,70 @@ frmtp_obstetrics_gynecology <- function(x) {
          paste0("P ", gsub("0\\.", "\\.", p_val))
       })
 }
+
+#' @export
+#' @rdname frmt
+#' @param est the numeric index of the vector element or the matrix column
+#' containing the point estimate.
+#' @param lcl the numeric index of the vector element or the matrix column
+#' containing the lower confidence limit.
+#' @param ucl the numeric index of the vector element or the matrix column
+#' containing the upper confidence limit.
+#' @param format a string with "est" "lcl", and "ucl" to denote the location of
+#' the estimate, lower confidence limit, and upper confidence limit for the
+#' formated string.  Defaults to "est (lcl, ucl)".
+#' @param show_level defualts to FALSE.  If TRUE and \code{format} is the
+#' default, then
+#' "100*(1-options()$qwraps2_alpha)% CI:" will be placed between the left
+#' parenthesis and the lcl.  If set to a string, then the given string will be
+#' placed between the left parenthesis and the lcl.  If the \code{format} is not
+#' the default, then this argument is ignored.
+#' @param ... args passed to frmt
+#' @examples
+#' # Formatting the point estimate and confidence interval
+#' # for a set of three values
+#' temp <- c(a = 1.23, b = .32, CC = 1.78)
+#' frmtci(temp) 
+#' frmtci(temp, show_level = TRUE) 
+#' 
+#' # note that the show_level will be ignored in the following
+#' frmtci(temp, format = "est ***lcl, ucl***", show_level = TRUE)
+#' 
+#' # show_level as a character
+#' frmtci(temp, show_level = "confidence between: ")
+#' 
+#' # For a matrix: the numbers in this example don't mean anything, but the
+#' # formatting should.
+#' temp2 <- matrix(rnorm(12), nrow = 4, dimnames = list(c("A", "B", "C", "D"), c("EST", "LOW", "HIGH")))
+#' temp2
+#' frmtci(temp2)
+frmtci <- function(x, est = 1, lcl = 2, ucl = 3, format = "est (lcl, ucl)", show_level = FALSE, ...) {
+  UseMethod("frmtci") 
+}
+
+frmtci.default <- function(x, est = 1, lcl = 2, ucl = 3, format = "est (lcl, ucl)", show_level = FALSE, ...) {
+
+  .est <- qwraps2::frmt(x[est], ...)
+  .lcl <- qwraps2::frmt(x[lcl], ...)
+  .ucl <- qwraps2::frmt(x[ucl], ...)
+
+  if (format == "est (lcl, ucl)") { 
+    out <- sub("ucl", .ucl, sub("lcl", .lcl, sub("est", .est, format)))
+    if (is.character(show_level)) {
+      lvl <- paste0("(", show_level)
+      out <- sub("\\(", lvl, out) 
+    } else if(is.logical(show_level)) {
+      lvl <- paste0("(", 100 * (1 - getOption("qwraps2_alpha", 0.05)), "% CI: ")
+      out <- sub("\\(", lvl, out)
+    }
+  } else { 
+    out <- sub("ucl", .ucl, sub("lcl", .lcl, sub("est", .est, format)))
+  } 
+  out
+}
+
+frmtci.matrix <- function(x, est = 1, lcl = 2, ucl = 3, format = "est (lcl, ucl)", show_level = FALSE, ...) {
+  apply(x, 1, frmtci.default, est = 1, lcl = lcl, ucl = ucl, format = format, show_level = show_level, ...)
+}
+
+
