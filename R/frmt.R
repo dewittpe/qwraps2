@@ -198,13 +198,15 @@ frmtp_obstetrics_gynecology <- function(x) {
 #' 
 #' # For a matrix: the numbers in this example don't mean anything, but the
 #' # formatting should.
-#' temp2 <- matrix(rnorm(12), nrow = 4, dimnames = list(c("A", "B", "C", "D"), c("EST", "LOW", "HIGH")))
+#' temp2 <- matrix(rnorm(12), nrow = 4, 
+#'                 dimnames = list(c("A", "B", "C", "D"), c("EST", "LOW", "HIGH")))
 #' temp2
 #' frmtci(temp2)
 frmtci <- function(x, est = 1, lcl = 2, ucl = 3, format = "est (lcl, ucl)", show_level = FALSE, ...) {
   UseMethod("frmtci") 
 }
 
+#' @export
 frmtci.default <- function(x, est = 1, lcl = 2, ucl = 3, format = "est (lcl, ucl)", show_level = FALSE, ...) {
 
   .est <- qwraps2::frmt(x[est], ...)
@@ -226,6 +228,7 @@ frmtci.default <- function(x, est = 1, lcl = 2, ucl = 3, format = "est (lcl, ucl
   out
 }
 
+#' @export
 frmtci.matrix <- function(x, est = 1, lcl = 2, ucl = 3, format = "est (lcl, ucl)", show_level = FALSE, ...) {
   apply(x, 1, frmtci.default, est = 1, lcl = lcl, ucl = ucl, format = format, show_level = show_level, ...)
 }

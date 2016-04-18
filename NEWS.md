@@ -1,4 +1,4 @@
-# qwraps 0.1.4.9001
+# qwraps 0.1.4.9002
 
 ## Bug Fixes:
 * `confusion_matrix` produces the correct confusion matrix.  Prior version could
@@ -9,6 +9,7 @@
   is the Truth and which is the Prediction.
 * `ggplot2_extract_legend` added (#6)
 * `show_n` functionality for `median_iqr` implemented.  (closes #24)
+* `frmtci` added (#32)
 
 # qwraps 0.1.4
 

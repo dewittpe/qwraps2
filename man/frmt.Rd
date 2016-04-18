@@ -2,6 +2,7 @@
 % Please edit documentation in R/frmt.R
 \name{frmt}
 \alias{frmt}
+\alias{frmtci}
 \alias{frmtp}
 \title{Format Wrappers}
 \usage{
@@ -11,7 +12,10 @@ frmtp(x, style = getOption("qwraps2_journal", "default"),
   digits = getOption("qwraps2_frmtp_digits", 4),
   markup = getOption("qwraps2_markup", "latex"),
   case = getOption("qwraps2_frmtp_case", "upper"),
-  leading0 = getOption("qwraps2_frmtp_leading0", TRUE), ...)
+  leading0 = getOption("qwraps2_frmtp_leading0", TRUE))
+
+frmtci(x, est = 1, lcl = 2, ucl = 3, format = "est (lcl, ucl)",
+  show_level = FALSE, ...)
 }
 \arguments{
 \item{x}{a vector of numbers or a numeric matrix to format.}
@@ -31,7 +35,27 @@ or lower case.}
 \item{leading0}{boolean, whether or not the p-value should be reported as
 0.0123 (TRUE, default), or .0123 (FALSE).}
 
-\item{...}{Not currently implemented.}
+\item{est}{the numeric index of the vector element or the matrix column
+containing the point estimate.}
+
+\item{lcl}{the numeric index of the vector element or the matrix column
+containing the lower confidence limit.}
+
+\item{ucl}{the numeric index of the vector element or the matrix column
+containing the upper confidence limit.}
+
+\item{format}{a string with "est" "lcl", and "ucl" to denote the location of
+the estimate, lower confidence limit, and upper confidence limit for the
+formated string.  Defaults to "est (lcl, ucl)".}
+
+\item{show_level}{defualts to FALSE.  If TRUE and \code{format} is the
+default, then
+"100*(1-options()$qwraps2_alpha)% CI:" will be placed between the left
+parenthesis and the lcl.  If set to a string, then the given string will be
+placed between the left parenthesis and the lcl.  If the \code{format} is not
+the default, then this argument is ignored.}
+
+\item{...}{args passed to frmt}
 }
 \value{
 a character vector of the formatted numbers
@@ -96,6 +120,24 @@ cbind("raw"      = ps,
       "3lower"   = frmtp(ps, digits = 3, case = "lower", markup = "markdown"),
       "PediDent" = frmtp(ps, style = "pediatric_dentistry", markup = "markdown"))
 
+# Formatting the point estimate and confidence interval
+# for a set of three values
+temp <- c(a = 1.23, b = .32, CC = 1.78)
+frmtci(temp) 
+frmtci(temp, show_level = TRUE) 
+
+# note that the show_level will be ignored in the following
+frmtci(temp, format = "est ***lcl, ucl***", show_level = TRUE)
+
+# show_level as a character
+frmtci(temp, show_level = "confidence between: ")
+
+# For a matrix: the numbers in this example don't mean anything, but the
+# formatting should.
+temp2 <- matrix(rnorm(12), nrow = 4, 
+                dimnames = list(c("A", "B", "C", "D"), c("EST", "LOW", "HIGH")))
+temp2
+frmtci(temp2)
 }
 \seealso{
 \code{\link{formatC}}
