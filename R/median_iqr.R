@@ -41,10 +41,15 @@ median_iqr <- function(x,
   rtn <- paste0(qwraps2::frmt(m, digits), " (",
                 qwraps2::frmt(qs[1L], digits), ", ", 
                 qwraps2::frmt(qs[2L], digits), ")")
-  # if (any(show_n %in% c("always", "ifNA"))) { 
-  #   rtn <- paste0(qwraps2::frmt(as.integer(n), digits), "; ", rtn)
-  # } 
+
+  if (all(!(show_n %in% c("ifNA", "always", "never")))) { 
+    warning("'show_n' should be in c('ifNA', 'always', 'never').  Setting to 'ifNA'.")
+    show_n <- "ifNA"
+  }
+
+  if (show_n == "always" | (show_n == "ifNA" & any(is.na(x)))) { 
+    rtn <- paste0(qwraps2::frmt(as.integer(n), digits), "; ", rtn)
+  } 
 
   return(rtn)
 }
-

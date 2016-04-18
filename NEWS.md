@@ -7,8 +7,8 @@
 ## New Features
 * `print.confusion_matrix` provides more detail to make it clear which variable
   is the Truth and which is the Prediction.
-
 * `ggplot2_extract_legend` added (#6)
+* `show_n` functionality for `median_iqr` implemented.  (closes #24)
 
 # qwraps 0.1.4
 
