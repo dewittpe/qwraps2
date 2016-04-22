@@ -214,13 +214,15 @@ frmtci.default <- function(x, est = 1, lcl = 2, ucl = 3, format = "est (lcl, ucl
   .ucl <- qwraps2::frmt(x[ucl], ...)
 
   if (format == "est (lcl, ucl)") { 
-    out <- sub("ucl", .ucl, sub("lcl", .lcl, sub("est", .est, format)))
+    out <- sub("ucl", .ucl, sub("lcl", .lcl, sub("est", .est, format))) 
     if (is.character(show_level)) {
       lvl <- paste0("(", show_level)
       out <- sub("\\(", lvl, out) 
-    } else if(is.logical(show_level)) {
+    } else if(is.logical(show_level)) { 
+      if (show_level) { 
       lvl <- paste0("(", 100 * (1 - getOption("qwraps2_alpha", 0.05)), "% CI: ")
       out <- sub("\\(", lvl, out)
+      }
     }
   } else { 
     out <- sub("ucl", .ucl, sub("lcl", .lcl, sub("est", .est, format)))
@@ -233,4 +235,22 @@ frmtci.matrix <- function(x, est = 1, lcl = 2, ucl = 3, format = "est (lcl, ucl)
   apply(x, 1, frmtci.default, est = 1, lcl = lcl, ucl = ucl, format = format, show_level = show_level, ...)
 }
 
+#' @export
+frmtci.qwraps2_mean_ci <- function(x, est = 1, lcl = 2, ucl = 3, format = "est (lcl, ucl)", show_level = FALSE, ...) {
 
+  .est <- qwraps2::frmt(x[est], ...)
+  .lcl <- qwraps2::frmt(x[lcl], ...)
+  .ucl <- qwraps2::frmt(x[ucl], ...)
+
+  if (format == "est (lcl, ucl)") { 
+    out <- sub("ucl", .ucl, sub("lcl", .lcl, sub("est", .est, format))) 
+
+    if (show_level) { 
+      lvl <- paste0("(", 100 * (1 - attr(x, "alpha")), "% CI: ")
+      out <- sub("\\(", lvl, out)
+    }
+  } else { 
+    out <- sub("ucl", .ucl, sub("lcl", .lcl, sub("est", .est, format)))
+  } 
+  out
+}

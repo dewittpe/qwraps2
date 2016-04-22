@@ -12,7 +12,7 @@ median_iqr(x, digits = getOption("qwraps2_frmt_digits", 2), na_rm = FALSE,
 
 \item{digits}{digits to the right of the decimal point to return.}
 
-\item{na_rm}{if true, omit NA values (NOT CURRENTLY IMPLEMENTED)}
+\item{na_rm}{if true, omit NA values}
 
 \item{show_n}{defaults to "ifNA".  Other options are "always" or "never".}
 

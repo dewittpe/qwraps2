@@ -5,6 +5,9 @@
   transpose the result.
 * `gmean_sd` displays the correct geometric standard deviation
 
+## Improvements
+* `mean_sd` and `gmean_sd` have better `show_n` handeling.
+
 ## New Features
 * `print.confusion_matrix` provides more detail to make it clear which variable
   is the Truth and which is the Prediction.

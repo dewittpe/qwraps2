@@ -44,7 +44,12 @@ mean_sd <- function(x,
   m <- mean(x, na.rm = na_rm)
   s <- stats::sd(x, na.rm = na_rm)
 
-  if (show_n =="always" | any(is.na(x))) { 
+  if (all(!(show_n %in% c("ifNA", "always", "never")))) { 
+    warning("'show_n' should be in c('ifNA', 'always', 'never').  Setting to 'ifNA'.")
+    show_n <- "ifNA"
+  }
+
+  if (show_n == "always" | (show_n == "ifNA" & any(is.na(x)))) { 
     rtn <- paste0(frmt(as.integer(n), digits), "; ", frmt(m, digits), " $\\pm$ ", frmt(s, digits))
   } else { 
     rtn <- paste0(frmt(m, digits), " $\\pm$ ", frmt(s, digits))
@@ -76,13 +81,18 @@ gmean_sd <- function(x,
 
   if (logged) {
     m <- exp(mean(x, na.rm = na_rm))
-    s <- exp(sqrt(sum((x - log(m))^2 , na_rm) / n))
+    s <- exp(sqrt(sum((x - log(m))^2, na.rm = na_rm) / n))
   } else { 
     m <- exp(mean(log(x), na.rm = na_rm))
-    s <- exp(sqrt(sum((log(x) - log(m))^2 , na_rm) / n))
+    s <- exp(sqrt(sum((log(x) - log(m))^2, na.rm = na_rm) / n))
   }
 
-  if (show_n =="always" | any(is.na(x))) { 
+  if (all(!(show_n %in% c("ifNA", "always", "never")))) { 
+    warning("'show_n' should be in c('ifNA', 'always', 'never').  Setting to 'ifNA'.")
+    show_n <- "ifNA"
+  }
+
+  if (show_n == "always" | (show_n == "ifNA" & any(is.na(x)))) { 
     rtn <- paste0(frmt(as.integer(n), digits), "; ", frmt(m, digits), " $\\pm$ ", frmt(s, digits))
   } else { 
     rtn <- paste0(frmt(m, digits), " $\\pm$ ", frmt(s, digits))

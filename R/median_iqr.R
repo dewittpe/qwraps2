@@ -9,7 +9,7 @@
 #'
 #' @param x a numeric vector
 #' @param digits digits to the right of the decimal point to return.
-#' @param na_rm if true, omit NA values (NOT CURRENTLY IMPLEMENTED)
+#' @param na_rm if true, omit NA values
 #' @param show_n defaults to "ifNA".  Other options are "always" or "never".
 #' @param markup latex or markdown
 #'
