@@ -14,6 +14,7 @@
 * `ggplot2_extract_legend` added (#6)
 * `show_n` functionality for `median_iqr` implemented.  (closes #24)
 * `frmtci` added (#32)
+* `mean_ci` added
 
 # qwraps 0.1.4
 

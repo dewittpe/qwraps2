@@ -16,7 +16,7 @@ mean_ci(x, na_rm = FALSE, transform, alpha = getOption("qwraps2_alpha",
 See Details.}
 
 \item{alpha}{defaults to \code{getOption('qwraps2_alpha', 0.05)}.  The
-symmetric 100(1-alpha)% CI will be determined.}
+symmetric 100(1-alpha)\% CI will be determined.}
 
 \item{qdist}{defaults to \code{qnorm}.  use \code{qt} for a Student t
 intervals.}

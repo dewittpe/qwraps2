@@ -17,7 +17,7 @@
 #' @param transform function transform to the mean and the confidence limits.
 #' See Details.
 #' @param alpha defaults to \code{getOption('qwraps2_alpha', 0.05)}.  The
-#' symmetric 100(1-alpha)% CI will be determined.
+#' symmetric 100(1-alpha)\% CI will be determined.
 #' @param qdist defaults to \code{qnorm}.  use \code{qt} for a Student t
 #' intervals.
 #' @param ... args passed to \code{qdist}
