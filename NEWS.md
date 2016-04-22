@@ -1,8 +1,9 @@
-# qwraps 0.1.4.9002
+# qwraps 0.1.4.9003
 
 ## Bug Fixes:
 * `confusion_matrix` produces the correct confusion matrix.  Prior version could
   transpose the result.
+* `gmean_sd` displays the correct geometric standard deviation
 
 ## New Features
 * `print.confusion_matrix` provides more detail to make it clear which variable

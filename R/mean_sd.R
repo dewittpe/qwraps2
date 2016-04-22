@@ -76,10 +76,10 @@ gmean_sd <- function(x,
 
   if (logged) {
     m <- exp(mean(x, na.rm = na_rm))
-    s <- sqrt(sum(exp(x)/m, na.rm = na_rm) / n)
+    s <- exp(sqrt(sum((x - log(m))^2 , na_rm) / n))
   } else { 
     m <- exp(mean(log(x), na.rm = na_rm))
-    s <- sqrt(sum(x/m) / n)
+    s <- exp(sqrt(sum((log(x) - log(m))^2 , na_rm) / n))
   }
 
   if (show_n =="always" | any(is.na(x))) { 
