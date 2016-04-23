@@ -1,9 +1,10 @@
 #' @title Kaplan-Meier Plot
 #'
-#' @description TO BE CONSTRUCTED
+#' @description A ggplot2 version of a Kaplan-Meier Plot
 #'
 #' @details
-#' TO DO
+#' Functions to build, explicitly or implicitly, data.frames and then creating a
+#' ggplot2 KM plot.
 #'
 #' @param x object
 #' @param conf_int logical if TRUE show the CI
@@ -17,9 +18,6 @@
 #' survival:::plot.survfit(leukemia.surv, conf.int = TRUE, lty = 2:3, col = 1:2)
 #' 
 #' qkmplot(leukemia.surv, conf_int = TRUE) 
-#' 
-#'
-#'
 #' 
 #' @export   
 #' @rdname qkmplot
