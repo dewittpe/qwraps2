@@ -37,21 +37,21 @@
 #' # Compare to the ci that comes form t.test
 #' t.test(mtcars$mpg)
 #' t.test(mtcars$mpg)$conf.int
-#' mean_ci(mtcars$mpg, qdist = qt, df = 31)
+#' mean_ci(mtcars$mpg, qdist = stats::qt, df = 31)
 #' 
 #' # geometric version
-#' mean_ci(log(mtcars$mpg), transform = exp, qdist = qt, df = 31)
+#' mean_ci(log(mtcars$mpg), transform = exp, qdist = stats::qt, df = 31)
 #'
 #' @export   
 mean_ci <- function(x, 
                     na_rm = FALSE, 
                     transform,
                     alpha = getOption("qwraps2_alpha", 0.05), 
-                    qdist = qnorm, 
+                    qdist = stats::qnorm, 
                     ...) { 
 
   m <- mean(x, na.rm = na_rm)
-  s <- sd(x,   na.rm = na_rm)
+  s <- stats::sd(x,   na.rm = na_rm)
   n <- if (na_rm) { sum(!is.na(x)) } else { length(x) }
 
   qd <- match.fun(qdist)

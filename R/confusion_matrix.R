@@ -82,8 +82,8 @@ confusion_matrix <- function(x, ...) {
 #' @export
 #' @rdname confusion_matrix
 confusion_matrix.default <- function(x, y, positive, boot = FALSE, boot_samples = 1000L, alpha = 0.05, ...) { 
-  confusion_matrix.formula(as.formula(paste(deparse(substitute(y)), deparse(substitute(x)), sep = "~")),
-                           data = setNames(data.frame(x,  y), c(deparse(substitute(x)), deparse(substitute(y)))),
+  confusion_matrix.formula(stats::as.formula(paste(deparse(substitute(y)), deparse(substitute(x)), sep = "~")),
+                           data = stats::setNames(data.frame(x,  y), c(deparse(substitute(x)), deparse(substitute(y)))),
                            positive,
                            boot, boot_samples, alpha)
 }
@@ -155,7 +155,7 @@ confusion_matrix.formula <- function(formula, data = parent.frame(), positive, b
   class(rtn) <- c("confusion_matrix", class(rtn))
   attr(rtn, "boot") <- boot
   attr(rtn, "alpha") <- alpha
-  attr(rtn, "var_names") <- setNames(as.list(names(.data)), c("Truth", "Prediction"))
+  attr(rtn, "var_names") <- stats::setNames(as.list(names(.data)), c("Truth", "Prediction"))
 
   rtn 
 }

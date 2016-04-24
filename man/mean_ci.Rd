@@ -5,7 +5,7 @@
 \title{Means and Confidence Intervals}
 \usage{
 mean_ci(x, na_rm = FALSE, transform, alpha = getOption("qwraps2_alpha",
-  0.05), qdist = qnorm, ...)
+  0.05), qdist = stats::qnorm, ...)
 }
 \arguments{
 \item{x}{a numeric vector}
@@ -52,10 +52,10 @@ qwraps2::frmtci(mean_ci(mtcars$mpg, alpha = 0.01), show_level = TRUE)
 # Compare to the ci that comes form t.test
 t.test(mtcars$mpg)
 t.test(mtcars$mpg)$conf.int
-mean_ci(mtcars$mpg, qdist = qt, df = 31)
+mean_ci(mtcars$mpg, qdist = stats::qt, df = 31)
 
 # geometric version
-mean_ci(log(mtcars$mpg), transform = exp, qdist = qt, df = 31)
+mean_ci(log(mtcars$mpg), transform = exp, qdist = stats::qt, df = 31)
 
 }
 

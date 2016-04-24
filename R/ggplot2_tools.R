@@ -48,7 +48,7 @@ ggplot2_extract_legend <- function(x) {
 
 #' @export
 print.qwraps2_ggplot2_extracted_legend <- function(x, ...) {
-  plot(x[[1]])
+  graphics::plot(x[[1]])
 }
 
 
