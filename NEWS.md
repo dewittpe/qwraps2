@@ -1,4 +1,6 @@
-# qwraps 0.1.4.9003
+# qwraps 0.2.0
+This is a long over due version bump.  Many new features and bug fixes have been
+made since 0.1.0.
 
 ## Bug Fixes:
 * `confusion_matrix` produces the correct confusion matrix.  Prior version could

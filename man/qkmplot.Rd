@@ -20,10 +20,11 @@ qkmplot_bulid_data_frame(x)
 a ggplot.
 }
 \description{
-TO BE CONSTRUCTED
+A ggplot2 version of a Kaplan-Meier Plot
 }
 \details{
-TO DO
+Functions to build, explicitly or implicitly, data.frames and then creating a
+ggplot2 KM plot.
 }
 \examples{
 require(survival)
@@ -31,9 +32,6 @@ leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x, data = surv
 survival:::plot.survfit(leukemia.surv, conf.int = TRUE, lty = 2:3, col = 1:2)
 
 qkmplot(leukemia.surv, conf_int = TRUE) 
-
-
-
 
 }
 
