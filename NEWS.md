@@ -1,3 +1,8 @@
+# qwraps 0.2.0.9000
+
+## New Features:
+* `logit` and `invlogit` functions added.  Using Rcpp so they are fast.
+
 # qwraps 0.2.0
 This is a long over due version bump.  Many new features and bug fixes have been
 made since 0.1.0.

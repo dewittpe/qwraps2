@@ -88,6 +88,9 @@
 #'   }
 #'
 #' }
+#'
+#' @useDynLib qwraps2
+#' @importFrom Rcpp sourceCpp
 #' @docType package
 #' @name qwraps2
 NULL
