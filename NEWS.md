@@ -1,7 +1,11 @@
-# qwraps 0.2.0.9000
+# qwraps 0.2.1
 
 ## New Features:
 * `logit` and `invlogit` functions added.  Using Rcpp so they are fast.
+
+## Bug Fixes:
+* `format` is correctly passed from `qwraps2::qable` to `knitr::kable`'s
+  `format` argument.
 
 # qwraps 0.2.0
 This is a long over due version bump.  Many new features and bug fixes have been
