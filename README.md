@@ -9,8 +9,6 @@
 
 [![Licence](https://img.shields.io/badge/licence-GPL--2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
 [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.0.2-6666ff.svg)](https://cran.r-project.org/)
-[![packageversion](https://img.shields.io/badge/Package%20version-0.2.1-orange.svg?style=flat-square)](commits/master)
-[![Last-changedate](https://img.shields.io/badge/last%20change-`r gsub('-', '--', Sys.Date())`-yellowgreen.svg)](/commits/master)
 
 A collection of helpful functions for summarizing data and formating results.
 These functions are almost certainly found in other R packages on github.com, or
@@ -31,10 +29,8 @@ the repo, add the feature, and send me a pull request.
 ## Install
 
 ### From CRAN
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/qwraps2)](http://cran.r-project.org/package=qwraps2)
-is on
-[The Comprehensive R Archive Network (CRAN)](http://cran.r-project.org/). You
-can install this version via
+Download and install from
+[The Comprehensive R Archive Network (CRAN)](http://cran.r-project.org/).
 
     install.packages("qwraps2", repo = "http://cran.rstudio.com")
 
