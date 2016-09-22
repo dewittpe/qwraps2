@@ -3,3 +3,4 @@ NEWS\.md
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^makefile$
+^codecov\.yml$
