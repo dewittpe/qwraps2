@@ -1,3 +1,8 @@
+# qwraps2 0.2.1.9000
+
+## New Features:
+* `summary_table` and `tab_summary` added (#33)
+
 # qwraps 0.2.1
 
 ## New Features:

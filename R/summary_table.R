@@ -4,10 +4,16 @@
 #'
 #' Detailed use of these functions can be found the a vignette.
 #'
+#' The \code{print} method for the \code{qwraps2_summary_table} objects is just
+#' a simple wrapper for \code{qable}.
+#'
 #' @param .data a \code{data.frame} or \code{grouped_df}.
+#' @param summaries a list of lists of formulea for summarizing the data set.
 #'
 #' @seealso \code{qable} for marking up \code{qwraps2_data_summary} objects.
 #' \code{\link[dplyr]{group_by}} for \code{grouped_df} objects.
+#'
+#' @return a \code{qwraps2_summary_table} object.
 #'
 #' @export
 #' @rdname summary_table
@@ -15,7 +21,7 @@ summary_table <- function(.data, summaries) {
   UseMethod("summary_table")
 }
 
-#' @method data.frame summary_table
+#' @method summary_table data.frame
 #' @export
 summary_table.data.frame <- function(.data, summaries) {
   out <- lapply(summaries, 
@@ -56,18 +62,13 @@ print.qwraps2_summary_table <- function(x, ...) {
   print(qable(x, rgroup = attr(x, "rgroups"), rnames = rownames(x), cnames = colnames(x), ...))
 }
 
+
+#' @param x a variable to summarize
 #' @export
 #' @rdname summary_table
 tab_summary <- function(x) {
   UseMethod("tab_summary")
 }
-
-# @export
-# tab_summary.default <- function(x, .data = parent.frame()) {
-#   cat("in default\n")
-#   x <- as.name(x)
-#   tab_summary(with(.data, x))
-# }
 
 #' @export
 tab_summary.numeric <- function(x) {
@@ -75,42 +76,41 @@ tab_summary.numeric <- function(x) {
 
   if (any(is.na(x))) {
     s <- list(
-              "min" = as.formula(paste("~ min(", v, ", na.rm = TRUE)")),
-              "median (IQR)" = as.formula(paste("~ qwraps2::median_iqr(", v, ", na_rm = TRUE)")),
-              "mead (sd)" = as.formula(paste("~ qwraps2::mean_sd(", v, ", na_rm = TRUE)")),
-              "max" = as.formula(paste("~ max(", v, ", na.rm = TRUE)")))
+              "min" = stats::as.formula(paste("~ min(", v, ", na.rm = TRUE)")),
+              "median (IQR)" = stats::as.formula(paste("~ qwraps2::median_iqr(", v, ", na_rm = TRUE)")),
+              "mead (sd)" = stats::as.formula(paste("~ qwraps2::mean_sd(", v, ", na_rm = TRUE)")),
+              "max" = stats::as.formula(paste("~ max(", v, ", na.rm = TRUE)")))
 
-    s <- c(s, list("Unknown" = as.formula(paste(" ~ qwraps2::n_perc0(is.na(", v, "))"))))
+    s <- c(s, list("Unknown" = stats::as.formula(paste(" ~ qwraps2::n_perc0(is.na(", v, "))"))))
 
   } else {
     s <- list(
-              "min" = as.formula(paste("~ min(", v, ")")),
-              "median (IQR)" = as.formula(paste("~ qwraps2::median_iqr(", v, ")")),
-              "mead (sd)" = as.formula(paste("~ qwraps2::mean_sd(", v, ")")),
-              "max" = as.formula(paste("~ max(", v, ")")))
+              "min" = stats::as.formula(paste("~ min(", v, ")")),
+              "median (IQR)" = stats::as.formula(paste("~ qwraps2::median_iqr(", v, ")")),
+              "mead (sd)" = stats::as.formula(paste("~ qwraps2::mean_sd(", v, ")")),
+              "max" = stats::as.formula(paste("~ max(", v, ")")))
   } 
   s
 }
-
 
 #' @export
 tab_summary.factor <- tab_summary.character <- function(x) {
   v <- deparse(substitute(x))
 
   if (any(is.na(x))) {
-    x <- na.omit(x)
+    x <- stats::na.omit(x)
     s <- lapply(sort(unique(x)), 
                 function(xx) {
-                  as.formula(paste0("~ qwraps2::n_perc0(", v, " == '", xx, "', na_rm = TRUE)"))
+                  stats::as.formula(paste0("~ qwraps2::n_perc0(", v, " == '", xx, "', na_rm = TRUE)"))
                 })
-    s <- c(s, as.formula(paste(" ~ qwraps2::n_perc0(is.na(", v, "))")))
-    s <- setNames(s, c(sort(unique(x)), "Unknown"))
+    s <- c(s, stats::as.formula(paste(" ~ qwraps2::n_perc0(is.na(", v, "))")))
+    s <- stats::setNames(s, c(sort(unique(x)), "Unknown"))
   } else {
     s <- lapply(sort(unique(x)), 
                 function(xx) {
-                  as.formula(paste0("~ qwraps2::n_perc0(", v, " == '", xx, "')"))
+                  stats::as.formula(paste0("~ qwraps2::n_perc0(", v, " == '", xx, "')"))
                 })
-    s <- setNames(s, sort(unique(x)))
+    s <- stats::setNames(s, sort(unique(x)))
   } 
   s
 }
