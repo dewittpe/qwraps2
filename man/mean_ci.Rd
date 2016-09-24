@@ -2,10 +2,13 @@
 % Please edit documentation in R/mean_ci.R
 \name{mean_ci}
 \alias{mean_ci}
+\alias{print.qwraps2_mean_ci}
 \title{Means and Confidence Intervals}
 \usage{
 mean_ci(x, na_rm = FALSE, transform, alpha = getOption("qwraps2_alpha",
-  0.05), qdist = stats::qnorm, ...)
+  0.05), qdist = stats::qnorm, qdist.args = list())
+
+\method{print}{qwraps2_mean_ci}(x, ...)
 }
 \arguments{
 \item{x}{a numeric vector}
@@ -21,7 +24,9 @@ symmetric 100(1-alpha)\% CI will be determined.}
 \item{qdist}{defaults to \code{qnorm}.  use \code{qt} for a Student t
 intervals.}
 
-\item{...}{args passed to \code{qdist}}
+\item{qdist.args}{list of arguments passed to \code{qdist}}
+
+\item{...}{arguments passed to \code{frmtci}.}
 }
 \value{
 a vector with the mean, lower confidence limit (LCL), and the upper
@@ -52,10 +57,13 @@ qwraps2::frmtci(mean_ci(mtcars$mpg, alpha = 0.01), show_level = TRUE)
 # Compare to the ci that comes form t.test
 t.test(mtcars$mpg)
 t.test(mtcars$mpg)$conf.int
-mean_ci(mtcars$mpg, qdist = stats::qt, df = 31)
+mean_ci(mtcars$mpg, qdist = stats::qt, qdist.args = list(df = 31))
 
 # geometric version
-mean_ci(log(mtcars$mpg), transform = exp, qdist = stats::qt, df = 31)
+mean_ci(log(mtcars$mpg), transform = exp, qdist = stats::qt, qdist.args = list(df = 31))
 
+}
+\seealso{
+\code{\link{frmtci}}
 }
 

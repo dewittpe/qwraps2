@@ -1,0 +1,225 @@
+---
+title: "Formatted Summary Statistics and Data Summary Tables with qwraps2"
+author: "Peter DeWitt"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{summary-statistics}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE) 
+```
+
+# Introduction
+
+It is common for a manuscript to require a data summary table.  Simple summary
+statistics for the whole sample and for subgroups therein.  There are many tools
+available for easing the difficulty involved in building such tables.   It is my
+opinion, that most of these tool exists with sufficient implicit biases and
+nuances imposed by the authors of the tools that other users need to not only
+understand the tool, but to think like the author.  I find myself approaching
+many problems in ways that few others do.  As a result, I needed my own tool for
+building data summary tables.  I hope you like these tools and will be able to
+use it in your work. 
+
+This vignette presents the use of the `summary_table`, `tab_summary`, and
+`qable` functions for quickly building data summary tables.  These functions
+implicitly use the `mean_sd`, `median_iqr`, and `n_perc0` functions from
+`qwraps2` as well.
+
+## Prerequisites Example Data Set
+We will use a modified version of the `mtcars` data set for examples throughout
+this vignette. The following packages are required to run the code in this
+vignette and to construct the `mtcars2` `data.frame`.
+
+The `mtcars2` data frame will have three versions of the `cyl` vector, the
+original numeric values in `cyl`, a `character` version, and a `factor` version.
+
+```{r}
+library(dplyr)
+library(qwraps2)
+
+# define the markup language we are working in.
+# options(qwraps2_markup = "latex") is also supported.
+options(qwraps2_markup = "markdown")
+
+data(mtcars)
+
+mtcars2 <- 
+  dplyr::mutate(mtcars,
+                cyl_factor = factor(cyl, 
+                                    levels = c(6, 4, 8), 
+                                    labels = paste(c(6, 4, 8), "cylinders")),
+                cyl_character = paste(cyl, "cylinders"))
+
+str(mtcars2)
+```
+Notice that in the construction of the `cyl_factor` and `cyl_character` vectors
+was done such that the coercion of `cyl_character` to a `factor` will not be the
+same as the `cyl_factor` vector, the levels are in a different order.
+
+```{r}
+with(mtcars2, table(cyl_factor, cyl_character))
+with(mtcars2, all.equal(factor(cyl_character), cyl_factor))
+```
+
+# Review of Summary Statistic Functions and Formatting
+Let's review some of the formatting functions provided by the `qwraps2` package
+
+## Means and Standard Deviations
+`mean_sd` will return the (arithmetic) mean and standard deviation for numeric
+vector, i.e., `mean_sd(mtcars2$mpg)` will return the formatted string.
+```{r}
+mean_sd(mtcars2$mpg)
+mean_sd(mtcars2$mpg, denote_sd = "paren") 
+```
+The default setting for `mean_sd` is to return the mean &plusmn; sd.  In a
+table this default is helpful sense the default formating for counts and
+percentages is n (%).  
+
+The `mean_sd`, and other functions, are helpful for in-line text too:
+
+> The `nrow(mtcars2)` vehicles in the `mtcars` data set had an average fuel
+> economy of `mean_sd(mtcars$mpg) miles per gallon.
+
+produces
+
+> The `r nrow(mtcars2)` vehicles in the `mtcars` data set had an average fuel
+> economy of `r mean_sd(mtcars$mpg)` miles per gallon.
+
+## Mean and Confidence intervals
+If you need the mean and a confidence interval there is `mean_ci`.
+`mean_ci` returns a `qwraps2_mean_ci` object which is a
+named vector with the mean, lower confidence limit, and the upper confidence
+limit.   There printing method for `qwraps2_mean_ci` objects is a call to the
+`frmtci` function.  You an modify the formating of printed result via adjusting
+the arguments pasted to `frmtci`
+```{r}
+mci <- mean_ci(mtcars2$mpg)
+mci
+print(mci, show_level = TRUE)
+```
+
+## Median and Inner Quartile Range
+Similar to the `mean_sd` function, the `median_iqr` returns the median and the
+inner quartile range (IQR) of a data vector.
+```{r}
+median_iqr(mtcars2$mpg)
+```
+
+## Count and Percentages
+The `n_perc` function is the workhorse, but `n_perc0` is also provided for ease
+of use in the same way that base R has `paste` and `paste0`.  `n_perc` returns
+the n (%) with the percentage sign in the string, `n_perc0` omits the
+percentage sign from the string.  The latter is good for table, the former for
+in-line text.
+
+```{r}
+n_perc(mtcars2$cyl == 4)
+n_perc0(mtcars2$cyl == 4)
+
+n_perc(mtcars2$cyl_factor == 4)  # this returns 0 (0.00%) 
+n_perc(mtcars2$cyl_factor == "4 cylinders")
+n_perc(mtcars2$cyl_factor == levels(mtcars2$cyl_factor)[2]) 
+
+# The count and percentage of 4 or 6 cylinders vehicles in the data set is
+n_perc(mtcars2$cyl %in% c(4, 6))
+```
+
+# Building a Data Summary Table
+
+Objective: build a table reporting summary statistics for some of the variables
+in the `mtcars2` `data.frame` overall, and within subgroups.  We'll start with
+something very simple and build up to something bigger.
+
+Let's report the min, max, and mean (sd) for continuous variables and n (%) for
+categorical variables.  We will report `mpg`, `disp`, `wt`, and `gear` overall
+and by number of cylinders.
+
+The function `summary_table`, along with some `dplyr` functions will do the work
+for us.  `summary_table` takes two arguments:
+
+1. `.data` a (`grouped_df`) data.frame
+2. `summaries` a list of summaries.  This is a list-of-lists.  The outer list
+   defines the row groups and the inner lists define the specif summaries.
+
+```{r}
+args(summary_table)
+```
+
+Let's build a list-of-lists to pass to the `summaries` argument of
+`summary_table`.  The inner lists are named `formula`e defining the wanted
+summary.  These `formula`e are passed through `dplyr::summarize_` to generate
+the table.  The names are important, as they are used to label row groups and row
+names in the table.
+
+```{r}
+our_summary1 <- 
+  list("Miles Per Gallon" = 
+       list("min" = ~ min(mpg), 
+            "max" = ~ max(mpg),
+            "mean (sd)" = ~ qwraps2::mean_sd(mpg)),
+       "Displacement" = 
+       list("min" = ~ min(disp), 
+            "max" = ~ max(disp),
+            "mean (sd)" = ~ qwraps2::mean_sd(disp)),
+       "Weight (1000 lbs)" = 
+       list("min" = ~ min(wt), 
+            "max" = ~ max(wt),
+            "mean (sd)" = ~ qwraps2::mean_sd(wt)),
+       "Forward Gears" = 
+       list("Three" = ~ qwraps2::n_perc0(gear == 3),
+            "Four"  = ~ qwraps2::n_perc0(gear == 4),
+            "Five"  = ~ qwraps2::n_perc0(gear == 5))
+       ) 
+```
+
+Building the table is done with a call to `summary_table`:
+
+### Overall
+```{r, result = "asis"}
+summary_table(mtcars2, our_summary1)
+```
+
+### By number of Cylinders
+```{r, result = "asis"}
+summary_table(dplyr::group_by(mtcars2, cyl_factor), our_summary1)
+```
+
+## Easy building of the summaries
+The task building the `summaries` list-of-lists can be tedious.  `tab_summary`
+is provided to help with that.  For `numeric` variable, `tab_summary` will
+provide the `formula`e for the min, median (iqr), mean (sd), and max.  `factor`
+and `character` vectors will have calls to `qwraps2::n_perc0` for all levels
+provided.
+
+```{r}
+tab_summary(mtcars2$mpg)
+
+tab_summary(mtcars2$gear) # gear is a numeric vector!
+tab_summary(factor(mtcars2$gear)) 
+```
+
+The `our_summary1` object can be recreated as follows.  Some additional row
+groups are provided to show default behavior of `tab_summary`.
+
+```{r}
+our_summary2 <- 
+  with(mtcars2, 
+       list("Miles Per Gallon" = tab_summary(mpg)[c(1, 4, 3)],
+            "Displacement (default summary)" = tab_summary(disp),
+            "Displacement" = tab_summary(disp)[c(1, 4, 3)],
+            "Weight (1000 lbs)" = tab_summary(wt)[c(1, 4, 3)],
+            "Forward Gears" = tab_summary(as.character(gear))
+            ))
+```
+
+```{r, result = "asis"}
+summary_table(mtcars2, our_summary2)
+```
+
+
+

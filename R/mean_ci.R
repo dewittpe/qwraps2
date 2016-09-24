@@ -20,10 +20,12 @@
 #' symmetric 100(1-alpha)\% CI will be determined.
 #' @param qdist defaults to \code{qnorm}.  use \code{qt} for a Student t
 #' intervals.
-#' @param ... args passed to \code{qdist}
+#' @param qdist.args list of arguments passed to \code{qdist}
 #'
 #' @return a vector with the mean, lower confidence limit (LCL), and the upper
 #' confidence limit (UCL).
+#'
+#' @seealso \code{\link{frmtci}}
 #'
 #' @examples
 #' # using the standard normal for the CI
@@ -37,10 +39,10 @@
 #' # Compare to the ci that comes form t.test
 #' t.test(mtcars$mpg)
 #' t.test(mtcars$mpg)$conf.int
-#' mean_ci(mtcars$mpg, qdist = stats::qt, df = 31)
+#' mean_ci(mtcars$mpg, qdist = stats::qt, qdist.args = list(df = 31))
 #' 
 #' # geometric version
-#' mean_ci(log(mtcars$mpg), transform = exp, qdist = stats::qt, df = 31)
+#' mean_ci(log(mtcars$mpg), transform = exp, qdist = stats::qt, qdist.args = list(df = 31))
 #'
 #' @export   
 mean_ci <- function(x, 
@@ -48,7 +50,8 @@ mean_ci <- function(x,
                     transform,
                     alpha = getOption("qwraps2_alpha", 0.05), 
                     qdist = stats::qnorm, 
-                    ...) { 
+                    qdist.args = list()
+                    ) { 
 
   m <- mean(x, na.rm = na_rm)
   s <- stats::sd(x,   na.rm = na_rm)
@@ -56,7 +59,7 @@ mean_ci <- function(x,
 
   qd <- match.fun(qdist)
 
-  scores <- qd(c(alpha/2, 1 - alpha/2), ...)
+  scores <- do.call(qd, c(list(p = c(alpha/2, 1 - alpha/2)), qdist.args))
 
   out <- c("mean" = m, "lcl"  = m + scores[1] * s / sqrt(n),  "ucl"  = m + scores[2] * s / sqrt(n))
 
@@ -68,5 +71,12 @@ mean_ci <- function(x,
   attr(out, 'alpha') <- alpha
   class(out) <- c("qwraps2_mean_ci", class(out)) 
   out 
+}
+
+#' @export
+#' @param ... arguments passed to \code{frmtci}.
+#' @rdname mean_ci
+print.qwraps2_mean_ci <- function(x, ...) {
+  print(frmtci(x, ...))
 }
 

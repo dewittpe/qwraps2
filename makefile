@@ -4,10 +4,11 @@ PKG_NAME    = $(shell awk '/^Package:/{print $$2}' DESCRIPTION)
 SRC    = $(wildcard src/*.cpp)
 RFILES = $(wildcard R/*.R)
 MANS   = $(wildcard man/*.Rd)
+TESTS  = $(wildcard tests/testthat/*.R)
 
 all: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
-$(PKG_NAME)_$(PKG_VERSION).tar.gz: $(RFILES) $(SRC)
+$(PKG_NAME)_$(PKG_VERSION).tar.gz: $(RFILES) $(SRC) $(TESTS)
 	R -e "devtools::document()"
 	R CMD build .
 
