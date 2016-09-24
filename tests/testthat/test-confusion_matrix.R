@@ -56,3 +56,15 @@ test_that("is confusion_matrix",
           { 
             expect_true(is.confusion_matrix(con_mat))
           })
+
+test_that("errors for levels", 
+          { 
+            x <- sample(c("A", "B", "C"), 100, replace = TRUE)
+            y <- sample(c("A", "B"), 100, replace = TRUE)
+            expect_error(confusion_matrix(x, y), "factors with two levels")
+            x <- sample(c("A", "B"), 100, replace = TRUE)
+            x <- factor(x, levels = c("A", "B"))
+            y <- factor(y, levels = c("B", "A"))
+            expect_error(confusion_matrix(x, y), "same levels for the factors")
+          })
+

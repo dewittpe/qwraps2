@@ -108,7 +108,7 @@ confusion_matrix.formula <- function(formula, data = parent.frame(), positive, b
     stop("qwraps2::confusion_matrix only supports factors with two levels.")
   }
 
-  if (!all(levels(.data[[1]]) %in% levels(.data[[2]]))) { 
+  if (any(levels(.data[[1]]) != levels(.data[[2]]))) { 
     stop("qwraps2::confusion_matrix expectes the same levels for the factors.")
   } 
 
