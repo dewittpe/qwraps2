@@ -36,14 +36,24 @@ Download and install from
     install.packages("qwraps2", repo = "http://cran.rstudio.com")
 
 ### Developmental
-Install the development version (version x.y.z.9000) of `qwraps2`, via the 
+Install the development version of `qwraps2` directly from github via the 
 [`devtools`](https://github.com/hadley/devtools) package:
 
-    # install.packages("devtools")
-    library(devtools)
-    install_github("dewittpe/qwraps2")
+    if (!("devtools" %in% rownames(installed.packages()))) { 
+      warning("installing devtools from https://cran.rstudio.com")
+      install.packages("devtools", 
+                       repo = "https://cran.rstudio.com")
+    }
 
-If you are working on a Windows machine you will need to download and install
-[`Rtools`](http://cran.r-project.org/bin/windows/Rtools/) before `devtools` will
-work for you.
+    devtools::install_github("dewittpe/qwraps2", 
+                             build_vignettes = TRUE)
+
+*NOTE:* If you are working on a Windows machine you will need to download and
+install [`Rtools`](http://cran.r-project.org/bin/windows/Rtools/) before
+`devtools` will work for you.
+
+### Cloned repo
+Install with GNU `make`
+
+    make install
 
