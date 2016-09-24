@@ -125,12 +125,12 @@ confusion_matrix.formula <- function(formula, data = parent.frame(), positive, b
 
   if (boot) { 
     rows <- replicate(boot_samples, 
-                      sample(seq(1, nrow(data), by = 1), nrow(data), replace = TRUE), 
+                      sample(seq(1, nrow(.data), by = 1), nrow(.data), replace = TRUE), 
                       simplify = FALSE)
     boot_stats <- 
       lapply(rows, 
              function(x) { 
-               tab <- table(data[x, 1], data[x, 2])
+               tab <- table(.data[[2]][x], .data[[1]][x], dnn = c("Prediction", "Truth"))
 
                rbind(Accuracy = accuracy(tab), 
                      Sensitivity = sensitivity(tab),
@@ -175,7 +175,6 @@ print.confusion_matrix <- function(x, ...) {
 }
 
 accuracy <- function(tab) { 
-  if (any(dim(tab) != 2)) { stop("Incorrect dim(tab)") } 
   as.numeric(sum(diag(tab)) / sum(tab))
 }
 
@@ -188,12 +187,10 @@ npv <- function(tab) {
 }
 
 sensitivity <- function(tab) { 
-  if (any(dim(tab) != 2)) { stop("Incorrect dim(tab)") } 
   as.numeric(tab[1, 1] / sum(tab[, 1]))
 }
 
 specificity <- function(tab, ...) { 
-  if (length(dim(tab)) != 2 | any(dim(tab) != 2)) { stop("Incorrect dim(tab)") } 
   as.numeric(tab[2, 2] / sum(tab[, 2]))
 }
 

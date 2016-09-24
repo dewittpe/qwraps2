@@ -3,6 +3,9 @@
 ## New Features:
 * `summary_table` and `tab_summary` added (#33)
 
+## Bug Fixes:
+* boot strapped statistics in confusion matrices
+
 # qwraps 0.2.1
 
 ## New Features:

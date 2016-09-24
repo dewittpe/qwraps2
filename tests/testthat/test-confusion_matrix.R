@@ -7,6 +7,16 @@ test_that("Table is as expected",
             expect_equivalent(unclass(con_mat$tab), matrix(c(20, 10, 33, 37), ncol = 1))
           })
 
+test_that("Boot Strap", 
+          {
+            set.seed(42)
+            con_mat_boot <- confusion_matrix(test, truth, positive = "1", boot = TRUE)
+
+            expect_equivalent(round(con_mat_boot$stats[, "Boot Est"], 3),
+                              c(0.573, 0.669, 0.532, 0.382, 0.788))
+          })
+
+
 test_that("Sensitivity",
           { 
             expect_equal(con_mat$stats["Sensitivity", 1], 20 / 30) 
@@ -34,3 +44,15 @@ test_that("confusion_matrix object",
             expect_equal(con_mat, expected_con_mat)
           })
 
+test_that("print confusion_matrix",
+          {
+            expect_output(print(con_mat), "Truth:\\ *truth")
+            expect_output(print(con_mat), "Prediction:\\ *test")
+            expect_output(print(con_mat), "Accuracy\\ *0.57")
+            expect_output(print(con_mat), "NPV\\ *0.78")
+          })
+
+test_that("is confusion_matrix",
+          { 
+            expect_true(is.confusion_matrix(con_mat))
+          })
