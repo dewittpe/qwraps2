@@ -94,7 +94,7 @@ tab_summary.numeric <- function(x) {
 }
 
 #' @export
-tab_summary.factor <- tab_summary.character <- function(x) {
+tab_summary.character <- function(x) {
   v <- deparse(substitute(x))
 
   if (any(is.na(x))) {
@@ -107,6 +107,27 @@ tab_summary.factor <- tab_summary.character <- function(x) {
     s <- stats::setNames(s, c(sort(unique(x)), "Unknown"))
   } else {
     s <- lapply(sort(unique(x)), 
+                function(xx) {
+                  stats::as.formula(paste0("~ qwraps2::n_perc0(", v, " == '", xx, "')"))
+                })
+    s <- stats::setNames(s, sort(unique(x)))
+  } 
+  s
+}
+
+#' @export
+tab_summary.factor <- function(x) {
+  v <- deparse(substitute(x))
+
+  if (any(is.na(x))) {
+    s <- lapply(levels(x),
+                function(xx) {
+                  stats::as.formula(paste0("~ qwraps2::n_perc0(", v, " == '", xx, "', na_rm = TRUE)"))
+                })
+    s <- c(s, stats::as.formula(paste(" ~ qwraps2::n_perc0(is.na(", v, "))")))
+    s <- stats::setNames(s, c(sort(unique(x)), "Unknown"))
+  } else {
+    s <- lapply(levels(x),
                 function(xx) {
                   stats::as.formula(paste0("~ qwraps2::n_perc0(", v, " == '", xx, "')"))
                 })

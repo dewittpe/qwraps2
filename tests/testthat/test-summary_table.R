@@ -1,31 +1,39 @@
-test_that("tab_summary generates formulea by mode", 
-          {
-            data(mtcars)
-            mymtcars <- 
-              dplyr::mutate(mtcars, cyl_factor = factor(cyl), cyl_char = as.character(cyl))
+# load_all()
 
-            summarize_these <- 
-              with(mymtcars,
-                   list("Cylinder (numeric)" = tab_summary(cyl),
-                        "Cylinder (factor)"  = tab_summary(cyl_factor),
-                        "Cylinder (character)" = tab_summary(cyl_char),
-                        "MGP" = tab_summary(mpg))
-                   ) 
+data(mtcars)
+mymtcars <- 
+  dplyr::mutate(mtcars, cyl_factor = factor(cyl, levels = c(6, 4, 8)), cyl_char = as.character(cyl))
+
+summarize_these <- 
+  with(mymtcars,
+       list("Cylinder (numeric)" = tab_summary(cyl),
+            "Cylinder (factor)"  = tab_summary(cyl_factor),
+            "Cylinder (character)" = tab_summary(cyl_char),
+            "MGP" = tab_summary(mpg))
+       ) 
+
+test_that("tab_summary generates formulea for numeric vector", 
+          {
 
             expect_equivalent(summarize_these[[1]], list(~ min(cyl), 
                                                          ~ qwraps2::median_iqr(cyl),
                                                          ~ qwraps2::mean_sd(cyl),
-                                                         ~ max(cyl)))
+                                                         ~ max(cyl))) 
+          })
 
-            expect_equivalent(summarize_these[[2]], list(~ qwraps2::n_perc0(cyl_factor == "4"), 
-                                                         ~ qwraps2::n_perc0(cyl_factor == "6"),
-                                                         ~ qwraps2::n_perc0(cyl_factor == "8"))                                                        )
+test_that("tab_summary generates formulea for factor", 
+          { 
+            expect_equivalent(summarize_these[[2]], list(~ qwraps2::n_perc0(cyl_factor == "6"), 
+                                                         ~ qwraps2::n_perc0(cyl_factor == "4"),
+                                                         ~ qwraps2::n_perc0(cyl_factor == "8"))) 
+          })
 
+test_that("tab_summary generates formulea for character", 
+          { 
             expect_equivalent(summarize_these[[3]], list(~ qwraps2::n_perc0(cyl_char == "4"), 
                                                          ~ qwraps2::n_perc0(cyl_char == "6"),
-                                                         ~ qwraps2::n_perc0(cyl_char == "8"))                                                        )
-          }
-)
+                                                         ~ qwraps2::n_perc0(cyl_char == "8")))
+          })
 
 
 
