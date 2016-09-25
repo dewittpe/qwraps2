@@ -211,7 +211,8 @@ our_summary2 <-
   with(mtcars2, 
        list("Miles Per Gallon" = tab_summary(mpg)[c(1, 4, 3)],
             "Displacement (default summary)" = tab_summary(disp),
-            "Displacement" = tab_summary(disp)[c(1, 4, 3)],
+            "Displacement" = c(tab_summary(disp)[c(1, 4, 3)],
+                               "mean (95% CI)" = ~ print(qwraps2::mean_ci(disp))),
             "Weight (1000 lbs)" = tab_summary(wt)[c(1, 4, 3)],
             "Forward Gears" = tab_summary(as.character(gear))
             ))
