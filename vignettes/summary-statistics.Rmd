@@ -180,13 +180,20 @@ our_summary1 <-
 Building the table is done with a call to `summary_table`:
 
 ### Overall
-```{r, result = "asis"}
+```{r, results = "asis"}
 summary_table(mtcars2, our_summary1)
 ```
 
 ### By number of Cylinders
-```{r, result = "asis"}
+```{r, results = "asis"}
 summary_table(dplyr::group_by(mtcars2, cyl_factor), our_summary1)
+```
+
+If you want to change the column names do so via the `cnames` argument to
+`qable` via the print method for `qwraps2_summary_table` objects.
+```{r, results = "asis"}
+print(summary_table(dplyr::group_by(mtcars2, cyl_factor), our_summary1), 
+      cnames = c("Col 1", "Col 2", "Col 3"))
 ```
 
 ## Easy building of the summaries
@@ -212,13 +219,13 @@ our_summary2 <-
        list("Miles Per Gallon" = tab_summary(mpg)[c(1, 4, 3)],
             "Displacement (default summary)" = tab_summary(disp),
             "Displacement" = c(tab_summary(disp)[c(1, 4, 3)],
-                               "mean (95% CI)" = ~ print(qwraps2::mean_ci(disp))),
+                               "mean (95% CI)" = ~ frmtci(qwraps2::mean_ci(disp))),
             "Weight (1000 lbs)" = tab_summary(wt)[c(1, 4, 3)],
             "Forward Gears" = tab_summary(as.character(gear))
             ))
 ```
 
-```{r, result = "asis"}
+```{r, results = "asis"}
 summary_table(mtcars2, our_summary2)
 ```
 

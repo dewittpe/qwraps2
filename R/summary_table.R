@@ -58,8 +58,8 @@ summary_table.grouped_df <- function(.data, summaries) {
 }
 
 #' @export
-print.qwraps2_summary_table <- function(x, ...) { 
-  print(qable(x, rgroup = attr(x, "rgroups"), rnames = rownames(x), cnames = colnames(x), ...))
+print.qwraps2_summary_table <- function(x, rgroup = attr(x, "rgroups"), rnames = rownames(x), cnames = colnames(x), ...) { 
+  print(qable(x, rgroup = rgroup, rnames = rnames, cnames = cnames, ...))
 }
 
 
