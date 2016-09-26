@@ -46,7 +46,10 @@ qable(mtcars[sort(rownames(mtcars)), ], rgroup = make)
 qable(mtcars[sort(rownames(mtcars)), ], rgroup = make, markup = "markdown")
 
 # define your own column names
-qable(mtcars[sort(rownames(mtcars)), ], rgroup = make, cnames = toupper(colnames(mtcars)), markup = "markdown")
+qable(mtcars[sort(rownames(mtcars)), ], 
+      rgroup = make, 
+      cnames = toupper(colnames(mtcars)), 
+      markup = "markdown")
 
 }
 \seealso{
