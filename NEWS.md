@@ -1,7 +1,8 @@
-# qwraps2 0.2.1.9000
+# qwraps2 0.2.2
 
 ## New Features:
 * `summary_table` and `tab_summary` added (#33)
+* New vignette `vignette("summary-statistics, package = "qwraps2")`
 
 ## Bug Fixes:
 * boot strapped statistics in confusion matrices

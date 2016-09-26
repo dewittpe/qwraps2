@@ -10,8 +10,9 @@
 #' @param .data a \code{data.frame} or \code{grouped_df}.
 #' @param summaries a list of lists of formulea for summarizing the data set.
 #'
-#' @seealso \code{qable} for marking up \code{qwraps2_data_summary} objects.
-#' \code{\link[dplyr]{group_by}} for \code{grouped_df} objects.
+#' @seealso \code{\link{qable}} for marking up \code{qwraps2_data_summary}
+#' objects.  \code{\link[dplyr]{group_by}} for \code{\link[dplyr]{grouped_df}}
+#' objects.
 #'
 #' @return a \code{qwraps2_summary_table} object.
 #'
@@ -135,3 +136,23 @@ tab_summary.factor <- function(x) {
   } 
   s
 }
+
+#' @export
+#' @rdname summary_table
+#' @param ... \code{qwraps2_summary_table} objects to bind together
+#' @param deparse.level integer controlling the construction of labels in the
+#' case of non-matrix-like arguments (for the default method): \code{deparse.level =
+#' 0} constructs no labels; the default, \code{deparse.level = 1} or
+#' \code{deparse.level = 2} constructs labels from the argument names.
+#' @seealso \code{cbind} 
+cbind.qwraps2_summary_table <- function(..., deparse.level = 1) {
+  tabs <- list(...)
+  
+  out <- do.call(cbind, args = c(lapply(tabs, unclass), list(deparse.level = deparse.level)))
+
+  attr(out, "rgroups") <- attr(tabs[[1]], "rgroups")
+  class(out) <- class(tabs[[1]])
+
+  out
+}
+

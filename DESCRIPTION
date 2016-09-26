@@ -1,6 +1,6 @@
 Package: qwraps2
 Title: Quick Wraps 2
-Version: 0.2.1.9000
+Version: 0.2.2
 Authors@R: c(
     person("Peter", "DeWitt", , "dewittpe@gmail.com", role = c("aut", "cre")),
     person("Tell",  "Bennett", , "tell.bennett@ucdenver.edu", role = c("ctb"))

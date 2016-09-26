@@ -226,8 +226,21 @@ our_summary2 <-
 ```
 
 ```{r, results = "asis"}
-summary_table(mtcars2, our_summary2)
+whole <- summary_table(mtcars2, our_summary2)
+whole
 ```
 
+Group by muliple factors:
+```{r, results = "asis"}
+grouped <- summary_table(dplyr::group_by(mtcars2, am, vs),  our_summary2)
+grouped
+```
+
+As one table:
+
+```{r, results = "asis"}
+both <- cbind(whole, grouped)
+both
+```
 
 
