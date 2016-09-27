@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/dewittpe/qwraps2.svg?branch=master)](https://travis-ci.org/dewittpe/qwraps2)
 [![Coverage Status](https://img.shields.io/codecov/c/github/dewittpe/qwraps2/master.svg)](https://codecov.io/github/dewittpe/qwraps2?branch=master)
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/qwraps2)](http://cran.r-project.org/package=qwraps2)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/qwraps2)](https://cran.r-project.org/package=qwraps2)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/qwraps2)](http://www.r-pkg.org/pkg/qwraps2)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/qwraps2)](http://www.r-pkg.org/pkg/qwraps2)
 
@@ -31,13 +31,13 @@ the repo, add the feature, and send me a pull request.
 
 ### From CRAN
 Download and install from
-[The Comprehensive R Archive Network (CRAN)](http://cran.r-project.org/).
+[The Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/).
 
     install.packages("qwraps2", repo = "http://cran.rstudio.com")
 
 ### Developmental
 Install the development version of `qwraps2` directly from github via the 
-[`devtools`](https://github.com/hadley/devtools) package:
+[`devtools`](https://github.com/hadley/devtools/) package:
 
     if (!("devtools" %in% rownames(installed.packages()))) { 
       warning("installing devtools from https://cran.rstudio.com")
@@ -49,7 +49,7 @@ Install the development version of `qwraps2` directly from github via the
                              build_vignettes = TRUE)
 
 *NOTE:* If you are working on a Windows machine you will need to download and
-install [`Rtools`](http://cran.r-project.org/bin/windows/Rtools/) before
+install [`Rtools`](https://cran.r-project.org/bin/windows/Rtools/) before
 `devtools` will work for you.
 
 ### Cloned repo
