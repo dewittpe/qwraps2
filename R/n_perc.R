@@ -87,12 +87,12 @@ perc_n <- function(x,
   p <- frmt(100 * n/d, digits)
 
   if (show_denom == "never") { 
-    rtn <- paste0(frmt(as.integer(n)), " (", p, "%)")
+    rtn <- paste0(p, "% (n = ", frmt(as.integer(d)), ")") 
   } else { 
     if (show_denom =="always" | any(is.na(x))) { 
-      rtn <- paste0(frmt(as.integer(n)), "/", frmt(as.integer(d)), " (", p, "%)")
+      rtn <- paste0(p, "% (n = ", frmt(as.integer(d)), "non-missing)") 
     } else { 
-      rtn <- paste0(frmt(as.integer(n)), " (", p, "%)")
+      rtn <- paste0(p, "% (n = ", frmt(as.integer(d)), ")")
     }
   }
 

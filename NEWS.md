@@ -1,3 +1,8 @@
+# qwraps2 0.2.2.9000
+
+## Bug Fixes:
+* `perc_n` reports the strings in the correct order.
+
 # qwraps2 0.2.2
 
 ## New Features:
