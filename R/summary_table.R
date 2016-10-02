@@ -79,7 +79,7 @@ tab_summary.numeric <- function(x) {
     s <- list(
               "min" = stats::as.formula(paste("~ min(", v, ", na.rm = TRUE)")),
               "median (IQR)" = stats::as.formula(paste("~ qwraps2::median_iqr(", v, ", na_rm = TRUE)")),
-              "mead (sd)" = stats::as.formula(paste("~ qwraps2::mean_sd(", v, ", na_rm = TRUE)")),
+              "mean (sd)" = stats::as.formula(paste("~ qwraps2::mean_sd(", v, ", na_rm = TRUE)")),
               "max" = stats::as.formula(paste("~ max(", v, ", na.rm = TRUE)")))
 
     s <- c(s, list("Unknown" = stats::as.formula(paste(" ~ qwraps2::n_perc0(is.na(", v, "))"))))
@@ -88,7 +88,7 @@ tab_summary.numeric <- function(x) {
     s <- list(
               "min" = stats::as.formula(paste("~ min(", v, ")")),
               "median (IQR)" = stats::as.formula(paste("~ qwraps2::median_iqr(", v, ")")),
-              "mead (sd)" = stats::as.formula(paste("~ qwraps2::mean_sd(", v, ")")),
+              "mean (sd)" = stats::as.formula(paste("~ qwraps2::mean_sd(", v, ")")),
               "max" = stats::as.formula(paste("~ max(", v, ")")))
   } 
   s
