@@ -2,6 +2,7 @@
 
 ## New features
 * `qacf` plot (#11)
+* `ll` an improved version of `ls()`
 
 ## Bug Fixes:
 * `perc_n` reports the strings in the correct order.
