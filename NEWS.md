@@ -1,5 +1,8 @@
 # qwraps2 0.2.2.9000
 
+## New features
+* `qacf` plot (#11)
+
 ## Bug Fixes:
 * `perc_n` reports the strings in the correct order.
 
