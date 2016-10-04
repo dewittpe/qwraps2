@@ -6,7 +6,7 @@
 #' TO DO
 #'
 #' @param x object
-#' @param conf_level confidence level for determining \squote{sigificant}
+#' @param conf_level confidence level for determining \sQuote{sigificant}
 #' correlations.
 #' @param show_sig logical, highlight significant correlations.
 #' @param ... Other arguments passed to stats::acf
@@ -62,14 +62,16 @@ qacf.default <- function(x, conf_level = 0.95, show_sig = FALSE, ...) {
 
 #' @export
 #' @method qacf data.frame
-qacf.data.frame <- function(x, conf_level = 0.95, show_sig = FALSE, ...) {
-
+qacf.data.frame <- function(x, conf_level = 0.95, show_sig = FALSE, ...) { 
   acf_data <- stats::acf(x, plot = FALSE, ...)
   ciline <- stats::qnorm((1 - conf_level) / 2) / sqrt(acf_data$n.used)
 
+  lags <- dplyr::as_data_frame(acf_data$lag)
+  acfs <- dplyr::as_data_frame(acf_data$acf)
+
   acf_df <- 
-    dplyr::bind_cols(tidyr::gather(dplyr::as_data_frame(acf_data$lag), key = key, value = lag),
-                     tidyr::gather(dplyr::as_data_frame(acf_data$acf), key = key, value = value)[, 2])
+    dplyr::bind_cols(tidyr::gather_(lags, key_col = 'key', value_col = 'lag',   gather_cols = names(lags)),
+                     tidyr::gather_(acfs, key_col = 'key', value_col = 'value', gather_cols = names(acfs))[, 2])
   acf_df <-
     dplyr::mutate_(acf_df, .dots = list("significant" =  ~ factor(abs(value) > abs(ciline))))
 

@@ -85,26 +85,12 @@ Recall:
 }
 }
 \examples{
-## Example taken from caret::confusionMatrix
-\donttest{ 
-lvs <- c("normal", "abnormal")
-truth <- factor(rep(lvs, times = c(86, 258)),
-                levels = rev(lvs))
-pred <- factor(c(rep(lvs, times = c(54, 32)),
-                 rep(lvs, times = c(27, 231))),               
-               levels = rev(lvs))
 
-confusion_matrix(pred, truth)
-confusion_matrix(pred, truth)$stats
-
-confusion_matrix(pred, truth, boot = TRUE)
-confusion_matrix(pred, truth, positive = "normal", boot = TRUE)
-
-# Using formulas
-test_data <- data.frame(xyz = pred, yyy = truth)
-confusion_matrix(yyy ~ xyz, test_data)
-confusion_matrix(yyy ~ xyz, test_data, positive = "normal") 
-}
+test  <- c(rep(1, 53), rep(0, 47))
+truth <- c(rep(1, 20), rep(0, 33), rep(1, 10), rep(0, 37))
+con_mat <- confusion_matrix(test, truth, positive = "1")
+str(con_mat)
+con_mat
 
 }
 

@@ -11,8 +11,8 @@
 #' @param pattern an optional regular expression.  Only names matching
 #' \code{pattern} are returned.  \code{\link[utils]{glob2rx}} can be used to
 #' convert wildcard patterns to regular expressions.
-#' @param order_by a character, order the results by \dquote{Size} (default),
-#' \dquote{Type}, \dquote{Rows}, or \dquote{Columns}.
+#' @param order_by a character, order the results by \dQuote{Size} (default),
+#' \dQuote{Type}, \dQuote{Rows}, or \dQuote{Columns}.
 #' @param decreasing logical, defaults to \code{TRUE}, decreasing order? passed
 #' to \code{\link[base]{order}}.
 #' @param head logical, if \code{TRUE} then only return the first \code{n}
@@ -26,14 +26,14 @@
 #' ll()
 #' }
 #'
-#' View another environment
+#' # View another environment
 #' e <- new.env()
 #' e$fit <- lm(mpg ~ wt, mtcars)
 #' e$fit2 <- lm(mpg ~ wt + am + vs, data = mtcars)
 #' e$x <- rnorm(1e5)
 #' e$y <- runif(1e4)
-#' e$z <- x * y
-#' e$w <- sum(z)
+#' e$z <- with(e, x * y)
+#' e$w <- sum(e$z)
 #' ls(e)
 #' ll(e)
 #' ll(e, head = TRUE)
@@ -46,7 +46,7 @@ ll <- function (pos = 1, pattern, order_by = "Size", decreasing = TRUE, head = F
     obj.class <- napply(names, function(x) as.character(class(x))[1])
     obj.mode <- napply(names, mode)
     obj.type <- ifelse(is.na(obj.class), obj.mode, obj.class)
-    obj.size <- napply(names, object.size)
+    obj.size <- napply(names, utils::object.size)
     obj.dim <- t(napply(names, function(x) as.numeric(dim(x))[1:2]))
     vec <- is.na(obj.dim)[, 1] & (obj.type != "function")
     obj.dim[vec, 1] <- napply(names, length)[vec]

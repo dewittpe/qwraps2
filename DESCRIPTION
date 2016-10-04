@@ -23,7 +23,9 @@ Imports:
     dplyr,
     ggplot2,
     knitr,
-    Rcpp
+    Rcpp,
+    tidyr,
+    utils
 Suggests:
     survival,
     testthat,
