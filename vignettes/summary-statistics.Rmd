@@ -182,6 +182,7 @@ Building the table is done with a call to `summary_table`:
 ### Overall
 ```{r, results = "asis"}
 summary_table(mtcars2, our_summary1)
+summary_table(mtcars2, our_summary1)
 ```
 
 ### By number of Cylinders
@@ -190,9 +191,12 @@ summary_table(dplyr::group_by(mtcars2, cyl_factor), our_summary1)
 ```
 
 If you want to change the column names do so via the `cnames` argument to
-`qable` via the print method for `qwraps2_summary_table` objects.
+`qable` via the print method for `qwraps2_summary_table` objects.  Any argument
+that you want to send to `qable` can be sent there when explicitly using the
+`print` method for `qwraps2_summary_table` objects.
 ```{r, results = "asis"}
 print(summary_table(dplyr::group_by(mtcars2, cyl_factor), our_summary1), 
+      rtitle = "Summary Statistics",
       cnames = c("Col 1", "Col 2", "Col 3"))
 ```
 
@@ -230,7 +234,7 @@ whole <- summary_table(mtcars2, our_summary2)
 whole
 ```
 
-Group by muliple factors:
+Group by multiple factors:
 ```{r, results = "asis"}
 grouped <- summary_table(dplyr::group_by(mtcars2, am, vs),  our_summary2)
 grouped

@@ -3,9 +3,14 @@
 ## New features
 * `qacf` plot (#11)
 * `ll` an improved version of `ls()`
+* `rtitle` option added to `qable` (#35)
 
 ## Bug Fixes:
 * `perc_n` reports the strings in the correct order.
+
+## Improvements:
+* Extended documentation for `qable`
+* Minor edits and extensions to the summary-statistics vignette.
 
 # qwraps2 0.2.2
 
