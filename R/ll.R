@@ -43,6 +43,9 @@ ll <- function (pos = 1, pattern, order_by = "Size", decreasing = TRUE, head = F
     napply <- function(names, fn) sapply(names, function(x)
                                          fn(get(x, pos = pos)))
     names <- ls(pos = pos, pattern = pattern)
+    if (length(names) == 0) {
+      return(names)
+    }
     obj.class <- napply(names, function(x) as.character(class(x))[1])
     obj.mode <- napply(names, mode)
     obj.type <- ifelse(is.na(obj.class), obj.mode, obj.class)

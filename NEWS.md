@@ -1,4 +1,4 @@
-# qwraps2 0.2.2.9000
+# qwraps2 0.2.3
 
 ## New features
 * `qacf` plot (#11)

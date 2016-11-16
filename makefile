@@ -1,7 +1,7 @@
 PKG_VERSION = $(shell awk '/^Version:/{print $$2}' DESCRIPTION)
 PKG_NAME    = $(shell awk '/^Package:/{print $$2}' DESCRIPTION)
 
-.PHONY: vignettes
+.PHONY: all clean install
 
 SRC    = $(wildcard src/*.cpp)
 RFILES = $(wildcard R/*.R)
@@ -11,10 +11,7 @@ VIGNETTES = $(wildcard vignettes/*.Rmd)
 
 all: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
-vignettes: $(VIGNETTES)
-	R -e "devtools::build_vignettes()"
-
-$(PKG_NAME)_$(PKG_VERSION).tar.gz: $(RFILES) $(SRC) $(TESTS) $(VIGNETTES)
+$(PKG_NAME)_$(PKG_VERSION).tar.gz: $(RFILES) $(SRC) $(TESTS)
 	R -e "devtools::document()"
 	R CMD build .
 
