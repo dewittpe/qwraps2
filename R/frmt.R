@@ -232,7 +232,12 @@ frmtci.default <- function(x, est = 1, lcl = 2, ucl = 3, format = "est (lcl, ucl
 
 #' @export
 frmtci.matrix <- function(x, est = 1, lcl = 2, ucl = 3, format = "est (lcl, ucl)", show_level = FALSE, ...) {
-  apply(x, 1, frmtci.default, est = 1, lcl = lcl, ucl = ucl, format = format, show_level = show_level, ...)
+  apply(x, 1, frmtci.default, est = est, lcl = lcl, ucl = ucl, format = format, show_level = show_level, ...)
+}
+
+#' @export
+frmtci.data.frame <- function(x, est = 1, lcl = 2, ucl = 3, format = "est (lcl, ucl)", show_level = FALSE, ...) {
+  frmtci.matrix(as.matrix(x[, c(est, lcl, ucl)]), est = 1, lcl = 2, ucl = 3, format = format, show_level = show_level, ...)
 }
 
 #' @export

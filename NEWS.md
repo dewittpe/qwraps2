@@ -1,3 +1,11 @@
+# qwraps2 0.2.3.9000
+
+## Bug Fixes:
+* `frmtci.matrix` using the `est` arg correctly
+
+## Improvements
+* `frmtci.data.frame` method added.
+
 # qwraps2 0.2.3
 
 ## New features
