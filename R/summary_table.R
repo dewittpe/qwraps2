@@ -65,14 +65,16 @@ print.qwraps2_summary_table <- function(x, rgroup = attr(x, "rgroups"), rnames =
 
 
 #' @param x a variable to summarize
+#' @param n_perc_args a list of arguments to pass to \code{n_perc}
+#' @param envir the environment to attach to the resulting formulea
 #' @export
 #' @rdname summary_table
-tab_summary <- function(x) {
+tab_summary <- function(x, n_perc_args = list(digits = 0, show_symbol = FALSE), envir = parent.frame()) {
   UseMethod("tab_summary")
 }
 
 #' @export
-tab_summary.numeric <- function(x) {
+tab_summary.numeric <- function(x, n_perc_args = list(digits = 0, show_symbol = FALSE), envir = parent.frame()) {
   v <- deparse(substitute(x))
 
   if (any(is.na(x))) {
@@ -95,46 +97,58 @@ tab_summary.numeric <- function(x) {
 }
 
 #' @export
-tab_summary.character <- function(x) {
-  v <- deparse(substitute(x))
+tab_summary.character <- function(x, n_perc_args = list(digits = 0, show_symbol = FALSE), envir = parent.frame()) {
+  v <- deparse(substitute(x)) 
+
+  if (length(n_perc_args)) { 
+    n_args <- paste(", ", paste(paste(names(n_perc_args), lapply(n_perc_args, function(x) if (is.character(x)) paste0("'", x, "'") else x), sep = " = "), collapse = ", "))
+  } else {
+    n_args <- ""
+  }
 
   if (any(is.na(x))) {
     x <- stats::na.omit(x)
     s <- lapply(sort(unique(x)), 
                 function(xx) {
-                  stats::as.formula(paste0("~ qwraps2::n_perc0(", v, " == '", xx, "', na_rm = TRUE)"))
+                  paste0("~ qwraps2::n_perc(", v, " == '", xx, "'", n_args, ", na_rm = TRUE)")
                 })
-    s <- c(s, stats::as.formula(paste(" ~ qwraps2::n_perc0(is.na(", v, "))")))
+    s <- c(s, paste(" ~ qwraps2::n_perc(is.na(", v, ")", n_args, ")"))
     s <- stats::setNames(s, c(sort(unique(x)), "Unknown"))
   } else {
     s <- lapply(sort(unique(x)), 
                 function(xx) {
-                  stats::as.formula(paste0("~ qwraps2::n_perc0(", v, " == '", xx, "')"))
+                  paste0("~ qwraps2::n_perc(", v, " == '", xx, "'", n_args, ")")
                 })
     s <- stats::setNames(s, sort(unique(x)))
   } 
-  s
+  lapply(s, as.formula, env = envir)
 }
 
 #' @export
-tab_summary.factor <- function(x) {
+tab_summary.factor <- function(x, n_perc_args = list(digits = 0, show_symbol = FALSE), envir = parent.frame()) {
   v <- deparse(substitute(x))
+
+  if (length(n_perc_args)) { 
+    n_args <- paste(", ", paste(paste(names(n_perc_args), lapply(n_perc_args, function(x) if (is.character(x)) paste0("'", x, "'") else x), sep = " = "), collapse = ", "))
+  } else {
+    n_args <- ""
+  }
 
   if (any(is.na(x))) {
     s <- lapply(levels(x),
                 function(xx) {
-                  stats::as.formula(paste0("~ qwraps2::n_perc0(", v, " == '", xx, "', na_rm = TRUE)"))
+                  paste0("~ qwraps2::n_perc(", v, " == '", xx, "'", n_args, ", na_rm = TRUE)")
                 })
-    s <- c(s, stats::as.formula(paste(" ~ qwraps2::n_perc0(is.na(", v, "))")))
+    s <- c(s, paste(" ~ qwraps2::n_perc(is.na(", v, ")", n_args, ")"))
     s <- stats::setNames(s, c(sort(unique(x)), "Unknown"))
   } else {
     s <- lapply(levels(x),
                 function(xx) {
-                  stats::as.formula(paste0("~ qwraps2::n_perc0(", v, " == '", xx, "')"))
+                  paste0("~ qwraps2::n_perc(", v, " == '", xx, "'", n_args, ")")
                 })
     s <- stats::setNames(s, sort(unique(x)))
   } 
-  s
+  lapply(s, as.formula, env = envir)
 }
 
 #' @export
