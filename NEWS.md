@@ -1,10 +1,16 @@
 # qwraps2 0.2.3.9000
 
+## New Features
+* `frmtci.data.frame` method added.
+* for the `tab_summary` methods to new arguments: `n_perc_args` and `envir`.
+  The former gives the end user control over the formating options passed to
+  `n_perc` and the latter controls the `environment` associated with the
+  generated formulae.
+
 ## Bug Fixes:
 * `frmtci.matrix` using the `est` arg correctly
 
 ## Improvements
-* `frmtci.data.frame` method added.
 
 # qwraps2 0.2.3
 
