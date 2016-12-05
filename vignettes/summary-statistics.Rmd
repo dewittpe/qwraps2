@@ -204,9 +204,23 @@ print(summary_table(dplyr::group_by(mtcars2, cyl_factor), our_summary1),
 The task building the `summaries` list-of-lists can be tedious.  `tab_summary`
 is provided to help with that.  For `numeric` variable, `tab_summary` will
 provide the `formula`e for the min, median (iqr), mean (sd), and max.  `factor`
-and `character` vectors will have calls to `qwraps2::n_perc0` for all levels
+and `character` vectors will have calls to `qwraps2::n_perc` for all levels
 provided.
 
+For version 0.2.3.9000 or beyond, arguments have been added to `tab_summary` to
+help control some of the formatting of counts and percentages.  The original
+behavior of `tab_summary` used `n_perc0` to format the summary of categorical
+variables.  Now, `n_perc` is called and the end user can specify formatting
+options via a `list` passed via the `n_perc_args` argument.  **Important
+Notes:** The default settings for `tab_summary` is below.
+```{r}
+args(tab_summary)
+```
+These options will make the output look as if `n_perc0` had been called instead
+of `n_perc`.  More importantly, these defaults *will not* honor the
+`options()$qwraps2_frmt_digits`.
+
+Examples for `tab_summary` follow:
 ```{r}
 tab_summary(mtcars2$mpg)
 
@@ -215,7 +229,9 @@ tab_summary(factor(mtcars2$gear))
 ```
 
 The `our_summary1` object can be recreated as follows.  Some additional row
-groups are provided to show default behavior of `tab_summary`.
+groups are provided to show default behavior of `tab_summary`. **Important:**
+Note that the `tab_summary` are made while using `with`.  Further explaination
+for this follows.
 
 ```{r}
 our_summary2 <- 
@@ -247,4 +263,44 @@ both <- cbind(whole, grouped)
 both
 ```
 
+### Why use `with` with `tab_summary`?
+`tab_summary` was written to help construct `formula`e to save the end user key
+strokes.  There are plenty of reasons for `summary_table` to be used *without*
+`tab_summary`.  However, when it is helpful to use `tab_summary` make sure you
+understand the results.
+
+For example, let's look at a simple summary of the miles per gallon.
+```{r}
+# tab_summary(mpg)[[3]] ## this errors
+tab_summary(mtcars$mpg)[[3]]
+with(mtcars, tab_summary(mpg))[[3]]
+```
+The first call errors because `mpg` is not in the global environment.  The
+difference between the second and third calls is subtle.  The second call
+generates a `formula` with `mtcars$mpg` as an argument whereas the third call
+generates a `formula` with only `mpg` as the argument.  The difference will be
+seen in the summary tables if the `.data` is sub setted.
+
+```{r}
+# The same tables:
+summary_table(mtcars, list("MPG 1" = with(mtcars, tab_summary(mpg)[[3]])))
+summary_table(mtcars, list("MPG 2" = tab_summary(mtcars$mpg)[[3]]))
+```
+These two calls generate the same table because the `.data` and the implied data
+within the second call are the same.
+
+```{r}
+# Different tables
+summary_table(dplyr::filter(mtcars, am == 0), list("MPG 3" = with(mtcars, tab_summary(mpg)[[3]])))
+summary_table(dplyr::filter(mtcars, am == 0), list("MPG 4" = tab_summary(mtcars$mpg)[[3]]))
+```
+Now, the result of the second call above is not correct, it is the same as for
+the first two calls.  This is because `mtcars$` is part of the `formula` and the
+`.data` is ignored.  The correct result is in the table with `MPG 3`.
+
+It is critical that you use `tab_summary` only as a took to help save you key
+strokes.  I strongly encourage you, the end user, to use `summary_table` a lot,
+and use `tab_summary` as a quick tool for generating a script.  It might be best
+if you use `tab_summary` to generate a template of the `formula`e you will want,
+copy the template into your script and editing accordingly.
 

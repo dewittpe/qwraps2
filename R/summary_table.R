@@ -2,7 +2,8 @@
 #'
 #' Tools useful for building data summary tables.  
 #'
-#' Detailed use of these functions can be found the a vignette.
+#' Detailed use of these functions can be found the "summary-statistics"
+#' vignette.
 #'
 #' The \code{print} method for the \code{qwraps2_summary_table} objects is just
 #' a simple wrapper for \code{qable}.
@@ -12,7 +13,8 @@
 #'
 #' @seealso \code{\link{qable}} for marking up \code{qwraps2_data_summary}
 #' objects.  \code{\link[dplyr]{group_by}} for \code{\link[dplyr]{grouped_df}}
-#' objects.
+#' objects.  The \code{vignette("summary-statistics", package = "qwraps2")} for
+#' detailed use of these functions and cavets.
 #'
 #' @return a \code{qwraps2_summary_table} object.
 #'
@@ -77,23 +79,29 @@ tab_summary <- function(x, n_perc_args = list(digits = 0, show_symbol = FALSE), 
 tab_summary.numeric <- function(x, n_perc_args = list(digits = 0, show_symbol = FALSE), envir = parent.frame()) {
   v <- deparse(substitute(x))
 
+  if (length(n_perc_args)) { 
+    n_args <- paste(", ", paste(paste(names(n_perc_args), lapply(n_perc_args, function(x) if (is.character(x)) paste0("'", x, "'") else x), sep = " = "), collapse = ", "))
+  } else {
+    n_args <- ""
+  }
+
   if (any(is.na(x))) {
     s <- list(
-              "min" = stats::as.formula(paste("~ min(", v, ", na.rm = TRUE)")),
-              "median (IQR)" = stats::as.formula(paste("~ qwraps2::median_iqr(", v, ", na_rm = TRUE)")),
-              "mean (sd)" = stats::as.formula(paste("~ qwraps2::mean_sd(", v, ", na_rm = TRUE)")),
-              "max" = stats::as.formula(paste("~ max(", v, ", na.rm = TRUE)")))
+              "min"          = paste("~ min(", v, ", na.rm = TRUE)"),
+              "median (IQR)" = paste("~ qwraps2::median_iqr(", v, ", na_rm = TRUE)"),
+              "mean (sd)"    = paste("~ qwraps2::mean_sd(", v, ", na_rm = TRUE)"),
+              "max"          = paste("~ max(", v, ", na.rm = TRUE)"))
 
-    s <- c(s, list("Unknown" = stats::as.formula(paste(" ~ qwraps2::n_perc0(is.na(", v, "))"))))
+    s <- c(s, paste(" ~ qwraps2::n_perc(is.na(", v, ")", n_args, ")"))
 
   } else {
     s <- list(
-              "min" = stats::as.formula(paste("~ min(", v, ")")),
-              "median (IQR)" = stats::as.formula(paste("~ qwraps2::median_iqr(", v, ")")),
-              "mean (sd)" = stats::as.formula(paste("~ qwraps2::mean_sd(", v, ")")),
-              "max" = stats::as.formula(paste("~ max(", v, ")")))
+              "min"          = paste("~ min(", v, ")"),
+              "median (IQR)" = paste("~ qwraps2::median_iqr(", v, ")"),
+              "mean (sd)"    = paste("~ qwraps2::mean_sd(", v, ")"),
+              "max"          = paste("~ max(", v, ")"))
   } 
-  s
+  lapply(s, stats::as.formula, env = envir)
 }
 
 #' @export
@@ -121,7 +129,7 @@ tab_summary.character <- function(x, n_perc_args = list(digits = 0, show_symbol 
                 })
     s <- stats::setNames(s, sort(unique(x)))
   } 
-  lapply(s, as.formula, env = envir)
+  lapply(s, stats::as.formula, env = envir)
 }
 
 #' @export
@@ -148,7 +156,7 @@ tab_summary.factor <- function(x, n_perc_args = list(digits = 0, show_symbol = F
                 })
     s <- stats::setNames(s, sort(unique(x)))
   } 
-  lapply(s, as.formula, env = envir)
+  lapply(s, stats::as.formula, env = envir)
 }
 
 #' @export

@@ -23,31 +23,14 @@ test_that("tab_summary generates formulea for numeric vector",
 
 test_that("tab_summary generates formulea for factor", 
           { 
-            expect_equivalent(summarize_these[[2]], list(~ qwraps2::n_perc0(cyl_factor == "6"), 
-                                                         ~ qwraps2::n_perc0(cyl_factor == "4"),
-                                                         ~ qwraps2::n_perc0(cyl_factor == "8"))) 
+            expect_equivalent(summarize_these[[2]], list(~ qwraps2::n_perc(cyl_factor == "6", digits = 0, show_symbol = FALSE), 
+                                                         ~ qwraps2::n_perc(cyl_factor == "4", digits = 0, show_symbol = FALSE),
+                                                         ~ qwraps2::n_perc(cyl_factor == "8", digits = 0, show_symbol = FALSE))) 
           })
 
 test_that("tab_summary generates formulea for character", 
           { 
-            expect_equivalent(summarize_these[[3]], list(~ qwraps2::n_perc0(cyl_char == "4"), 
-                                                         ~ qwraps2::n_perc0(cyl_char == "6"),
-                                                         ~ qwraps2::n_perc0(cyl_char == "8")))
-          })
-
-
-
-# 
-# 
-# 
-# x <- summary_table(mymtcars, summarize_these)
-# print(x)
-# print(x, markup = "markdown")
-# 
-# 
-# summary_table(
-#               dplyr::group_by(mymtcars, am, carb)
-#               , 
-#               summarize_these)
-# 
-
+            expect_equivalent(summarize_these[[3]], list(~ qwraps2::n_perc(cyl_char == "4", digits = 0, show_symbol = FALSE), 
+                                                         ~ qwraps2::n_perc(cyl_char == "6", digits = 0, show_symbol = FALSE),
+                                                         ~ qwraps2::n_perc(cyl_char == "8", digits = 0, show_symbol = FALSE)))
+          }) 

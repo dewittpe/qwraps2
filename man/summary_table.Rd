@@ -8,7 +8,8 @@
 \usage{
 summary_table(.data, summaries)
 
-tab_summary(x)
+tab_summary(x, n_perc_args = list(digits = 0, show_symbol = FALSE),
+  envir = parent.frame())
 
 cbind.qwraps2_summary_table(..., deparse.level = 1)
 }
@@ -18,6 +19,10 @@ cbind.qwraps2_summary_table(..., deparse.level = 1)
 \item{summaries}{a list of lists of formulea for summarizing the data set.}
 
 \item{x}{a variable to summarize}
+
+\item{n_perc_args}{a list of arguments to pass to \code{n_perc}}
+
+\item{envir}{the environment to attach to the resulting formulea}
 
 \item{...}{\code{qwraps2_summary_table} objects to bind together}
 
@@ -33,7 +38,8 @@ a \code{qwraps2_summary_table} object.
 Tools useful for building data summary tables.
 }
 \details{
-Detailed use of these functions can be found the a vignette.
+Detailed use of these functions can be found the "summary-statistics"
+vignette.
 
 The \code{print} method for the \code{qwraps2_summary_table} objects is just
 a simple wrapper for \code{qable}.
@@ -41,7 +47,8 @@ a simple wrapper for \code{qable}.
 \seealso{
 \code{\link{qable}} for marking up \code{qwraps2_data_summary}
 objects.  \code{\link[dplyr]{group_by}} for \code{\link[dplyr]{grouped_df}}
-objects.
+objects.  The \code{vignette("summary-statistics", package = "qwraps2")} for
+detailed use of these functions and cavets.
 
 \code{cbind}
 }
