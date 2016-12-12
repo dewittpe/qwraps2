@@ -86,17 +86,15 @@ tab_summary.numeric <- function(x, n_perc_args = list(digits = 0, show_symbol = 
   }
 
   if (any(is.na(x))) {
-    s <- list(
-              "min"          = paste("~ min(", v, ", na.rm = TRUE)"),
+    s <- list("min"          = paste("~ min(", v, ", na.rm = TRUE)"),
               "median (IQR)" = paste("~ qwraps2::median_iqr(", v, ", na_rm = TRUE)"),
               "mean (sd)"    = paste("~ qwraps2::mean_sd(", v, ", na_rm = TRUE)"),
               "max"          = paste("~ max(", v, ", na.rm = TRUE)"))
 
-    s <- c(s, paste(" ~ qwraps2::n_perc(is.na(", v, ")", n_args, ")"))
+    s <- c(s, Unknown = paste(" ~ qwraps2::n_perc(is.na(", v, ")", n_args, ")"))
 
   } else {
-    s <- list(
-              "min"          = paste("~ min(", v, ")"),
+    s <- list("min"          = paste("~ min(", v, ")"),
               "median (IQR)" = paste("~ qwraps2::median_iqr(", v, ")"),
               "mean (sd)"    = paste("~ qwraps2::mean_sd(", v, ")"),
               "max"          = paste("~ max(", v, ")"))
