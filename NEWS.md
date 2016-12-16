@@ -11,6 +11,7 @@
 * `frmtci.matrix` using the `est` arg correctly
 
 ## Improvements
+* extended documentation and examples for `summary_table`
 
 # qwraps2 0.2.3
 
