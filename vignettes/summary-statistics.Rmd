@@ -211,8 +211,9 @@ For version 0.2.3.9000 or beyond, arguments have been added to `tab_summary` to
 help control some of the formatting of counts and percentages.  The original
 behavior of `tab_summary` used `n_perc0` to format the summary of categorical
 variables.  Now, `n_perc` is called and the end user can specify formatting
-options via a `list` passed via the `n_perc_args` argument.  **Important
-Notes:** The default settings for `tab_summary` is below.
+options via a `list` passed via the `n_perc_args` argument.
+The default settings for `tab_summary` is below.
+
 ```{r}
 args(tab_summary)
 ```
@@ -230,7 +231,7 @@ tab_summary(factor(mtcars2$gear))
 
 The `our_summary1` object can be recreated as follows.  Some additional row
 groups are provided to show default behavior of `tab_summary`. **Important:**
-Note that the `tab_summary` are made while using `with`.  Further explaination
+Note that the `tab_summary` are made while using `with`.  Further explanation
 for this follows.
 
 ```{r}

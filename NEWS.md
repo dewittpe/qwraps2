@@ -1,4 +1,4 @@
-# qwraps2 0.2.3.9000
+# qwraps2 0.2.4
 
 ## New Features
 * `frmtci.data.frame` method added.
