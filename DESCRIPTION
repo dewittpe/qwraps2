@@ -1,6 +1,6 @@
 Package: qwraps2
 Title: Quick Wraps 2
-Version: 0.2.4
+Version: 0.2.4.9000
 Authors@R: c(
     person("Peter", "DeWitt", , "dewittpe@gmail.com", role = c("aut", "cre")),
     person("Tell",  "Bennett", , "tell.bennett@ucdenver.edu", role = c("ctb"))
@@ -30,6 +30,7 @@ Suggests:
     survival,
     testthat,
     covr,
+    rbenchmark,
     rmarkdown
 RoxygenNote: 5.0.1
 LinkingTo: Rcpp (>= 0.11.0)

@@ -1,3 +1,10 @@
+# qwraps2 0.2.4.9000
+
+## Improvements:
+* Extended the documentation for `logit` and `invlogit` to reference bases R
+  methods.
+
+
 # qwraps2 0.2.4
 
 ## New Features

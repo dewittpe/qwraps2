@@ -16,7 +16,34 @@ invlogit(x)
 transform \code{x} either via the logit, or inverse logit.
 }
 \details{
-Why are these functions are not part of base R?  I don't have the
-answer to that question.  So here are functions for easy of use.
+The loogit and inverse logit functions are part of R via the
+logistic distribution functions in the stats package.  
+Quoting from the documentation for the logistic distribution
+
+"\code{qlogis(p)} is the same as the \code{logit} function, \code{logit(p) =
+log(p/1-p)}, and \code{plogis(x)} has consequently been called the 'inverse
+logit'."
+
+See the examples for benchmarking these functions.  The \code{logit} and
+\code{invlogit} functions are faster than the \code{qlogis} and \code{plogis}
+functions.
+}
+\examples{
+library(qwraps2)
+library(rbenchmark)
+
+# compare logit to qlogis
+p <- runif(1e5)
+identical(logit(p), qlogis(p)) 
+benchmark(logit(p), qlogis(p))
+
+# compare invlogit to plogis
+x <- runif(1e5, -1000, 1000)
+identical(invlogit(x), plogis(x))
+benchmark(invlogit(x), plogis(x))
+
+}
+\seealso{
+\code{\link[stats]{qlogis}}
 }
 
