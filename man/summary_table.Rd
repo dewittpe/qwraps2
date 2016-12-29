@@ -103,6 +103,9 @@ grouped_by_table
 # levels
 cbind(whole_table, grouped_by_table)
 
+# Adding a caption for a LaTeX table
+print(whole_table, caption = "Hellow world", markup = "latex")
+
 # A **warning** about grouped_df objects.  The attr
 # If you use dplyr::group_by or
 # dplyr::rowwise to manipulate a data set and fail to use dplyr::ungroup you

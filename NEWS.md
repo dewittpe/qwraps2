@@ -3,6 +3,8 @@
 ## Improvements:
 * Extended the documentation for `logit` and `invlogit` to reference bases R
   methods.
+* Added to the examples for `summary_table` showing how to add a caption to a
+  LaTeX table (#39)
 
 
 # qwraps2 0.2.4

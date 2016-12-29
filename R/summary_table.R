@@ -76,6 +76,9 @@
 #' # To build a table with a column for the whole data set and each of the am
 #' # levels
 #' cbind(whole_table, grouped_by_table)
+#'
+#' # Adding a caption for a LaTeX table
+#' print(whole_table, caption = "Hellow world", markup = "latex")
 #' 
 #' # A **warning** about grouped_df objects.  The attr
 #' # If you use dplyr::group_by or
