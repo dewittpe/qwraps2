@@ -15,15 +15,13 @@ knitr::opts_chunk$set(collapse = TRUE)
 
 # Introduction
 
-It is common for a manuscript to require a data summary table.  Simple summary
-statistics for the whole sample and for subgroups therein.  There are many tools
-available for easing the difficulty involved in building such tables.   It is my
-opinion, that most of these tool exists with sufficient implicit biases and
-nuances imposed by the authors of the tools that other users need to not only
-understand the tool, but to think like the author.  I find myself approaching
-many problems in ways that few others do.  As a result, I needed my own tool for
-building data summary tables.  I hope you like these tools and will be able to
-use it in your work. 
+It is common for a manuscript to require a data summary table.  The table might
+include simple summary statistics for the whole sample and for subgroups.  
+There are several tools available to build such tables.  In my opinion, though,
+most of those tools have nuances imposed by the creators/authors such that other
+users need not only understand the tool, but also think like the authors.  
+I wrote this package to be as flexible and general as possible.  I hope you like
+these tools and will be able to use them in your work. 
 
 This vignette presents the use of the `summary_table`, `tab_summary`, and
 `qable` functions for quickly building data summary tables.  These functions
@@ -35,7 +33,7 @@ We will use a modified version of the `mtcars` data set for examples throughout
 this vignette. The following packages are required to run the code in this
 vignette and to construct the `mtcars2` `data.frame`.
 
-The `mtcars2` data frame will have three versions of the `cyl` vector, the
+The `mtcars2` data frame will have three versions of the `cyl` vector: the
 original numeric values in `cyl`, a `character` version, and a `factor` version.
 
 ```{r}
@@ -57,9 +55,9 @@ mtcars2 <-
 
 str(mtcars2)
 ```
-Notice that in the construction of the `cyl_factor` and `cyl_character` vectors
+Notice that the construction of the `cyl_factor` and `cyl_character` vectors
 was done such that the coercion of `cyl_character` to a `factor` will not be the
-same as the `cyl_factor` vector, the levels are in a different order.
+same as the `cyl_factor` vector; the levels are in a different order.
 
 ```{r}
 with(mtcars2, table(cyl_factor, cyl_character))
@@ -67,20 +65,19 @@ with(mtcars2, all.equal(factor(cyl_character), cyl_factor))
 ```
 
 # Review of Summary Statistic Functions and Formatting
-Let's review some of the formatting functions provided by the `qwraps2` package
 
 ## Means and Standard Deviations
 `mean_sd` will return the (arithmetic) mean and standard deviation for numeric
-vector, i.e., `mean_sd(mtcars2$mpg)` will return the formatted string.
+vector. For example, `mean_sd(mtcars2$mpg)` will return the formatted string.
 ```{r}
 mean_sd(mtcars2$mpg)
 mean_sd(mtcars2$mpg, denote_sd = "paren") 
 ```
 The default setting for `mean_sd` is to return the mean &plusmn; sd.  In a
-table this default is helpful sense the default formating for counts and
-percentages is n (%).  
+table this default is helpful because the default table formatting for counts 
+and percentages is n (%).  
 
-The `mean_sd`, and other functions, are helpful for in-line text too:
+`mean_sd` and other functions are helpful for in-line text too:
 
 > The `nrow(mtcars2)` vehicles in the `mtcars` data set had an average fuel
 > economy of `mean_sd(mtcars$mpg) miles per gallon.
@@ -94,9 +91,9 @@ produces
 If you need the mean and a confidence interval there is `mean_ci`.
 `mean_ci` returns a `qwraps2_mean_ci` object which is a
 named vector with the mean, lower confidence limit, and the upper confidence
-limit.   There printing method for `qwraps2_mean_ci` objects is a call to the
-`frmtci` function.  You an modify the formating of printed result via adjusting
-the arguments pasted to `frmtci`
+limit.   The printing method for `qwraps2_mean_ci` objects is a call to the
+`frmtci` function.  You an modify the formatting of printed result by adjusting
+the arguments pasted to `frmtci`.
 ```{r}
 mci <- mean_ci(mtcars2$mpg)
 mci
@@ -114,7 +111,7 @@ median_iqr(mtcars2$mpg)
 The `n_perc` function is the workhorse, but `n_perc0` is also provided for ease
 of use in the same way that base R has `paste` and `paste0`.  `n_perc` returns
 the n (%) with the percentage sign in the string, `n_perc0` omits the
-percentage sign from the string.  The latter is good for table, the former for
+percentage sign from the string.  The latter is good for tables, the former for
 in-line text.
 
 ```{r}
@@ -132,7 +129,7 @@ n_perc(mtcars2$cyl %in% c(4, 6))
 # Building a Data Summary Table
 
 Objective: build a table reporting summary statistics for some of the variables
-in the `mtcars2` `data.frame` overall, and within subgroups.  We'll start with
+in the `mtcars2` `data.frame` overall and within subgroups.  We'll start with
 something very simple and build up to something bigger.
 
 Let's report the min, max, and mean (sd) for continuous variables and n (%) for
@@ -190,7 +187,7 @@ summary_table(mtcars2, our_summary1)
 summary_table(dplyr::group_by(mtcars2, cyl_factor), our_summary1)
 ```
 
-If you want to change the column names do so via the `cnames` argument to
+If you want to change the column names, do so via the `cnames` argument to
 `qable` via the print method for `qwraps2_summary_table` objects.  Any argument
 that you want to send to `qable` can be sent there when explicitly using the
 `print` method for `qwraps2_summary_table` objects.
@@ -201,8 +198,8 @@ print(summary_table(dplyr::group_by(mtcars2, cyl_factor), our_summary1),
 ```
 
 ## Easy building of the summaries
-The task building the `summaries` list-of-lists can be tedious.  `tab_summary`
-is provided to help with that.  For `numeric` variable, `tab_summary` will
+The task of building the `summaries` list-of-lists can be tedious.  `tab_summary`
+is designed to make it easier.  For `numeric` variables, `tab_summary` will
 provide the `formula`e for the min, median (iqr), mean (sd), and max.  `factor`
 and `character` vectors will have calls to `qwraps2::n_perc` for all levels
 provided.
@@ -280,7 +277,7 @@ The first call errors because `mpg` is not in the global environment.  The
 difference between the second and third calls is subtle.  The second call
 generates a `formula` with `mtcars$mpg` as an argument whereas the third call
 generates a `formula` with only `mpg` as the argument.  The difference will be
-seen in the summary tables if the `.data` is sub setted.
+seen in the summary tables if the `.data` is subsetted.
 
 ```{r, results = "asis"}
 # The same tables:
@@ -299,8 +296,7 @@ Now, the result of the second call above is not correct, it is the same as for
 the first two calls.  This is because `mtcars$` is part of the `formula` and the
 `.data` is ignored.  The correct result is in the table with `MPG 3`.
 
-It is critical that you use `tab_summary` only as a took to help save you key
-strokes.  I strongly encourage you, the end user, to use `summary_table` a lot,
+I encourage you, the end user, to use `summary_table` primarily,
 and use `tab_summary` as a quick tool for generating a script.  It might be best
 if you use `tab_summary` to generate a template of the `formula`e you will want,
 copy the template into your script and editing accordingly.

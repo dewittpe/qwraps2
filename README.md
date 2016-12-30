@@ -11,11 +11,11 @@
 [![Licence](https://img.shields.io/badge/licence-GPL--2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
 [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.0.2-6666ff.svg)](https://cran.r-project.org/)
 
-A collection of helpful functions for summarizing data and formating results.
-These functions are almost certainly found in other R packages on github.com, or
-on CRAN.  This is a collection of methods I have generated to help with
+A collection of helpful functions for summarizing data and formatting results.
+These or similar functions can be found in other R packages on github.com or
+on CRAN.  However, this is a collection of methods I have generated to help with
 particular projects I have worked on over the last several years.  Using my
-origiinal `qwraps` package as the foundation, this work is aimed at simplicity
+original `qwraps` package as the foundation, this work is aimed at simplicity
 and ease of use.  
 
 ----
