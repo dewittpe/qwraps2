@@ -10,18 +10,18 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(collapse = TRUE) 
+knitr::opts_chunk$set(collapse = TRUE)
 ```
 
 # Introduction
 
 It is common for a manuscript to require a data summary table.  The table might
-include simple summary statistics for the whole sample and for subgroups.  
+include simple summary statistics for the whole sample and for subgroups.
 There are several tools available to build such tables.  In my opinion, though,
 most of those tools have nuances imposed by the creators/authors such that other
-users need not only understand the tool, but also think like the authors.  
+users need not only understand the tool, but also think like the authors.
 I wrote this package to be as flexible and general as possible.  I hope you like
-these tools and will be able to use them in your work. 
+these tools and will be able to use them in your work.
 
 This vignette presents the use of the `summary_table`, `tab_summary`, and
 `qable` functions for quickly building data summary tables.  These functions
@@ -46,10 +46,10 @@ options(qwraps2_markup = "markdown")
 
 data(mtcars)
 
-mtcars2 <- 
+mtcars2 <-
   dplyr::mutate(mtcars,
-                cyl_factor = factor(cyl, 
-                                    levels = c(6, 4, 8), 
+                cyl_factor = factor(cyl,
+                                    levels = c(6, 4, 8),
                                     labels = paste(c(6, 4, 8), "cylinders")),
                 cyl_character = paste(cyl, "cylinders"))
 
@@ -71,11 +71,11 @@ with(mtcars2, all.equal(factor(cyl_character), cyl_factor))
 vector. For example, `mean_sd(mtcars2$mpg)` will return the formatted string.
 ```{r}
 mean_sd(mtcars2$mpg)
-mean_sd(mtcars2$mpg, denote_sd = "paren") 
+mean_sd(mtcars2$mpg, denote_sd = "paren")
 ```
 The default setting for `mean_sd` is to return the mean &plusmn; sd.  In a
-table this default is helpful because the default table formatting for counts 
-and percentages is n (%).  
+table this default is helpful because the default table formatting for counts
+and percentages is n (%).
 
 `mean_sd` and other functions are helpful for in-line text too:
 
@@ -118,9 +118,9 @@ in-line text.
 n_perc(mtcars2$cyl == 4)
 n_perc0(mtcars2$cyl == 4)
 
-n_perc(mtcars2$cyl_factor == 4)  # this returns 0 (0.00%) 
+n_perc(mtcars2$cyl_factor == 4)  # this returns 0 (0.00%)
 n_perc(mtcars2$cyl_factor == "4 cylinders")
-n_perc(mtcars2$cyl_factor == levels(mtcars2$cyl_factor)[2]) 
+n_perc(mtcars2$cyl_factor == levels(mtcars2$cyl_factor)[2])
 
 # The count and percentage of 4 or 6 cylinders vehicles in the data set is
 n_perc(mtcars2$cyl %in% c(4, 6))
@@ -154,24 +154,24 @@ the table.  The names are important, as they are used to label row groups and ro
 names in the table.
 
 ```{r}
-our_summary1 <- 
-  list("Miles Per Gallon" = 
-       list("min" = ~ min(mpg), 
+our_summary1 <-
+  list("Miles Per Gallon" =
+       list("min" = ~ min(mpg),
             "max" = ~ max(mpg),
             "mean (sd)" = ~ qwraps2::mean_sd(mpg)),
-       "Displacement" = 
-       list("min" = ~ min(disp), 
+       "Displacement" =
+       list("min" = ~ min(disp),
             "max" = ~ max(disp),
             "mean (sd)" = ~ qwraps2::mean_sd(disp)),
-       "Weight (1000 lbs)" = 
-       list("min" = ~ min(wt), 
+       "Weight (1000 lbs)" =
+       list("min" = ~ min(wt),
             "max" = ~ max(wt),
             "mean (sd)" = ~ qwraps2::mean_sd(wt)),
-       "Forward Gears" = 
+       "Forward Gears" =
        list("Three" = ~ qwraps2::n_perc0(gear == 3),
             "Four"  = ~ qwraps2::n_perc0(gear == 4),
             "Five"  = ~ qwraps2::n_perc0(gear == 5))
-       ) 
+       )
 ```
 
 Building the table is done with a call to `summary_table`:
@@ -192,7 +192,7 @@ If you want to change the column names, do so via the `cnames` argument to
 that you want to send to `qable` can be sent there when explicitly using the
 `print` method for `qwraps2_summary_table` objects.
 ```{r, results = "asis"}
-print(summary_table(dplyr::group_by(mtcars2, cyl_factor), our_summary1), 
+print(summary_table(dplyr::group_by(mtcars2, cyl_factor), our_summary1),
       rtitle = "Summary Statistics",
       cnames = c("Col 1", "Col 2", "Col 3"))
 ```
@@ -223,7 +223,7 @@ Examples for `tab_summary` follow:
 tab_summary(mtcars2$mpg)
 
 tab_summary(mtcars2$gear) # gear is a numeric vector!
-tab_summary(factor(mtcars2$gear)) 
+tab_summary(factor(mtcars2$gear))
 ```
 
 The `our_summary1` object can be recreated as follows.  Some additional row
@@ -232,8 +232,8 @@ Note that the `tab_summary` are made while using `with`.  Further explanation
 for this follows.
 
 ```{r}
-our_summary2 <- 
-  with(mtcars2, 
+our_summary2 <-
+  with(mtcars2,
        list("Miles Per Gallon" = tab_summary(mpg)[c(1, 4, 3)],
             "Displacement (default summary)" = tab_summary(disp),
             "Displacement" = c(tab_summary(disp)[c(1, 4, 3)],
@@ -299,5 +299,5 @@ the first two calls.  This is because `mtcars$` is part of the `formula` and the
 I encourage you, the end user, to use `summary_table` primarily,
 and use `tab_summary` as a quick tool for generating a script.  It might be best
 if you use `tab_summary` to generate a template of the `formula`e you will want,
-copy the template into your script and editing accordingly.
+copy the template into your script and edit accordingly.
 
