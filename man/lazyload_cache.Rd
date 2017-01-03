@@ -9,7 +9,7 @@ lazyload_cache_dir(path = "./cache", envir = parent.frame(), ask = FALSE,
   verbose = TRUE, full.names = TRUE, ...)
 
 lazyload_cache_labels(labels, path = "./cache/", envir = parent.frame(),
-  verbose = TRUE, full.names = TRUE, ...)
+  verbose = TRUE, filter, full.names = TRUE, ...)
 }
 \arguments{
 \item{path}{the path to the cache directory.}
@@ -27,6 +27,10 @@ label? This argument is passed to \code{\link[base]{list.files}}.}
 \item{...}{additional arguments passed to \code{\link[base]{list.files}}.}
 
 \item{labels}{a character vector of the chunk labels to load.}
+
+\item{filter}{an optional function passed to \code{\link[base]{lazyLoad}}.
+when called on a character vector of object names returns a logical vector:
+only objects for which this is true will be loaded.}
 }
 \description{
 Lazyload Cached label(s) or a whole directory.

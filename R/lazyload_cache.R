@@ -55,9 +55,12 @@ lazyload_cache_dir <- function(path = "./cache", envir = parent.frame(), ask = F
 }
 
 #' @param labels a character vector of the chunk labels to load.
+#' @param filter an optional function passed to \code{\link[base]{lazyLoad}}.
+#' when called on a character vector of object names returns a logical vector:
+#' only objects for which this is true will be loaded.
 #' @export
 #' @rdname lazyload_cache
-lazyload_cache_labels <- function(labels, path = "./cache/", envir = parent.frame(), verbose = TRUE, full.names = TRUE, ...) {
+lazyload_cache_labels <- function(labels, path = "./cache/", envir = parent.frame(), verbose = TRUE, filter, full.names = TRUE, ...) {
   files <- do.call(list.files, list(path = path, pattern = paste0("^(", paste(labels, collapse = "|"), ")_[0-9a-f]{32}\\.rdx$"), full.names = full.names, ...))
   files <- gsub("\\.rdx$", "", files)
 
@@ -72,13 +75,14 @@ lazyload_cache_labels <- function(labels, path = "./cache/", envir = parent.fram
   } else {
 
     if (!verbose) {
-      sapply(files, lazyLoad, envir = envir)
+      sapply(files, lazyLoad, envir = envir, filter = filter)
     } else {
       sapply(files, 
-             function(x, envir) { 
+             function(x, envir, filter) { 
                message(paste("Lazyloading", x))
-               lazyLoad(x, envir = envir) },
-             envir = envir)
+               lazyLoad(x, envir = envir, filter = filter) },
+             envir = envir, 
+             filter = filter)
     } 
   }
   invisible()
