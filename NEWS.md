@@ -1,5 +1,10 @@
 # qwraps2 0.2.4.9000
 
+## New Features
+* Added `lazyload_cache_dir` and `lazyload_cache_labels` for (lazy)loading of
+  cached chunks.  Very useful for loading cached `knitr` code chunks into an
+  interactive R session.
+
 ## Improvements:
 * Extended the documentation for `logit` and `invlogit` to reference bases R
   methods.
