@@ -34,4 +34,3 @@ survival:::plot.survfit(leukemia.surv, conf.int = TRUE, lty = 2:3, col = 1:2)
 qkmplot(leukemia.surv, conf_int = TRUE) 
 
 }
-

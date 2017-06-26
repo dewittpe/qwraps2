@@ -2,8 +2,8 @@
 % Please edit documentation in R/frmt.R
 \name{frmt}
 \alias{frmt}
-\alias{frmtci}
 \alias{frmtp}
+\alias{frmtci}
 \title{Format Wrappers}
 \usage{
 frmt(x, digits = getOption("qwraps2_frmt_digits", 2))
@@ -142,4 +142,3 @@ frmtci(temp2)
 \seealso{
 \code{\link{formatC}}
 }
-

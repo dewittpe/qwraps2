@@ -95,4 +95,3 @@ For more detail on arguments you can pass to \code{...} look at the
 non-exported functions form the knitr package \code{knitr:::kable_latex},
 \code{knitr:::kable_markdown}, or others.
 }
-

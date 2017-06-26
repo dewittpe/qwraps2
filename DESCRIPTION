@@ -1,6 +1,6 @@
 Package: qwraps2
 Title: Quick Wraps 2
-Version: 0.2.4.9000
+Version: 0.2.4.9001
 Authors@R: c(
     person("Peter", "DeWitt", , "dewittpe@gmail.com", role = c("aut", "cre")),
     person("Tell",  "Bennett", , "tell.bennett@ucdenver.edu", role = c("ctb"))
@@ -23,7 +23,7 @@ Imports:
     dplyr,
     ggplot2,
     knitr,
-    Rcpp,
+    Rcpp (>= 0.12.11),
     tidyr,
     utils
 Suggests:
@@ -32,6 +32,6 @@ Suggests:
     covr,
     rbenchmark,
     rmarkdown
-RoxygenNote: 5.0.1
-LinkingTo: Rcpp (>= 0.11.0)
+RoxygenNote: 6.0.1
+LinkingTo: Rcpp (>= 0.12.11)
 VignetteBuilder: knitr

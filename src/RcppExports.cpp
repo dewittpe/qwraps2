@@ -27,3 +27,14 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+
+static const R_CallMethodDef CallEntries[] = {
+    {"qwraps2_logit", (DL_FUNC) &qwraps2_logit, 1},
+    {"qwraps2_invlogit", (DL_FUNC) &qwraps2_invlogit, 1},
+    {NULL, NULL, 0}
+};
+
+RcppExport void R_init_qwraps2(DllInfo *dll) {
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
+}

@@ -82,4 +82,3 @@ Bland, J. Martin, and DouglasG Altman. "Statistical methods for assessing
 agreement between two methods of clinical measurement." The lancet 327, no. 8476
 (1986): 307-310.
 }
-

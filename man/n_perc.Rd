@@ -2,8 +2,8 @@
 % Please edit documentation in R/n_perc.R
 \name{n_perc}
 \alias{n_perc}
-\alias{n_perc0}
 \alias{perc_n}
+\alias{n_perc0}
 \title{Count and Percentage}
 \usage{
 n_perc(x, digits = getOption("qwraps2_frmt_digits", 2), na_rm = FALSE,
@@ -65,4 +65,3 @@ n_perc0(c(0, 1,1, 1, 0, 0))
 n_perc0(mtcars$cyl == 6)
 
 }
-

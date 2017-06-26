@@ -49,4 +49,3 @@ Use \code{lazyload_cache_dir} to load a whole directory of cached objects.
 
 Use \code{lazyload_cache_labels} to load and explicit set of cached chunks.
 }
-

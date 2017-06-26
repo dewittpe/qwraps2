@@ -42,4 +42,3 @@ plot(temp[[1]])
 plot(temp[[2]])
 
 }
-

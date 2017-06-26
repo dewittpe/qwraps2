@@ -66,4 +66,3 @@ mean_ci(log(mtcars$mpg), transform = exp, qdist = stats::qt, qdist.args = list(d
 \seealso{
 \code{\link{frmtci}}
 }
-

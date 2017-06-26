@@ -55,4 +55,3 @@ The basis for this work came from a Stack Overflow posting:
 \seealso{
 \code{\link[base]{ls}}
 }
-

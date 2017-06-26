@@ -62,4 +62,3 @@ qacf(testdf)
 qacf(testdf, show_sig = TRUE)
 
 }
-
