@@ -39,12 +39,27 @@
 #' @export
 #' @rdname logit
 logit <- function(x) {
-    .Call('qwraps2_logit', PACKAGE = 'qwraps2', x)
+    .Call('_qwraps2_logit', PACKAGE = 'qwraps2', x)
 }
 
 #' @export
 #' @rdname logit
 invlogit <- function(x) {
-    .Call('qwraps2_invlogit', PACKAGE = 'qwraps2', x)
+    .Call('_qwraps2_invlogit', PACKAGE = 'qwraps2', x)
+}
+
+#' @title Trapezoid Rule Numeric Integration
+#'
+#' @description Compute the integral of y with respect to x via trapezoid rule.
+#'
+#' @param x,y numeric vectors of equal length
+#'
+#' @return a numeric value, the estimated integral
+#'
+#' @example examples/traprule.R
+#'
+#' @export
+traprule <- function(x, y) {
+    .Call('_qwraps2_traprule', PACKAGE = 'qwraps2', x, y)
 }
 
