@@ -56,10 +56,10 @@
 #' make <- sub("^(\\w+)\\s?(.*)$", "\\1", rownames(mtcars))
 #' make <- c(table(make))
 #' 
-#' # A LaTeX table with a verticle bar between each column
+#' # A LaTeX table with a vertical bar between each column
 #' qable(mtcars[sort(rownames(mtcars)), ], rgroup = make) 
 #' 
-#' # A LaTeX table with no verticle bars between columns
+#' # A LaTeX table with no vertical bars between columns
 #' qable(mtcars[sort(rownames(mtcars)), ], rgroup = make, vline = "")
 #' 
 #' # a markdown table
