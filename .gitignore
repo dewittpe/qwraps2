@@ -3,3 +3,4 @@ quick_check.sh
 *.tar.gz
 qwraps2.Rcheck/
 inst/doc
+*.Rout
