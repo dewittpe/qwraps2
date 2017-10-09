@@ -5,6 +5,10 @@
   cached chunks.  Very useful for loading cached `knitr` code chunks into an
   interactive R session.
 
+* Added `traprule` for a quick way to integrate a numeric vector
+* Added `create_pkg`: a wrapper about `devtools::create` with more defaults that
+  I prefer.
+
 ## Improvements:
 * Extended the documentation for `logit` and `invlogit` to reference bases R
   methods.

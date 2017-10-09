@@ -1,0 +1,13 @@
+^\.travis\.yml$
+^.gitlab-ci.yml$
+^.gitlab-ci-r-setup.R$
+^codecov\.yml$ 
+^CONTRIBUTING.md$
+^NEWS.md$
+^README.md$
+^logo.png$
+^logo-518x600.png$
+^.*\.Rout$
+^.*\.Rproj$
+^\.Rproj\.user$
+^makefile$

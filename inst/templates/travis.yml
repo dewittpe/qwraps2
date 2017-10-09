@@ -1,0 +1,11 @@
+sudo: false
+language: r
+cache: packages
+
+# whitelist
+branches:
+  only:
+    - master
+
+after_success:
+  - Rscript -e 'covr::codecov(type = "all", commentDontrun = FALSE, commentDonttest = FALSE)'
