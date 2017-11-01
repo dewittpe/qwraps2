@@ -4,8 +4,8 @@ PKG_NAME    = $(shell gawk '/^Package:/{print $$2}' DESCRIPTION)
 SRC    = $(wildcard src/*.cpp)
 RFILES = $(wildcard R/*.R)
 EXAMPLES = $(wildcard examples/*.R)
-VIGNETTES = $(shell find . -regex "./vignettes/.*\.R[mn][dw]")
-TESTS  = $(wildcard tests/testthat/*.R)
+VIGNETTES = $(wildcard vignettes/*.R) 
+#VIGNETTES = $(shell find . -regex "./vignettes/.*\.R[mn][dw]")
 RAWDATAR  = $(wildcard data-raw/*.R)
 
 .PHONY: all
@@ -20,11 +20,12 @@ all: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 	/bin/rm -f .document.R
 
 .vignettes.Rout: $(VIGNETTES)
-	echo "devtools::build_vignettes()" > .vignettes.R
+	if [ -d "./vignettes" ]; then $(MAKE) -C vignettes; fi
+	echo "date()" > .vignettes.R
 	R CMD BATCH --vanilla .vignettes.R
 	/bin/rm -f .vignettes.R
 
-$(PKG_NAME)_$(PKG_VERSION).tar.gz: .document.Rout $(VIGNETTES) DESCRIPTION
+$(PKG_NAME)_$(PKG_VERSION).tar.gz: .document.Rout .vignettes.Rout DESCRIPTION
 	R CMD build --no-resave-data --md5 .
 
 check: $(PKG_NAME)_$(PKG_VERSION).tar.gz
@@ -38,5 +39,4 @@ clean:
 	/bin/rm -rf $(PKG_NAME).Rcheck
 	/bin/rm -f .document.Rout
 	/bin/rm -f .vignettes.Rout
-	/bin/rm -f inst/doc/*
-
+	/bin/rm -f inst/doc/* 
