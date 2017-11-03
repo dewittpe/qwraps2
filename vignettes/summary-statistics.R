@@ -1,42 +1,45 @@
----
-title: "Formatted Summary Statistics and Data Summary Tables with qwraps2"
-author: "Peter DeWitt"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{summary-statistics}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
-
-```{r, include = FALSE}
+#'---
+#'title: "Formatted Summary Statistics and Data Summary Tables with qwraps2"
+#'author: "Peter DeWitt"
+#'date: "`r Sys.Date()`"
+#'output: rmarkdown::html_vignette
+#'vignette: >
+#'  %\VignetteIndexEntry{summary-statistics}
+#'  %\VignetteEngine{knitr::rmarkdown}
+#'  %\VignetteEncoding{UTF-8}
+#'---
+#'
+#+ label = "setup", include = FALSE
 knitr::opts_chunk$set(collapse = TRUE)
-```
+#'
+# /*
+# =============================================================================
+# */
+#'
+#' # Introduction
+#'
+#' It is common for a manuscript to require a data summary table.  The table might
+#' include simple summary statistics for the whole sample and for subgroups.
+#' There are several tools available to build such tables.  In my opinion, though,
+#' most of those tools have nuances imposed by the creators/authors such that other
+#' users need not only understand the tool, but also think like the authors.
+#' I wrote this package to be as flexible and general as possible.  I hope you like
+#' these tools and will be able to use them in your work.
+#'
+#' This vignette presents the use of the `summary_table`, `tab_summary`, and
+#' `qable` functions for quickly building data summary tables.  These functions
+#' implicitly use the `mean_sd`, `median_iqr`, and `n_perc0` functions from
+#' `qwraps2` as well.
+#'
+#' ## Prerequisites Example Data Set
+#' We will use a modified version of the `mtcars` data set for examples throughout
+#' this vignette. The following packages are required to run the code in this
+#' vignette and to construct the `mtcars2` `data.frame`.
+#'
+#' The `mtcars2` data frame will have three versions of the `cyl` vector: the
+#' original numeric values in `cyl`, a `character` version, and a `factor` version.
+#'
 
-# Introduction
-
-It is common for a manuscript to require a data summary table.  The table might
-include simple summary statistics for the whole sample and for subgroups.
-There are several tools available to build such tables.  In my opinion, though,
-most of those tools have nuances imposed by the creators/authors such that other
-users need not only understand the tool, but also think like the authors.
-I wrote this package to be as flexible and general as possible.  I hope you like
-these tools and will be able to use them in your work.
-
-This vignette presents the use of the `summary_table`, `tab_summary`, and
-`qable` functions for quickly building data summary tables.  These functions
-implicitly use the `mean_sd`, `median_iqr`, and `n_perc0` functions from
-`qwraps2` as well.
-
-## Prerequisites Example Data Set
-We will use a modified version of the `mtcars` data set for examples throughout
-this vignette. The following packages are required to run the code in this
-vignette and to construct the `mtcars2` `data.frame`.
-
-The `mtcars2` data frame will have three versions of the `cyl` vector: the
-original numeric values in `cyl`, a `character` version, and a `factor` version.
-
-```{r}
 library(dplyr)
 library(qwraps2)
 
@@ -54,67 +57,65 @@ mtcars2 <-
                 cyl_character = paste(cyl, "cylinders"))
 
 str(mtcars2)
-```
-Notice that the construction of the `cyl_factor` and `cyl_character` vectors
-was done such that the coercion of `cyl_character` to a `factor` will not be the
-same as the `cyl_factor` vector; the levels are in a different order.
 
-```{r}
+#'
+#' Notice that the construction of the `cyl_factor` and `cyl_character` vectors
+#' was done such that the coercion of `cyl_character` to a `factor` will not be the
+#' same as the `cyl_factor` vector; the levels are in a different order.
+#'
 with(mtcars2, table(cyl_factor, cyl_character))
 with(mtcars2, all.equal(factor(cyl_character), cyl_factor))
-```
 
-# Review of Summary Statistic Functions and Formatting
-
-## Means and Standard Deviations
-`mean_sd` will return the (arithmetic) mean and standard deviation for numeric
-vector. For example, `mean_sd(mtcars2$mpg)` will return the formatted string.
-```{r}
+#'
+#' # Review of Summary Statistic Functions and Formatting
+#'
+#' ## Means and Standard Deviations
+#' `mean_sd` will return the (arithmetic) mean and standard deviation for numeric
+#' vector. For example, `mean_sd(mtcars2$mpg)` will return the formatted string.
+#'
 mean_sd(mtcars2$mpg)
 mean_sd(mtcars2$mpg, denote_sd = "paren")
-```
-The default setting for `mean_sd` is to return the mean &plusmn; sd.  In a
-table this default is helpful because the default table formatting for counts
-and percentages is n (%).
 
-`mean_sd` and other functions are helpful for in-line text too:
-
-> The `nrow(mtcars2)` vehicles in the `mtcars` data set had an average fuel
-> economy of `mean_sd(mtcars$mpg) miles per gallon.
-
-produces
-
-> The `r nrow(mtcars2)` vehicles in the `mtcars` data set had an average fuel
-> economy of `r mean_sd(mtcars$mpg)` miles per gallon.
-
-## Mean and Confidence intervals
-If you need the mean and a confidence interval there is `mean_ci`.
-`mean_ci` returns a `qwraps2_mean_ci` object which is a
-named vector with the mean, lower confidence limit, and the upper confidence
-limit.   The printing method for `qwraps2_mean_ci` objects is a call to the
-`frmtci` function.  You an modify the formatting of printed result by adjusting
-the arguments pasted to `frmtci`.
-```{r}
+#'
+#' The default setting for `mean_sd` is to return the mean &plusmn; sd.  In a
+#' table this default is helpful because the default table formatting for counts
+#' and percentages is n (%).
+#'
+#' `mean_sd` and other functions are helpful for in-line text too:
+#'
+#'> The `r nrow(mtcars2)` vehicles in the `mtcars` data set had an average fuel
+#'> economy of `r mean_sd(mtcars$mpg) miles per gallon.
+#'
+#' produces
+#'
+#'> The `r nrow(mtcars2)` vehicles in the `mtcars` data set had an average fuel
+#'> economy of `r mean_sd(mtcars$mpg)` miles per gallon.
+#'
+#' ## Mean and Confidence intervals
+#' If you need the mean and a confidence interval there is `mean_ci`.
+#' `mean_ci` returns a `qwraps2_mean_ci` object which is a
+#' named vector with the mean, lower confidence limit, and the upper confidence
+#' limit.   The printing method for `qwraps2_mean_ci` objects is a call to the
+#' `frmtci` function.  You an modify the formatting of printed result by adjusting
+#' the arguments pasted to `frmtci`.
 mci <- mean_ci(mtcars2$mpg)
 mci
 print(mci, show_level = TRUE)
-```
 
-## Median and Inner Quartile Range
-Similar to the `mean_sd` function, the `median_iqr` returns the median and the
-inner quartile range (IQR) of a data vector.
-```{r}
+#'
+#' ## Median and Inner Quartile Range
+#' Similar to the `mean_sd` function, the `median_iqr` returns the median and the
+#' inner quartile range (IQR) of a data vector.
 median_iqr(mtcars2$mpg)
-```
 
-## Count and Percentages
-The `n_perc` function is the workhorse, but `n_perc0` is also provided for ease
-of use in the same way that base R has `paste` and `paste0`.  `n_perc` returns
-the n (%) with the percentage sign in the string, `n_perc0` omits the
-percentage sign from the string.  The latter is good for tables, the former for
-in-line text.
-
-```{r}
+#'
+#' ## Count and Percentages
+#' The `n_perc` function is the workhorse, but `n_perc0` is also provided for ease
+#' of use in the same way that base R has `paste` and `paste0`.  `n_perc` returns
+#' the n (%) with the percentage sign in the string, `n_perc0` omits the
+#' percentage sign from the string.  The latter is good for tables, the former for
+#' in-line text.
+#'
 n_perc(mtcars2$cyl == 4)
 n_perc0(mtcars2$cyl == 4)
 
@@ -124,36 +125,34 @@ n_perc(mtcars2$cyl_factor == levels(mtcars2$cyl_factor)[2])
 
 # The count and percentage of 4 or 6 cylinders vehicles in the data set is
 n_perc(mtcars2$cyl %in% c(4, 6))
-```
 
-# Building a Data Summary Table
-
-Objective: build a table reporting summary statistics for some of the variables
-in the `mtcars2` `data.frame` overall and within subgroups.  We'll start with
-something very simple and build up to something bigger.
-
-Let's report the min, max, and mean (sd) for continuous variables and n (%) for
-categorical variables.  We will report `mpg`, `disp`, `wt`, and `gear` overall
-and by number of cylinders.
-
-The function `summary_table`, along with some `dplyr` functions will do the work
-for us.  `summary_table` takes two arguments:
-
-1. `.data` a (`grouped_df`) data.frame
-2. `summaries` a list of summaries.  This is a list-of-lists.  The outer list
-   defines the row groups and the inner lists define the specif summaries.
-
-```{r}
+#'
+#' # Building a Data Summary Table
+#'
+#' Objective: build a table reporting summary statistics for some of the variables
+#' in the `mtcars2` `data.frame` overall and within subgroups.  We'll start with
+#' something very simple and build up to something bigger.
+#'
+#' Let's report the min, max, and mean (sd) for continuous variables and n (%) for
+#' categorical variables.  We will report `mpg`, `disp`, `wt`, and `gear` overall
+#' and by number of cylinders.
+#'
+#' The function `summary_table`, along with some `dplyr` functions will do the work
+#' for us.  `summary_table` takes two arguments:
+#'
+#' 1. `.data` a (`grouped_df`) data.frame
+#' 2. `summaries` a list of summaries.  This is a list-of-lists.  The outer list
+#'    defines the row groups and the inner lists define the specif summaries.
+#'
 args(summary_table)
-```
 
-Let's build a list-of-lists to pass to the `summaries` argument of
-`summary_table`.  The inner lists are named `formula`e defining the wanted
-summary.  These `formula`e are passed through `dplyr::summarize_` to generate
-the table.  The names are important, as they are used to label row groups and row
-names in the table.
-
-```{r}
+#'
+#' Let's build a list-of-lists to pass to the `summaries` argument of
+#' `summary_table`.  The inner lists are named `formula`e defining the wanted
+#' summary.  These `formula`e are passed through `dplyr::summarize_` to generate
+#' the table.  The names are important, as they are used to label row groups and row
+#' names in the table.
+#'
 our_summary1 <-
   list("Miles Per Gallon" =
        list("min" = ~ min(mpg),
@@ -172,66 +171,64 @@ our_summary1 <-
             "Four"  = ~ qwraps2::n_perc0(gear == 4),
             "Five"  = ~ qwraps2::n_perc0(gear == 5))
        )
-```
-
-Building the table is done with a call to `summary_table`:
-
+#'
+#' Building the table is done with a call to `summary_table`:
+#'
+#+ results = "asis"
 ### Overall
-```{r, results = "asis"}
 summary_table(mtcars2, our_summary1)
 summary_table(mtcars2, our_summary1)
-```
 
+#'
+#'
+#'
+
+#+ results = "asis"
 ### By number of Cylinders
-```{r, results = "asis"}
 summary_table(dplyr::group_by(mtcars2, cyl_factor), our_summary1)
-```
 
-If you want to change the column names, do so via the `cnames` argument to
-`qable` via the print method for `qwraps2_summary_table` objects.  Any argument
-that you want to send to `qable` can be sent there when explicitly using the
-`print` method for `qwraps2_summary_table` objects.
-```{r, results = "asis"}
+#'
+#' If you want to change the column names, do so via the `cnames` argument to
+#' `qable` via the print method for `qwraps2_summary_table` objects.  Any argument
+#' that you want to send to `qable` can be sent there when explicitly using the
+#' `print` method for `qwraps2_summary_table` objects.
+#+ results = "asis"
 print(summary_table(dplyr::group_by(mtcars2, cyl_factor), our_summary1),
       rtitle = "Summary Statistics",
       cnames = c("Col 1", "Col 2", "Col 3"))
-```
-
-## Easy building of the summaries
-The task of building the `summaries` list-of-lists can be tedious.  `tab_summary`
-is designed to make it easier.  For `numeric` variables, `tab_summary` will
-provide the `formula`e for the min, median (iqr), mean (sd), and max.  `factor`
-and `character` vectors will have calls to `qwraps2::n_perc` for all levels
-provided.
-
-For version 0.2.3.9000 or beyond, arguments have been added to `tab_summary` to
-help control some of the formatting of counts and percentages.  The original
-behavior of `tab_summary` used `n_perc0` to format the summary of categorical
-variables.  Now, `n_perc` is called and the end user can specify formatting
-options via a `list` passed via the `n_perc_args` argument.
-The default settings for `tab_summary` is below.
-
-```{r}
+#'
+#' ## Easy building of the summaries
+#' The task of building the `summaries` list-of-lists can be tedious.  `tab_summary`
+#' is designed to make it easier.  For `numeric` variables, `tab_summary` will
+#' provide the `formula`e for the min, median (iqr), mean (sd), and max.  `factor`
+#' and `character` vectors will have calls to `qwraps2::n_perc` for all levels
+#' provided.
+#'
+#' For version 0.2.3.9000 or beyond, arguments have been added to `tab_summary` to
+#' help control some of the formatting of counts and percentages.  The original
+#' behavior of `tab_summary` used `n_perc0` to format the summary of categorical
+#' variables.  Now, `n_perc` is called and the end user can specify formatting
+#' options via a `list` passed via the `n_perc_args` argument.
+#' The default settings for `tab_summary` is below.
 args(tab_summary)
-```
-These options will make the output look as if `n_perc0` had been called instead
-of `n_perc`.  More importantly, these defaults *will not* honor the
-`options()$qwraps2_frmt_digits`.
 
-Examples for `tab_summary` follow:
-```{r}
+#'
+#' These options will make the output look as if `n_perc0` had been called instead
+#' of `n_perc`.  More importantly, these defaults *will not* honor the
+#' `options()$qwraps2_frmt_digits`.
+#'
+#' Examples for `tab_summary` follow:
 tab_summary(mtcars2$mpg)
 
 tab_summary(mtcars2$gear) # gear is a numeric vector!
 tab_summary(factor(mtcars2$gear))
-```
 
-The `our_summary1` object can be recreated as follows.  Some additional row
-groups are provided to show default behavior of `tab_summary`. **Important:**
-Note that the `tab_summary` are made while using `with`.  Further explanation
-for this follows.
-
-```{r}
+#'
+#' The `our_summary1` object can be recreated as follows.  Some additional row
+#' groups are provided to show default behavior of `tab_summary`. **Important:**
+#' Note that the `tab_summary` are made while using `with`.  Further explanation
+#' for this follows.
+#'
 our_summary2 <-
   with(mtcars2,
        list("Miles Per Gallon" = tab_summary(mpg)[c(1, 4, 3)],
@@ -241,63 +238,66 @@ our_summary2 <-
             "Weight (1000 lbs)" = tab_summary(wt)[c(1, 4, 3)],
             "Forward Gears" = tab_summary(as.character(gear))
             ))
-```
-
-```{r, results = "asis"}
+#'
+#'
+#'
+#+ results = "asis"
 whole <- summary_table(mtcars2, our_summary2)
 whole
-```
 
-Group by multiple factors:
-```{r, results = "asis"}
+#'
+#' Group by multiple factors:
+#'
+#+ results = "asis"
 grouped <- summary_table(dplyr::group_by(mtcars2, am, vs),  our_summary2)
 grouped
-```
 
-As one table:
-
-```{r, results = "asis"}
+#'
+#' As one table:
+#'
+#+ results = "asis"
 both <- cbind(whole, grouped)
 both
-```
 
-### Why use `with` with `tab_summary`?
-`tab_summary` was written to help construct `formula`e to save the end user key
-strokes.  There are plenty of reasons for `summary_table` to be used *without*
-`tab_summary`.  However, when it is helpful to use `tab_summary` make sure you
-understand the results.
-
-For example, let's look at a simple summary of the miles per gallon.
-```{r}
+#'
+#' ### Why use `with` with `tab_summary`?
+#' `tab_summary` was written to help construct `formula`e to save the end user key
+#' strokes.  There are plenty of reasons for `summary_table` to be used *without*
+#' `tab_summary`.  However, when it is helpful to use `tab_summary` make sure you
+#' understand the results.
+#'
+#' For example, let's look at a simple summary of the miles per gallon.
 # tab_summary(mpg)[[3]] ## this errors
 tab_summary(mtcars$mpg)[[3]]
 with(mtcars, tab_summary(mpg))[[3]]
-```
-The first call errors because `mpg` is not in the global environment.  The
-difference between the second and third calls is subtle.  The second call
-generates a `formula` with `mtcars$mpg` as an argument whereas the third call
-generates a `formula` with only `mpg` as the argument.  The difference will be
-seen in the summary tables if the `.data` is subsetted.
 
-```{r, results = "asis"}
+#'
+#' The first call errors because `mpg` is not in the global environment.  The
+#' difference between the second and third calls is subtle.  The second call
+#' generates a `formula` with `mtcars$mpg` as an argument whereas the third call
+#' generates a `formula` with only `mpg` as the argument.  The difference will be
+#' seen in the summary tables if the `.data` is subsetted.
 # The same tables:
 summary_table(mtcars, list("MPG 1" = with(mtcars, tab_summary(mpg)[[3]])))
 summary_table(mtcars, list("MPG 2" = tab_summary(mtcars$mpg)[[3]]))
-```
-These two calls generate the same table because the `.data` and the implied data
-within the second call are the same.
 
-```{r, results = "asis"}
+#'
+#' These two calls generate the same table because the `.data` and the implied
+#' data within the second call are the same.
+#+ results = "asis"
 # Different tables
 summary_table(dplyr::filter(mtcars, am == 0), list("MPG 3" = with(mtcars, tab_summary(mpg)[[3]])))
 summary_table(dplyr::filter(mtcars, am == 0), list("MPG 4" = tab_summary(mtcars$mpg)[[3]]))
-```
-Now, the result of the second call above is not correct, it is the same as for
-the first two calls.  This is because `mtcars$` is part of the `formula` and the
-`.data` is ignored.  The correct result is in the table with `MPG 3`.
 
-I encourage you, the end user, to use `summary_table` primarily,
-and use `tab_summary` as a quick tool for generating a script.  It might be best
-if you use `tab_summary` to generate a template of the `formula`e you will want,
-copy the template into your script and edit accordingly.
-
+#'
+#' Now, the result of the second call above is not correct, it is the same as
+#' for the first two calls.  This is because `mtcars$` is part of the `formula`
+#' and the `.data` is ignored.  The correct result is in the table with `MPG 3`.
+#'
+#' I encourage you, the end user, to use `summary_table` primarily, and use
+#' `tab_summary` as a quick tool for generating a script.  It might be best if
+#' you use `tab_summary` to generate a template of the `formula`e you will want,
+#' copy the template into your script and edit accordingly.
+#'
+#' # Session Info
+print(sessionInfo(), local = FALSE)
