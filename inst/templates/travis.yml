@@ -6,6 +6,13 @@ r:
 cache: packages
 warnings_are_errors: true
 
+install:
+  - R -e 'devtools::install_deps(dep = TRUE)'
+  - make
+
+script:
+  - R CMD check --as-cran *.tar.gz 
+
 # whitelist
 branches:
   only:
