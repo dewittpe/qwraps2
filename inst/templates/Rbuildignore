@@ -1,7 +1,7 @@
 ^\.travis\.yml$
 ^.gitlab-ci.yml$
 ^.gitlab-ci-r-setup.R$
-^codecov\.yml$ 
+^codecov\.yml$
 ^CONTRIBUTING.md$
 ^NEWS.md$
 ^README.md$
@@ -10,4 +10,4 @@
 ^.*\.Rout$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^makefile$
+^.*makefile$
