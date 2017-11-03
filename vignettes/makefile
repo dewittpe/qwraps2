@@ -1,0 +1,1 @@
+../inst/templates/vignettes-makefile

@@ -26,7 +26,7 @@ all: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 	/bin/rm -f .vignettes.R
 
 $(PKG_NAME)_$(PKG_VERSION).tar.gz: .document.Rout .vignettes.Rout DESCRIPTION
-	R CMD build --no-resave-data --md5 .
+	R CMD build --no-resave-data --md5 $(build-options) .
 
 check: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 	R CMD check $(PKG_NAME)_$(PKG_VERSION).tar.gz
@@ -40,3 +40,4 @@ clean:
 	/bin/rm -f .document.Rout
 	/bin/rm -f .vignettes.Rout
 	/bin/rm -f inst/doc/*
+
