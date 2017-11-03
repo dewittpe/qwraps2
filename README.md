@@ -25,6 +25,35 @@ If you have a particular task or function used for data summaries or for
 reporting that you think would be helpful to include in this package please fork
 the repo, add the feature, and send me a pull request.  
 
+### Cloning the repo
+
+**IMPORTANT NOTE FOR WINDOW USERS**
+This package uses soft links.  Those on unix-like systems, this shouldn't be an
+issue.  If you are on windows then you will need to clone, or re-clone, the
+repository using 
+
+    # Using https
+    git clone -c core.symlinks=true https://github.com/dewittpe/qwraps2
+
+    # Using ssh
+    git clone -c core.symlinks=true git@github.com:dewittpe/qwraps2
+
+### Building the package
+Use the makefile.  RStudio users, you will find a `qwraps2.Rproj` that will set
+the default to use the makefile in the build.  My prefered IDE is
+[neovim](https://neovim.io) with the
+[Nvim-R](https://github.com/jalvesaq/Nvim-R) plugin and I prefer to work on a
+Debian system.  After cloning the repo, a simple call
+
+    make
+
+will build the package.  Passing arguments to `R CMD build` can be done too.
+For example, building the package without the vignettes is done via:
+
+    make build-options=--no-build-vignettes
+
+Rules for `clean` and package `check` are provided too.
+
 ---
  
 ## Install
