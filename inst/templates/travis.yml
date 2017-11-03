@@ -1,6 +1,10 @@
 sudo: false
 language: r
+r:
+  - release
+  - devel
 cache: packages
+warnings_are_errors: true
 
 # whitelist
 branches:
