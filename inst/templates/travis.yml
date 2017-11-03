@@ -16,6 +16,8 @@ install:
 
 script:
   - make all
+  - cat .document.Rout
+  - cat .vignettes.Rout
   - R CMD check --as-cran *.tar.gz 
 
 # whitelist
