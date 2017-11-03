@@ -18,11 +18,11 @@
 #'   \item .Rbuildignore
 #'   \item makefile
 #' }
-#' 
+#'
 #' If data will be used in the package set \code{use_data_raw = TRUE} when
 #' creating the package skeleton, or use \code{create_data_raw()} after the
 #' initial package skeleton is created to add the data and data-raw directories.
-#' 
+#'
 #' Template files for CI via travis and gitlab runners are in the template
 #' directtory. Setting \code{ci} to \code{travis} of \code{gitlab} will place
 #' the needed template files into the top level of the package skeleton.
@@ -30,12 +30,13 @@
 #' @param path location to create a new package.  The last component of the path
 #' will be used as the package name.
 #' @param use_data_raw logical (default \code{FALSE}), if \code{TRUE} then data
-#' and data-raw directories are created.  
+#' and data-raw directories are created.
 #' @param ci when set to \code{travis} of \code{gitlab} will place
 #' the needed template files into the top level of the package skeleton.
 #' @param rstudio passed to \code{\link[devtools]{create}}.  devtools sets the
 #' default to \code{TRUE} but \code{create_pkg} sets the default to \code{FALSE}
 #' since I don't use RStudio.
+#' @param name the name of the vigenette
 #'
 #' @example examples/create_pkg.R
 #'
@@ -81,7 +82,7 @@ create_pkg <- function(path, use_data_raw = FALSE, ci = NULL, rstudio = FALSE) {
                    rstudio = rstudio
                    )
 
-  dir.create(paste0(path, "/examples")) 
+  dir.create(paste0(path, "/examples"))
 
   if (use_data_raw) {
     create_data_raw(path)
@@ -90,30 +91,30 @@ create_pkg <- function(path, use_data_raw = FALSE, ci = NULL, rstudio = FALSE) {
   apply(templates, 1, function(x) {
           writeLines(readLines(system.file("templates", x[1], package = "qwraps2")),
                      paste0(path, "/", x[2]))
-                   }) 
+                   })
 
   invisible(TRUE)
 }
 
 #' @rdname create_pkg
 #' @export
-create_vignette(name, path = ".") {
+create_vignette <- function(name, path = ".") {
   path <- normalizePath(path.expand(path))
   dir.create(paste0(path, "/vignettes"))
   writeLines(readLines(system.file("templates", "vignette.R", package = "qwraps2")),
              paste0(path, "/vignettes/", name))
   writeLines(readLines(system.file("templates", "vignettes-makefile", package = "qwraps2")),
              paste0(path, "/vignettes/makefile"))
-  invisible(TRUE) 
+  invisible(TRUE)
 }
 
 #' @rdname create_pkg
 #' @export
-create_data_raw <- function(path = ".") { 
+create_data_raw <- function(path = ".") {
   path <- normalizePath(path.expand(path))
   dir.create(paste0(path, "/data"))
   dir.create(paste0(path, "/data-raw"))
   writeLines(readLines(system.file("templates", "data-raw-makefile", package = "qwraps2")),
              paste0(path, "/data-raw/makefile"))
-  invisible(TRUE) 
+  invisible(TRUE)
 }

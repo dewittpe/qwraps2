@@ -3,10 +3,13 @@
 \name{create_pkg}
 \alias{create_pkg}
 \alias{create_pkg}
+\alias{create_vignette}
 \alias{create_data_raw}
 \title{Create Package}
 \usage{
 create_pkg(path, use_data_raw = FALSE, ci = NULL, rstudio = FALSE)
+
+create_vignette(name, path = ".")
 
 create_data_raw(path = ".")
 }
@@ -23,6 +26,8 @@ the needed template files into the top level of the package skeleton.}
 \item{rstudio}{passed to \code{\link[devtools]{create}}.  devtools sets the
 default to \code{TRUE} but \code{create_pkg} sets the default to \code{FALSE}
 since I don't use RStudio.}
+
+\item{name}{the name of the vigenette}
 }
 \description{
 A wrapper about \code{\link[devtools]{create}} for creating R package
