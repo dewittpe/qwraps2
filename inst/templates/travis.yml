@@ -6,6 +6,11 @@ r:
 cache: packages
 warnings_are_errors: true
 
+addons:
+  apt:
+    packages:
+      - make
+
 install:
   - R -e 'devtools::install_deps(dep = TRUE)'
   - make
