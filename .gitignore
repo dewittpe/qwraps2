@@ -4,3 +4,4 @@ quick_check.sh
 qwraps2.Rcheck/
 inst/doc
 *.Rout
+vignettes/summary-statistics.Rmd

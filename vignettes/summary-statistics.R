@@ -83,8 +83,8 @@ mean_sd(mtcars2$mpg, denote_sd = "paren")
 #'
 #' `mean_sd` and other functions are helpful for in-line text too:
 #'
-#'> The `r nrow(mtcars2)` vehicles in the `mtcars` data set had an average fuel
-#'> economy of `r mean_sd(mtcars$mpg) miles per gallon.
+#'     The `r nrow(mtcars2)` vehicles in the `mtcars` data set had an average fuel
+#'     economy of `r mean_sd(mtcars$mpg)` miles per gallon.
 #'
 #' produces
 #'
