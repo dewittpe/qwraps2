@@ -1,25 +1,12 @@
-sudo: required
-dist: trusty
+sudo: false
+language: r
+r:
+  - release
+  - devel
+cache: packages
+warnings_are_errors: true
 
-before_install:
-  - apt-get install -qq update
-  - apt-get install -y r-base-dev
-  - wget https://github.com/jgm/pandoc/releases/download/1.19.2.1/pandoc-1.19.2.1-1-amd64.deb
-  - dpkg -i pandoc-1.19.2.1-1-amd64.deb
-  - wget https://stat.ethz.ch/R/daily/R-devel.tar.gz
-  - tar -xvf R-devel.tar.gz
-  - cd R-devel
-  - ./configure --enable-R-shlib --enable-BLAS-shlib --with-blas --with-lapack --with-x=no # --with-readline --with-cairo --with-libtiff --with-libpng --with-jpeglib --with-blas
-  - make
-  - cd ..  
-  - alias R="./R-devel/bin/R"
-  - R -e 'install.packages("devtools", repos = "http://cran.rstudio.com")'
-  - R -e 'devtools::install_deps(dependencies = TRUE)'
-  - make
-
-script:
-  - make check
-
+# whitelist
 branches:
   only:
     - master
