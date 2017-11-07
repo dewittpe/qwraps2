@@ -20,7 +20,7 @@ all: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 	/bin/rm -f .document.R
 
 .vignettes.Rout: $(VIGNETTES)
-	if [ -d "./vignettes" ]; then $(MAKE) -C vignettes; fi
+	if [ -e "./vignettes/makefile" ]; then $(MAKE) -C vignettes; fi
 	echo "date()" > .vignettes.R
 	R CMD BATCH --vanilla .vignettes.R
 	/bin/rm -f .vignettes.R

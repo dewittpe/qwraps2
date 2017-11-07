@@ -1,3 +1,4 @@
+^examples/$
 ^\.travis\.yml$
 ^.gitlab-ci.yml$
 ^.gitlab-ci-r-setup.R$
