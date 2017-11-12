@@ -9,16 +9,16 @@
 
 our_summaries <-
   list("Miles Per Gallon" = 
-       list("min"  = ~ min(mpg),
-            "mean" = ~ mean(mpg),
-            "mean &plusmn; sd" = ~ qwraps2::mean_sd(mpg),
-            "max"  = ~ max(mpg)),
+         list("min"  = ~ min(mpg),
+              "mean" = ~ mean(mpg),
+              "mean &plusmn; sd" = ~ qwraps2::mean_sd(mpg),
+              "max"  = ~ max(mpg)),
        "Weight" = 
-       list("median" = ~ median(wt)),
+         list("median" = ~ median(wt)),
        "Cylinders" = 
-       list("4 cyl: n (%)" = ~ qwraps2::n_perc0(cyl == 4),
-            "6 cyl: n (%)" = ~ qwraps2::n_perc0(cyl == 6),
-            "8 cyl: n (%)" = ~ qwraps2::n_perc0(cyl == 8)))
+         list("4 cyl: n (%)" = ~ qwraps2::n_perc0(cyl == 4),
+              "6 cyl: n (%)" = ~ qwraps2::n_perc0(cyl == 6),
+              "8 cyl: n (%)" = ~ qwraps2::n_perc0(cyl == 8)))
 
 # Going to use markdow for the markup language in this example,  the original
 # option will be reset at the end of the example.
@@ -31,7 +31,8 @@ whole_table
 
 # The summary table for mtcars grouped by am (automatic or manual transmission)
 # This will generate one column for each level of mtcars$am
-grouped_by_table <- summary_table(dplyr::group_by(mtcars, am), our_summaries)
+grouped_by_table <-
+  summary_table(dplyr::group_by(mtcars, am), our_summaries)
 grouped_by_table
 
 # To build a table with a column for the whole data set and each of the am

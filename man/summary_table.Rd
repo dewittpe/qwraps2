@@ -2,28 +2,18 @@
 % Please edit documentation in R/summary_table.R
 \name{summary_table}
 \alias{summary_table}
-\alias{tab_summary}
 \alias{cbind.qwraps2_summary_table}
 \title{Data Summary Tables}
 \usage{
-summary_table(.data, summaries)
-
-tab_summary(x, n_perc_args = list(digits = 0, show_symbol = FALSE),
-  envir = parent.frame())
+summary_table(x, summaries)
 
 \method{cbind}{qwraps2_summary_table}(..., deparse.level = 1)
 }
 \arguments{
-\item{.data}{a \code{data.frame} or \code{grouped_df}.}
+\item{x}{a \code{data.frame} or \code{grouped_df}.}
 
 \item{summaries}{a list of lists of formulea for summarizing the data set.
 See Details and examples.}
-
-\item{x}{a variable to summarize}
-
-\item{n_perc_args}{a list of arguments to pass to \code{n_perc}}
-
-\item{envir}{the environment to attach to the resulting formulea}
 
 \item{...}{\code{qwraps2_summary_table} objects to bind together}
 
@@ -74,16 +64,16 @@ a simple wrapper for \code{\link{qable}}.
 
 our_summaries <-
   list("Miles Per Gallon" = 
-       list("min"  = ~ min(mpg),
-            "mean" = ~ mean(mpg),
-            "mean &plusmn; sd" = ~ qwraps2::mean_sd(mpg),
-            "max"  = ~ max(mpg)),
+         list("min"  = ~ min(mpg),
+              "mean" = ~ mean(mpg),
+              "mean &plusmn; sd" = ~ qwraps2::mean_sd(mpg),
+              "max"  = ~ max(mpg)),
        "Weight" = 
-       list("median" = ~ median(wt)),
+         list("median" = ~ median(wt)),
        "Cylinders" = 
-       list("4 cyl: n (\%)" = ~ qwraps2::n_perc0(cyl == 4),
-            "6 cyl: n (\%)" = ~ qwraps2::n_perc0(cyl == 6),
-            "8 cyl: n (\%)" = ~ qwraps2::n_perc0(cyl == 8)))
+         list("4 cyl: n (\%)" = ~ qwraps2::n_perc0(cyl == 4),
+              "6 cyl: n (\%)" = ~ qwraps2::n_perc0(cyl == 6),
+              "8 cyl: n (\%)" = ~ qwraps2::n_perc0(cyl == 8)))
 
 # Going to use markdow for the markup language in this example,  the original
 # option will be reset at the end of the example.
@@ -96,7 +86,8 @@ whole_table
 
 # The summary table for mtcars grouped by am (automatic or manual transmission)
 # This will generate one column for each level of mtcars$am
-grouped_by_table <- summary_table(dplyr::group_by(mtcars, am), our_summaries)
+grouped_by_table <-
+  summary_table(dplyr::group_by(mtcars, am), our_summaries)
 grouped_by_table
 
 # To build a table with a column for the whole data set and each of the am
@@ -156,7 +147,6 @@ options(qwraps2_markup = orig_opt)
 
 # Detailed examples in the vignette
 # vignette("summary-statistics", package = "qwraps2")
-
 }
 \seealso{
 \code{\link{qable}} for marking up \code{qwraps2_data_summary}

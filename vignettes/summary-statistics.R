@@ -249,7 +249,7 @@ whole
 #' Group by multiple factors:
 #'
 #+ results = "asis"
-grouped <- summary_table(dplyr::group_by(mtcars2, am, vs),  our_summary2)
+grouped <- summary_table(dplyr::group_by(mtcars2, am, vs), our_summary2)
 grouped
 
 #'
@@ -267,9 +267,9 @@ both
 #' understand the results.
 #'
 #' For example, let's look at a simple summary of the miles per gallon.
-# tab_summary(mpg)[[3]] ## this errors
-tab_summary(mtcars$mpg)[[3]]
-with(mtcars, tab_summary(mpg))[[3]]
+# tab_summary(mpg) ## this errors
+tab_summary(mtcars$mpg)
+with(mtcars, tab_summary(mpg))
 
 #'
 #' The first call errors because `mpg` is not in the global environment.  The
@@ -278,16 +278,17 @@ with(mtcars, tab_summary(mpg))[[3]]
 #' generates a `formula` with only `mpg` as the argument.  The difference will be
 #' seen in the summary tables if the `.data` is subsetted.
 # The same tables:
-summary_table(mtcars, list("MPG 1" = with(mtcars, tab_summary(mpg)[[3]])))
-summary_table(mtcars, list("MPG 2" = tab_summary(mtcars$mpg)[[3]]))
+summary_table(mtcars, list("MPG 1" = with(mtcars, tab_summary(mpg))))
+summary_table(mtcars, list("MPG 2" = tab_summary(mtcars$mpg)))
+
 
 #'
 #' These two calls generate the same table because the `.data` and the implied
 #' data within the second call are the same.
 #+ results = "asis"
 # Different tables
-summary_table(dplyr::filter(mtcars, am == 0), list("MPG 3" = with(mtcars, tab_summary(mpg)[[3]])))
-summary_table(dplyr::filter(mtcars, am == 0), list("MPG 4" = tab_summary(mtcars$mpg)[[3]]))
+summary_table(dplyr::filter(mtcars, am == 0), list("MPG 3" = with(mtcars, tab_summary(mpg))))
+summary_table(dplyr::filter(mtcars, am == 0), list("MPG 4" = tab_summary(mtcars$mpg)))
 
 #'
 #' Now, the result of the second call above is not correct, it is the same as

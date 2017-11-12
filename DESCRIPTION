@@ -1,6 +1,6 @@
 Package: qwraps2
 Title: Quick Wraps 2
-Version: 0.2.4.9002
+Version: 0.2.4.9003
 Authors@R: c(
     person("Peter", "DeWitt", , "dewittpe@gmail.com", role = c("aut", "cre")),
     person("Tell",  "Bennett", , "tell.bennett@ucdenver.edu", role = c("ctb"))
@@ -25,6 +25,7 @@ Imports:
     ggplot2,
     knitr,
     Rcpp (>= 0.12.11),
+    rlang,
     tidyr,
     utils
 Suggests:
