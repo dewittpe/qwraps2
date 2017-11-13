@@ -70,10 +70,10 @@ qacf.data.frame <- function(x, conf_level = 0.95, show_sig = FALSE, ...) {
   acfs <- dplyr::as_data_frame(acf_data$acf)
 
   acf_df <- 
-    dplyr::bind_cols(tidyr::gather_(lags, key_col = 'key', value_col = 'lag',   gather_cols = names(lags)),
-                     tidyr::gather_(acfs, key_col = 'key', value_col = 'value', gather_cols = names(acfs))[, 2])
+    dplyr::bind_cols(tidyr::gather(lags, key = 'key', value = 'lag'),
+                     tidyr::gather(acfs, key = 'key', value = 'value')["value"])
   acf_df <-
-    dplyr::mutate_(acf_df, .dots = list("significant" =  ~ factor(abs(value) > abs(ciline))))
+    dplyr::mutate(acf_df, significant =  factor(abs(.data$value) > abs(ciline)))
 
   g <-
     ggplot2::ggplot() +
@@ -90,7 +90,7 @@ qacf.data.frame <- function(x, conf_level = 0.95, show_sig = FALSE, ...) {
             1, function(x) {if(x[1] == x[2]) x[1] else paste(x, collapse = " & ")})
 
     acf_df <-
-      dplyr::mutate_(acf_df, .dots = list("facets" = ~ factor(facets, levels = facets_levels)))
+      dplyr::mutate(acf_df, facets = factor(facets, levels = facets_levels))
 
     g <- g + ggplot2::facet_wrap( ~ facets, scales = "free_x")
   }
