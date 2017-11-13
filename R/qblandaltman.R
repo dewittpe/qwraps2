@@ -13,7 +13,7 @@
 #' then call \code{qblandaltman}.  This might be helpful if you are putting
 #' multiple Bland Altman plots together into one ggplot object.  See Examples.
 #'
-#' @param .data a \code{data.frame} with two columns.  If a \code{data.frame}
+#' @param x a \code{data.frame} with two columns.  If a \code{data.frame}
 #' with more than two columns is used only the first two columns will be used.
 #' @param alpha (Defaults to 0.05) place (1 - alpha)*100% confidence levels to
 #' place on the plot. 
@@ -33,51 +33,18 @@
 #' agreement between two methods of clinical measurement." The lancet 327, no. 8476
 #' (1986): 307-310.
 #'
-#' @examples
-#' \dontrun{
-#' # load ggplot2 and the diamonds data set
-#' library(ggplot2)
-#' data(diamonds, package = "ggplot2")
-#'
-#' # compare a simple regression to random noise
-#' dat <- 
-#'   data.frame(fitted(lm(price ~ poly(carat, 4), data = diamonds)),  # fitted values
-#'              diamonds$price + rnorm(nrow(diamonds), sd = 0.2),     # observed with noise
-#'              pi)                                                   # extra column
-#' qblandaltman(dat)
-#' 
-#' # simple example
-#' dat <- data.frame(eval1 = rpois(100, 3), eval2 = rpois(100, 3.4)) 
-#' qblandaltman(dat)
-#'
-#' last_plot() + theme_bw()
-#' 
-#' # Two plots in one ggplot object
-#' set.seed(42)
-#' dat1 <- data.frame(eval1 = rnorm(100), eval2 = rt(100, df = 1))
-#' dat2 <- data.frame(eval1 = rpois(50, 3), eval2 = rpois(50, 4))
-#' 
-#' # individual plots
-#' qblandaltman(dat1)
-#' qblandaltman(dat2)
-#' 
-#' # combined plots
-#' dat <- rbind(cbind(set = "rnorm", qblandaltman_build_data_frame(dat1)), 
-#'              cbind(set = "rpois", qblandaltman_build_data_frame(dat2)))
-#' qblandaltman(dat, generate_data = FALSE) + facet_wrap( ~ set)
-#' }
-#' @import ggplot2 dplyr
+#' @example examples/blandaltman.R
 #' @export   
 #' @rdname qblandaltman
-qblandaltman <- function(.data, alpha = getOption("qwraps2_alpha", 0.05), generate_data = TRUE) { 
+qblandaltman <- function(x, alpha = getOption("qwraps2_alpha", 0.05), generate_data = TRUE) { 
 
-  if (is.null(attr(.data, "qwraps2_generated"))) { 
+  if (is.null(attr(x, "qwraps2_generated"))) { 
     if (generate_data) {
-      .data <- qblandaltman_build_data_frame(.data, alpha)
+      x <- qblandaltman_build_data_frame(x, alpha)
     }
   }
 
-  ggplot2::ggplot(.data) + 
+  ggplot2::ggplot(x) + 
   ggplot2::aes_string(x = 'avg', y = 'diff') + 
   ggplot2::geom_point() + 
   ggplot2::geom_hline(ggplot2::aes_string(yintercept = 'lcl'), lty = 2) + 
@@ -87,16 +54,16 @@ qblandaltman <- function(.data, alpha = getOption("qwraps2_alpha", 0.05), genera
 
 #' @export
 #' @rdname qblandaltman
-qblandaltman_build_data_frame <- function(.data, alpha = getOption("qwraps2_alpha", 0.05)) { 
+qblandaltman_build_data_frame <- function(x, alpha = getOption("qwraps2_alpha", 0.05)) { 
   rtn <-
-    dplyr::mutate_(data.frame(x1 = .data[[1]], x2 = .data[[2]]),
-                   avg  = ~ (x1 + x2) / 2, 
-                   diff = ~ (x2 - x1), 
-                   mean_diff = "mean(diff)", 
-                   sd_diff   = "sd(diff)", 
-                   lcl       = ~ mean_diff + qnorm(alpha / 2) * sd_diff,
-                   ucl       = ~ mean_diff + qnorm(1 - alpha / 2) * sd_diff) 
-  rtn <- tbl_df(rtn)
+    dplyr::mutate(data.frame(x1 = x[[1]], x2 = x[[2]]),
+                  avg       = (.data$x1 + .data$x2) / 2, 
+                  diff      = (.data$x2 - .data$x1), 
+                  mean_diff = mean(.data$diff), 
+                  sd_diff   = sd(.data$diff), 
+                  lcl       = .data$mean_diff + stats::qnorm(alpha / 2) * .data$sd_diff,
+                  ucl       = .data$mean_diff + stats::qnorm(1 - alpha / 2) * .data$sd_diff) 
+  rtn <- dplyr::tbl_df(rtn)
 
   attr(rtn, "qwraps2_generated") = TRUE
 
