@@ -52,7 +52,7 @@ create_pkg <- function(path, use_data_raw = FALSE, ci = NULL, rstudio = FALSE) {
   templates <-
     data.frame(temp_file = c("gitignore",  "Rbuildignore",
                              "NEWS.md", "CONTRIBUTING.md", "README.md",
-                             "makefile"),
+                             "pkg-make-file"),
                pkg_path  = c(".gitignore", ".Rbuildignore",
                              "NEWS.md", "CONTRIBUTING.md", "README.md",
                              "makefile"))
@@ -96,6 +96,10 @@ create_pkg <- function(path, use_data_raw = FALSE, ci = NULL, rstudio = FALSE) {
   invisible(TRUE)
 }
 
+
+list.files(system.file("templates", package = "qwraps2"), all.files = TRUE, recursive = TRUE)
+
+
 #' @rdname create_pkg
 #' @export
 create_vignette <- function(name, path = ".") {
@@ -103,7 +107,7 @@ create_vignette <- function(name, path = ".") {
   dir.create(paste0(path, "/vignettes"))
   writeLines(readLines(system.file("templates", "vignette.R", package = "qwraps2")),
              paste0(path, "/vignettes/", name))
-  writeLines(readLines(system.file("templates", "vignettes-makefile", package = "qwraps2")),
+  writeLines(readLines(system.file("templates", "vignettes-make-file", package = "qwraps2")),
              paste0(path, "/vignettes/makefile"))
   invisible(TRUE)
 }
@@ -114,7 +118,7 @@ create_data_raw <- function(path = ".") {
   path <- normalizePath(path.expand(path))
   dir.create(paste0(path, "/data"))
   dir.create(paste0(path, "/data-raw"))
-  writeLines(readLines(system.file("templates", "data-raw-makefile", package = "qwraps2")),
+  writeLines(readLines(system.file("templates", "data-raw-make-file", package = "qwraps2")),
              paste0(path, "/data-raw/makefile"))
   invisible(TRUE)
 }

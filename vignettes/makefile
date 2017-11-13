@@ -1,1 +1,1 @@
-../inst/templates/vignettes-makefile
+../inst/templates/vignettes-make-file

@@ -14,7 +14,7 @@ RAWDATAR  = $(wildcard data-raw/*.R)
 all: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
 .document.Rout: $(RFILES) $(SRC) $(EXAMPLES) $(RAWDATAR)
-	if [ -d "./data-raw" ]; then $(MAKE) -C data-raw/; fi
+	if [ -e "./data-raw/makefile" ]; then $(MAKE) -C data-raw/; fi
 	echo "devtools::document()" > .document.R
 	R CMD BATCH --vanilla .document.R
 	/bin/rm -f .document.R
@@ -29,10 +29,10 @@ $(PKG_NAME)_$(PKG_VERSION).tar.gz: .document.Rout .vignettes.Rout DESCRIPTION
 	R CMD build --no-resave-data --md5 $(build-options) .
 
 check: $(PKG_NAME)_$(PKG_VERSION).tar.gz
-	R CMD check $(PKG_NAME)_$(PKG_VERSION).tar.gz
+	R CMD check $(check-options) $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
 install: $(PKG_NAME)_$(PKG_VERSION).tar.gz
-	R CMD INSTALL $(PKG_NAME)_$(PKG_VERSION).tar.gz
+	R CMD INSTALL $(install-options) $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
 clean:
 	/bin/rm -f  $(PKG_NAME)_*.tar.gz
