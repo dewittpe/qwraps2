@@ -17,6 +17,7 @@
 #' leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x, data = survival::aml) 
 #' survival:::plot.survfit(leukemia.surv, conf.int = TRUE, lty = 2:3, col = 1:2)
 #' 
+#' qkmplot_bulid_data_frame(leukemia.surv) 
 #' qkmplot(leukemia.surv, conf_int = TRUE) 
 #' 
 #' @export   
@@ -27,32 +28,34 @@ qkmplot <- function(x, conf_int = FALSE, ...) {
 
 #' @export
 qkmplot.default <- function(x, conf_int = FALSE, ...) { 
-  qkmplot_ggplot(x, ...)
+  qkmplot_ggplot(x, conf_int = conf_int, ...)
 }
 
 #' @export
 qkmplot.survfit <- function(x, conf_int = FALSE, ...) { 
-  qkmplot_ggplot(qkmplot_bulid_data_frame(x), ...)
+  qkmplot_ggplot(qkmplot_bulid_data_frame(x), conf_int = conf_int, ...)
 }
 
 #' @export
 qkmplot.qwraps2_generated <- function(x, conf_int = FALSE, ...) { 
-  qkmplot_ggplot(x, ...)
+  qkmplot_ggplot(x, conf_int = conf_int, ...)
 }
 
-qkmplot_ggplot <- function(.data, conf_int = FALSE, ...) { 
+qkmplot_ggplot <- function(dat, conf_int = FALSE, ...) { 
   layers <- list(ggplot2::aes_string(x = "time", y = "surv", colour = "strata", fill = "strata"),
                  ggplot2::geom_step(),
                  ggplot2::ylim(c(0, 1)),
                  ggplot2::ylab("Survivial"),
-                 ggplot2::geom_point(data = dplyr::filter_(.data, "n.censor" > 0), shape = 3, alpha = 0.9)
+                 ggplot2::geom_point(data = dplyr::filter(dat, .data$n.censor > 0), shape = 3, alpha = 0.9)
                  )
+
   if (conf_int) {
-    layers[[length(layers) + 1L]] <- 
-      ggplot2::geom_ribbon(ggplot2::aes_string(ymin = "lower", ymax = "upper"), alpha = 0.2) 
+    layers <- append(layers,
+                     ggplot2::geom_ribbon(ggplot2::aes_string(ymin = "lower", ymax = "upper"), alpha = 0.2) 
+      )
   }
 
-  ggplot2::ggplot(.data) + layers
+  ggplot2::ggplot(dat) + layers
 }
 
 #' @export   
@@ -77,7 +80,7 @@ qkmplot_bulid_data_frame <- function(x) {
   first_data$upper <- 1
 
   dat <- rbind(plot_data, first_data)
-  class(dat) <- c(class(dat), "qwraps2_generated")
-  dat
+  class(dat) <- c("qwraps2_generated", class(dat))
+  dplyr::tbl_df(dat)
 } 
 
