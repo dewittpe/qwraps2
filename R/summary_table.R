@@ -75,7 +75,10 @@ summary_table.grouped_df <- function(x, summaries) {
     lapply(t) %>%
     lapply(function(y) `[`(y, -seq(1, ngrps, by = 1), )) %>%
     do.call(rbind, .)
+
   colnames(out) <- lbs
+  rownames(out) <- unlist(lapply(summaries, names), use.names = FALSE)
+
   attr(out, "rgroups") <- sapply(summaries, length)
   class(out) <- c("qwraps2_summary_table", class(out))
 
