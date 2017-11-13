@@ -24,6 +24,7 @@ Imports:
     dplyr,
     ggplot2,
     knitr,
+    magrittr,
     Rcpp (>= 0.12.11),
     rlang,
     tidyr,

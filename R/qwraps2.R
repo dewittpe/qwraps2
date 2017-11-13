@@ -91,6 +91,8 @@
 #'
 #' @useDynLib qwraps2
 #' @importFrom Rcpp sourceCpp
+#' @importFrom magrittr "%>%"
+#' @importFrom rlang .data
 #' @docType package
 #' @name qwraps2
 NULL

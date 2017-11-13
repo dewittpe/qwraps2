@@ -5,13 +5,13 @@
 \alias{qblandaltman_build_data_frame}
 \title{Bland Altman Plots}
 \usage{
-qblandaltman(.data, alpha = getOption("qwraps2_alpha", 0.05),
+qblandaltman(x, alpha = getOption("qwraps2_alpha", 0.05),
   generate_data = TRUE)
 
-qblandaltman_build_data_frame(.data, alpha = getOption("qwraps2_alpha", 0.05))
+qblandaltman_build_data_frame(x, alpha = getOption("qwraps2_alpha", 0.05))
 }
 \arguments{
-\item{.data}{a \code{data.frame} with two columns.  If a \code{data.frame}
+\item{x}{a \code{data.frame} with two columns.  If a \code{data.frame}
 with more than two columns is used only the first two columns will be used.}
 
 \item{alpha}{(Defaults to 0.05) place (1 - alpha)*100% confidence levels to
@@ -42,8 +42,8 @@ multiple Bland Altman plots together into one ggplot object.  See Examples.
 }
 \examples{
 \dontrun{
+
 # load ggplot2 and the diamonds data set
-library(ggplot2)
 data(diamonds, package = "ggplot2")
 
 # compare a simple regression to random noise
@@ -57,7 +57,7 @@ qblandaltman(dat)
 dat <- data.frame(eval1 = rpois(100, 3), eval2 = rpois(100, 3.4)) 
 qblandaltman(dat)
 
-last_plot() + theme_bw()
+ggplot2::last_plot() + ggplot2::theme_bw()
 
 # Two plots in one ggplot object
 set.seed(42)
@@ -71,7 +71,8 @@ qblandaltman(dat2)
 # combined plots
 dat <- rbind(cbind(set = "rnorm", qblandaltman_build_data_frame(dat1)), 
              cbind(set = "rpois", qblandaltman_build_data_frame(dat2)))
-qblandaltman(dat, generate_data = FALSE) + facet_wrap( ~ set)
+qblandaltman(dat, generate_data = FALSE) + ggplot2::facet_wrap( ~ set)
+
 }
 }
 \references{

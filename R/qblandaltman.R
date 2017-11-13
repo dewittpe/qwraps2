@@ -60,7 +60,7 @@ qblandaltman_build_data_frame <- function(x, alpha = getOption("qwraps2_alpha", 
                   avg       = (.data$x1 + .data$x2) / 2, 
                   diff      = (.data$x2 - .data$x1), 
                   mean_diff = mean(.data$diff), 
-                  sd_diff   = sd(.data$diff), 
+                  sd_diff   = stats::sd(.data$diff), 
                   lcl       = .data$mean_diff + stats::qnorm(alpha / 2) * .data$sd_diff,
                   ucl       = .data$mean_diff + stats::qnorm(1 - alpha / 2) * .data$sd_diff) 
   rtn <- dplyr::tbl_df(rtn)
