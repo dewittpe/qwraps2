@@ -1,7 +1,7 @@
 #'---
 #'title: "vignette title"
 #'author: "Your Name"
-#'output: rmarkdown:html_vignette
+#'output: rmarkdown::html_vignette
 #'vignette: >
 #'  %\VignetteEngine{knitr::rmarkdown}
 #'  %\VignetteIndexEntry{vignette title}
