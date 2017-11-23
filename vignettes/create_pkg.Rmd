@@ -32,7 +32,7 @@ library(qwraps2)
 
 # Section 1: `create_pkg`
 
-The basic package skeleton is created with the `create_pkg` function.  
+The basic package skeleton is created with the `create_pkg` function.
 
 ```{r }
 str(create_pkg)
@@ -40,7 +40,7 @@ str(create_pkg)
 
 
 The `path` is a directory to use for the package.  For the examples to follow
-we will use a temporary directory.  
+we will use a temporary directory.
 
 
 ```{r }
@@ -48,19 +48,136 @@ tmp_dir <- tempdir()
 pkg_dir <- paste(tmp_dir, "eg.pkg", sep = "/")
 pkg_dir
 create_pkg(pkg_dir)
-
-files <- list.files(pkg_dir, all.files = TRUE, full.names = TRUE, recursive = TRUE, include.dirs = TRUE)
-
-data.tree::as.Node(data.frame(filename = files), pathName = "filename")
 ```
 
 
-`use_data_raw` sets up the `data` and
-`data-raw` directories.  If this
+Let's look at the files and the skeleton created for the package.  We'll do
+this a few times so a `tree` function will be created and used:
+
+```{r }
+tree <- function(pkg_dir) {
+  files <- list.files(pkg_dir,
+                      all.files = TRUE,
+                      full.names = TRUE,
+                      recursive = TRUE,
+                      include.dirs = TRUE)
+  files <- data.frame(filename = gsub(tmp_dir, "", files), file.info(files)) 
+  print(data.tree::as.Node(files, pathName = "filename"), "isdir")
+}
+tree(pkg_dir)
+```
+
+
+There are two empty directories created, the `R` directory and the `examples`
+directory.  The `examples` directory is expected to be used to store the
+examples for the documentation written, using
+[roxygen2](https://cran.r-project.org/package=roxygen2) markup, in the files
+within the `R` directory.  More details are given in a later section.
+
+The files populating the root directory of the package includes the needed
+`DESCRIPTION` file, which you, the package developer, will need to edit.  The
+`NAMESPACE` file is provided, but **should not** be edited by the end user,
+let `devtools::document()`, called via the `makefile` handle the edits to the
+`NAMESPACE` file.  General package documentation in the form of a
+`README.md`, `CONTRIBUTING.md`, and `NEWS.md` are provided.  The
+`.Rbuildignore` and `.gitignore` files are provided with commonly needed
+expressions.  Lastly, the `makefile` is provided for building, checking, and
+installing the package.
+
+
+```{r }
+system("make help")
+```
+
+
+The recipes in the makefile are:
+
+```{r }
+system("cat makefile")
+```
+
+
+If the `rstudio` option is used when calling create_pkg then a .Rproj file is
+added to the root directory.
+
+The `ci` argument is used to add template files for either [Travis
+CI](https://travis-ci.org) or gitlab runners.
+
+The `use_data_raw` option is used if raw data is to be part of the package.
+calling the `create_data_raw` function can be called later to create the
+directories and place the generic makefiles as needed to work with the
+makefile in the package root directory.
+
+## `create_data_raw`
+
+Adding the `data-raw` and `data` directories to the package, if not done on
+the initial construction, is done via
+
+```{r }
+create_data_raw(pkg_dir)
+```
+
+
+The updated package structure is:
+
+```{r }
+tree(pkg_dir)
+```
+
+
+The makefile in the `data-raw` is generic such that any `.R` file will be
+evaluated.  Noting that some scripts needed to create a data set might
+require a non-trivial amount of time to evaluate, the makefile creates, and
+then uses, md5sums for assessing if the `.R` file(s) needs to be re-evaluated
+instead of the standard file modified time stamp.
+
+```{r }
+system(paste0("cat ", pkg_dir, "/data-raw/makefile"))
+```
+
+
+## `create_vignette`
+
+Authoring vignettes is a great way to document your package.  I have found
+that the parallel development of a 'how to use this package' vignette while
+writing and testing the package code has made development and documentation
+easier.
+
+Developing the vignette and the code base can be painful.  Consider a
+standard .Rmd or .Rnw file with with R code in individual chunks.  Having to
+re-evaluate all the chunks can be time consuming and cumbersome depending on
+your IDE.  An alternative method is to author `.R` files with the expectation
+of using [`knitr::spin`](https://yihui.name/knitr/demo/stitch/) to generate
+the `.Rmd` file that then gets processed into the vignette(s).
+
+The `create_vignette` places a template vignette file and makefile into a
+`vignettes` directory.#' 
+
+```{r }
+create_vignette(name = "egVign.R", path = pkg_dir)
+tree(pkg_dir)
+```
+
+
+It is critically important that you **do not use**
+`devtools::build_vignettes()` as this will over write the .R file.  If you
+need to build the vignettes without building the whole package use the
+makefile in the package root directory and call
+
+```
+make .vignettes.Rout
+```
+
+```{r }
+system(paste0("cat ", pkg_dir, "/DESCRIPTION"))
+```
 
 
 
-# Section 2
+# Examples:
+
+The best example for this style of package development is the
+[qwraps2](https://github.com/dewittpe/qwraps2) package on github.
 
 
 

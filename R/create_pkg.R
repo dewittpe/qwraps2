@@ -93,12 +93,10 @@ create_pkg <- function(path, use_data_raw = FALSE, ci = NULL, rstudio = FALSE) {
                      paste0(path, "/", x[2]))
                    })
 
+  cat("VignetteBuilder: knitr", file = paste0(path, "/DESCRIPTION"), append = TRUE)
+
   invisible(TRUE)
 }
-
-
-list.files(system.file("templates", package = "qwraps2"), all.files = TRUE, recursive = TRUE)
-
 
 #' @rdname create_pkg
 #' @export
