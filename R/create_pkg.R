@@ -36,6 +36,7 @@
 #' @param rstudio passed to \code{\link[devtools]{create}}.  devtools sets the
 #' default to \code{TRUE} but \code{create_pkg} sets the default to \code{FALSE}
 #' since I don't use RStudio.
+#' @param ... additional arguments passed to \code{\link[devtools]{create}}
 #' @param name the name of the vigenette
 #'
 #' @example examples/create_pkg.R
@@ -45,7 +46,7 @@ NULL
 
 #' @rdname create_pkg
 #' @export
-create_pkg <- function(path, use_data_raw = FALSE, ci = NULL, rstudio = FALSE) {
+create_pkg <- function(path, use_data_raw = FALSE, ci = NULL, rstudio = FALSE, ...) {
 
   path <- normalizePath(path.expand(path))
 
@@ -79,8 +80,9 @@ create_pkg <- function(path, use_data_raw = FALSE, ci = NULL, rstudio = FALSE) {
 
   devtools::create(path,
                    description = list(Depends = NULL),
-                   rstudio = rstudio
-                   )
+                   rstudio = rstudio,
+                   quiet = TRUE,
+                   ...)
 
   dir.create(paste0(path, "/examples"))
 
@@ -93,7 +95,7 @@ create_pkg <- function(path, use_data_raw = FALSE, ci = NULL, rstudio = FALSE) {
                      paste0(path, "/", x[2]))
                    })
 
-  cat("VignetteBuilder: knitr", file = paste0(path, "/DESCRIPTION"), append = TRUE)
+  cat("VignetteBuilder: knitr\n", file = paste0(path, "/DESCRIPTION"), append = TRUE)
 
   invisible(TRUE)
 }

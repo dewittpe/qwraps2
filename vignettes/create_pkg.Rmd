@@ -75,25 +75,32 @@ examples for the documentation written, using
 within the `R` directory.  More details are given in a later section.
 
 The files populating the root directory of the package includes the needed
-`DESCRIPTION` file, which you, the package developer, will need to edit.  The
+`DESCRIPTION` file, which you, the package developer, will need to edit.
+Details on the metadata and what/how to edit it is found in the [R
+packages](http://r-pkgs.had.co.nz/description.html) book by Hadley Wickham.
+
+```{r }
+cat(readLines(paste0(pkg_dir, "/DESCRIPTION")), sep = "\n")
+```
+
+
+The
 `NAMESPACE` file is provided, but **should not** be edited by the end user,
 let `devtools::document()`, called via the `makefile` handle the edits to the
 `NAMESPACE` file.  General package documentation in the form of a
 `README.md`, `CONTRIBUTING.md`, and `NEWS.md` are provided.  The
 `.Rbuildignore` and `.gitignore` files are provided with commonly needed
 expressions.  Lastly, the `makefile` is provided for building, checking, and
-installing the package.
+installing the package.  A `help` recipe has been provided in the makefile.
 
-
-```{r }
-system("make help")
 ```
-
+make help
+```
 
 The recipes in the makefile are:
 
 ```{r }
-system("cat makefile")
+cat(readLines(paste0(pkg_dir, "/makefile")), sep = "\n")
 ```
 
 
@@ -132,7 +139,7 @@ then uses, md5sums for assessing if the `.R` file(s) needs to be re-evaluated
 instead of the standard file modified time stamp.
 
 ```{r }
-system(paste0("cat ", pkg_dir, "/data-raw/makefile"))
+cat(readLines(paste0(pkg_dir, "/data-raw/makefile")), sep = "\n")
 ```
 
 
@@ -167,11 +174,6 @@ makefile in the package root directory and call
 ```
 make .vignettes.Rout
 ```
-
-```{r }
-system(paste0("cat ", pkg_dir, "/DESCRIPTION"))
-```
-
 
 
 # Examples:

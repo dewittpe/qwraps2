@@ -4,4 +4,4 @@ TARGETS = $(addsuffix .Rmd, $(basename $(SOURCES)))
 all: $(TARGETS)
 
 %.Rmd: %.R
-	R --vanilla -e "knitr::spin(hair = '$<', knit = FALSE)"
+	Rscript --vanilla -e "knitr::spin(hair = '$<', knit = FALSE)"
