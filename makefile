@@ -1,1 +1,1 @@
-inst/templates/pkg-makefile
+inst/templates/pkg-make-file

@@ -36,6 +36,7 @@
 #' @param rstudio passed to \code{\link[devtools]{create}}.  devtools sets the
 #' default to \code{TRUE} but \code{create_pkg} sets the default to \code{FALSE}
 #' since I don't use RStudio.
+#' @param ... additional arguments passed to \code{\link[devtools]{create}}
 #' @param name the name of the vigenette
 #'
 #' @example examples/create_pkg.R
@@ -45,14 +46,14 @@ NULL
 
 #' @rdname create_pkg
 #' @export
-create_pkg <- function(path, use_data_raw = FALSE, ci = NULL, rstudio = FALSE) {
+create_pkg <- function(path, use_data_raw = FALSE, ci = NULL, rstudio = FALSE, ...) {
 
   path <- normalizePath(path.expand(path))
 
   templates <-
     data.frame(temp_file = c("gitignore",  "Rbuildignore",
                              "NEWS.md", "CONTRIBUTING.md", "README.md",
-                             "makefile"),
+                             "pkg-make-file"),
                pkg_path  = c(".gitignore", ".Rbuildignore",
                              "NEWS.md", "CONTRIBUTING.md", "README.md",
                              "makefile"))
@@ -79,8 +80,9 @@ create_pkg <- function(path, use_data_raw = FALSE, ci = NULL, rstudio = FALSE) {
 
   devtools::create(path,
                    description = list(Depends = NULL),
-                   rstudio = rstudio
-                   )
+                   rstudio = rstudio,
+                   quiet = TRUE,
+                   ...)
 
   dir.create(paste0(path, "/examples"))
 
@@ -93,6 +95,8 @@ create_pkg <- function(path, use_data_raw = FALSE, ci = NULL, rstudio = FALSE) {
                      paste0(path, "/", x[2]))
                    })
 
+  cat("VignetteBuilder: knitr\n", file = paste0(path, "/DESCRIPTION"), append = TRUE)
+
   invisible(TRUE)
 }
 
@@ -103,7 +107,7 @@ create_vignette <- function(name, path = ".") {
   dir.create(paste0(path, "/vignettes"))
   writeLines(readLines(system.file("templates", "vignette.R", package = "qwraps2")),
              paste0(path, "/vignettes/", name))
-  writeLines(readLines(system.file("templates", "vignettes-makefile", package = "qwraps2")),
+  writeLines(readLines(system.file("templates", "vignettes-make-file", package = "qwraps2")),
              paste0(path, "/vignettes/makefile"))
   invisible(TRUE)
 }
@@ -114,7 +118,7 @@ create_data_raw <- function(path = ".") {
   path <- normalizePath(path.expand(path))
   dir.create(paste0(path, "/data"))
   dir.create(paste0(path, "/data-raw"))
-  writeLines(readLines(system.file("templates", "data-raw-makefile", package = "qwraps2")),
+  writeLines(readLines(system.file("templates", "data-raw-make-file", package = "qwraps2")),
              paste0(path, "/data-raw/makefile"))
   invisible(TRUE)
 }

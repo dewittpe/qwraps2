@@ -30,6 +30,7 @@ Imports:
     tidyr,
     utils
 Suggests:
+    data.tree,
     survival,
     testthat,
     covr,

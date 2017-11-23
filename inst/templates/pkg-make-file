@@ -21,7 +21,7 @@ help: ## Show this help list
 	@echo "\ncheck-options\tOptions passed to R CMD check (see R CMD check --help).\n"
 
 .document.Rout: $(RFILES) $(SRC) $(EXAMPLES) $(RAWDATAR)  ## Build data sets and man files
-	if [ -d "./data-raw" ]; then $(MAKE) -C data-raw/; fi
+	if [ -e "./data-raw/makefile" ]; then $(MAKE) -C data-raw/; fi
 	echo "devtools::document()" > .document.R
 	R CMD BATCH --vanilla .document.R
 	/bin/rm -f .document.R
@@ -39,7 +39,7 @@ check: $(PKG_NAME)_$(PKG_VERSION).tar.gz  ## Check the package
 	R CMD check $(check-options) $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
 install: $(PKG_NAME)_$(PKG_VERSION).tar.gz ## Install the package
-	R CMD INSTALL $(PKG_NAME)_$(PKG_VERSION).tar.gz
+	R CMD INSTALL $(install-options) $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
 clean:  ## clean up the working directory
 	/bin/rm -f  $(PKG_NAME)_*.tar.gz
