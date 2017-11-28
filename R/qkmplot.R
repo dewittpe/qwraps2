@@ -51,8 +51,7 @@ qkmplot_ggplot <- function(dat, conf_int = FALSE, ...) {
 
   if (conf_int) {
     layers <- append(layers,
-                     ggalt::stat_stepribbon(mapping = ggplot2::aes_string(ymin = "lower", ymax = "upper"),
-                                            alpha = 0.2) 
+                     ggplot2::geom_ribbon(ggplot2::aes_string(ymin = "lower", ymax = "upper"), alpha = 0.2) 
       )
   }
 
