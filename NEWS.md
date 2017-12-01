@@ -15,6 +15,9 @@
 * Added to the examples for `summary_table` showing how to add a caption to a
   LaTeX table (#39)
 
+## Bug Fixes
+* Factor levels as characters in `summary_table` (#48)
+
 
 # qwraps2 0.2.4
 

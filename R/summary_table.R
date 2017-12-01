@@ -197,7 +197,7 @@ tab_summary.factor <- function(x, n_perc_args = list(digits = 0, show_symbol = F
                   paste0("~ qwraps2::n_perc(", v, " == '", xx, "'", n_args, ", na_rm = TRUE)")
                 })
     s <- c(s, paste(" ~ qwraps2::n_perc(is.na(", v, ")", n_args, ")"))
-    s <- stats::setNames(s, c(sort(unique(x)), "Unknown"))
+    s <- stats::setNames(s, c(as.character(sort(unique(x))), "Unknown"))
   } else {
     s <- lapply(levels(x),
                 function(xx) {
