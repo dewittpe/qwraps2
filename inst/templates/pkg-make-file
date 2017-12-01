@@ -44,7 +44,7 @@ install: $(PKG_NAME)_$(PKG_VERSION).tar.gz ## Install the package
 clean:  ## clean up the working directory
 	/bin/rm -f  $(PKG_NAME)_*.tar.gz
 	/bin/rm -rf $(PKG_NAME).Rcheck
-	/bin/rm -f .document.Rout
-	/bin/rm -f .vignettes.Rout
+	/bin/rm -f .document.Rout .document.R
+	/bin/rm -f .vignettes.Rout .vignettes.R
 	/bin/rm -f inst/doc/*
 
