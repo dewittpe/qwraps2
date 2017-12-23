@@ -100,9 +100,27 @@ make help
 The recipes in the makefile are:
 
 ```{r }
-cat(readLines(paste0(pkg_dir, "/makefile")), sep = "\n")
+# cat(readLines(paste0(pkg_dir, "/makefile")), sep = "\n")
 ```
 
+This `makefile` is built to be useful for most R package development, it is
+copied into new R packages created by `qwraps2::create_pkg`, see
+`vignette("create_pkg", package = "qwraps2")`.
+
+   usage: make [build-options] [check-options] [install-options] [targets]
+
+Target          Description
+------          -----------
+all             Build the man files, vignettes, and the `<package>_<version>.tar.gz` file
+help            Display usage, targets, and options provided by the makefile
+check           Run `R CMD check`
+install         Install the R package via `R CMD INSTALL`
+document        Construct raw data sets, if needed, and build/update man files.
+vignettes 
+
+Options       Description
+-------       -----------
+build-options
 
 If the `rstudio` option is used when calling create_pkg then a .Rproj file is
 added to the root directory.
