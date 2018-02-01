@@ -2,6 +2,7 @@
 % Please edit documentation in R/create_pkg.R
 \name{create_pkg}
 \alias{create_pkg}
+\alias{create_pkg}
 \alias{create_vignette}
 \alias{create_data_raw}
 \title{Create Package}
