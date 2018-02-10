@@ -37,13 +37,6 @@ test_that("NPV",
             expect_equal(con_mat$stats["NPV", 1], 37 / 47)
           })
 
-test_that("confusion_matrix object", 
-          {
-            expected_con_mat <- structure(list(tab = structure(c(20L, 10L, 33L, 37L), .Dim = c(2L, 2L), .Dimnames = structure(list(Prediction = c("1", "0"), Truth = c("1", "0")), .Names = c("Prediction", "Truth")), class = "table"), stats = structure(c(0.57, 0.666666666666667, 0.528571428571429, 0.377358490566038, 0.787234042553192, 0.472153895492123, 0.569623188665981, 0.431497322303242, 0.288554433843916, 0.697177823059726, 0.662667014758899, 0.751378978598357, 0.623531620656359, 0.475236424206854, 0.856038677970304), .Dim = c(5L, 3L), .Dimnames = list(c("Accuracy", "Sensitivity", "Specificity", "PPV", "NPV"), c("Est", "LCL", "UCL")))), .Names = c("tab", "stats"), class = c("confusion_matrix", "list"), boot = FALSE, alpha = 0.05, var_names = structure(list(Truth = "truth", Prediction = "test"), .Names = c("Truth", "Prediction")))
-
-            expect_equal(con_mat, expected_con_mat)
-          })
-
 test_that("print confusion_matrix",
           {
             expect_output(print(con_mat), "Truth:\\ *truth")
@@ -62,9 +55,15 @@ test_that("errors for levels",
             x <- sample(c("A", "B", "C"), 100, replace = TRUE)
             y <- sample(c("A", "B"), 100, replace = TRUE)
             expect_error(confusion_matrix(x, y), "factors with two levels")
+
             x <- sample(c("A", "B"), 100, replace = TRUE)
-            x <- factor(x, levels = c("A", "B"))
+            x <- factor(x, levels = c("B", "A"))
+            y <- sample(c("A", "B"), 100, replace = TRUE)
             y <- factor(y, levels = c("B", "A"))
-            expect_error(confusion_matrix(x, y), "same levels for the factors")
+
+            expect_equal(attr(confusion_matrix(x, y), "positive") , "B")
+ 
+            x <- factor(sample(c("C", "D"), 100, replace = TRUE))
+            expect_error(confusion_matrix(x, y), "levels of x and y need to be identical.")
           })
 

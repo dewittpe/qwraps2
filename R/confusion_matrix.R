@@ -42,14 +42,8 @@
 #'   \item stats a matrix of summary statistics and confidence intervals.
 #' }
 #'
-#' @examples
+#' @example examples/confusion_matrix.R
 #' 
-#' test  <- c(rep(1, 53), rep(0, 47))
-#' truth <- c(rep(1, 20), rep(0, 33), rep(1, 10), rep(0, 37))
-#' con_mat <- confusion_matrix(test, truth, positive = "1")
-#' str(con_mat)
-#' con_mat
-#'
 #' @export
 #' @rdname confusion_matrix
 confusion_matrix <- function(x, ...) { 
@@ -80,25 +74,41 @@ confusion_matrix.default <- function(x, y, positive, boot = FALSE, boot_samples 
 #' @rdname confusion_matrix
 confusion_matrix.formula <- function(formula, data = parent.frame(), positive, boot = FALSE, boot_samples = 1000L, alpha = 0.05, ...) { 
 
-  .data <- stats::model.frame(formula, data)
-  .data[[1]] <- factor(.data[[1]])
-  .data[[2]] <- factor(.data[[2]]) 
+  mf <- stats::model.frame(formula, data)
+  mf[[1]] <- factor(mf[[1]])  # Truth
+  mf[[2]] <- factor(mf[[2]])  # Predicited
 
-  if (!missing(positive)) {
+  if (nlevels(mf[[1]]) != 2L || nlevels(mf[[2]]) != 2L) {
+    stop("qwraps2::confusion_matrix only supports factors with two levels.",
+         call. = FALSE)
+  }
+  if (!identical(levels(mf[[1]]), levels(mf[[2]]))) { 
+    stop("levels of x and y need to be identical.",
+         call. = FALSE)
+  }
+
+  if (missing(positive)) {
     # Add error handing here
-    .data[[1]] <- stats::relevel(.data[[1]], positive)
-    .data[[2]] <- stats::relevel(.data[[2]], positive) 
+    positive <- levels(mf[[1]])[1]
   }
+  mf[[1]] <- stats::relevel(mf[[1]], positive)
+  mf[[2]] <- stats::relevel(mf[[2]], positive) 
 
-  if (nlevels(.data[[1]]) != nlevels(.data[[2]]) | nlevels(.data[[1]]) != 2) { 
-    stop("qwraps2::confusion_matrix only supports factors with two levels.")
-  }
 
-  if (any(levels(.data[[1]]) != levels(.data[[2]]))) { 
+  if (any(levels(mf[[1]]) != levels(mf[[2]]))) { 
     stop("qwraps2::confusion_matrix expectes the same levels for the factors.")
   } 
 
-  tab <- table(.data[[2]], .data[[1]], dnn = c("Prediction", "Truth"))#rev(names(.data)))
+  tab <- table(mf[[2]], mf[[1]], dnn = c("Prediction", "Truth"))#rev(names(mf)))
+
+  cells <- list(true_positives  = tab[1, 1],
+                true_negatives  = tab[2, 2],
+                false_positives = tab[1, 2],
+                false_negatives = tab[2, 1],
+                positives       = sum(tab[1, ]),
+                negatives       = sum(tab[2, ]))
+
+  # cat(paste(c("TP = ", "FN = ", "FP = ", "TN = "), conmat, collapse = "; ")) 
 
   stats <- rbind(Accuracy = accuracy(tab), 
                  Sensitivity = sensitivity(tab),
@@ -106,17 +116,17 @@ confusion_matrix.formula <- function(formula, data = parent.frame(), positive, b
                  PPV = ppv(tab), 
                  NPV = npv(tab))
 
-  stats <- cbind(stats, t(apply(stats, 1, wilson_score_interval, n = nrow(.data), alpha = alpha))) 
+  stats <- cbind(stats, t(apply(stats, 1, wilson_score_interval, n = nrow(mf), alpha = alpha))) 
   colnames(stats) <- c("Est", "LCL", "UCL")
 
   if (boot) { 
     rows <- replicate(boot_samples, 
-                      sample(seq(1, nrow(.data), by = 1), nrow(.data), replace = TRUE), 
+                      sample(seq(1, nrow(mf), by = 1), nrow(mf), replace = TRUE), 
                       simplify = FALSE)
     boot_stats <- 
       lapply(rows, 
              function(x) { 
-               tab <- table(.data[[2]][x], .data[[1]][x], dnn = c("Prediction", "Truth"))
+               tab <- table(mf[[2]][x], mf[[1]][x], dnn = c("Prediction", "Truth"))
 
                rbind(Accuracy = accuracy(tab), 
                      Sensitivity = sensitivity(tab),
@@ -136,12 +146,13 @@ confusion_matrix.formula <- function(formula, data = parent.frame(), positive, b
     stats <- cbind(stats, boot_stats)
   }
 
-  rtn <- list(tab = tab, stats = stats)
+  rtn <- list(tab = tab, cells = cells, stats = stats)
 
   class(rtn) <- c("confusion_matrix", class(rtn))
   attr(rtn, "boot") <- boot
   attr(rtn, "alpha") <- alpha
-  attr(rtn, "var_names") <- stats::setNames(as.list(names(.data)), c("Truth", "Prediction"))
+  attr(rtn, "var_names") <- stats::setNames(as.list(names(mf)), c("Truth", "Prediction"))
+  attr(rtn, "positive_value") <- positive
 
   rtn 
 }
@@ -153,9 +164,13 @@ is.confusion_matrix <- function(x) inherits(x, "confusion_matrix")
 #' @rdname confusion_matrix
 #' @export
 print.confusion_matrix <- function(x, ...) { 
-  cat("\nTruth:      ", attr(x, "var_names")[[1]], 
-      "\nPrediction: ", attr(x, "var_names")[[2]], "\n\n")
-  print.table(x$tab) 
+  cat("\nTruth:          ", attr(x, "var_names")[[1]], 
+      "\nPrediction:     ", attr(x, "var_names")[[2]],
+      "\nPositive Value: ", attr(x, "positive"),
+      "\n\n")
+
+  print.table(apply(x$tab, 1:2, frmt)) 
+  cat("\n")
   print(x$stats) 
   invisible(x) 
 }
