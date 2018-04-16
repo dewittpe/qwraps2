@@ -1,4 +1,4 @@
-^examples/$
+^examples/*
 ^\.travis\.yml$
 ^.gitlab-ci.yml$
 ^codecov\.yml$
