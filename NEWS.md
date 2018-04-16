@@ -12,6 +12,8 @@
 
 * Added a `file_check` (#50) to check for read access and optionally md5sum of files.
 
+* Added a `pkg_check` (#51) to check if a list of packages are available.
+
 ## Improvements:
 * Extended the documentation for `logit` and `invlogit` to reference bases R
   methods.

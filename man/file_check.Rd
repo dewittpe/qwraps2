@@ -7,7 +7,7 @@
 file_check(paths, md5sums = NULL)
 }
 \arguments{
-\item{paths}{a character path to the target file, to be appended to \code{getwd()}}
+\item{paths}{a character path to the target file}
 
 \item{md5sums}{a character string for the expected md5sum of the target file.
 If \code{NULL} then only a \code{file.exists} check will be done.}
@@ -17,7 +17,7 @@ The function will return a single TRUE/FALSE value with attributes
 \code{attr(, "checks")}.
 }
 \description{
-This check is three-fold: 1) verify the the current working directory is as
+This check is three-fold: 1) verify the current working directory is as
 expected, 2) verify the user can access the file, and 3) verify the file
 contents are as expected (via md5sum).
 }
@@ -26,11 +26,14 @@ The test for the file access is done to verify the file can be read by the
 current user.
 
 The return of the function is \code{TRUE} if all the files in \code{paths}
-are accessable and all of requested md5sum checks pass.  \code{FALSE} is any
-file is not accessable or any md5sum check fails.  By default, if the return
-is \code{TRUE} then only \code{TRUE} will be printed to the consule.  If the
+are accessible and all of requested md5sum checks pass.  \code{FALSE} is any
+file is not accessible or any md5sum check fails.  By default, if the return
+is \code{TRUE} then only \code{TRUE} will be printed to the console.  If the
 return is \code{FALSE} then the \code{attr(, "checks")} is printed by default
 as well.
+
+Good practice would be to use relative paths, a warning will be given if any
+of the \code{paths} are determined to be absolute paths.
 }
 \examples{
 \dontrun{
