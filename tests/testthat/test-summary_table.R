@@ -1,5 +1,3 @@
-# load_all()
-
 data(mtcars)
 mymtcars <- 
   dplyr::mutate(mtcars, cyl_factor = factor(cyl, levels = c(6, 4, 8)), cyl_char = as.character(cyl))

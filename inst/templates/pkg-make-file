@@ -1,4 +1,4 @@
-PKG_ROOT = .
+PKG_ROOT    = .
 PKG_VERSION = $(shell gawk '/^Version:/{print $$2}' $(PKG_ROOT)/DESCRIPTION)
 PKG_NAME    = $(shell gawk '/^Package:/{print $$2}' $(PKG_ROOT)/DESCRIPTION)
 
@@ -14,12 +14,11 @@ RAWDATAR  = $(wildcard $(PKG_ROOT)/data-raw/*.R)
 all: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
 .document.Rout: $(RFILES) $(SRC) $(EXAMPLES) $(RAWDATAR) $(VIGNETTES) $(PKG_ROOT)/DESCRIPTION
-	if [ -d "$(PKG_ROOT)/data-raw" ]; then $(MAKE) -C data-raw/; fi
+	if [ -d "$(PKG_ROOT)/data-raw" ]; then $(MAKE) -C $(PKG_ROOT)/data-raw/; fi
 	echo "devtools::document('$(PKG_ROOT)')" > .document.R
-	R CMD BATCH --vanilla --quiet --no-timing .document.R
-	cat .document.Rout
+	Rscript --vanilla --quiet .document.R 2>&1 | tee .document.Rout
 	/bin/rm .document.R
-	if [ -e "$(PKG_ROOT)/vignettes/makefile" ]; then $(MAKE) -C vignettes; fi
+	if [ -e "$(PKG_ROOT)/vignettes/makefile" ]; then $(MAKE) -C $(PKG_ROOT)/vignettes/; fi
 
 $(PKG_NAME)_$(PKG_VERSION).tar.gz: .document.Rout $(TESTS) $(PKG_ROOT)/DESCRIPTION
 	R CMD build --no-resave-data --md5 $(build-options) $(PKG_ROOT)
