@@ -6,8 +6,11 @@
   interactive R session.
 
 * Added `traprule` for a quick way to integrate a numeric vector
+
 * Added `create_pkg`: a wrapper about `devtools::create` with more defaults that
   I prefer.
+
+* Added a `file_check` (#50) to check for read access and optionally md5sum of files.
 
 ## Improvements:
 * Extended the documentation for `logit` and `invlogit` to reference bases R
