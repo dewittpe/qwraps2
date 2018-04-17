@@ -17,8 +17,11 @@
 ## Improvements:
 * Extended the documentation for `logit` and `invlogit` to reference bases R
   methods.
+
 * Added to the examples for `summary_table` showing how to add a caption to a
   LaTeX table (#39)
+
+* step ribbon used in `qkmplot` (#45)
 
 ## Bug Fixes
 * Factor levels as characters in `summary_table` (#48)
