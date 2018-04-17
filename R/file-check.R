@@ -20,6 +20,8 @@
 #' @param paths a character path to the target file
 #' @param md5sums a character string for the expected md5sum of the target file.
 #' If \code{NULL} then only a \code{file.exists} check will be done.
+#' @param stop if \code{TRUE} then an error is thrown if any of the checks fail.
+#' If \code{FALSE} (default) a logical is returned.
 #'
 #' @return The function will return a single TRUE/FALSE value with attributes
 #' \code{attr(, "checks")}.
@@ -28,7 +30,7 @@
 #' @example examples/file-check.R
 #'
 #' @export
-file_check <- function(paths, md5sums = NULL) {
+file_check <- function(paths, md5sums = NULL, stop = FALSE) {
   paths <- as.character(paths)
   md5sums <- as.character(md5sums)
   current_md5sums <- tools::md5sum(path.expand(paths))
@@ -66,6 +68,12 @@ file_check <- function(paths, md5sums = NULL) {
   status <- all(c(checks$accessible, stats::na.omit(checks$md5check)))
   attr(status, "checks") <- checks
   attr(status, "class") <- "qwraps2_file_check"
+
+  if (!status && stop) {
+    print(status)
+    stop("At least one path or md5sum check failed.", call. = FALSE)
+  }
+
   status
 }
 

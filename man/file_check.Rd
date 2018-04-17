@@ -4,13 +4,16 @@
 \alias{file_check}
 \title{File and Working Directory Check}
 \usage{
-file_check(paths, md5sums = NULL)
+file_check(paths, md5sums = NULL, stop = FALSE)
 }
 \arguments{
 \item{paths}{a character path to the target file}
 
 \item{md5sums}{a character string for the expected md5sum of the target file.
 If \code{NULL} then only a \code{file.exists} check will be done.}
+
+\item{stop}{if \code{TRUE} then an error is thrown if any of the checks fail.
+If \code{FALSE} (default) a logical is returned.}
 }
 \value{
 The function will return a single TRUE/FALSE value with attributes
@@ -53,6 +56,10 @@ attr(test1, "checks")
 # is printed by default.
 test2 <- file_check(c("UNLIKELYFILENAME", "QWRAPS2_EXAMPLE_1.txt", "QWRAPS2_EXAMPLE_2.txt"))
 test2
+
+# Or have an error thrown:
+file_check(c("UNLIKELYFILENAME", "QWRAPS2_EXAMPLE_1.txt", "QWRAPS2_EXAMPLE_2.txt"),
+           stop = TRUE)
 
 # Verify the md5sums as well as file access:
 file_check("QWRAPS2_EXAMPLE_1.txt", "7a3409e17f9de067740e64448a86e708")

@@ -16,6 +16,10 @@ attr(test1, "checks")
 test2 <- file_check(c("UNLIKELYFILENAME", "QWRAPS2_EXAMPLE_1.txt", "QWRAPS2_EXAMPLE_2.txt"))
 test2
 
+# Or have an error thrown:
+file_check(c("UNLIKELYFILENAME", "QWRAPS2_EXAMPLE_1.txt", "QWRAPS2_EXAMPLE_2.txt"),
+           stop = TRUE)
+
 # Verify the md5sums as well as file access:
 file_check("QWRAPS2_EXAMPLE_1.txt", "7a3409e17f9de067740e64448a86e708")
 

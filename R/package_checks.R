@@ -16,9 +16,11 @@
 #' @param pkgs a character vector of package names to check for
 #' @param versions an optional character vector, of the same length of
 #' \code{pkgs} for the minimum version of the packages.
+#' @param stop if \code{TRUE} then an error is thrown if any of the checks fail.
+#' If \code{FALSE} (default) a logical is returned.
 #'
 #' @export
-pkg_check <- function(pkgs, versions) {
+pkg_check <- function(pkgs, versions, stop = FALSE) {
   if (missing(versions)) {
     versions <- rep(NA, length(pkgs))
   } else {
@@ -42,13 +44,19 @@ pkg_check <- function(pkgs, versions) {
           }
           out 
   },
-           p = pkgs, v = versions)  %>%
+           p = pkgs, v = versions) %>%
     lapply(dplyr::as_data_frame) %>%
     dplyr::bind_rows(.)
 
   out <- all(checks$available)
   attr(out, "checks") <- checks
   attr(out, "class")  <- "qwraps2_pkg_check"
+
+  if (!out && stop) {
+    print(out)
+    stop("At least one package is not available.", call. = FALSE)
+  }
+
   out
 }
 

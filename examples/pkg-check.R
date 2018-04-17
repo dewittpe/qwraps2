@@ -13,7 +13,14 @@ pkg_check(c("qwraps2", "ggplot2", "BH"),
 pkg_check(c("qwraps2", "ggplot2", "BH"),
           c("42.3.14", "2.2.0", NA))
 
+
 \dontrun{
+  # You can have the function throw an error is any of the checks fail
+  pkg_check(c("qwraps2", "ggplot2", "BH"),
+            c("42.3.14", "2.2.0", NA),
+            stop = TRUE)
+
+
   # If you have missing packages that can be installed from CRAN you may find
   # the following helpful.  If this code, with the needed edits, were placed at
   # the top of a script, then if a package is missing then the current version

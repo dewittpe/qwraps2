@@ -4,13 +4,16 @@
 \alias{pkg_check}
 \title{Package Checks}
 \usage{
-pkg_check(pkgs, versions)
+pkg_check(pkgs, versions, stop = FALSE)
 }
 \arguments{
 \item{pkgs}{a character vector of package names to check for}
 
 \item{versions}{an optional character vector, of the same length of
 \code{pkgs} for the minimum version of the packages.}
+
+\item{stop}{if \code{TRUE} then an error is thrown if any of the checks fail.
+If \code{FALSE} (default) a logical is returned.}
 }
 \description{
 Check if a package is available on the local machine and optionally verify a
