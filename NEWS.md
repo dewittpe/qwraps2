@@ -1,4 +1,4 @@
-# qwraps2 0.2.4.9000
+# qwraps2 0.3.0
 
 ## New Features
 * Added `lazyload_cache_dir` and `lazyload_cache_labels` for (lazy)loading of

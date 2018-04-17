@@ -11,3 +11,4 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^.*makefile$
+^.*\.tar\.gz$
