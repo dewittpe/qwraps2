@@ -23,6 +23,8 @@
 ## Bug Fixes
 * Factor levels as characters in `summary_table` (#48)
 
+* `qkmplot` works for intercept only models (#38)
+
 
 # qwraps2 0.2.4
 

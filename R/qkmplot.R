@@ -20,6 +20,11 @@
 #' qkmplot_bulid_data_frame(leukemia.surv) 
 #' qkmplot(leukemia.surv, conf_int = TRUE) 
 #' 
+#' intonly_fit <- survival::survfit(survival::Surv(time, status) ~ 1, data = survival::aml) 
+#' survival:::plot.survfit(intonly_fit, conf.int = TRUE)
+#' 
+#' qkmplot_bulid_data_frame(intonly_fit) 
+#' qkmplot(intonly_fit, conf_int = TRUE) 
 #' @export   
 #' @rdname qkmplot
 qkmplot <- function(x, conf_int = FALSE, ...) { 
@@ -42,7 +47,8 @@ qkmplot.qwraps2_generated <- function(x, conf_int = FALSE, ...) {
 }
 
 qkmplot_ggplot <- function(dat, conf_int = FALSE, ...) { 
-  layers <- list(ggplot2::aes_string(x = "time", y = "surv", colour = "strata", fill = "strata"),
+  layers <- list(ggplot2::aes_string(x = "time", y = "surv"),
+                 if (!is.null(dat$strata)) {ggplot2::aes_string(colour = "strata", fill = "strata") } else {NULL},
                  ggplot2::geom_step(),
                  ggplot2::ylim(c(0, 1)),
                  ggplot2::ylab("Survivial"),
@@ -66,11 +72,16 @@ qkmplot_bulid_data_frame <- function(x) {
                           n.event = x[['n.event']],
                           n.censor = x[['n.censor']],
                           surv = x[['surv']],
-                          strata = rep(attr(x[['strata']], "names"), times = x[['strata']]), 
+                          # strata = rep(attr(x[['strata']], "names"), times = x[['strata']]), 
                           upper = x[['upper']],
                           lower = x[['lower']], 
                           stringsAsFactors = FALSE) 
-  first_data <- plot_data[!duplicated(plot_data$strata), ]
+  if (!is.null(x$strata)) {
+    plot_data$strata <- rep(attr(x[['strata']], "names"), times = x[['strata']])
+    first_data <- plot_data[!duplicated(plot_data$strata), ]
+  } else {
+    first_data <- plot_data[1, ]
+  }
   first_data$time <- 0
   first_data$surv <- 1
   first_data$n.risk <- NA
