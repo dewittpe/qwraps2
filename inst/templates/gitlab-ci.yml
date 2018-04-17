@@ -1,22 +1,26 @@
-image: debian:latest
+variables:
+  CRAN: "https://cran.rstudio.com"
+  BIOC: "https://bioconductor.org/packages/3.4/bioc"
 
-test:
-   script:
-    - apt-get update
-    - apt-get -y upgrade
-    - apt-get -y install libcurl4-openssl-dev libssl-dev libudunits2-dev libxml2-dev libgdal-dev libgeos-dev
-    - apt-get -y install texlive gawk wget
-    - apt-get -y install r-base-dev
-    - wget https://github.com/jgm/pandoc/releases/download/1.19.2.1/pandoc-1.19.2.1-1-amd64.deb
-    - dpkg -i pandoc-1.19.2.1-1-amd64.deb
-    - wget https://stat.ethz.ch/R/daily/R-devel.tar.gz
-    - tar -xvf R-devel.tar.gz
-    - cd R-devel
-    - ./configure --enable-R-shlib --enable-BLAS-shlib --with-blas --with-lapack --with-x=no # --with-readline --with-cairo --with-libtiff --with-libpng --with-jpeglib --with-blas
+before_script:
+  - apt-get update -qq
+  - apt-get -y upgrade
+  - apt-get install -y --no-install-recommends gawk wget texlive
+  - apt-get install -y --no-install-recommends pandoc pandoc-citeproc
+  - apt-get install -y --no-install-recommends libudunits2-dev libssl-dev libcurl4-openssl-dev libxml2-dev
+  - apt-get install -y --no-install-recommends subversion
+  - export _R_CHECK_CRAN_INCOMING_=FALSE
+  - export R_BUILD_ARGS=""
+  - export R_CHECK_ARGS=""
+  - R -e "install.packages(c('devtools', 'roxygen2'), repos = c('${CRAN}', '$(BIOC)'))"
+  - R -e "devtools::install_dev_deps()"
+
+r-latest:
+  image: r-base:latest
+  script: 
     - make
-    - cd ..  
-    - ./R-devel/bin/R -e 'install.packages("devtools", repos = "http://cran.rstudio.com")'
-    - ./R-devel/bin/Rscript .gitlab-ci-r-setup.R
-    - ./R-devel/bin/R CMD build --no-resave-data --md5 .
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
-    - ./R-devel/bin/R CMD check "${PKG_FILE_NAME}"
+    - tar --list --verbose --file="${PKG_FILE_NAME}"
+    - make check check-options="${R_CHECK_ARGS}"
+    - if grep -q WARNING ${PKG_FILE_NAME}.Rcheck/00check.log; then exit 1; fi
+

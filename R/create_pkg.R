@@ -70,8 +70,8 @@ create_pkg <- function(path, use_data_raw = FALSE, ci = NULL, rstudio = FALSE, .
     } else if (ci == "gitlab") {
       templates <-
         dplyr::bind_rows(templates,
-                         data.frame(temp_file = c("gitlab-ci.yml", "gitlab-ci-r-setup.R"),
-                                    pkg_path  = c(".gitlab-ci.yml", ".gitlab-ci-r-setup.R"))
+                         data.frame(temp_file = c("gitlab-ci.yml"),
+                                    pkg_path  = c(".gitlab-ci.yml"))
                          )
     } else {
       stop("ci needs to be 'travis' or 'gitlab'", call. = FALSE)
