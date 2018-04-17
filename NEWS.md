@@ -14,6 +14,9 @@
 
 * Added a `pkg_check` (#51) to check if a list of packages are available.
 
+* Added functions for geometric mean, variance, and standard deviation.  (#52)
+  See the summary-statistics vignette for details.
+
 ## Improvements:
 * Extended the documentation for `logit` and `invlogit` to reference bases R
   methods.

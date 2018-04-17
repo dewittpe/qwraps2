@@ -68,10 +68,7 @@ mean_sd <- function(x,
 
 #' @rdname mean_sd
 #' @export   
-#' @param logged if TRUE the \code{x} is assumed to already by log transformed.
-#' If FALSE the data will be transformed.
 gmean_sd <- function(x, 
-                     logged = FALSE,
                      digits = getOption("qwraps2_frmt_digits", 2), 
                      na_rm = FALSE, 
                      show_n = "ifNA", 
@@ -79,13 +76,8 @@ gmean_sd <- function(x,
                      markup = getOption("qwraps2_markup", "latex")) { 
   n <- sum(!is.na(x))
 
-  if (logged) {
-    m <- exp(mean(x, na.rm = na_rm))
-    s <- exp(sqrt(sum((x - log(m))^2, na.rm = na_rm) / n))
-  } else { 
-    m <- exp(mean(log(x), na.rm = na_rm))
-    s <- exp(sqrt(sum((log(x) - log(m))^2, na.rm = na_rm) / n))
-  }
+  m <- gmean(x, na_rm)
+  s <- gsd(x, na_rm)
 
   if (all(!(show_n %in% c("ifNA", "always", "never")))) { 
     warning("'show_n' should be in c('ifNA', 'always', 'never').  Setting to 'ifNA'.")
@@ -108,3 +100,6 @@ gmean_sd <- function(x,
 
   return(rtn)
 }
+
+
+

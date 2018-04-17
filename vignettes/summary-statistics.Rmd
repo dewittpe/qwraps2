@@ -39,8 +39,8 @@ vignette and to construct the `mtcars2` `data.frame`.
 The `mtcars2` data frame will have three versions of the `cyl` vector: the
 original numeric values in `cyl`, a `character` version, and a `factor` version.
 
-
 ```{r }
+set.seed(42)
 library(dplyr)
 library(qwraps2)
 
@@ -141,6 +141,83 @@ n_perc(mtcars2$cyl_factor == levels(mtcars2$cyl_factor)[2])
 
 # The count and percentage of 4 or 6 cylinders vehicles in the data set is
 n_perc(mtcars2$cyl %in% c(4, 6))
+```
+
+
+## Geometric Means and Standard Deviations
+
+Let $\left\{x_1, x_2, x_3, \ldots, x_n \right\}$ be a sample of size $n$ with
+$x_i > 0$ for all $i.$  Then the geometric mean, $\mu_g,$ and geometric standard
+deviation are in Equation \@ref(eq:geometricmean) and \@ref(eq:geometricsd)
+respectively.
+
+$$
+\begin{equation}
+  (\#eq:geometricmean)
+  \mu_g = \left( \prod_{i = 1}^{n} x_i \right)^{\frac{1}{n}} = b^{ \sum_{i = 1}^{n} \log_{b} x_i }
+\end{equation}
+$$
+
+$$
+\begin{equation}
+  (\#eq:geometricsd)
+  \sigma_g = b ^ {
+  \sqrt{ \frac{\sum_{i = 1}^{n} \left( \log_{b} \frac{x_i}{\mu_g}
+  \right)^2}{n}}}
+\end{equation}
+$$
+
+When looking for the geometric standard deviation in R, the simple
+`exp(sd(log(x)))` is not exactly correct.  Note that in
+\@ref(eq:geometricsd) the denominator is $n,$ the full sample size, where as
+the `sd` and `var` functions in R use the denominator $n - 1.$  To get
+the geometric standard deviation one should adjust the result by multiplying the
+variance by $(n - 1) / n$ or the standard deviation by $\sqrt{(n - 1) / n}.$
+See the example below.
+
+```{r }
+x <- runif(6, min = 4, max = 70)
+
+# geometric mean
+mu_g <- prod(x) ** (1 / length(x))
+mu_g
+exp(mean(log(x)))
+1.2 ** mean(log(x, base = 1.2))
+
+# geometric standard deviation
+exp(sd(log(x)))  ## This is wrong
+
+# these equations are correct
+sigma_g <- exp(sqrt(sum(log(x / mu_g) ** 2) / length(x)))
+sigma_g
+
+exp(sqrt((length(x) - 1) / length(x)) * sd(log(x)))
+```
+
+
+The functions `gmean`, `gvar`, and `gsd` in the
+package, provide the geometric
+mean, variance, and standard deviation for a sample.
+
+```{r }
+gmean(x)
+all.equal(gmean(x), mu_g)
+
+gvar(x)
+all.equal(gvar(x), sigma_g^2)  # This is supposed to be FALSE
+all.equal(gvar(x), exp(log(sigma_g)^2))
+
+gsd(x)
+all.equal(gsd(x), sigma_g)
+```
+
+
+`gmean_sd` will provide a quick way for reporting the geometric mean and
+geometric standard deviation in the same way that `mean_sd` does for the
+arithmetic mean and arithmetic standard deviation:
+
+```{r }
+gmean_sd(x)
 ```
 
 

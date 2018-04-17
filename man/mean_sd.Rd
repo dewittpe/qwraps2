@@ -9,9 +9,9 @@ mean_sd(x, digits = getOption("qwraps2_frmt_digits", 2), na_rm = FALSE,
   show_n = "ifNA", denote_sd = "pm", markup = getOption("qwraps2_markup",
   "latex"))
 
-gmean_sd(x, logged = FALSE, digits = getOption("qwraps2_frmt_digits", 2),
-  na_rm = FALSE, show_n = "ifNA", denote_sd = "pm",
-  markup = getOption("qwraps2_markup", "latex"))
+gmean_sd(x, digits = getOption("qwraps2_frmt_digits", 2), na_rm = FALSE,
+  show_n = "ifNA", denote_sd = "pm", markup = getOption("qwraps2_markup",
+  "latex"))
 }
 \arguments{
 \item{x}{a numeric vector}
@@ -27,9 +27,6 @@ percentage estimate.}
 \eqn{\pm} sd' or 'mean (sd)'}
 
 \item{markup}{latex or markdown}
-
-\item{logged}{if TRUE the \code{x} is assumed to already by log transformed.
-If FALSE the data will be transformed.}
 }
 \value{
 a character vector of the formatted values
