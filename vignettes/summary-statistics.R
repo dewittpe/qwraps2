@@ -11,6 +11,7 @@
 #'
 #+ label = "setup", include = FALSE
 knitr::opts_chunk$set(collapse = TRUE)
+
 #'
 # /*
 # =============================================================================
@@ -257,6 +258,57 @@ grouped
 #'
 #+ results = "asis"
 both <- cbind(whole, grouped)
+both
+
+#'
+#' ### Adding P-values to a Summary Table
+#'
+#' There are many, many different ways to format data summary tables. Adding
+#' p-values to a table is just one thing that can be done in more than one way.
+#' For example, if a row group reports the counts and percentages for each level
+#' of a categorical variable across multiple (column) groups, then I would argue
+#' that the p-value resulting from a chi square test or a Fisher exact test
+#' would be best placed on the line of the table labeling the row group.
+#' However, say we reported the minimum, median, mean, and maximum with in a
+#' row group for one variable.  The p-value from a t-test, or other meaningful
+#' test, for the difference in mean I would suggest should be reported on the
+#' line of the summary table for the mean, not the row group itself.
+#'
+#' With so many possibilities I have reserved construction of a p-value column
+#' to be ad hoc.  Perhaps an additional column wouldn't be used and the p-values
+#' are edited into row group labels, for example.
+#'
+#' If you want to add a p-value column to a `qwraps2_summary_table` object you
+#' can with some degree of ease.  Note that `qwraps2_summary_table` objects are
+#' just character matrices.
+both %>% str
+
+# another good way to veiw the character matrix
+# print.default(both)
+
+#'
+#' Let's added p-values for testing the difference in the mean between the four
+#' groups defined by `am:vs`.
+pvals <-
+  list(lm(mpg ~ am:vs,  data = mtcars2),
+       lm(disp ~ am:vs, data = mtcars2),
+       lm(disp ~ am:vs, data = mtcars2),  # yeah, silly example this is needed twice
+       lm(wt ~ am:vs,   data = mtcars2)) %>%
+  lapply(aov) %>%
+  lapply(summary) %>%
+  lapply(function(x) x[[1]][["Pr(>F)"]][1]) %>%
+  lapply(frmtp) %>%
+  do.call(c, .)
+pvals
+
+#'
+#' Adding the p-value column is done as follows:
+both <- cbind(both, "P-value" = "")
+both[grepl("mean \\(sd\\)", rownames(both)), "P-value"] <- pvals
+
+#'
+#' and the resulting table is:
+#+ results = "asis"
 both
 
 #'
