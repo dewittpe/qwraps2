@@ -1,3 +1,10 @@
+# qwraps2 0.3.0.9000
+
+## Improvements:
+
+* Added example to vignette to address the use `tab_summary` with more than one
+  variable, e.g., in a `sapply` call. (#53)
+
 # qwraps2 0.3.0
 
 ## New Features

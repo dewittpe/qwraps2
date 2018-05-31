@@ -446,6 +446,7 @@ both
 
 
 ### Why use `with` with `tab_summary`?
+
 `tab_summary` was written to help construct `formula`e to save the end user key
 strokes.  There are plenty of reasons for `summary_table` to be used *without*
 `tab_summary`.  However, when it is helpful to use `tab_summary` make sure you
@@ -460,7 +461,7 @@ with(mtcars, tab_summary(mpg))
 ```
 
 
-The first call errors because `mpg` is not in the global environment.  The
+The first call, `tab_summary(mpg)`, errors because `mpg` is not in the global environment.  The
 difference between the second and third calls is subtle.  The second call
 generates a `formula` with `mtcars$mpg` as an argument whereas the third call
 generates a `formula` with only `mpg` as the argument.  The difference will be
@@ -468,8 +469,8 @@ seen in the summary tables if the `.data` is subsetted.
 
 ```{r }
 # The same tables:
-summary_table(mtcars, list("MPG 1" = with(mtcars, tab_summary(mpg))))
-summary_table(mtcars, list("MPG 2" = tab_summary(mtcars$mpg)))
+summary_table(mtcars, list("MPG Summary 1" = with(mtcars, tab_summary(mpg))))
+summary_table(mtcars, list("MPG Summary 2" = tab_summary(mtcars$mpg)))
 ```
 
 
@@ -478,14 +479,64 @@ data within the second call are the same.
 
 ```{r results = "asis"}
 # Different tables
-summary_table(dplyr::filter(mtcars, am == 0), list("MPG 3" = with(mtcars, tab_summary(mpg))))
-summary_table(dplyr::filter(mtcars, am == 0), list("MPG 4" = tab_summary(mtcars$mpg)))
+summary_table(dplyr::filter(mtcars, am == 0), list("MPG Summary 3" = with(mtcars, tab_summary(mpg))))
+summary_table(dplyr::filter(mtcars, am == 0), list("MPG Summary 4" = tab_summary(mtcars$mpg)))
 ```
 
 
 Now, the result of the second call above is not correct, it is the same as
 for the first two calls.  This is because `mtcars$` is part of the `formula`
 and the `.data` is ignored.  The correct result is in the table with `MPG 3`.
+
+## Using `tab_summary` for multiple variables at one time
+
+Say you have a data frame and want to use `tab_summary` for several (all) of the
+columns.  In this example we will use the `diamonds` data set from the
+`ggplot2` package.
+
+```{r }
+data("diamonds", package = "ggplot2")
+```
+
+
+The construction of the lists can be achived using either of the following
+two methods:
+
+```{r }
+spec1 <-
+  sapply(names(diamonds),
+         function(x) eval(substitute(with(diamonds, tab_summary(xx)), list(xx = as.name(x)))))
+
+spec2 <-
+  sapply(names(diamonds),
+       function(x) eval(substitute(tab_summary(diamonds[[xx]]), list(xx = x))))
+```
+
+
+The differenced between `spec1` and `spec2` are similar to the differences
+between MPG Summary 3 and MPG Summary 4 in the above examples.  `spec1` will
+work well with a subset of the `diamonds` whereas `spec2` is inadviable.
+Compare the differences in the following:
+
+```{r }
+spec1$carat
+
+spec2$carat
+
+spec1$cut
+
+spec2$cut
+```
+
+
+And of course, here is the summary table:
+
+```{r results="asis"}
+summary_table(diamonds, spec1)
+```
+
+
+## Closing Note on `summary_table` and `tab_summary`.
 
 I encourage you, the end user, to use `summary_table` primarily, and use
 `tab_summary` as a quick tool for generating a script.  It might be best if
