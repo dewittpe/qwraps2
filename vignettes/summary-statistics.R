@@ -422,6 +422,10 @@ summary_table(dplyr::filter(mtcars, am == 0), list("MPG Summary 4" = tab_summary
 data("diamonds", package = "ggplot2")
 
 #'
+#' The function works for non-syntactically valid names, e.g.,
+diamonds["The Price"] <- diamonds$price
+
+#'
 #' The construction of the lists can be achived using either of the following
 #' two methods:
 spec1 <-

@@ -499,6 +499,13 @@ data("diamonds", package = "ggplot2")
 ```
 
 
+The function works for non-syntactically valid names, e.g.,
+
+```{r }
+diamonds["The Price"] <- diamonds$price
+```
+
+
 The construction of the lists can be achived using either of the following
 two methods:
 
