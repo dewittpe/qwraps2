@@ -40,13 +40,13 @@
 #'
 #' @export
 #' @rdname summary_table
-summary_table <- function(x, summaries) {
+summary_table <- function(x, summaries = qsummary(x)) {
   UseMethod("summary_table")
 }
 
 #' @method summary_table data.frame
 #' @export
-summary_table.data.frame <- function(x, summaries) {
+summary_table.data.frame <- function(x, summaries = qsummary(x)) {
 
   out <- 
     lapply(summaries, function(s) { lapply(s, function(y) { rlang::f_rhs(y) }) }) %>%
@@ -61,7 +61,7 @@ summary_table.data.frame <- function(x, summaries) {
 }
 
 #' @export
-summary_table.grouped_df <- function(x, summaries) {
+summary_table.grouped_df <- function(x, summaries = qsummary(x)) {
   ngrps <- length(attr(x, "vars"))
 
   lbs <- attr(x, "labels")
@@ -110,7 +110,66 @@ cbind.qwraps2_summary_table <- function(..., deparse.level = 1) {
 }
 
 
+#' Quick Variable Summaries
+#'
+#' Tool to quickly generate the code for summarizing the variables of a
+#' \code{data.frame}.
+#'
+#' @param .data a \code{data.frame}
+#' @param numeric_summaries a list of functions to use for summarizing numeric
+#' variables.  
+#' @param n_perc_args a list of arguments to pass to
+#' \code{\link[qwraps2]{n_perc}} to be used with \code{character} or
+#' \code{factor} variables in \code{.data}.
+#'
+#' @export
+qsummary <- function(.data, numeric_summaries, n_perc_args) {
+  UseMethod("qsummary")
+}
 
+#' @export
+qsummary.data.frame <- function(.data,
+                                numeric_summaries = 
+                                  list("minimum"      = "~ qwraps2::frmt(min(%s))",
+                                       "median (IQR)" = "~ qwraps2::median_iqr(%s)",
+                                       "mean (sd)"    = "~ qwraps2::mean_sd(%s)",
+                                       "maximum"      = "~ qwraps2::frmt(max(%s))"),
+                                n_perc_args = list(digits = 0, show_symbol = FALSE),
+                                env = parent.frame()) { 
+  out <-
+    sapply(names(.data),
+           function(var) {
+             if (is.numeric(.data[[var]])) {
+               rtn <- lapply(numeric_summaries, sprintf, sprintf(".data[['%s']]", var))
+             } else if (is.character(.data[[var]]) | is.factor(.data[[var]])) { 
+               .data[[var]] <- as.factor(.data[[var]])
+
+               rtn <-
+                 sapply(levels(.data[[var]]),
+                        function(l) {
+                          cl <- list(quote(qwraps2::n_perc)) 
+                          cl[[2]] <- substitute(.data[[vv]] == ll, list(vv = var, ll = l))
+                          cl <- c(cl, n_perc_args)
+                          paste("~", deparse(as.call(cl)))
+                        },
+                        simplify = FALSE) 
+
+             } else if (is.logical(.data[[var]])) {
+               rtn <- "~ 1"
+             } else {
+               warning(sprintf("no default method for class '%s' found in .data[['%s']]", class(.data[[var]]), var),
+                       call. = FALSE)
+               rtn <- NA
+             }
+             rtn
+           }) 
+  lapply(out[!is.na(out)], function(x) lapply(x, FUN = as.formula, env = env))
+}
+
+#' @export
+qsummary.grouped_df <- function(.data, ...) {
+  qsummary(dplyr::ungroup(.data), ...)
+}
 
 
 #' Tabular Summaries
@@ -123,6 +182,7 @@ cbind.qwraps2_summary_table <- function(..., deparse.level = 1) {
 #' @param envir the environment to attach to the resulting formulea
 #' @export
 tab_summary <- function(x, n_perc_args = list(digits = 0, show_symbol = FALSE), envir = parent.frame()) {
+  .Deprecated(new = "qsummary")
   UseMethod("tab_summary")
 }
 

@@ -219,25 +219,27 @@ args(summary_table)
 #' `summary_table`.  The inner lists are named `formula`e defining the wanted
 #' summary.  These `formula`e are passed through `dplyr::summarize_` to generate
 #' the table.  The names are important, as they are used to label row groups and row
-#' names in the table.
-#'
+#' names in the table.  The arguemnt for the functions below use the `.data`
+#' pronoun for tidy evaluation (see `help(topic = ".data", package = "rlang")`).
+#' The use of this pronoun is not mandatory, however, the use of the pronoun is
+#' strongly encouraged.
 our_summary1 <-
   list("Miles Per Gallon" =
-       list("min" = ~ min(mpg),
-            "max" = ~ max(mpg),
-            "mean (sd)" = ~ qwraps2::mean_sd(mpg)),
+       list("min" = ~ min(.data$mpg),
+            "max" = ~ max(.data$mpg),
+            "mean (sd)" = ~ qwraps2::mean_sd(.data$mpg)),
        "Displacement" =
-       list("min" = ~ min(disp),
-            "max" = ~ max(disp),
-            "mean (sd)" = ~ qwraps2::mean_sd(disp)),
+       list("min" = ~ min(.data$disp),
+            "max" = ~ max(.data$disp),
+            "mean (sd)" = ~ qwraps2::mean_sd(.data$disp)),
        "Weight (1000 lbs)" =
-       list("min" = ~ min(wt),
-            "max" = ~ max(wt),
-            "mean (sd)" = ~ qwraps2::mean_sd(wt)),
+       list("min" = ~ min(.data$wt),
+            "max" = ~ max(.data$wt),
+            "mean (sd)" = ~ qwraps2::mean_sd(.data$wt)),
        "Forward Gears" =
-       list("Three" = ~ qwraps2::n_perc0(gear == 3),
-            "Four"  = ~ qwraps2::n_perc0(gear == 4),
-            "Five"  = ~ qwraps2::n_perc0(gear == 5))
+       list("Three" = ~ qwraps2::n_perc0(.data$gear == 3),
+            "Four"  = ~ qwraps2::n_perc0(.data$gear == 4),
+            "Five"  = ~ qwraps2::n_perc0(.data$gear == 5))
        )
 #'
 #' Building the table is done with a call to `summary_table`:
@@ -245,12 +247,9 @@ our_summary1 <-
 #+ results = "asis"
 ### Overall
 summary_table(mtcars2, our_summary1)
-summary_table(mtcars2, our_summary1)
 
 #'
-#'
-#'
-
+#' The `summary_table` will 
 #+ results = "asis"
 ### By number of Cylinders
 summary_table(dplyr::group_by(mtcars2, cyl_factor), our_summary1)
@@ -266,19 +265,21 @@ print(summary_table(dplyr::group_by(mtcars2, cyl_factor), our_summary1),
       cnames = c("Col 1", "Col 2", "Col 3"))
 #'
 #' ## Easy building of the summaries
-#' The task of building the `summaries` list-of-lists can be tedious.  `tab_summary`
-#' is designed to make it easier.  For `numeric` variables, `tab_summary` will
-#' provide the `formula`e for the min, median (iqr), mean (sd), and max.  `factor`
-#' and `character` vectors will have calls to `qwraps2::n_perc` for all levels
-#' provided.
 #'
-#' For version 0.2.3.9000 or beyond, arguments have been added to `tab_summary` to
-#' help control some of the formatting of counts and percentages.  The original
-#' behavior of `tab_summary` used `n_perc0` to format the summary of categorical
-#' variables.  Now, `n_perc` is called and the end user can specify formatting
-#' options via a `list` passed via the `n_perc_args` argument.
-#' The default settings for `tab_summary` is below.
-args(tab_summary)
+#' The task of building the `summaries` list-of-lists can be tedious.  `qsummary`
+#' is designed to make it easier.  `qsummary` will use a set of predefined
+#' functions to summarize numeric columns of a `data.frame`, a set of arguments
+#' to pass to `qwraps2::n_perc` for categorical (`character` and `factors`)
+#' variables.
+#'
+#' By default, calling `summarize
+qsummary(mtcars2)
+
+
+#'
+#'
+#'
+#'
 
 #'
 #' These options will make the output look as if `n_perc0` had been called instead

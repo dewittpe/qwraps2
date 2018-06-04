@@ -86,6 +86,31 @@ subject_level_dat %>%
   dplyr::ungroup() %>%
   summary_table(iss_summary)
 
+
+### NEW SECTION FOR qsummary development
+# library(magrittr)
+# devtools::load_all()
+# options("qwraps2_markup" = "markdown")
+data("diamonds", package = "ggplot2")
+diamonds["The Price"] <- diamonds$price
+diamonds[["badcol"]] <- replicate(expr = list(c(1:34)), n = nrow(diamonds))
+diamonds
+
+summary_table(diamonds)
+summary_table(diamonds, qsummary(diamonds))
+
+summary_table(dplyr::group_by(diamonds, .data$cut))
+
+summary_table(dplyr::group_by(diamonds, .data$cut),
+              list("My Summary of Price" =
+                   list("min price" = ~ min(.data$price),
+                        "IQR"       = ~ stats::IQR(.data$price))))
+
+summary_table(mtcars)
+summary_table(mtcars2)
+
+
+
 # reset the original markup option that was used before this example was
 # evaluated.
 options(qwraps2_markup = orig_opt)
