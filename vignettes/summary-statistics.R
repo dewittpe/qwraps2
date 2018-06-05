@@ -40,6 +40,7 @@ knitr::opts_chunk$set(collapse = TRUE)
 #' The `mtcars2` data frame will have three versions of the `cyl` vector: the
 #' original numeric values in `cyl`, a `character` version, and a `factor` version.
 set.seed(42)
+library(magrittr)
 library(dplyr)
 library(qwraps2)
 
@@ -246,13 +247,21 @@ our_summary1 <-
 #'
 #+ results = "asis"
 ### Overall
-summary_table(mtcars2, our_summary1)
+whole <- summary_table(mtcars2, our_summary1)
+whole
 
 #'
-#' The `summary_table` will 
+#' The `summary_table` will work with grouped data frames too.
 #+ results = "asis"
 ### By number of Cylinders
-summary_table(dplyr::group_by(mtcars2, cyl_factor), our_summary1)
+by_cyl <- summary_table(dplyr::group_by(mtcars2, cyl_factor), our_summary1)
+by_cyl
+
+#'
+#' To report a table with both the whole sample summary and conditional columns
+#' together:
+both <- cbind(whole, by_cyl)
+both
 
 #'
 #' If you want to change the column names, do so via the `cnames` argument to
@@ -260,9 +269,9 @@ summary_table(dplyr::group_by(mtcars2, cyl_factor), our_summary1)
 #' that you want to send to `qable` can be sent there when explicitly using the
 #' `print` method for `qwraps2_summary_table` objects.
 #+ results = "asis"
-print(summary_table(dplyr::group_by(mtcars2, cyl_factor), our_summary1),
+print(both,
       rtitle = "Summary Statistics",
-      cnames = c("Col 1", "Col 2", "Col 3"))
+      cnames = c("Col 0", "Col 1", "Col 2", "Col 3"))
 #'
 #' ## Easy building of the summaries
 #'
@@ -272,64 +281,44 @@ print(summary_table(dplyr::group_by(mtcars2, cyl_factor), our_summary1),
 #' to pass to `qwraps2::n_perc` for categorical (`character` and `factors`)
 #' variables.
 #'
-#' By default, calling `summarize
+#' By default, calling `summary_table` will use the default summary metrics
+#' defined by `qsummary`.  The purpose of `qsummary` is to provide the same
+#' summary for all numeric variables within a data.frame and a single style of
+#' summary for categorical variables within the data.frame.  For example, the
+#' default summary for the `mtcars2` data set is
 qsummary(mtcars2)
 
+#'
+#' That default summary is used for a table as follows:
+#+label="summary_table_mtcars2_default", result = "asis"
+summary_table(mtcars2)
 
 #'
-#'
-#'
-#'
+#' Now, say we want to only report the minimum and maximum for each of the
+#' numeric variables and for the categorical variables we want two show the
+#' demoninator for each category and for the percentage, to one digit with the
+#' percent symbol in the table.
+#' Note that when defining the list of numeric_summaries that the argument place
+#' holder is the `%s` character.
+new_summary <-
+  qsummary(mtcars2,
+           numeric_summaries = list("Minimum" = "~ min(%s)",
+                                    "Maximum" = "~ max(%s)"),
+           n_perc_args = list(digits = 1, show_symbol = TRUE, show_denom = "always"))
+
+new_summary
 
 #'
-#' These options will make the output look as if `n_perc0` had been called instead
-#' of `n_perc`.  More importantly, these defaults *will not* honor the
-#' `options()$qwraps2_frmt_digits`.
-#'
-#' Examples for `tab_summary` follow:
-tab_summary(mtcars2$mpg)
-
-tab_summary(mtcars2$gear) # gear is a numeric vector!
-tab_summary(factor(mtcars2$gear))
+#' The resulting table is:
+#+results = "asis"
+summary_table(mtcars2, new_summary)
 
 #'
-#' The `our_summary1` object can be recreated as follows.  Some additional row
-#' groups are provided to show default behavior of `tab_summary`. **Important:**
-#' Note that the `tab_summary` are made while using `with`.  Further explanation
-#' for this follows.
-#'
-our_summary2 <-
-  with(mtcars2,
-       list("Miles Per Gallon" = tab_summary(mpg)[c(1, 4, 3)],
-            "Displacement (default summary)" = tab_summary(disp),
-            "Displacement" = c(tab_summary(disp)[c(1, 4, 3)],
-                               "mean (95% CI)" = ~ frmtci(qwraps2::mean_ci(disp))),
-            "Weight (1000 lbs)" = tab_summary(wt)[c(1, 4, 3)],
-            "Forward Gears" = tab_summary(as.character(gear))
-            ))
-#'
-#'
-#'
-#+ results = "asis"
-whole <- summary_table(mtcars2, our_summary2)
-whole
+#' The summary can easily be used on a grouped `data.frame`.
+summary_table(dplyr::group_by(mtcars2, .data$am), new_summary)
 
 #'
-#' Group by multiple factors:
-#'
-#+ results = "asis"
-grouped <- summary_table(dplyr::group_by(mtcars2, am, vs), our_summary2)
-grouped
-
-#'
-#' As one table:
-#'
-#+ results = "asis"
-both <- cbind(whole, grouped)
-both
-
-#'
-#' ### Adding P-values to a Summary Table
+#' ## Adding P-values to a Summary Table
 #'
 #' There are many, many different ways to format data summary tables. Adding
 #' p-values to a table is just one thing that can be done in more than one way.
@@ -351,109 +340,34 @@ both
 #' just character matrices.
 both %>% str
 
-# another good way to veiw the character matrix
-# print.default(both)
-
 #'
-#' Let's added p-values for testing the difference in the mean between the four
-#' groups defined by `am:vs`.
-pvals <-
-  list(lm(mpg ~ am:vs,  data = mtcars2),
-       lm(disp ~ am:vs, data = mtcars2),
-       lm(disp ~ am:vs, data = mtcars2),  # yeah, silly example this is needed twice
-       lm(wt ~ am:vs,   data = mtcars2)) %>%
+#' Let's added p-values for testing the difference in the mean between the three
+#' cylinder groups.
+# difference in means
+mpvals <-
+  list(lm(mpg ~ cyl_factor,  data = mtcars2),
+       lm(disp ~ cyl_factor, data = mtcars2),
+       lm(wt ~ cyl_factor,   data = mtcars2)) %>%
   lapply(aov) %>%
   lapply(summary) %>%
   lapply(function(x) x[[1]][["Pr(>F)"]][1]) %>%
   lapply(frmtp) %>%
   do.call(c, .)
-pvals
+
+# Fisher test
+fpval <- frmtp(fisher.test(table(mtcars2$gear, mtcars2$cyl_factor))$p.value)
 
 #'
 #' Adding the p-value column is done as follows:
 both <- cbind(both, "P-value" = "")
-both[grepl("mean \\(sd\\)", rownames(both)), "P-value"] <- pvals
+both[grepl("mean \\(sd\\)", rownames(both)), "P-value"] <- mpvals
+a <- capture.output(print(both))
+a[grepl("Forward Gears", a)] %<>% sub("&nbsp;&nbsp;\\ \\|$", paste(fpval, "|"), .)
 
 #'
 #' and the resulting table is:
 #+ results = "asis"
-both
-
-#'
-#' ### Why use `with` with `tab_summary`?
-#'
-#' `tab_summary` was written to help construct `formula`e to save the end user key
-#' strokes.  There are plenty of reasons for `summary_table` to be used *without*
-#' `tab_summary`.  However, when it is helpful to use `tab_summary` make sure you
-#' understand the results.
-#'
-#' For example, let's look at a simple summary of the miles per gallon.
-# tab_summary(mpg) ## this errors
-tab_summary(mtcars$mpg)
-with(mtcars, tab_summary(mpg))
-
-#'
-#' The first call, `tab_summary(mpg)`, errors because `mpg` is not in the global environment.  The
-#' difference between the second and third calls is subtle.  The second call
-#' generates a `formula` with `mtcars$mpg` as an argument whereas the third call
-#' generates a `formula` with only `mpg` as the argument.  The difference will be
-#' seen in the summary tables if the `.data` is subsetted.
-# The same tables:
-summary_table(mtcars, list("MPG Summary 1" = with(mtcars, tab_summary(mpg))))
-summary_table(mtcars, list("MPG Summary 2" = tab_summary(mtcars$mpg)))
-
-#'
-#' These two calls generate the same table because the `.data` and the implied
-#' data within the second call are the same.
-#+ results = "asis"
-# Different tables
-summary_table(dplyr::filter(mtcars, am == 0), list("MPG Summary 3" = with(mtcars, tab_summary(mpg))))
-summary_table(dplyr::filter(mtcars, am == 0), list("MPG Summary 4" = tab_summary(mtcars$mpg)))
-
-#'
-#' Now, the result of the second call above is not correct, it is the same as
-#' for the first two calls.  This is because `mtcars$` is part of the `formula`
-#' and the `.data` is ignored.  The correct result is in the table with `MPG 3`.
-#'
-#' ## Using `tab_summary` for multiple variables at one time
-#'
-#' Say you have a data frame and want to use `tab_summary` for several (all) of the
-#' columns.  In this example we will use the `diamonds` data set from the
-#' `ggplot2` package.
-data("diamonds", package = "ggplot2")
-
-#'
-#' The function works for non-syntactically valid names, e.g.,
-diamonds["The Price"] <- diamonds$price
-
-#'
-#' The construction of the lists can be achived using either of the following
-#' two methods:
-spec1 <-
-  sapply(names(diamonds),
-         function(x) eval(substitute(with(diamonds, tab_summary(xx)), list(xx = as.name(x)))))
-
-spec2 <-
-  sapply(names(diamonds),
-       function(x) eval(substitute(tab_summary(diamonds[[xx]]), list(xx = x))))
-
-#'
-#' The differenced between `spec1` and `spec2` are similar to the differences
-#' between MPG Summary 3 and MPG Summary 4 in the above examples.  `spec1` will
-#' work well with a subset of the `diamonds` whereas `spec2` is inadviable.
-#' Compare the differences in the following:
-spec1$carat
-
-spec2$carat
-
-spec1$cut
-
-spec2$cut
-
-#'
-#' And of course, here is the summary table:
-#+results="asis"
-summary_table(diamonds, spec1)
+cat(a, sep = "\n")
 
 #'
 #' ## Closing Note on `summary_table` and `tab_summary`.
