@@ -144,32 +144,74 @@ qsummary.data.frame <- function(.data,
 
   numeric_summaries <-
     lapply(numeric_summaries, function(x) as.character(x)[length(x)])
+  n_perc_args_show_denom <- n_perc_args
+  n_perc_args_show_denom$show_denom = "always"
 
   out <-
     sapply(names(.data),
            function(var) {
              if (is.numeric(.data[[var]])) {
-               rtn <- lapply(numeric_summaries, sprintf, sprintf(".data[['%s']]", var))
+               if (any(is.na(.data[[var]]))) {
+                 rtn <- lapply(numeric_summaries, sprintf, sprintf("na.omit(.data[['%s']])", var))
+                 cl <- list(quote(qwraps2::n_perc))
+                 cl[[2]] <- substitute(is.na(.data[[vv]]), list(vv = var))
+                 cl <- c(cl, n_perc_args_show_denom)
+                 rtn <- c(rtn, Unknown = paste("~", paste(deparse(as.call(cl)), collapse = "")))
+               } else {
+                 rtn <- lapply(numeric_summaries, sprintf, sprintf(".data[['%s']]", var))
+               }
              } else if (is.character(.data[[var]]) | is.factor(.data[[var]])) {
                .data[[var]] <- as.factor(.data[[var]])
 
-               rtn <-
-                 sapply(levels(.data[[var]]),
-                        function(l) {
-                          cl <- list(quote(qwraps2::n_perc))
-                          cl[[2]] <- substitute(.data[[vv]] == ll, list(vv = var, ll = l))
-                          cl <- c(cl, n_perc_args)
-                          paste("~", paste(deparse(as.call(cl)), collapse = ""))
-                        },
-                        simplify = FALSE)
+               if (any(is.na(.data[[var]]))) { 
+                 rtn <-
+                   sapply(levels(.data[[var]]),
+                          function(l) {
+                            cl <- list(quote(qwraps2::n_perc))
+                            cl[[2]] <- substitute(na.omit(.data[[vv]]) == ll, list(vv = var, ll = l))
+                            cl <- c(cl, n_perc_args)
+                            paste("~", paste(deparse(as.call(cl)), collapse = ""))
+                          },
+                          simplify = FALSE) 
+                 cl <- list(quote(qwraps2::n_perc))
+                 cl[[2]] <- substitute(is.na(.data[[vv]]), list(vv = var))
+                 cl <- c(cl, n_perc_args_show_denom)
+                 rtn <- c(rtn, Unknown = paste("~", paste(deparse(as.call(cl)), collapse = "")))
+               } else { 
+                 rtn <-
+                   sapply(levels(.data[[var]]),
+                          function(l) {
+                            cl <- list(quote(qwraps2::n_perc))
+                            cl[[2]] <- substitute(.data[[vv]] == ll, list(vv = var, ll = l))
+                            cl <- c(cl, n_perc_args)
+                            paste("~", paste(deparse(as.call(cl)), collapse = ""))
+                          },
+                          simplify = FALSE) 
+               }
 
              } else if (is.logical(.data[[var]])) {
-               cl <- list(quote(qwraps2::n_perc))
-               cl[[2]] <- substitute(.data[[vv]], list(vv = var))
-               cl <- c(cl, n_perc_args)
-               rtn <- paste("~", paste(deparse(as.call(cl)), collapse = ""))
-               names(rtn) <- var
-               rtn
+
+               if (any(is.na(.data[[var]]))) {
+                 cl <- list(quote(qwraps2::n_perc))
+                 cl[[2]] <- substitute(na.omit(.data[[vv]]), list(vv = var))
+                 cl <- c(cl, n_perc_args)
+                 rtn <- paste("~", paste(deparse(as.call(cl)), collapse = ""))
+                 names(rtn) <- "True"
+
+                 cl <- list(quote(qwraps2::n_perc))
+                 cl[[2]] <- substitute(is.na(.data[[vv]]), list(vv = var))
+                 cl <- c(cl, n_perc_args_show_denom)
+                 rtn <- c(rtn, Unknown = paste("~", paste(deparse(as.call(cl)), collapse = "")))
+
+                 rtn
+               } else {
+                 cl <- list(quote(qwraps2::n_perc))
+                 cl[[2]] <- substitute(.data[[vv]], list(vv = var))
+                 cl <- c(cl, n_perc_args)
+                 rtn <- paste("~", paste(deparse(as.call(cl)), collapse = ""))
+                 names(rtn) <- var
+                 rtn
+               }
              } else {
                warning(sprintf("no default method for class '%s' found in .data[['%s']]", class(.data[[var]]), var),
                        call. = FALSE)

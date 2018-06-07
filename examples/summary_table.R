@@ -44,7 +44,7 @@ cbind(whole_table, grouped_by_table)
 # Adding a caption for a LaTeX table
 print(whole_table, caption = "Hello world", markup = "latex")
 
-# A **warning** about grouped_df objects.  The attr
+# A **warning** about grouped_df objects.
 # If you use dplyr::group_by or
 # dplyr::rowwise to manipulate a data set and fail to use dplyr::ungroup you
 # might find a table that takes a long time to create and does not summarize the
@@ -53,7 +53,7 @@ print(whole_table, caption = "Hello world", markup = "latex")
 # by finding the max ISS score for each subject and then reporting summary
 # statistics there of.
 set.seed(42)
-library(dplyr)
+library(magrittr)
 dat <- dplyr::data_frame(id = letters[1:20],
                          head_iss = sample(1:6, 20, replace = TRUE, prob = 10 * (6:1)),
                          face_iss = sample(1:6, 20, replace = TRUE, prob = 10 * (6:1)))
@@ -111,6 +111,17 @@ summary_table(dplyr::group_by(diamonds, .data$cut),
               list("My Summary of Price" =
                    list("min price" = ~ min(.data$price),
                         "IQR"       = ~ stats::IQR(.data$price))))
+
+################################################################################
+# Data sets with missing values
+temp <- mtcars
+temp$cyl[5] <- NA
+temp$am[c(1, 5, 10)] <- NA
+temp$am <- factor(temp$am, levels = 0:1, labels = c("Automatic", "Manual"))
+temp$vs <- as.logical(temp$vs)
+temp$vs[c(2, 6)] <- NA
+qsummary(dplyr::select(temp, .data$cyl, .data$am, .data$vs))
+summary_table(dplyr::select(temp, .data$cyl, .data$am, .data$vs))
 
 ################################################################################
 # reset the original markup option that was used before this example was
