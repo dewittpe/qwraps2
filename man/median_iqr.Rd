@@ -4,8 +4,9 @@
 \alias{median_iqr}
 \title{Median and Inner Quartile Range}
 \usage{
-median_iqr(x, digits = getOption("qwraps2_frmt_digits", 2), na_rm = FALSE,
-  show_n = "ifNA", markup = getOption("qwraps2_markup", "latex"))
+median_iqr(x, digits = getOption("qwraps2_frmt_digits", 2),
+  na_rm = FALSE, show_n = "ifNA",
+  markup = getOption("qwraps2_markup", "latex"))
 }
 \arguments{
 \item{x}{a numeric vector}

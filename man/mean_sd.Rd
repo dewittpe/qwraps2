@@ -6,12 +6,12 @@
 \title{Mean and Standard deviation}
 \usage{
 mean_sd(x, digits = getOption("qwraps2_frmt_digits", 2), na_rm = FALSE,
-  show_n = "ifNA", denote_sd = "pm", markup = getOption("qwraps2_markup",
-  "latex"))
+  show_n = "ifNA", denote_sd = "pm",
+  markup = getOption("qwraps2_markup", "latex"))
 
-gmean_sd(x, digits = getOption("qwraps2_frmt_digits", 2), na_rm = FALSE,
-  show_n = "ifNA", denote_sd = "pm", markup = getOption("qwraps2_markup",
-  "latex"))
+gmean_sd(x, digits = getOption("qwraps2_frmt_digits", 2),
+  na_rm = FALSE, show_n = "ifNA", denote_sd = "pm",
+  markup = getOption("qwraps2_markup", "latex"))
 }
 \arguments{
 \item{x}{a numeric vector}

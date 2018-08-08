@@ -2,12 +2,12 @@
 % Please edit documentation in R/create_pkg.R
 \name{create_pkg}
 \alias{create_pkg}
-\alias{create_pkg}
 \alias{create_vignette}
 \alias{create_data_raw}
 \title{Create Package}
 \usage{
-create_pkg(path, use_data_raw = FALSE, ci = NULL, rstudio = FALSE, ...)
+create_pkg(path, use_data_raw = FALSE, ci = NULL, rstudio = FALSE,
+  ...)
 
 create_vignette(name, path = ".")
 

@@ -13,8 +13,8 @@ confusion_matrix(x, ...)
 \method{confusion_matrix}{default}(x, y, positive, boot = FALSE,
   boot_samples = 1000L, alpha = 0.05, ...)
 
-\method{confusion_matrix}{formula}(formula, data = parent.frame(), positive,
-  boot = FALSE, boot_samples = 1000L, alpha = 0.05, ...)
+\method{confusion_matrix}{formula}(formula, data = parent.frame(),
+  positive, boot = FALSE, boot_samples = 1000L, alpha = 0.05, ...)
 
 is.confusion_matrix(x)
 
