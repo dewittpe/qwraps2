@@ -27,7 +27,7 @@ knitr::opts_chunk$set(collapse = TRUE)
 #' I wrote this package to be as flexible and general as possible.  I hope you like
 #' these tools and will be able to use them in your work.
 #'
-#' This vignette presents the use of the `summary_table`, `tab_summary`, and
+#' This vignette presents the use of the `summary_table`, `qsummary`, and
 #' `qable` functions for quickly building data summary tables.  These functions
 #' implicitly use the `mean_sd`, `median_iqr`, and `n_perc0` functions from
 #' `qwraps2` as well.

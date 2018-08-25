@@ -16,5 +16,6 @@ tab_summary(x, n_perc_args = list(digits = 0, show_symbol = FALSE),
 }
 \description{
 Tool to quickly generate the code for summarizing a variable.  To be used
-with summary_table.
+with summary_table.  This function has been deprecated, see
+\code{\link{qsummary}} instead.
 }

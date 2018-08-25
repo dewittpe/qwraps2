@@ -232,7 +232,8 @@ qsummary.grouped_df <- function(.data, ...) {
 #' Tabular Summaries
 #'
 #' Tool to quickly generate the code for summarizing a variable.  To be used
-#' with summary_table.
+#' with summary_table.  This function has been deprecated, see
+#' \code{\link{qsummary}} instead.
 #'
 #' @param x a variable to summarize
 #' @param n_perc_args a list of arguments to pass to \code{n_perc}

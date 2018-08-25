@@ -5,6 +5,10 @@
 * Added example to vignette to address the use `tab_summary` with more than one
   variable, e.g., in a `sapply` call. (#53)
 
+## Deprecations
+
+* `tab_summary` has been deprecated, use `qsummary` instead.
+
 # qwraps2 0.3.0
 
 ## New Features
