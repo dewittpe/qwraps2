@@ -101,6 +101,16 @@ print.qwraps2_summary_table <- function(x, rgroup = attr(x, "rgroups"), rnames =
 cbind.qwraps2_summary_table <- function(..., deparse.level = 1) {
   tabs <- list(...)
 
+  for(i in seq_along(tabs)[-1]) {
+    if (!identical(attr(tabs[[i-1]], "rgroups"), attr(tabs[[i]], "rgroups") ) ) {
+      stop("Not all row groups are identical.")
+    }
+    
+    if (!identical(rownames(tabs[[i-1]]), rownames(tabs[[i]]))) {
+      stop("Not all rownames are identical.")
+    }
+  }
+  
   out <- do.call(cbind, args = c(lapply(tabs, unclass), list(deparse.level = deparse.level)))
 
   attr(out, "rgroups") <- attr(tabs[[1]], "rgroups")
