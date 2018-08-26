@@ -124,6 +124,53 @@ qsummary(dplyr::select(temp, .data$cyl, .data$am, .data$vs))
 summary_table(dplyr::select(temp, .data$cyl, .data$am, .data$vs))
 
 ################################################################################
+# binding tables together.  The original design and expected use of
+# summary_table did not require a rbind, as all rows are defined in the
+# summaries argument.  That said, here are examples of using cbind and rbind to
+# build several different tables.
+our_summary1 <-
+  list("Miles Per Gallon" =
+       list("min" = ~ min(.data$mpg),
+            "max" = ~ max(.data$mpg),
+            "mean (sd)" = ~ qwraps2::mean_sd(.data$mpg)),
+       "Displacement" =
+       list("min" = ~ min(.data$disp),
+            "max" = ~ max(.data$disp),
+            "mean (sd)" = ~ qwraps2::mean_sd(.data$disp)))
+
+our_summary2 <-
+  list(
+       "Weight (1000 lbs)" =
+       list("min" = ~ min(.data$wt),
+            "max" = ~ max(.data$wt),
+            "mean (sd)" = ~ qwraps2::mean_sd(.data$wt)),
+       "Forward Gears" =
+       list("Three" = ~ qwraps2::n_perc0(.data$gear == 3),
+            "Four"  = ~ qwraps2::n_perc0(.data$gear == 4),
+            "Five"  = ~ qwraps2::n_perc0(.data$gear == 5))
+       )
+
+tab1 <- summary_table(mtcars, our_summary1)
+tab2 <- summary_table(dplyr::group_by(mtcars, am), our_summary1)
+tab3 <- summary_table(dplyr::group_by(mtcars, vs), our_summary1) 
+
+tab4 <- summary_table(mtcars, our_summary2)
+tab5 <- summary_table(dplyr::group_by(mtcars, am), our_summary2)
+tab6 <- summary_table(dplyr::group_by(mtcars, vs), our_summary2)
+
+
+cbind(tab1, tab2, tab3)
+cbind(tab4, tab5, tab6)
+
+rbind(tab1, tab4)
+all.equal(rbind(tab1, tab4), summary_table(mtcars, c(our_summary1, our_summary2)))
+
+\dontrun{
+  cbind(tab1, tab4) # error because rows are not the same
+  rbind(tab1, tab2) # error because columns are not the same
+}
+
+################################################################################
 # reset the original markup option that was used before this example was
 # evaluated.
 options(qwraps2_markup = orig_opt)

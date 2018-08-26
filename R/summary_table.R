@@ -119,6 +119,31 @@ cbind.qwraps2_summary_table <- function(..., deparse.level = 1) {
   out
 }
 
+#' @export
+#' @rdname summary_table
+#' @param ... \code{qwraps2_summary_table} objects to bind together
+#' @param deparse.level integer controlling the construction of labels in the
+#' case of non-matrix-like arguments (for the default method): \code{deparse.level =
+#' 0} constructs no labels; the default, \code{deparse.level = 1} or
+#' \code{deparse.level = 2} constructs labels from the argument names.
+#' @seealso \code{rbind}
+rbind.qwraps2_summary_table <- function(..., deparse.level = 1) {
+  tabs <- list(...)
+
+  for(i in seq_along(tabs)[-1]) { 
+    if (!identical(colnames(tabs[[i-1]]), colnames(tabs[[i]]))) {
+      stop("Not all colnames are identical.")
+    }
+  }
+  
+  out <- do.call(rbind, args = c(lapply(tabs, unclass), list(deparse.level = deparse.level)))
+
+  attr(out, "rgroups") <- do.call(c, lapply(tabs, attr, "rgroups"))
+  class(out) <- class(tabs[[1]])
+
+  out
+}
+
 
 #' Quick Variable Summaries
 #'
