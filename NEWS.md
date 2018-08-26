@@ -1,7 +1,13 @@
 # qwraps2 0.3.0.9000
 
+## New Features
+
+* `rbind.qwraps2_summary_table` (#55, #56)
+
 ## Improvements:
 
+* `cbind.qwrap2_summary_table` check attributes of objects to be binded
+  together. (#56)
 * Added example to vignette to address the use `tab_summary` with more than one
   variable, e.g., in a `sapply` call. (#53)
 

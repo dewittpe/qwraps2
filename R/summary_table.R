@@ -102,12 +102,14 @@ cbind.qwraps2_summary_table <- function(..., deparse.level = 1) {
   tabs <- list(...)
 
   for(i in seq_along(tabs)[-1]) {
-    if (!identical(attr(tabs[[i-1]], "rgroups"), attr(tabs[[i]], "rgroups") ) ) {
-      stop("Not all row groups are identical.")
-    }
-    
-    if (!identical(rownames(tabs[[i-1]]), rownames(tabs[[i]]))) {
-      stop("Not all rownames are identical.")
+    if (inherits(tabs[[i-1]], "qwraps2_summary_table") & inherits(tabs[[i]], "qwraps2_summary_table")) { 
+      if (!identical(attr(tabs[[i-1]], "rgroups"), attr(tabs[[i]], "rgroups") ) ) {
+        stop("Not all row groups are identical.")
+      }
+
+      if (!identical(rownames(tabs[[i-1]]), rownames(tabs[[i]]))) {
+        stop("Not all rownames are identical.")
+      }
     }
   }
   
@@ -121,18 +123,15 @@ cbind.qwraps2_summary_table <- function(..., deparse.level = 1) {
 
 #' @export
 #' @rdname summary_table
-#' @param ... \code{qwraps2_summary_table} objects to bind together
-#' @param deparse.level integer controlling the construction of labels in the
-#' case of non-matrix-like arguments (for the default method): \code{deparse.level =
-#' 0} constructs no labels; the default, \code{deparse.level = 1} or
-#' \code{deparse.level = 2} constructs labels from the argument names.
 #' @seealso \code{rbind}
 rbind.qwraps2_summary_table <- function(..., deparse.level = 1) {
   tabs <- list(...)
 
   for(i in seq_along(tabs)[-1]) { 
-    if (!identical(colnames(tabs[[i-1]]), colnames(tabs[[i]]))) {
-      stop("Not all colnames are identical.")
+    if (inherits(tabs[[i-1]], "qwraps2_summary_table") & inherits(tabs[[i]], "qwraps2_summary_table")) { 
+      if (!identical(colnames(tabs[[i-1]]), colnames(tabs[[i]]))) {
+        stop("Not all colnames are identical.")
+      }
     }
   }
   
