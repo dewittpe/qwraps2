@@ -23,7 +23,7 @@ all: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 		-e "devtools::install_dev_deps()" \
 		-e "devtools::document('$(PKG_ROOT)')" \
 		-e "invisible(file.create('$(PKG_ROOT)/.document.Rout', showWarnings = FALSE))"
-	if [ -e "$(PKG_ROOT)/vignettes/makefile" ]; then $(MAKE) -C $(PKG_ROOT)/vignettes/; else "Nothing to do"; fi
+	if [ -e "$(PKG_ROOT)/vignettes/makefile" ]; then $(MAKE) -C $(PKG_ROOT)/vignettes/; else echo "Nothing to do"; fi
 
 $(PKG_NAME)_$(PKG_VERSION).tar.gz: .document.Rout $(TESTS) $(PKG_ROOT)/DESCRIPTION
 	R CMD build --no-resave-data --md5 $(build-options) $(PKG_ROOT)
