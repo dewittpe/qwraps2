@@ -246,6 +246,10 @@ qsummary.data.frame <- function(.data,
                  names(rtn) <- var
                  rtn
                }
+             } else if (inherits(.data[[var]], "Date")) {
+                 rtn <- lapply(list("first" = " ~ min(%s)", "last"  = " ~ max(%s)"),
+                               sprintf, sprintf(".data[['%s']]", var))
+               
              } else {
                warning(sprintf("no default method for class '%s' found in .data[['%s']]", class(.data[[var]]), var),
                        call. = FALSE)

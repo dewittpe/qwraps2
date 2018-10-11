@@ -1,4 +1,4 @@
-# qwraps2 0.3.0.9000
+# qwraps2 0.3.0.9003
 
 ## New Features
 
@@ -10,6 +10,8 @@
   together. (#56)
 * Added example to vignette to address the use `tab_summary` with more than one
   variable, e.g., in a `sapply` call. (#53)
+* `qsummary` will return the first (min) and last (max) for variables where
+  `inherit(var, "Date")` is `TRUE`.
 
 ## Deprecations
 
