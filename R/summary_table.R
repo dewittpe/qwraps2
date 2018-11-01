@@ -54,7 +54,7 @@ summary_table.data.frame <- function(x, summaries = qsummary(x)) {
     lapply(t) %>%
     do.call(rbind, .)
 
-  colnames(out) <- paste0(deparse(substitute(x), backtick = TRUE), " (N = ", nrow(x), ")")
+  colnames(out) <- paste0(deparse(substitute(x), backtick = TRUE), " (N = ", frmt(nrow(x)), ")")
   attr(out, "rgroups") <- sapply(summaries, length)
   class(out) <- c("qwraps2_summary_table", class(out))
   out
@@ -65,7 +65,7 @@ summary_table.grouped_df <- function(x, summaries = qsummary(x)) {
   ngrps <- length(attr(x, "vars"))
 
   lbs <- attr(x, "labels")
-  grpsz <- attr(x, "group_sizes")
+  grpsz <- frmt(attr(x, "group_sizes"))
 
   lbs <- apply(cbind(matrix(paste(rep(names(lbs), each = nrow(lbs)), as.matrix(lbs), sep= ": "), nrow = nrow(lbs)), paste0("(N = ", grpsz, ")")), 1, paste, collapse = " ")
 
