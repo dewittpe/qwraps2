@@ -1,10 +1,10 @@
 #'---
-#'title: "Create A Package Skeleton"
+#'title: "Quick Package Skeletons"
 #'author: "Peter DeWitt"
 #'output: rmarkdown::html_vignette
 #'vignette: >
 #'  %\VignetteEngine{knitr::rmarkdown}
-#'  %\VignetteIndexEntry{Create A Package Skeleton}
+#'  %\VignetteIndexEntry{Quick Package Skeletons}
 #'  %\VignetteEncoding{UTF-8}
 #'---
 
@@ -13,177 +13,57 @@ library(knitr)
 knitr::opts_chunk$set(collapse = TRUE)
 
 #'
-#' The `create_pkg`, and its sister functions `create_data_raw` and
-#' `create_vignette`, are provided to build a package skeleton that I prefer.
-#' These functions are based on the
-#' [devtools](https://cran.r-project.org/package=devtools) `create`,
-#' `use_vignette` and `use_data_raw` functions.
+#' Building R packages has become easier and easier over the last several years.
+#' Two packages,
+#' [devtools](https://github.com/r-libs/devtools) and
+#' [usethis](https://github.com/r-lib/usethis), along with the imported and
+#' suggested packages used by these two packages, are, in my opinion, have made
+#' package authoring a viable option for novice and expert R programmers alike.
 #'
-#' This vignette will provided a detailed explanation of the package structure
-#' and design I prefer for R package development.
+#' Of course every programmer has their own style and I am no exception.  The
+#' qwraps2 package provides the `qpkg` (Quick Package) function to build an R
+#' package skeleton.  This vignette serves as an example for the use of the
+#' function and an explanation of how I prefer to write my R packages.
 #'
-#' This vignette only needs the `qwraps2` namespace loaded and attached.
-library(qwraps2)
-
-# /*
-# =============================================================================
-# */
+#' A couple things to be aware of as you read this vignette:
 #'
-#' # Section 1: `create_pkg`
+#' * I write a lot of packages for data analysis projects.  That is, I'm the
+#' consulting statistician on a research project and I use the R package
+#' structure to document and check my work.  Obviously, functions written to
+#' automate repeated analysis tasks are easy to document in a package.
+#' Vignettes are used to document data-import, exploratory data analysis, and
+#' are the basis for data analysis reports and manuscripts.
 #'
-#' The basic package skeleton is created with the `create_pkg` function.
-str(create_pkg)
-
+#' * I prefer to work in a Linux environment, Debian is my preferred
+#' distribution, and my preferred IDE is [neovim](https://neovim.io) with the
+#' [Nvim-R](https://github.com/jalvesaq/Nvim-R) plugin. If you are working in
+#' Linux or on a Mac I would expect that the following work will be relatively
+#' easy to follow and replicate.  If you are working on Windows, you might have
+#' some issue arise as the following rely on symbolic links.  Window users will
+#' need:
 #'
-#' The `path` is a directory to use for the package.  For the examples to follow
-#' we will use a temporary directory.
+#'   * Vista or later with a NTFS file system, not FAT,
+#'   * You need administrator rights or at least `SeCreateSymbolicLinkPrivilege`
+#'   privilege
+#'   * git bash version 2.10.2 or later.  It will be helpful to install with
+#'   `core.symlinks` option turned on.
 #'
-tmp_dir <- tempdir()
-pkg_dir <- paste(tmp_dir, "eg.pkg", sep = "/")
-pkg_dir
-create_pkg(pkg_dir)
-
 #'
-#' Let's look at the files and the skeleton created for the package.  We'll do
-#' this a few times so a `tree` function will be created and used:
-tree <- function(pkg_dir) {
-  files <- list.files(pkg_dir,
-                      all.files = TRUE,
-                      full.names = TRUE,
-                      recursive = TRUE,
-                      include.dirs = TRUE)
-  files <- data.frame(filename = gsub(tmp_dir, "", files), file.info(files)) 
-  print(data.tree::as.Node(files, pathName = "filename"), "isdir")
-}
-tree(pkg_dir)
-
-#'
-#' There are two empty directories created, the `R` directory and the `examples`
-#' directory.  The `examples` directory is expected to be used to store the
-#' examples for the documentation written, using
-#' [roxygen2](https://cran.r-project.org/package=roxygen2) markup, in the files
-#' within the `R` directory.  More details are given in a later section.
-#'
-#' The files populating the root directory of the package includes the needed
-#' `DESCRIPTION` file, which you, the package developer, will need to edit.
-#' Details on the metadata and what/how to edit it is found in the [R
-#' packages](http://r-pkgs.had.co.nz/description.html) book by Hadley Wickham.
-cat(readLines(paste0(pkg_dir, "/DESCRIPTION")), sep = "\n")
-
-#'
-#' The
-#' `NAMESPACE` file is provided, but **should not** be edited by the end user,
-#' let `devtools::document()`, called via the `makefile` handle the edits to the
-#' `NAMESPACE` file.  General package documentation in the form of a
-#' `README.md`, `CONTRIBUTING.md`, and `NEWS.md` are provided.  The
-#' `.Rbuildignore` and `.gitignore` files are provided with commonly needed
-#' expressions.  Lastly, the `makefile` is provided for building, checking, and
-#' installing the package.  A `help` recipe has been provided in the makefile.
-#'
-#'```
-#'make help
-#'```
-#'
-#' The recipes in the makefile are:
-# cat(readLines(paste0(pkg_dir, "/makefile")), sep = "\n")
-
-
-#'This `makefile` is built to be useful for most R package development, it is
-#'copied into new R packages created by `qwraps2::create_pkg`, see
-#'`vignette("create_pkg", package = "qwraps2")`.
-#'
-#'    usage: make [build-options] [check-options] [install-options] [targets]
-#'
-#'Target          Description
-#'------          -----------
-#'all             Build the man files, vignettes, and the `<package>_<version>.tar.gz` file
-#'help            Display usage, targets, and options provided by the makefile
-#'check           Run `R CMD check`
-#'install         Install the R package via `R CMD INSTALL`
-#'document        Construct raw data sets, if needed, and build/update man files.
-#'vignettes 
-#'
-#'Options       Description
-#'-------       -----------
-#'build-options
-
-
-
-#'
-#' If the `rstudio` option is used when calling create_pkg then a .Rproj file is
-#' added to the root directory.
-#'
-#' The `ci` argument is used to add template files for either [Travis
-#' CI](https://travis-ci.org) or gitlab runners.
-#'
-#' The `use_data_raw` option is used if raw data is to be part of the package.
-#' calling the `create_data_raw` function can be called later to create the
-#' directories and place the generic makefiles as needed to work with the
-#' makefile in the package root directory.
-#'
-#' ## `create_data_raw`
-#'
-#' Adding the `data-raw` and `data` directories to the package, if not done on
-#' the initial construction, is done via
-create_data_raw(pkg_dir)
-
-#'
-#' The updated package structure is:
-tree(pkg_dir)
-
-#'
-#' The makefile in the `data-raw` is generic such that any `.R` file will be
-#' evaluated.  Noting that some scripts needed to create a data set might
-#' require a non-trivial amount of time to evaluate, the makefile creates, and
-#' then uses, md5sums for assessing if the `.R` file(s) needs to be re-evaluated
-#' instead of the standard file modified time stamp.
-cat(readLines(paste0(pkg_dir, "/data-raw/makefile")), sep = "\n")
-
-#'
-#' ## `create_vignette`
-#'
-#' Authoring vignettes is a great way to document your package.  I have found
-#' that the parallel development of a 'how to use this package' vignette while
-#' writing and testing the package code has made development and documentation
-#' easier.
-#'
-#' Developing the vignette and the code base can be painful.  Consider a
-#' standard .Rmd or .Rnw file with with R code in individual chunks.  Having to
-#' re-evaluate all the chunks can be time consuming and cumbersome depending on
-#' your IDE.  An alternative method is to author `.R` files with the expectation
-#' of using [`knitr::spin`](https://yihui.name/knitr/demo/stitch/) to generate
-#' the `.Rmd` file that then gets processed into the vignette(s).
-#'
-#' The `create_vignette` places a template vignette file and makefile into a
-#' `vignettes` directory.#' 
-create_vignette(name = "egVign.R", path = pkg_dir)
-tree(pkg_dir)
-
-#'
-#' It is critically important that you **do not use**
-#' `devtools::build_vignettes()` as this will over write the .R file.  If you
-#' need to build the vignettes without building the whole package use the
-#' makefile in the package root directory and call
-#'
-#'```
-#'make .vignettes.Rout
-#'```
-
 
 
 #'
 # /*
-# =============================================================================
+# {{{ --------------------------------------------------------------------------
 # */
 #'
 #' # Examples:
-#' 
+#'
 #' The best example for this style of package development is the
 #' [qwraps2](https://github.com/dewittpe/qwraps2) package on github.
 #'
 #'
 # /*
-# =============================================================================
+# -------------------------------------------------------------------------- }}}
 # */
 #'
 #' # Session Info

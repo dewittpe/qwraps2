@@ -1,3 +1,6 @@
+#'
+
+
 #' Create Package
 #'
 #' A wrapper about \code{\link[devtools]{create}} for creating R package
@@ -47,6 +50,7 @@ NULL
 #' @rdname create_pkg
 #' @export
 create_pkg <- function(path, use_data_raw = FALSE, ci = NULL, rstudio = FALSE, ...) {
+  .Deprecated("qpkg", msg = "create_pkg has been deprecated.\nPlease use qpkg instead.\ncreate_pkg was only on github and was part of development work before the 0.4.0 submission to CRAN.\ncreate_pkg *will be removed* from the code base before the 0.4.0 submission to CRAN." )
 
   path <- normalizePath(path.expand(path))
 
@@ -103,6 +107,7 @@ create_pkg <- function(path, use_data_raw = FALSE, ci = NULL, rstudio = FALSE, .
 #' @rdname create_pkg
 #' @export
 create_vignette <- function(name, path = ".") {
+  .Deprecated(msg = "create_vignette will be removed from the code base before 0.4.0 submission to CRAN.\nSee qpkg instead.")
   path <- normalizePath(path.expand(path))
   dir.create(paste0(path, "/vignettes"))
   writeLines(readLines(system.file("templates", "vignette.R", package = "qwraps2")),
@@ -115,6 +120,7 @@ create_vignette <- function(name, path = ".") {
 #' @rdname create_pkg
 #' @export
 create_data_raw <- function(path = ".") {
+  .Deprecated(msg = "create_data_raw will be removed from the code base before 0.4.0 submission to CRAN.\nSee qpkg instead.")
   path <- normalizePath(path.expand(path))
   dir.create(paste0(path, "/data"))
   dir.create(paste0(path, "/data-raw"))
