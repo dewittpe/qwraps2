@@ -2,7 +2,10 @@
 #'title: "Formatted Summary Statistics and Data Summary Tables with qwraps2"
 #'author: "Peter DeWitt"
 #'date: "`r Sys.Date()`"
-#'output: rmarkdown::html_vignette
+#'output:
+#'  rmarkdown::html_vignette:
+#'    toc: true
+#'    number_sections: true
 #'vignette: >
 #'  %\VignetteIndexEntry{summary-statistics}
 #'  %\VignetteEngine{knitr::rmarkdown}
@@ -14,7 +17,7 @@ knitr::opts_chunk$set(collapse = TRUE)
 
 #'
 # /*
-# =============================================================================
+# {{{ Introduction -------------------------------------------------------------
 # */
 #'
 #' # Introduction
@@ -67,9 +70,24 @@ with(mtcars2, table(cyl_factor, cyl_character))
 with(mtcars2, all.equal(factor(cyl_character), cyl_factor))
 
 #'
+#/*
+# End of Introduction ------------------------------------------------------ }}}
+#*/
+#'
+#'
+#'
+#/*
+# {{{ Review of Summary Statistic Functions and Formatting ---------------------
+#*/
+#'
 #' # Review of Summary Statistic Functions and Formatting
 #'
+#/*
+# {{{ Subsection: Means and Standard Deviations --------------------------------
+#*/
+#'
 #' ## Means and Standard Deviations
+#'
 #' `mean_sd` will return the (arithmetic) mean and standard deviation for numeric
 #' vector. For example, `mean_sd(mtcars2$mpg)` will return the formatted string.
 #'
@@ -103,13 +121,31 @@ mci
 print(mci, show_level = TRUE)
 
 #'
+#/*
+# End Subsection: Means and Standard Deviations ---------------------------- }}}
+#*/
+#'
+#/*
+# {{{ Subsection: Median and Inner Quartile Range ------------------------------
+#*/
+#'
 #' ## Median and Inner Quartile Range
+#'
 #' Similar to the `mean_sd` function, the `median_iqr` returns the median and the
 #' inner quartile range (IQR) of a data vector.
 median_iqr(mtcars2$mpg)
 
 #'
+#/*
+# End Subsection: Median and Inner Quartile Range -------------------------- }}}
+#*/
+#'
+#/*
+# {{{ Subsection: Count and Percentages ----------------------------------------
+#*/
+#'
 #' ## Count and Percentages
+#'
 #' The `n_perc` function is the workhorse, but `n_perc0` is also provided for ease
 #' of use in the same way that base R has `paste` and `paste0`.  `n_perc` returns
 #' the n (%) with the percentage sign in the string, `n_perc0` omits the
@@ -127,6 +163,14 @@ n_perc(mtcars2$cyl_factor == levels(mtcars2$cyl_factor)[2])
 n_perc(mtcars2$cyl %in% c(4, 6))
 
 #'
+#/*
+# End Subsection: Count and Percentages ------------------------------------ }}}
+#*/
+#'
+#/*
+# {{{ Subsection: Geometric Means and Standard Deviations ----------------------
+#*/
+#'
 #' ## Geometric Means and Standard Deviations
 #'
 #' Let $\left\{x_1, x_2, x_3, \ldots, x_n \right\}$ be a sample of size $n$ with
@@ -143,8 +187,10 @@ n_perc(mtcars2$cyl %in% c(4, 6))
 #' $$
 #' \begin{equation}
 #'   \sigma_g = b ^ {
-#'   \sqrt{ \frac{\sum_{i = 1}^{n} \left( \log_{b} \frac{x_i}{\mu_g}
-#'   \right)^2}{n}}}
+#'   \sqrt{
+#'     \frac{\sum_{i = 1}^{n} \left( \log_{b} \frac{x_i}{\mu_g} \right)^2}{n}
+#'   }
+#'   }
 #' \end{equation}
 #' $$
 #' or, for clarity,
@@ -157,8 +203,8 @@ n_perc(mtcars2$cyl %in% c(4, 6))
 #' $$
 #'
 #' When looking for the geometric standard deviation in R, the simple
-#' `exp(sd(log(x)))` is not exactly correct.  Note that in
-#' \@ref(eq:geometricsd) the denominator is $n,$ the full sample size, where as
+#' `exp(sd(log(x)))` is not exactly correct.  The geometric standard deviation
+#' uses $n,$ the full sample size, in the denominator, where as
 #' the `sd` and `var` functions in R use the denominator $n - 1.$  To get
 #' the geometric standard deviation one should adjust the result by multiplying the
 #' variance by $(n - 1) / n$ or the standard deviation by $\sqrt{(n - 1) / n}.$
@@ -201,6 +247,18 @@ all.equal(gsd(x), sigma_g)
 gmean_sd(x)
 
 #'
+#/*
+# End Subsection: Geometric Means and Standard Deviations ------------------ }}}
+#*/
+#'
+#/*
+# End Section: Review of Summary Statistics and Functions ------------------ }}}
+#*/
+#'
+#/*
+# {{{ Section: Building a Data Summary Table -----------------------------------
+#*/
+#'
 #' # Building a Data Summary Table
 #'
 #' Objective: build a table reporting summary statistics for some of the variables
@@ -223,13 +281,18 @@ args(summary_table)
 
 #'
 #' Let's build a list-of-lists to pass to the `summaries` argument of
-#' `summary_table`.  The inner lists are named `formula`e defining the wanted
+#' `summary_table`.  Additional examples and tools for building the
+#' list-of-lists are given in the following section.  The immediate example is
+#' provided to demonstrate how to use the `summary_table` method.
+#'
+#' The inner lists are named `formula`e defining the wanted
 #' summary.  These `formula`e are passed through `dplyr::summarize` to generate
 #' the table.  The names are important, as they are used to label row groups and row
 #' names in the table.  The arguemnt for the functions below use the `.data`
 #' pronoun for tidy evaluation (see `help(topic = ".data", package = "rlang")`).
 #' The use of this pronoun is not mandatory, however, the use of the pronoun is
 #' strongly encouraged.
+#'
 our_summary1 <-
   list("Miles Per Gallon" =
        list("min" = ~ min(.data$mpg),
@@ -237,6 +300,7 @@ our_summary1 <-
             "mean (sd)" = ~ qwraps2::mean_sd(.data$mpg)),
        "Displacement" =
        list("min" = ~ min(.data$disp),
+            "median" = ~ median(.data$disp),
             "max" = ~ max(.data$disp),
             "mean (sd)" = ~ qwraps2::mean_sd(.data$disp)),
        "Weight (1000 lbs)" =
@@ -248,6 +312,7 @@ our_summary1 <-
             "Four"  = ~ qwraps2::n_perc0(.data$gear == 4),
             "Five"  = ~ qwraps2::n_perc0(.data$gear == 5))
        )
+
 #'
 #' Building the table is done with a call to `summary_table`:
 #'
@@ -266,7 +331,7 @@ by_cyl
 #'
 #' To report a table with both the whole sample summary and conditional columns
 #' together:
-#+results = "asis"
+#+ results = "asis"
 both <- cbind(whole, by_cyl)
 both
 
@@ -279,6 +344,10 @@ both
 print(both,
       rtitle = "Summary Statistics",
       cnames = c("Col 0", "Col 1", "Col 2", "Col 3"))
+#'
+#/*
+# {{{ Subsection: Easy building of the summaries -------------------------------
+#*/
 #'
 #' ## Easy building of the summaries
 #'
@@ -307,7 +376,7 @@ mtcars2 %>%
 #'
 #' Now, say we want to only report the minimum and maximum for each of the
 #' numeric variables and for the categorical variables we want two show the
-#' demoninator for each category and for the percentage, to one digit with the
+#' denominator for each category and for the percentage, to one digit with the
 #' percent symbol in the table.
 #' Note that when defining the list of numeric_summaries that the argument place
 #' holder is the `%s` character.
@@ -331,6 +400,16 @@ mtcars2 %>%
   dplyr::group_by(.data$am) %>%
   summary_table(., new_summary)
 
+#'
+#'
+#/*
+# End Subsection: Easy building of the summaries --------------------------- }}}
+#*/
+#'
+#'
+#/*
+# {{{ Subsection: Adding p-values to a summary table ---------------------------
+#*/
 #'
 #' ## Adding P-values to a Summary Table
 #'
@@ -384,5 +463,38 @@ a[grepl("Forward Gears", a)] %<>% sub("&nbsp;&nbsp;\\ \\|$", paste(fpval, "|"), 
 cat(a, sep = "\n")
 
 #'
+#' Another option you might consider is to have the p-value in the row group
+#' name.  Consider the following construction.  The p-values are added to the
+#' names of the row groups when building the summary table.
+#+ results = "asis"
+gear_summary <-
+  list("Forward Gears" =
+       list("Three" = ~ qwraps2::n_perc0(.data$gear == 3),
+            "Four"  = ~ qwraps2::n_perc0(.data$gear == 4),
+            "Five"  = ~ qwraps2::n_perc0(.data$gear == 5)),
+       "Transmission" =
+       list("Automatic" = ~ qwraps2::n_perc0(.data$am == 0),
+            "Manual"  = ~ qwraps2::n_perc0(.data$am == 1))
+       ) %>%
+setNames(.,
+         c(
+         paste("Forward Gears: ", frmtp(fisher.test(xtabs( ~ gear + cyl_factor, data = mtcars2))$p.value)),
+         paste("Transmission: ",  frmtp(fisher.test(xtabs( ~ am + cyl_factor, data = mtcars2))$p.value)))
+         )
+
+summary_table(dplyr::group_by(mtcars2, cyl_factor), gear_summary)
+
+
+#'
+#/*
+# End Subsection: Adding p-values to a summary table ----------------------- }}}
+#*/
+#'
+#'
+#/*
+# End Section: Building a Data Summary Table ------------------------------- }}}
+#*/
+#'
 #' # Session Info
+#'
 print(sessionInfo(), local = FALSE)
