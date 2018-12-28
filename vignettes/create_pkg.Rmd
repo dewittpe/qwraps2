@@ -1,1 +1,0 @@
-../vignette-spinners/create_pkg.Rmd
