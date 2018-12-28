@@ -1,4 +1,5 @@
 ^examples/*
+^vignette-spinners/*
 ^\.travis\.yml$
 ^.gitlab-ci.yml$
 ^codecov\.yml$

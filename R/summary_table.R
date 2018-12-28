@@ -50,7 +50,7 @@ summary_table.data.frame <- function(x, summaries = qsummary(x)) {
 
   out <-
     lapply(summaries, function(s) { lapply(s, function(y) { rlang::f_rhs(y) }) }) %>%
-    lapply(function(dots) { dplyr::summarize(x, rlang::UQS(dots)) }) %>%
+    lapply(function(dots) { dplyr::summarize(x, !!!(dots)) }) %>%
     lapply(t) %>%
     do.call(rbind, .)
 
@@ -71,7 +71,7 @@ summary_table.grouped_df <- function(x, summaries = qsummary(x)) {
 
   out <-
     lapply(summaries, function(s) { lapply(s, function(y) { rlang::f_rhs(y) }) }) %>%
-    lapply(function(dots) { dplyr::summarize(x, rlang::UQS(dots)) }) %>%
+    lapply(function(dots) { dplyr::summarize(x, !!!(dots)) }) %>%
     lapply(t) %>%
     lapply(function(y) `[`(y, -seq(1, ngrps, by = 1), )) %>%
     do.call(rbind, .)
