@@ -15,7 +15,15 @@
 
 ## Deprecations
 
-* `tab_summary` has been deprecated, use `qsummary` instead.
+* `tab_summary` has been deprecated, use `qsummary` instead.  A warning message
+  will be given to the user at this time.  `tab_summary` will be removed
+  completely in a later version.
+
+* `create_pkg` has been deprecated and removed from the package.  The function
+  was going to need a massive rewrite to deal with changes to
+  [devtools](https://cran.r-project.org/package=devtools) and
+  [usethis](https://cran.r-project.org/package=usethis).   Effectively, the
+  function would no longer work and this deprecation is just being pragmatic.
 
 # qwraps2 0.3.0
 
@@ -128,7 +136,7 @@ made since 0.1.0.
 # qwraps 0.1.3
 
 ## New features
-* `gmean_sd` returns the geometric mean and standard deviation 
+* `gmean_sd` returns the geometric mean and standard deviation
 
 ## Notable Changes
 * The `confusion_matrix` method has been modified.  Please read the
