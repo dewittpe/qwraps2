@@ -62,18 +62,28 @@ summary_table.data.frame <- function(x, summaries = qsummary(x)) {
 
 #' @export
 summary_table.grouped_df <- function(x, summaries = qsummary(x)) {
-  ngrps <- length(attr(x, "vars"))
 
-  lbs <- attr(x, "labels")
-  grpsz <- frmt(attr(x, "group_sizes"))
+  # A workaround needs to be made while dplyr transition form version 0.7.8 to
+  # 0.8.0, see issue #67
 
-  lbs <- apply(cbind(matrix(paste(rep(names(lbs), each = nrow(lbs)), as.matrix(lbs), sep= ": "), nrow = nrow(lbs)), paste0("(N = ", grpsz, ")")), 1, paste, collapse = " ")
+  if (!is.null(attr(x, "vars"))) {
+    ngrps <- length(attr(x, "vars"))  # for dplyr version 0.7.8
+    lbs <- attr(x, "labels")
+    grpsz <- frmt(attr(x, "group_sizes"))
+    lbs <- apply(cbind(matrix(paste(rep(names(lbs), each = nrow(lbs)), as.matrix(lbs), sep= ": "), nrow = nrow(lbs)), paste0("(N = ", grpsz, ")")), 1, paste, collapse = " ")
+  } else {
+    ngrps <- nrow(attr(x, "groups"))  # for dplyr version 0.7.99.9000 and beyond
+    lbs <- attr(x, "groups")
+    lbs <- lbs[-length(lbs)]
+    grpsz <- frmt(sapply(attr(x, "groups")[[".rows"]], length))
+    lbs <- apply(cbind(matrix(paste(rep(names(lbs), each = nrow(lbs)), as.matrix(lbs), sep= ": "), nrow = nrow(lbs)), paste0("(N = ", grpsz, ")")), 1, paste, collapse = " ")
+  }
 
   out <-
     lapply(summaries, function(s) { lapply(s, function(y) { rlang::f_rhs(y) }) }) %>%
     lapply(function(dots) { dplyr::summarize(x, !!!(dots)) }) %>%
     lapply(t) %>%
-    lapply(function(y) `[`(y, -seq(1, ngrps, by = 1), )) %>%
+    lapply(function(y) `[`(y, -1, )) %>%
     do.call(rbind, .)
 
   colnames(out) <- lbs
@@ -102,7 +112,7 @@ cbind.qwraps2_summary_table <- function(..., deparse.level = 1) {
   tabs <- list(...)
 
   for(i in seq_along(tabs)[-1]) {
-    if (inherits(tabs[[i-1]], "qwraps2_summary_table") & inherits(tabs[[i]], "qwraps2_summary_table")) { 
+    if (inherits(tabs[[i-1]], "qwraps2_summary_table") & inherits(tabs[[i]], "qwraps2_summary_table")) {
       if (!identical(attr(tabs[[i-1]], "rgroups"), attr(tabs[[i]], "rgroups") ) ) {
         stop("Not all row groups are identical.")
       }
@@ -112,7 +122,7 @@ cbind.qwraps2_summary_table <- function(..., deparse.level = 1) {
       }
     }
   }
-  
+
   out <- do.call(cbind, args = c(lapply(tabs, unclass), list(deparse.level = deparse.level)))
 
   attr(out, "rgroups") <- attr(tabs[[1]], "rgroups")
@@ -127,14 +137,14 @@ cbind.qwraps2_summary_table <- function(..., deparse.level = 1) {
 rbind.qwraps2_summary_table <- function(..., deparse.level = 1) {
   tabs <- list(...)
 
-  for(i in seq_along(tabs)[-1]) { 
-    if (inherits(tabs[[i-1]], "qwraps2_summary_table") & inherits(tabs[[i]], "qwraps2_summary_table")) { 
+  for(i in seq_along(tabs)[-1]) {
+    if (inherits(tabs[[i-1]], "qwraps2_summary_table") & inherits(tabs[[i]], "qwraps2_summary_table")) {
       if (!identical(colnames(tabs[[i-1]]), colnames(tabs[[i]]))) {
         stop("Not all colnames are identical.")
       }
     }
   }
-  
+
   out <- do.call(rbind, args = c(lapply(tabs, unclass), list(deparse.level = deparse.level)))
 
   attr(out, "rgroups") <- do.call(c, lapply(tabs, attr, "rgroups"))
@@ -197,7 +207,7 @@ qsummary.data.frame <- function(.data,
              } else if (is.character(.data[[var]]) | is.factor(.data[[var]])) {
                .data[[var]] <- as.factor(.data[[var]])
 
-               if (any(is.na(.data[[var]]))) { 
+               if (any(is.na(.data[[var]]))) {
                  rtn <-
                    sapply(levels(.data[[var]]),
                           function(l) {
@@ -206,12 +216,12 @@ qsummary.data.frame <- function(.data,
                             cl <- c(cl, n_perc_args)
                             paste("~", paste(deparse(as.call(cl)), collapse = ""))
                           },
-                          simplify = FALSE) 
+                          simplify = FALSE)
                  cl <- list(quote(qwraps2::n_perc))
                  cl[[2]] <- substitute(is.na(.data[[vv]]), list(vv = var))
                  cl <- c(cl, n_perc_args_show_denom)
                  rtn <- c(rtn, Unknown = paste("~", paste(deparse(as.call(cl)), collapse = "")))
-               } else { 
+               } else {
                  rtn <-
                    sapply(levels(.data[[var]]),
                           function(l) {
@@ -220,7 +230,7 @@ qsummary.data.frame <- function(.data,
                             cl <- c(cl, n_perc_args)
                             paste("~", paste(deparse(as.call(cl)), collapse = ""))
                           },
-                          simplify = FALSE) 
+                          simplify = FALSE)
                }
 
              } else if (is.logical(.data[[var]])) {
@@ -249,7 +259,7 @@ qsummary.data.frame <- function(.data,
              } else if (inherits(.data[[var]], "Date")) {
                  rtn <- lapply(list("first" = " ~ min(%s)", "last"  = " ~ max(%s)"),
                                sprintf, sprintf(".data[['%s']]", var))
-               
+
              } else {
                warning(sprintf("no default method for class '%s' found in .data[['%s']]", class(.data[[var]]), var),
                        call. = FALSE)
