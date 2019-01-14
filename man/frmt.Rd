@@ -61,7 +61,7 @@ the default, then this argument is ignored.}
 a character vector of the formatted numbers
 }
 \description{
-Functions for formating Numeric values for consistent display
+Functions for formating numeric values for consistent display
 in reports.
 }
 \details{
@@ -94,6 +94,11 @@ format.
 
 `frmtcip` expects four values, est, lcl, ucl, and p-value.  The resulting
 sting will be of the form "est (lcl, ucl; p-value)".
+
+The `Rpkg`, `CRANpkg`, and `Githubpkg` functions are used to help make
+documenting packages stylistically consistent and with valid urls.  These
+functions were inspired by similar ones found in BioConductor's BiocStyle
+package.
 }
 \examples{
 

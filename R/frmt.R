@@ -1,6 +1,6 @@
 #' @title Format Wrappers
 #'
-#' @description Functions for formating Numeric values for consistent display
+#' @description Functions for formating numeric values for consistent display
 #' in reports.
 #'
 #' @details
@@ -33,7 +33,11 @@
 #'
 #' `frmtcip` expects four values, est, lcl, ucl, and p-value.  The resulting
 #' sting will be of the form "est (lcl, ucl; p-value)".
-#' 
+#'
+#' The `Rpkg`, `CRANpkg`, and `Githubpkg` functions are used to help make
+#' documenting packages stylistically consistent and with valid urls.  These
+#' functions were inspired by similar ones found in BioConductor's BiocStyle
+#' package.
 #'
 #' @seealso
 #' \code{\link{formatC}}
@@ -258,4 +262,70 @@ frmtci.qwraps2_mean_ci <- function(x, est = 1, lcl = 2, ucl = 3, format = "est (
     out <- sub("ucl", .ucl, sub("lcl", .lcl, sub("est", .est, format)))
   } 
   out
+}
+
+#' Formatting Style on URLs for packages on CRAN, Github, and Gitlab.
+#'
+#' Functions for controling the look of package names in markdown created
+#' vignettes and easy currating of URLs for the packages.
+#'
+#' @param pkg The name of the package, will work as a quoted or raw name.
+#' @param username username for Github.com or Gitlab.com
+#' @examples
+#'
+#' Rpkg(qwraps2)
+#' Rpkg("qwraps2")
+#'
+#' CRANpkg(qwraps2)
+#' CRANpkg("qwraps2")
+#'
+#' Githubpkg(qwraps2, "dewittpe")
+#' Githubpkg("qwraps2", dewittpe)
+#'
+#' Gitlabpkg(qwraps2, "dewittpe")
+#' Gitlabpkg("qwraps2", dewittpe)
+#'
+#' @name Rpkg
+NULL
+
+#' @export
+#' @rdname Rpkg
+Rpkg <- function(pkg) {
+  pkg <- deparse(substitute(pkg))
+  pkg <- gsub("\"|\'", "", pkg)
+  sprintf("*%s*", pkg)
+}
+
+#' @export
+#' @rdname Rpkg
+CRANpkg <- function(pkg) {
+  pkg <- deparse(substitute(pkg))
+  pkg <- gsub("\"|\'", "", pkg)
+  pkg <- sprintf("[%s](https://cran.r-project.org/package=%s", pkg, pkg) 
+  cl <- list(quote(Rpkg), pkg = pkg)
+  eval(as.call(cl))
+}
+
+#' @export
+#' @rdname Rpkg
+Githubpkg <- function(pkg, username) {
+  pkg <- deparse(substitute(pkg))
+  pkg <- gsub("\"|\'", "", pkg)
+  usn <- deparse(substitute(username))
+  usn <- gsub("\"|\'", "", usn)
+  pkg <- sprintf("[%s](https://github.com/%s/package=%s", pkg, usn, pkg)
+  cl <- list(quote(Rpkg), pkg = pkg)
+  eval(as.call(cl))
+}
+
+#' @export
+#' @rdname Rpkg
+Gitlabpkg <- function(pkg, username) {
+  pkg <- deparse(substitute(pkg))
+  pkg <- gsub("\"|\'", "", pkg)
+  usn <- deparse(substitute(username))
+  usn <- gsub("\"|\'", "", usn)
+  pkg <- sprintf("[%s](https://gitlab.com/%s/package=%s", pkg, usn, pkg)
+  cl <- list(quote(Rpkg), pkg = pkg)
+  eval(as.call(cl))
 }

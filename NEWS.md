@@ -3,6 +3,8 @@
 ## New Features
 
 * `rbind.qwraps2_summary_table` (#55, #56)
+* formatting options for package names and urls to CRAN, gitlab, and github.
+  (#68)
 
 ## Improvements:
 
