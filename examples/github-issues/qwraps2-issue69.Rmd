@@ -1,0 +1,69 @@
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(plyr) # if it is installed after dplyr, there is problem
+library(dplyr)
+library(psych)
+library(tidyr)
+library(ggplot2)
+library(gtools)
+library(reshape)
+library(reshape2)
+library(magrittr) # includes the %<>% operator
+library(qwraps2) # create tables
+library(broom)
+library(formattable)
+library(summarytools)
+Sys.setlocale(category = "LC_ALL", locale = "chinese")
+options(scipen = 6)
+options(qwraps2_markup = "markdown")
+```
+
+```{r}
+data(mtcars)
+mtcars
+class(mtcars$cyl)
+mtcars2<- dplyr::mutate(mtcars,
+                       cyl_factor = factor(cyl, 
+                                           levels = c(6,4,8),
+                                           labels = paste(c(6,4,8), 'cylinders')),
+                       cyl_character = paste(cyl, 'cylinders'))
+summary(mtcars2)
+```
+
+```{r, results = "asis"}
+our_summary1 <-
+  list("Miles Per Gallon" =
+         list("min" = ~ min(.data$mpg),
+              "max" = ~ max(.data$mpg),
+              "mean (sd)" = ~ qwraps2::mean_sd(.data$mpg)),
+       "Displacement" =
+         list("min" = ~ min(.data$disp),
+              "median" = ~ median(.data$disp),
+              "max" = ~ max(.data$disp),
+              "mean (sd)" = ~ qwraps2::mean_sd(.data$disp)),
+       "Weight (1000 lbs)" =
+         list("min" = ~ min(.data$wt),
+              "max" = ~ max(.data$wt),
+              "mean (sd)" = ~ qwraps2::mean_sd(.data$wt)),
+       "Forward Gears" =
+         list("Three" = ~ qwraps2::n_perc0(.data$gear == 3),
+              "Four"  = ~ qwraps2::n_perc0(.data$gear == 4),
+              "Five"  = ~ qwraps2::n_perc0(.data$gear == 5))
+  )
+whole <- summary_table(mtcars2, our_summary1)
+whole
+
+new_summary <-
+  mtcars2 %>%
+  dplyr::select(.data$mpg, .data$cyl_factor, .data$wt) %>%
+  qsummary(.,
+           numeric_summaries = list("Minimum" = "~ min(%s)",
+                                    "Maximum" = "~ max(%s)"),
+           n_perc_args = list(digits = 1, show_symbol = TRUE, show_denom = "always"))
+mtcars2 %>%
+  dplyr::group_by(.data$am) %>%
+  summary_table(., new_summary)
+```
+
