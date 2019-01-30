@@ -1,0 +1,35 @@
+The code in Chunk 1 compiles, but no caption when the markup language is
+markdown.  The table is not a floating environment.
+
+```{r label = "example_table_1", results = "asis"}
+# Chunk 1
+library(qwraps2)
+options(qwraps2_markup = "markdown")
+eg_table <- summary_table(mtcars[c("mpg", "hp")])
+print(eg_table, caption = "Example Caption")
+```
+
+Chunk 2 will work and I can reference the captioned Table
+\ref{tab:example_table_2} as I would any other table in \LaTeX.
+
+
+```{r label = "example_table_2", results = "asis"}
+# Chunk 2
+options(qwraps2_markup = "latex")
+eg_table <- summary_table(mtcars[c("mpg", "hp")])
+print(eg_table, caption = "Example Caption")
+```
+
+The last chunk here, chunk 3 will result in a compile error.  The issue is that
+th summary statistics characters are generated with the expectation of markdown
+but the markup language wrapping up the character matrix is \LaTeX.  The
+\&plusmn; html code introduces the ``Extra alignment tab has been change
+to \cr.` error.  
+
+```{r label = "example_table_3", results = "markup"}
+# Chunk 3 ... compile error if chunk option "results = 'asis'" is used.  No
+options(qwraps2_markup = "markdown")
+eg_table <- summary_table(mtcars[c("mpg", "hp")])
+print(eg_table, caption = "Example Caption", markup = "latex")
+```
+
