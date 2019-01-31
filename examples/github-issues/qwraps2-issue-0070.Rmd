@@ -17,7 +17,9 @@ Chunk 2 will work and I can reference the captioned Table
 # Chunk 2
 options(qwraps2_markup = "latex")
 eg_table <- summary_table(mtcars[c("mpg", "hp")])
-print(eg_table, caption = "Example Caption")
+
+# use booktabs = TRUE to have better formatting.
+print(eg_table, caption = "Example Caption", booktabs = TRUE)
 ```
 
 The last chunk here, chunk 3 will result in a compile error.  The issue is that
@@ -31,5 +33,9 @@ to \cr.` error.
 options(qwraps2_markup = "markdown")
 eg_table <- summary_table(mtcars[c("mpg", "hp")])
 print(eg_table, caption = "Example Caption", markup = "latex")
+
+# omit the \hline after every row
+print(eg_table, caption = "Example Caption", markup = "latex", booktabs = TRUE)
 ```
+
 
