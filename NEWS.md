@@ -1,4 +1,9 @@
-# qwraps2 0.3.0.9003
+# qwraps2 0.4.1
+
+Comment out a test due to the change in random number generating for `sample`.
+(#72)
+
+# qwraps2 0.4.0
 
 ## New Features
 
