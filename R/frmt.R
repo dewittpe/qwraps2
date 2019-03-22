@@ -335,11 +335,10 @@ Gitlabpkg <- function(pkg, username) {
 #' Encapsulate a string in backticks. Very helpful for in line code in
 #' knitr::spin scripts.
 #'
-#' @param x a string or raw name to encapsulate.
+#' @param x the thing to be deparsed and encapsulated in backticks
 #'
 #' @export
 backtick <- function(x) {
   x <- deparse(substitute(x))
-  x <- gsub("\"|\'|`", "", x)
   sprintf("`%s`", x)
 }

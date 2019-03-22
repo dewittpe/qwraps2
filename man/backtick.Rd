@@ -7,7 +7,7 @@
 backtick(x)
 }
 \arguments{
-\item{x}{a string or raw name to encapsulate.}
+\item{x}{the thing to be deparsed and encapsulated in backticks}
 }
 \description{
 Encapsulate a string in backticks. Very helpful for in line code in
