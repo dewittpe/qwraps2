@@ -75,12 +75,12 @@ Default settings are controlled through the function arguments but should be
 set via \code{options()}.
 
 Default settings report the P-value exactly if P >
-\code{getOptions("qwraps2_frmtp_digits", 4)} and reports 
+\code{getOptions("qwraps2_frmtp_digits", 4)} and reports
 P < \code{10^-(getOptions("qwraps2_frmtp_digits", 2))} otherwise.  By the
-leading zero is controlled via 
-\code{getOptions("qwraps2_frmtp_leading0", TRUE)} 
+leading zero is controlled via
+\code{getOptions("qwraps2_frmtp_leading0", TRUE)}
 and a upper or lower case P is controlled by
-\code{getOptions("qwraps2_frmtp_case", "upper")}.  These options are ignored 
+\code{getOptions("qwraps2_frmtp_case", "upper")}.  These options are ignored
 if \code{style != "default"}.
 
 Journals with predefined P-value formatting are noted in the
@@ -114,22 +114,22 @@ frmt(numbers)
 # Formatting p-values
 ps <- c(0.2, 0.001, 0.00092, 0.047, 0.034781, 0.0000872, 0.787, 0.05, 0.043)
 # LaTeX is the default markup language
-cbind("raw"      = ps, 
-      "default"  = frmtp(ps), 
+cbind("raw"      = ps,
+      "default"  = frmtp(ps),
       "3lower"   = frmtp(ps, digits = 3, case = "lower"),
       "PediDent" = frmtp(ps, style = "pediatric_dentistry"))
 
 # Using markdown
-cbind("raw"      = ps, 
-      "default"  = frmtp(ps, markup = "markdown"), 
+cbind("raw"      = ps,
+      "default"  = frmtp(ps, markup = "markdown"),
       "3lower"   = frmtp(ps, digits = 3, case = "lower", markup = "markdown"),
       "PediDent" = frmtp(ps, style = "pediatric_dentistry", markup = "markdown"))
 
 # Formatting the point estimate and confidence interval
 # for a set of three values
 temp <- c(a = 1.23, b = .32, CC = 1.78)
-frmtci(temp) 
-frmtci(temp, show_level = TRUE) 
+frmtci(temp)
+frmtci(temp, show_level = TRUE)
 
 # note that the show_level will be ignored in the following
 frmtci(temp, format = "est ***lcl, ucl***", show_level = TRUE)
@@ -139,7 +139,7 @@ frmtci(temp, show_level = "confidence between: ")
 
 # For a matrix: the numbers in this example don't mean anything, but the
 # formatting should.
-temp2 <- matrix(rnorm(12), nrow = 4, 
+temp2 <- matrix(rnorm(12), nrow = 4,
                 dimnames = list(c("A", "B", "C", "D"), c("EST", "LOW", "HIGH")))
 temp2
 frmtci(temp2)

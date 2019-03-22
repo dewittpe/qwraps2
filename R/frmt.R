@@ -12,14 +12,14 @@
 #'
 #' Default settings are controlled through the function arguments but should be
 #' set via \code{options()}.
-#' 
+#'
 #' Default settings report the P-value exactly if P >
-#' \code{getOptions("qwraps2_frmtp_digits", 4)} and reports 
+#' \code{getOptions("qwraps2_frmtp_digits", 4)} and reports
 #' P < \code{10^-(getOptions("qwraps2_frmtp_digits", 2))} otherwise.  By the
-#' leading zero is controlled via 
-#' \code{getOptions("qwraps2_frmtp_leading0", TRUE)} 
+#' leading zero is controlled via
+#' \code{getOptions("qwraps2_frmtp_leading0", TRUE)}
 #' and a upper or lower case P is controlled by
-#' \code{getOptions("qwraps2_frmtp_case", "upper")}.  These options are ignored 
+#' \code{getOptions("qwraps2_frmtp_case", "upper")}.  These options are ignored
 #' if \code{style != "default"}.
 #'
 #' Journals with predefined P-value formatting are noted in the
@@ -49,48 +49,48 @@
 #' @return a character vector of the formatted numbers
 #'
 #' @examples
-#' 
+#'
 #' # Formatting numbers
 #' integers <- c(1234L, 9861230L)
 #' numbers  <- c(1234,  9861230)
 #' frmt(integers)  # no decimal point
 #' frmt(numbers)   # decimal point and zeros to the right
-#' 
+#'
 #' numbers <- c(0.1234, 0.1, 1234.4321, 0.365, 0.375)
 #' frmt(numbers)
 #'
 #' # Formatting p-values
 #' ps <- c(0.2, 0.001, 0.00092, 0.047, 0.034781, 0.0000872, 0.787, 0.05, 0.043)
 #' # LaTeX is the default markup language
-#' cbind("raw"      = ps, 
-#'       "default"  = frmtp(ps), 
+#' cbind("raw"      = ps,
+#'       "default"  = frmtp(ps),
 #'       "3lower"   = frmtp(ps, digits = 3, case = "lower"),
 #'       "PediDent" = frmtp(ps, style = "pediatric_dentistry"))
 #'
 #' # Using markdown
-#' cbind("raw"      = ps, 
-#'       "default"  = frmtp(ps, markup = "markdown"), 
+#' cbind("raw"      = ps,
+#'       "default"  = frmtp(ps, markup = "markdown"),
 #'       "3lower"   = frmtp(ps, digits = 3, case = "lower", markup = "markdown"),
 #'       "PediDent" = frmtp(ps, style = "pediatric_dentistry", markup = "markdown"))
 #'
-#' @export   
+#' @export
 #' @rdname frmt
-frmt <- function(x, digits = getOption("qwraps2_frmt_digits", 2)) { 
-  sapply(x, 
-         function(xx) { 
-           if (is.integer(xx)) { 
+frmt <- function(x, digits = getOption("qwraps2_frmt_digits", 2)) {
+  sapply(x,
+         function(xx) {
+           if (is.integer(xx)) {
              formatC(xx, format = "d", big.mark = ",")
-           } else { 
+           } else {
              formatC(xx, digits = digits, format = "f", big.mark = ",")
            }
          })
 }
 
 
-#' @export   
+#' @export
 #' @rdname frmt
 #' @param style a character string indicating a specific journal requirements
-#' for p-value formatting.  
+#' for p-value formatting.
 #' @param markup a character string indicating if the output should be latex or
 #' markup.
 #' @param case a character string indicating if the output should be upper case
@@ -98,19 +98,19 @@ frmt <- function(x, digits = getOption("qwraps2_frmt_digits", 2)) {
 #' @param leading0 boolean, whether or not the p-value should be reported as
 #' 0.0123 (TRUE, default), or .0123 (FALSE).
 frmtp <- function(x,
-                  style    = getOption("qwraps2_journal", "default"), 
-                  digits   = getOption("qwraps2_frmtp_digits", 4), 
+                  style    = getOption("qwraps2_journal", "default"),
+                  digits   = getOption("qwraps2_frmtp_digits", 4),
                   markup   = getOption("qwraps2_markup", "latex"),
-                  case     = getOption("qwraps2_frmtp_case", "upper"), 
-                  leading0 = getOption("qwraps2_frmtp_leading0", TRUE)) {  
+                  case     = getOption("qwraps2_frmtp_case", "upper"),
+                  leading0 = getOption("qwraps2_frmtp_leading0", TRUE)) {
 
-  rtn <- 
+  rtn <-
     switch(style,
-           default               = frmtp_default(x, digits, case, leading0), 
-           obstetrics_gynecology = frmtp_obstetrics_gynecology(x), 
+           default               = frmtp_default(x, digits, case, leading0),
+           obstetrics_gynecology = frmtp_obstetrics_gynecology(x),
            pediatric_dentistry   = frmtp_pediatric_dentistry(x))
 
-  if (markup == "latex") { 
+  if (markup == "latex") {
     rtn <- paste0("$", rtn, "$")
   } else if (markup == "markdown") {
     rtn <- gsub("(P|p)", "\\*\\1\\*", rtn)
@@ -118,22 +118,22 @@ frmtp <- function(x,
   return(rtn)
 }
 
-frmtp_default <- function(x, digits, case, leading0) { 
+frmtp_default <- function(x, digits, case, leading0) {
   p_cutoff <- 10^-digits
-  
-  sapply(x, 
-         function(xx) { 
-           if (xx < p_cutoff) { 
+
+  sapply(x,
+         function(xx) {
+           if (xx < p_cutoff) {
              p_val <- paste("P <", formatC(p_cutoff, format = "g"))
            } else {
-             p_val <- paste0("P = ", formatC(xx, digits = digits, format = "f")) 
+             p_val <- paste0("P = ", formatC(xx, digits = digits, format = "f"))
            }
 
-           if (case == "lower") { 
+           if (case == "lower") {
              p_val <- tolower(p_val)
            }
 
-           if (!leading0) { 
+           if (!leading0) {
              p_val <- gsub("0\\.", "\\.", p_val)
            }
 
@@ -141,28 +141,28 @@ frmtp_default <- function(x, digits, case, leading0) {
          })
 }
 
-frmtp_pediatric_dentistry <- function(x) { 
+frmtp_pediatric_dentistry <- function(x) {
   sapply(x, function(xx) {
 
-         if (xx < 0.001) { 
+         if (xx < 0.001) {
            p_val <- "< .001"
-         } else if (xx < 0.01) { 
+         } else if (xx < 0.01) {
            p_val <- paste0("= ", formatC(xx, digits = 3, format = "f"))
-         } else if (xx < 0.05 & round(xx, 2) == 0.05) { 
+         } else if (xx < 0.05 & round(xx, 2) == 0.05) {
            p_val <- paste0("= ", formatC(xx, digits = 3, format = "f"))
-         } else { 
+         } else {
            p_val <- paste0("= ", formatC(xx, digits = 2, format = "f"))
                              }
          paste0("P ", gsub("0\\.", "\\.", p_val))
       })
 }
 
-frmtp_obstetrics_gynecology <- function(x) { 
+frmtp_obstetrics_gynecology <- function(x) {
   sapply(x, function(xx) {
 
-         if (xx < 0.001) { 
+         if (xx < 0.001) {
            p_val <- "< .001"
-         } else { 
+         } else {
            p_val <- paste0("= ", formatC(xx, digits = 3, format = "f"))
                              }
          paste0("P ", gsub("0\\.", "\\.", p_val))
@@ -191,23 +191,23 @@ frmtp_obstetrics_gynecology <- function(x) {
 #' # Formatting the point estimate and confidence interval
 #' # for a set of three values
 #' temp <- c(a = 1.23, b = .32, CC = 1.78)
-#' frmtci(temp) 
-#' frmtci(temp, show_level = TRUE) 
-#' 
+#' frmtci(temp)
+#' frmtci(temp, show_level = TRUE)
+#'
 #' # note that the show_level will be ignored in the following
 #' frmtci(temp, format = "est ***lcl, ucl***", show_level = TRUE)
-#' 
+#'
 #' # show_level as a character
 #' frmtci(temp, show_level = "confidence between: ")
-#' 
+#'
 #' # For a matrix: the numbers in this example don't mean anything, but the
 #' # formatting should.
-#' temp2 <- matrix(rnorm(12), nrow = 4, 
+#' temp2 <- matrix(rnorm(12), nrow = 4,
 #'                 dimnames = list(c("A", "B", "C", "D"), c("EST", "LOW", "HIGH")))
 #' temp2
 #' frmtci(temp2)
 frmtci <- function(x, est = 1, lcl = 2, ucl = 3, format = "est (lcl, ucl)", show_level = FALSE, ...) {
-  UseMethod("frmtci") 
+  UseMethod("frmtci")
 }
 
 #' @export
@@ -217,20 +217,20 @@ frmtci.default <- function(x, est = 1, lcl = 2, ucl = 3, format = "est (lcl, ucl
   .lcl <- qwraps2::frmt(x[lcl], ...)
   .ucl <- qwraps2::frmt(x[ucl], ...)
 
-  if (format == "est (lcl, ucl)") { 
-    out <- sub("ucl", .ucl, sub("lcl", .lcl, sub("est", .est, format))) 
+  if (format == "est (lcl, ucl)") {
+    out <- sub("ucl", .ucl, sub("lcl", .lcl, sub("est", .est, format)))
     if (is.character(show_level)) {
       lvl <- paste0("(", show_level)
-      out <- sub("\\(", lvl, out) 
-    } else if(is.logical(show_level)) { 
-      if (show_level) { 
+      out <- sub("\\(", lvl, out)
+    } else if(is.logical(show_level)) {
+      if (show_level) {
       lvl <- paste0("(", 100 * (1 - getOption("qwraps2_alpha", 0.05)), "% CI: ")
       out <- sub("\\(", lvl, out)
       }
     }
-  } else { 
+  } else {
     out <- sub("ucl", .ucl, sub("lcl", .lcl, sub("est", .est, format)))
-  } 
+  }
   out
 }
 
@@ -251,16 +251,16 @@ frmtci.qwraps2_mean_ci <- function(x, est = 1, lcl = 2, ucl = 3, format = "est (
   .lcl <- qwraps2::frmt(x[lcl], ...)
   .ucl <- qwraps2::frmt(x[ucl], ...)
 
-  if (format == "est (lcl, ucl)") { 
-    out <- sub("ucl", .ucl, sub("lcl", .lcl, sub("est", .est, format))) 
+  if (format == "est (lcl, ucl)") {
+    out <- sub("ucl", .ucl, sub("lcl", .lcl, sub("est", .est, format)))
 
-    if (show_level) { 
+    if (show_level) {
       lvl <- paste0("(", 100 * (1 - attr(x, "alpha")), "% CI: ")
       out <- sub("\\(", lvl, out)
     }
-  } else { 
+  } else {
     out <- sub("ucl", .ucl, sub("lcl", .lcl, sub("est", .est, format)))
-  } 
+  }
   out
 }
 
@@ -301,7 +301,7 @@ Rpkg <- function(pkg) {
 CRANpkg <- function(pkg) {
   pkg <- deparse(substitute(pkg))
   pkg <- gsub("\"|\'", "", pkg)
-  pkg <- sprintf("[%s](https://cran.r-project.org/package=%s", pkg, pkg) 
+  pkg <- sprintf("[%s](https://cran.r-project.org/package=%s", pkg, pkg)
   cl <- list(quote(Rpkg), pkg = pkg)
   eval(as.call(cl))
 }
@@ -328,4 +328,18 @@ Gitlabpkg <- function(pkg, username) {
   pkg <- sprintf("[%s](https://gitlab.com/%s/package=%s", pkg, usn, pkg)
   cl <- list(quote(Rpkg), pkg = pkg)
   eval(as.call(cl))
+}
+
+#' Backtick
+#'
+#' Encapsulate a string in backticks. Very helpful for in line code in
+#' knitr::spin scripts.
+#'
+#' @param x a string or raw name to encapsulate.
+#'
+#' @export
+backtick <- function(x) {
+  x <- deparse(substitute(x))
+  x <- gsub("\"|\'|`", "", x)
+  sprintf("`%s`", x)
 }
