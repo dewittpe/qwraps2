@@ -301,7 +301,7 @@ Rpkg <- function(pkg) {
 CRANpkg <- function(pkg) {
   pkg <- deparse(substitute(pkg))
   pkg <- gsub("\"|\'", "", pkg)
-  pkg <- sprintf("[%s](https://cran.r-project.org/package=%s", pkg, pkg)
+  pkg <- sprintf("[%s](https://cran.r-project.org/package=%s)", pkg, pkg)
   cl <- list(quote(Rpkg), pkg = pkg)
   eval(as.call(cl))
 }
@@ -313,7 +313,7 @@ Githubpkg <- function(pkg, username) {
   pkg <- gsub("\"|\'", "", pkg)
   usn <- deparse(substitute(username))
   usn <- gsub("\"|\'", "", usn)
-  pkg <- sprintf("[%s](https://github.com/%s/package=%s", pkg, usn, pkg)
+  pkg <- sprintf("[%s](https://github.com/%s/package=%s)", pkg, usn, pkg)
   cl <- list(quote(Rpkg), pkg = pkg)
   eval(as.call(cl))
 }
@@ -325,7 +325,7 @@ Gitlabpkg <- function(pkg, username) {
   pkg <- gsub("\"|\'", "", pkg)
   usn <- deparse(substitute(username))
   usn <- gsub("\"|\'", "", usn)
-  pkg <- sprintf("[%s](https://gitlab.com/%s/package=%s", pkg, usn, pkg)
+  pkg <- sprintf("[%s](https://gitlab.com/%s/package=%s)", pkg, usn, pkg)
   cl <- list(quote(Rpkg), pkg = pkg)
   eval(as.call(cl))
 }
