@@ -4,10 +4,12 @@
 \alias{backtick}
 \title{Backtick}
 \usage{
-backtick(x)
+backtick(x, dequote = FALSE)
 }
 \arguments{
 \item{x}{the thing to be deparsed and encapsulated in backticks}
+
+\item{dequote}{remove the first and last double or signal quote form \code{x}}
 }
 \description{
 Encapsulate a string in backticks. Very helpful for in line code in

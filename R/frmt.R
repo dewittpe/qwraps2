@@ -336,9 +336,14 @@ Gitlabpkg <- function(pkg, username) {
 #' knitr::spin scripts.
 #'
 #' @param x the thing to be deparsed and encapsulated in backticks
+#' @param dequote remove the first and last double or signal quote form \code{x}
 #'
 #' @export
-backtick <- function(x) {
+backtick <- function(x, dequote = FALSE) {
   x <- deparse(substitute(x))
+  if (dequote) {
+    x <- sub("^(\"|\')", "", x)
+    x <- sub("(\"|\')$", "", x)
+  }
   sprintf("`%s`", x)
 }
