@@ -7,7 +7,7 @@ by Hadley Wickham.  Please just try to be consistent with the style you see.
 
 ## Cloning the Repo
 
-The package structure relies on symbolic links.  If you are working on Linux of
+The package structure relies on symbolic links.  If you are working on Linux or
 Mac the you should have not problem cloning and working with this repo.  If,
 however, you are working on a Windows machine there are a few additional steps
 you will need to take.
