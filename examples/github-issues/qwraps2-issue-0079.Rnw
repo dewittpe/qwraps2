@@ -1,0 +1,17 @@
+\documentclass{article}
+\begin{document}
+
+Set up:
+
+<<>>=
+library(dplyr)
+library(qwraps2)
+@
+
+
+<<test-table, results = "asis">>=
+summary_table(select(mtcars, mpg, hp, cyl))
+@
+
+
+\end{document}
