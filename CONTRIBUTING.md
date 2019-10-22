@@ -1,4 +1,4 @@
-# Contributing to the ensr package
+# Contributing to the qwraps2 package
 
 ## Style Guide
 
