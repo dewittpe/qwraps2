@@ -1,7 +1,7 @@
 # qwraps2
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-[![Build Status](https://travis-ci.org/dewittpe/qwraps2.svg?branch=master)](https://travis-ci.org/dewittpe/qwraps2)
+[![Build Status](https://travis-ci.com/dewittpe/qwraps2.svg?branch=master)](https://travis-ci.com/dewittpe/qwraps2)
 [![Coverage Status](https://img.shields.io/codecov/c/github/dewittpe/qwraps2/master.svg)](https://codecov.io/github/dewittpe/qwraps2?branch=master)
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/qwraps2)](https://cran.r-project.org/package=qwraps2)
