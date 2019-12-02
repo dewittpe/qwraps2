@@ -4,8 +4,7 @@
 \alias{ll}
 \title{List Object Aliases}
 \usage{
-ll(pos = 1, pattern, order_by = "Size", decreasing = TRUE,
-  head = FALSE, n = 5)
+ll(pos = 1, pattern, order_by = "Size", decreasing = TRUE, head = FALSE, n = 5)
 }
 \arguments{
 \item{pos}{specifies the environment as a position in the search list}

@@ -4,8 +4,11 @@
 \alias{tab_summary}
 \title{Tabular Summaries}
 \usage{
-tab_summary(x, n_perc_args = list(digits = 0, show_symbol = FALSE),
-  envir = parent.frame())
+tab_summary(
+  x,
+  n_perc_args = list(digits = 0, show_symbol = FALSE),
+  envir = parent.frame()
+)
 }
 \arguments{
 \item{x}{a variable to summarize}

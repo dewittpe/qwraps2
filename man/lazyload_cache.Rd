@@ -5,12 +5,24 @@
 \alias{lazyload_cache_labels}
 \title{Lazyload Cache}
 \usage{
-lazyload_cache_dir(path = "./cache", envir = parent.frame(),
-  ask = FALSE, verbose = TRUE, full.names = TRUE, ...)
+lazyload_cache_dir(
+  path = "./cache",
+  envir = parent.frame(),
+  ask = FALSE,
+  verbose = TRUE,
+  full.names = TRUE,
+  ...
+)
 
-lazyload_cache_labels(labels, path = "./cache/",
-  envir = parent.frame(), verbose = TRUE, filter, full.names = TRUE,
-  ...)
+lazyload_cache_labels(
+  labels,
+  path = "./cache/",
+  envir = parent.frame(),
+  verbose = TRUE,
+  filter,
+  full.names = TRUE,
+  ...
+)
 }
 \arguments{
 \item{path}{the path to the cache directory.}

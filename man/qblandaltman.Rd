@@ -5,11 +5,9 @@
 \alias{qblandaltman_build_data_frame}
 \title{Bland Altman Plots}
 \usage{
-qblandaltman(x, alpha = getOption("qwraps2_alpha", 0.05),
-  generate_data = TRUE)
+qblandaltman(x, alpha = getOption("qwraps2_alpha", 0.05), generate_data = TRUE)
 
-qblandaltman_build_data_frame(x, alpha = getOption("qwraps2_alpha",
-  0.05))
+qblandaltman_build_data_frame(x, alpha = getOption("qwraps2_alpha", 0.05))
 }
 \arguments{
 \item{x}{a \code{data.frame} with two columns.  If a \code{data.frame}

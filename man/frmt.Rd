@@ -8,14 +8,24 @@
 \usage{
 frmt(x, digits = getOption("qwraps2_frmt_digits", 2))
 
-frmtp(x, style = getOption("qwraps2_journal", "default"),
+frmtp(
+  x,
+  style = getOption("qwraps2_journal", "default"),
   digits = getOption("qwraps2_frmtp_digits", 4),
   markup = getOption("qwraps2_markup", "latex"),
   case = getOption("qwraps2_frmtp_case", "upper"),
-  leading0 = getOption("qwraps2_frmtp_leading0", TRUE))
+  leading0 = getOption("qwraps2_frmtp_leading0", TRUE)
+)
 
-frmtci(x, est = 1, lcl = 2, ucl = 3, format = "est (lcl, ucl)",
-  show_level = FALSE, ...)
+frmtci(
+  x,
+  est = 1,
+  lcl = 2,
+  ucl = 3,
+  format = "est (lcl, ucl)",
+  show_level = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{a vector of numbers or a numeric matrix to format.}

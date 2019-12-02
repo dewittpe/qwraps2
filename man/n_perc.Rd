@@ -6,15 +6,31 @@
 \alias{n_perc0}
 \title{Count and Percentage}
 \usage{
-n_perc(x, digits = getOption("qwraps2_frmt_digits", 2), na_rm = FALSE,
-  show_denom = "ifNA", show_symbol = TRUE,
-  markup = getOption("qwraps2_markup", "latex"))
+n_perc(
+  x,
+  digits = getOption("qwraps2_frmt_digits", 2),
+  na_rm = FALSE,
+  show_denom = "ifNA",
+  show_symbol = TRUE,
+  markup = getOption("qwraps2_markup", "latex")
+)
 
-perc_n(x, digits = getOption("qwraps2_frmt_digits", 2), na_rm = FALSE,
-  show_denom = "ifNA", markup = getOption("qwraps2_markup", "latex"))
+perc_n(
+  x,
+  digits = getOption("qwraps2_frmt_digits", 2),
+  na_rm = FALSE,
+  show_denom = "ifNA",
+  markup = getOption("qwraps2_markup", "latex")
+)
 
-n_perc0(x, digits = 0, na_rm = FALSE, show_denom = "never",
-  show_symbol = FALSE, markup = getOption("qwraps2_markup", "latex"))
+n_perc0(
+  x,
+  digits = 0,
+  na_rm = FALSE,
+  show_denom = "never",
+  show_symbol = FALSE,
+  markup = getOption("qwraps2_markup", "latex")
+)
 }
 \arguments{
 \item{x}{a 0:1 or boolean vector}

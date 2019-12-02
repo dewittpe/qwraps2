@@ -3,7 +3,6 @@
 \docType{package}
 \name{qwraps2}
 \alias{qwraps2}
-\alias{qwraps2-package}
 \title{A collection of wrapper functions aimed at for aiding the authoring of reproducible
 reports.}
 \description{

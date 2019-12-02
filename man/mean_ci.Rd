@@ -5,8 +5,14 @@
 \alias{print.qwraps2_mean_ci}
 \title{Means and Confidence Intervals}
 \usage{
-mean_ci(x, na_rm = FALSE, transform, alpha = getOption("qwraps2_alpha",
-  0.05), qdist = stats::qnorm, qdist.args = list())
+mean_ci(
+  x,
+  na_rm = FALSE,
+  transform,
+  alpha = getOption("qwraps2_alpha", 0.05),
+  qdist = stats::qnorm,
+  qdist.args = list()
+)
 
 \method{print}{qwraps2_mean_ci}(x, ...)
 }

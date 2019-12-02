@@ -4,8 +4,15 @@
 \alias{qable}
 \title{Qable: an extended verion of knitr::kable}
 \usage{
-qable(x, rtitle, rgroup, rnames = rownames(x), cnames = colnames(x),
-  markup = getOption("qwraps2_markup", "latex"), ...)
+qable(
+  x,
+  rtitle,
+  rgroup,
+  rnames = rownames(x),
+  cnames = colnames(x),
+  markup = getOption("qwraps2_markup", "latex"),
+  ...
+)
 }
 \arguments{
 \item{x}{\code{matrix} or \code{data.frame} to be turned into a qable}
