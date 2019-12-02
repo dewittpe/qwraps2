@@ -36,6 +36,7 @@ knitr::opts_chunk$set(collapse = TRUE)
 #' `qwraps2` as well.
 #'
 #' ## Prerequisites Example Data Set
+#'
 #' We will use a modified version of the `mtcars` data set for examples throughout
 #' this vignette. The following packages are required to run the code in this
 #' vignette and to construct the `mtcars2` `data.frame`.
@@ -488,6 +489,49 @@ summary_table(dplyr::group_by(mtcars2, cyl_factor), gear_summary)
 #'
 #/*
 # End Subsection: Adding p-values to a summary table ----------------------- }}}
+#*/
+#'
+#'
+#/*
+# Subsection: Using Variable labels ---------------------------------------- {{{
+#*/
+#'
+#' ## Using Variable Labels
+#'
+#' Some data management paradigms will use attributes to keep a label associated
+#' with a variable in a data.frame.  Notable examples are the
+#' [Hmisc](https://cran.r-project.org/package=hmisc) and
+#' [sjPlot](https://cran.r-project.org/package=sjPlot).  If you associate a
+#' label with a variable in the data frame the that label will be used when
+#' building a summary table.  This feature was suggested
+#' https://github.com/dewittpe/qwraps2/issues/74 and implemented thusly:
+
+new_data_frame <-
+  data.frame(age = c(18, 20, 24, 17, 43),
+             edu = c(1, 3, 1, 5, 2),
+             rt  = c(0.01, 0.04, 0.02, 0.10, 0.06))
+
+# Set a label for the variables
+attr(new_data_frame$age, "label") <- "Age in years"
+attr(new_data_frame$rt,  "label") <- "Reaction time"
+
+# mistakenly set the attribute to name instead of label
+attr(new_data_frame$edu, "name") <- "Education"
+
+#'
+#' When calling `qsummary` the provide labels for the age and rt variables will
+#' be used.  Since the attribute "label" does not exist for the edu variable,
+#' edu will be used in the output.
+qsummary(new_data_frame)
+
+#'
+#' This behavior is also seen with the `summary_table` call
+#+ results = "asis"
+summary_table(new_data_frame)
+
+#'
+#/*
+# End Subsection: Using Variable labels------------------------------------- }}}
 #*/
 #'
 #'
