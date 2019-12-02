@@ -3,7 +3,7 @@ Title: Quick Wraps 2
 Version: 0.4.1.9000
 Authors@R: c(
     person("Peter", "DeWitt", , "dewittpe@gmail.com", role = c("aut", "cre")),
-    person("Tell",  "Bennett", , "tell.bennett@ucdenver.edu", role = c("ctb"))
+    person("Tell",  "Bennett", , "tell.bennett@cuanschutz.edu", role = c("ctb"))
     )
 Description: A collection of (wrapper) functions the creator found useful
     for quickly placing data summaries and formatted regression results into
@@ -35,7 +35,7 @@ Suggests:
     covr,
     rbenchmark,
     rmarkdown
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 LinkingTo: Rcpp (>= 0.12.11),
     RcppArmadillo
 VignetteBuilder: knitr
