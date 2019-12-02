@@ -1,3 +1,14 @@
+# qwraps2 0.4.2
+
+## New Features
+
+* If the a variable in a data.frame has an attributed called "label" then that
+  lable will be used in the rgroup for `qsummary` and `summary_table`, (#74)
+
+* `backtick` is provided as a work around for a `knitr::spin` issue.  The
+  function wraps text in backticks so that backticks do not need to be
+  explicitly used in a .R file expected to be spun to .Rmd.
+
 # qwraps2 0.4.1
 
 Comment out a test due to the change in random number generating for `sample`.

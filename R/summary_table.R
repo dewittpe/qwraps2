@@ -268,7 +268,17 @@ qsummary.data.frame <- function(.data,
              rtn
            },
            simplify = FALSE)
-  lapply(out[!is.na(out)], function(x) lapply(x, FUN = stats::as.formula, env = env))
+  out <- lapply(out[!is.na(out)], function(x) lapply(x, FUN = stats::as.formula, env = env))
+
+  labs <- lapply(.data, attr, "label")
+
+  for (i in seq_along(out)) {
+    if (!is.null(labs[[i]])) {
+      names(out)[i] <- labs[[i]]
+    }
+  }
+
+  out
 }
 
 #' @export
