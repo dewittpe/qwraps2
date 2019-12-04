@@ -1,0 +1,176 @@
+\documentclass{article}
+
+% answers and examples for issue 83
+%
+% build the pdf via:
+%
+% #!/bin/bash
+% R -e "knitr::knit('qwraps2-issue-0083.Rnw")'
+% latexmk --pdf qwraps2-issue-0083.tex
+
+\usepackage{pdflscape}
+\usepackage[english]{babel}
+\usepackage{blindtext}
+\usepackage{enumitem}
+\usepackage{url}
+\usepackage{booktabs}
+
+\title{Example for qwraps2 issue \#83}
+\author{Peter DeWitt}
+
+\begin{document}
+
+\maketitle
+
+<<setup, include=FALSE>>=
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(qwraps2)
+options(qwraps2_markup = "latex")
+@
+
+Issue 83, \url{https://github.com/dewittpe/qwraps2/issues/83}, There are five questions to answer:
+
+\begin{enumerate}[label={\arabic*}]
+  \item \label{q1} Is there a way to set latex tables to be landscape?
+  \item \label{q2} Is it possible to show just one level of binary variables?
+    For instance, if I have a variable Sex can I report just Sex: Female rather
+    than percentages of males and females on two separate lines?
+  \item \label{q3} Related to \ref{q2}, is it possible to skip the row-level
+    grouping in these cases so that the row label Sex: Female is on the same
+    line as the summary data for this variable (and not with the label on it's
+    own row with white space)?
+  \item \label{q4} Are captions possible when knitting to PDF? (not rtitle style
+    in the table itself)
+  \item \label{q5} Is it possible to keep the N's when using cnames in print()?
+\end{enumerate}
+
+The quick answer to all these questions is yes.  Details to follow.
+
+\paragraph{A quick, but important note.}  When I started to build the tools in
+qwraps2 I did so to support two work flows.
+
+\begin{enumerate}
+  \item .Rnw knitted to .tex and compiled to .pdf via pdflatex.
+  \item .Rmd knitted to .md and compiled to .docx or .html via pandoc
+\end{enumerate}
+
+Since the target output is a pdf using \LaTeX\ markup I would start by writing a
+.Rnw file, not a .Rmd file.  One reason for this has to do with how knitr, the
+underlying workhorse for printing summary tables, renders .Rnw files vs .Rmd
+files.
+
+To answer the questions with examples we'll need to set up the mtcars2 data set.
+To address the issue with escaping the underscore in the variable name, an issue
+noted in \url{https://github.com/dewittpe/qwraps2/issues/57} and
+\url{https://github.com/dewittpe/qwraps2/issues/82}, is to escape the underscore
+in the variable name explicitly, or to change the name/label later.
+<<>>=
+data(mtcars)
+mtcars2 <-
+  dplyr::mutate(mtcars,
+                `cyl\\_factor` = factor(cyl,
+                                    levels = c(6, 4, 8),
+                                    labels = paste(c(6, 4, 8), "cylinders")),
+                `cyl\\_character` = paste(cyl, "cylinders"))
+
+@
+
+\section{Detailed Answers and Examples}
+
+\subsection{\LaTeX\ Tables in Landscape}
+
+Question \ref{q1} and \ref{q4} are answered here.  There are multiple ways to
+set a \LaTeX\ table into a landscape.  The use the \LaTeX package pdflscape and
+the environment landscape to get get Table~\ref{tab:table1}.
+
+\blindtext
+
+\begin{landscape}
+<<label = "table1", results='asis', echo = FALSE>>=
+mtcars2 %>%
+  dplyr::select(.data$mpg, .data$`cyl\\_factor`, .data$wt) %>%
+  summary_table(.) %>%
+  print(caption = "The caption for this table",
+        booktabs = TRUE)
+@
+\end{landscape}
+
+\blindtext
+
+\subsection{Displaying One level of a binary variable}
+
+The default summary for factors will report all levels.  To get just one level
+you'll need to explicitly define the summary.  For example, see
+Table~\ref{tab:table2}.
+
+\blindtext[2]
+
+<<table2, results = "asis">>=
+qs <-
+  mtcars2 %>%
+  dplyr::select(.data$mpg, .data$`cyl\\_factor`, .data$wt) %>%
+  qsummary
+
+qs <-
+  c(
+  list("~" =
+       list("Automatic Transmissions" = ~ qwraps2::n_perc(.data[["am"]]),
+            "V-shaped Engine"         = ~ qwraps2::n_perc(.data[["vs"]]))
+       ),
+    qs)
+
+summary_table(mtcars2, qs) %>%
+  print(caption = "One row factors", booktabs = TRUE)
+@
+
+\blindtext[2]
+
+
+\subsection{Skipping rowgrouping}
+Answering "Yes" might have been an over sell.  As seen in
+Table~\ref{tab:table2} there is no row group label for the transmission and
+engine shape, but the structure is still there. Aligning the row names for the
+row group without a label with the bold row labels is not supported within the
+qwraps2 code base at this time.  Use of capture.output might be useful for fine
+tweaking of the output.  See the subsection "Adding p-values to a summary table"
+in the vignette for an example of modifying the summary table after capturing
+the output.
+
+\subsection{Captions for the tables}
+Yes, use the caption argument in the print method.  See the code chunks which
+built Table~\ref{tab:table1} and Table~\ref{tab:table2}.
+
+\subsection{Keep N's when using cnames in print}
+No. But it is possible to keep the N, update the colnames of the summary table.
+
+<<change-colnames>>=
+tab <- cbind(summary_table(mtcars2, qs),
+             summary_table(dplyr::group_by(mtcars2, gear), qs))
+colnames(tab)
+
+colnames(tab) %<>%
+  sub("mtcars2", "Whole Data Set", .) %>%
+  sub("gear:\\ (\\d)", "\\1 Forward Gears", .)
+
+colnames(tab)
+@
+
+The resulting table is Table~\ref{tab:table3}.
+
+\begin{landscape}
+
+<<table3, echo = FALSE, results = "asis">>=
+print(tab, caption = "cnames edited", booktabs = TRUE)
+@
+
+\end{landscape}
+
+\blindtext
+
+
+<<>>=
+sessionInfo()
+@
+
+\end{document}
