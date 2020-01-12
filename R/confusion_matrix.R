@@ -52,7 +52,8 @@ confusion_matrix <- function(x, ...) {
 
 #' @param y True Condition vector with the same possible values as x.
 #' @param positive the level of x and y which is the positive outcome.  If
-#' missing the first level of factor(y) will be used as the positive level.
+#' \code{NULL} the first level of \code{factor(y)} will be used as the positive
+#' level.
 #' @param boot boolean, should bootstrapped confidence intervals for the
 #' sensitivity and specificity be computed?  Defaults to FALSE.
 #' @param boot_samples number of bootstrapping sample to generate, defaults to
@@ -61,45 +62,37 @@ confusion_matrix <- function(x, ...) {
 #' sensitivity.  Ignored if \code{boot == FALSE}.
 #' @export
 #' @rdname confusion_matrix
-confusion_matrix.default <- function(x, y, positive, boot = FALSE, boot_samples = 1000L, alpha = 0.05, ...) { 
-  confusion_matrix.formula(stats::as.formula(paste(deparse(substitute(y)), deparse(substitute(x)), sep = "~")),
-                           data = stats::setNames(data.frame(x,  y), c(deparse(substitute(x)), deparse(substitute(y)))),
-                           positive,
-                           boot, boot_samples, alpha)
-}
+confusion_matrix.default <- function(x, y, positive = NULL, boot = FALSE, boot_samples = 1000L, alpha = 0.05, ...) { 
+  cl <- as.list(match.call())
+  xname <- deparse(cl$x)
+  yname <- deparse(cl$y)
 
-#' @param formula column (known) ~ row (test) for building the confusion matrix
-#' @param data environment containing the variables listed in the formula
-#' @export
-#' @rdname confusion_matrix
-confusion_matrix.formula <- function(formula, data = parent.frame(), positive, boot = FALSE, boot_samples = 1000L, alpha = 0.05, ...) { 
+  x <- factor(x)  # Truth
+  y <- factor(y)  # Predicited
 
-  mf <- stats::model.frame(formula, data)
-  mf[[1]] <- factor(mf[[1]])  # Truth
-  mf[[2]] <- factor(mf[[2]])  # Predicited
-
-  if (nlevels(mf[[1]]) != 2L || nlevels(mf[[2]]) != 2L) {
-    stop("qwraps2::confusion_matrix only supports factors with two levels.",
+  if (nlevels(x) != 2L || nlevels(x) != 2L) {
+    stop(paste0("qwraps2::confusion_matrix only supports inputs with two unique values.",
+                "\n  `", xname, "` has ", nlevels(x), " unique values and \n  `",
+                yname, "` has ", nlevels(y), " unique values."),
          call. = FALSE)
   }
-  if (!identical(levels(mf[[1]]), levels(mf[[2]]))) { 
+  if (!identical(levels(x), levels(y))) { 
     stop("levels of x and y need to be identical.",
          call. = FALSE)
   }
 
-  if (missing(positive)) {
-    # Add error handing here
-    positive <- levels(mf[[1]])[1]
+  if(length(x) != length(y)) {
+    stop("length of x and y need to be the same")
   }
-  mf[[1]] <- stats::relevel(mf[[1]], positive)
-  mf[[2]] <- stats::relevel(mf[[2]], positive) 
 
+  if (is.null(positive)) {
+    # Add error handing here
+    positive <- levels(x)[1]
+  }
+  x <- stats::relevel(x, positive)
+  y <- stats::relevel(y, positive) 
 
-  if (any(levels(mf[[1]]) != levels(mf[[2]]))) { 
-    stop("qwraps2::confusion_matrix expectes the same levels for the factors.")
-  } 
-
-  tab <- table(mf[[2]], mf[[1]], dnn = c("Prediction", "Truth"))#rev(names(mf)))
+  tab <- table(y, x, dnn = c("Prediction", "Truth"))
 
   cells <- list(true_positives  = tab[1, 1],
                 true_negatives  = tab[2, 2],
@@ -108,25 +101,23 @@ confusion_matrix.formula <- function(formula, data = parent.frame(), positive, b
                 positives       = sum(tab[1, ]),
                 negatives       = sum(tab[2, ]))
 
-  # cat(paste(c("TP = ", "FN = ", "FP = ", "TN = "), conmat, collapse = "; ")) 
-
   stats <- rbind(Accuracy = accuracy(tab), 
                  Sensitivity = sensitivity(tab),
                  Specificity = specificity(tab), 
                  PPV = ppv(tab), 
                  NPV = npv(tab))
 
-  stats <- cbind(stats, t(apply(stats, 1, wilson_score_interval, n = nrow(mf), alpha = alpha))) 
+  stats <- cbind(stats, t(apply(stats, 1, wilson_score_interval, n = length(x), alpha = alpha))) 
   colnames(stats) <- c("Est", "LCL", "UCL")
 
   if (boot) { 
     rows <- replicate(boot_samples, 
-                      sample(seq(1, nrow(mf), by = 1), nrow(mf), replace = TRUE), 
+                      sample(seq(1, length(x), by = 1), length(x), replace = TRUE), 
                       simplify = FALSE)
     boot_stats <- 
       lapply(rows, 
-             function(x) { 
-               tab <- table(mf[[2]][x], mf[[1]][x], dnn = c("Prediction", "Truth"))
+             function(xx) { 
+               tab <- table(y[xx], x[xx], dnn = c("Prediction", "Truth"))
 
                rbind(Accuracy = accuracy(tab), 
                      Sensitivity = sensitivity(tab),
@@ -151,10 +142,30 @@ confusion_matrix.formula <- function(formula, data = parent.frame(), positive, b
   class(rtn) <- c("confusion_matrix", class(rtn))
   attr(rtn, "boot") <- boot
   attr(rtn, "alpha") <- alpha
-  attr(rtn, "var_names") <- stats::setNames(as.list(names(mf)), c("Truth", "Prediction"))
+  attr(rtn, "var_names") <- list("Truth" = yname, "Prediction" = xname)
   attr(rtn, "positive_value") <- positive
+  attr(rtn, "call") <- match.call()
 
   rtn 
+}
+
+#' @param formula column (known) ~ row (test) for building the confusion matrix
+#' @param data environment containing the variables listed in the formula
+#' @export
+#' @rdname confusion_matrix
+confusion_matrix.formula <- function(formula, data = parent.frame(), positive = NULL, boot = FALSE, boot_samples = 1000L, alpha = 0.05, ...) { 
+  cl <- as.list(match.call())[-1]
+
+  mf <- stats::model.frame(formula, data)
+
+  e <- environment(formula)
+  e[[names(mf)[1]]] <- mf[[1]]
+  e[[names(mf)[2]]] <- mf[[2]]
+
+  cl$y <- substitute(y, list(y = as.name(names(mf)[1])))
+  cl$x <- substitute(x, list(x = as.name(names(mf)[2])))
+
+  do.call(confusion_matrix.default, args = cl, envir = e)
 }
 
 #' @rdname confusion_matrix

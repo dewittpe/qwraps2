@@ -13,7 +13,7 @@ confusion_matrix(x, ...)
 \method{confusion_matrix}{default}(
   x,
   y,
-  positive,
+  positive = NULL,
   boot = FALSE,
   boot_samples = 1000L,
   alpha = 0.05,
@@ -23,7 +23,7 @@ confusion_matrix(x, ...)
 \method{confusion_matrix}{formula}(
   formula,
   data = parent.frame(),
-  positive,
+  positive = NULL,
   boot = FALSE,
   boot_samples = 1000L,
   alpha = 0.05,
@@ -43,7 +43,8 @@ variable that can be converted to one.}
 \item{y}{True Condition vector with the same possible values as x.}
 
 \item{positive}{the level of x and y which is the positive outcome.  If
-missing the first level of factor(y) will be used as the positive level.}
+\code{NULL} the first level of \code{factor(y)} will be used as the positive
+level.}
 
 \item{boot}{boolean, should bootstrapped confidence intervals for the
 sensitivity and specificity be computed?  Defaults to FALSE.}
@@ -130,8 +131,8 @@ confusion_matrix(cats[, "Predicted"], cats[, "Actual"], positive = "Cat")
 confusion_matrix(cats[, "Predicted"], cats[, "Actual"], positive = "Non-Cat")
 
 # Using a Formula
-confusion_matrix(I(Actual == "Cat") ~ I(Predicted == "Cat"),
-                 data = as.data.frame(animals),
+confusion_matrix(formula = I(Actual == "Cat") ~ I(Predicted == "Cat"),
+                 data = animals,
                  positive = "TRUE")
 
 ################################################################################
@@ -145,4 +146,6 @@ russell <-
 confusion_matrix(x = russell$Pred, y = russell$Truth, positive = "0")
 confusion_matrix(x = russell$Pred, y = russell$Truth, positive = "1")
 
+confusion_matrix(Truth ~ Pred, data = russell, positive = "0")
+confusion_matrix(Truth ~ Pred, data = russell, positive = "1")
 }

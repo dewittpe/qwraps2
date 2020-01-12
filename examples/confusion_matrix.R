@@ -29,8 +29,8 @@ confusion_matrix(cats[, "Predicted"], cats[, "Actual"], positive = "Cat")
 confusion_matrix(cats[, "Predicted"], cats[, "Actual"], positive = "Non-Cat")
 
 # Using a Formula
-confusion_matrix(I(Actual == "Cat") ~ I(Predicted == "Cat"),
-                 data = as.data.frame(animals),
+confusion_matrix(formula = I(Actual == "Cat") ~ I(Predicted == "Cat"),
+                 data = animals,
                  positive = "TRUE")
 
 ################################################################################
@@ -44,3 +44,5 @@ russell <-
 confusion_matrix(x = russell$Pred, y = russell$Truth, positive = "0")
 confusion_matrix(x = russell$Pred, y = russell$Truth, positive = "1")
 
+confusion_matrix(Truth ~ Pred, data = russell, positive = "0")
+confusion_matrix(Truth ~ Pred, data = russell, positive = "1")
