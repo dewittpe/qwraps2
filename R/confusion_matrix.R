@@ -92,7 +92,7 @@ confusion_matrix.default <- function(x, y, positive = NULL, boot = FALSE, boot_s
   x <- stats::relevel(x, positive)
   y <- stats::relevel(y, positive) 
 
-  tab <- table(y, x, dnn = c("Prediction", "Truth"))
+  tab <- table(x, y, dnn = c("Prediction", "Truth"))
 
   cells <- list(true_positives  = tab[1, 1],
                 true_negatives  = tab[2, 2],
