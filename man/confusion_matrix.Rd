@@ -63,8 +63,9 @@ sensitivity.  Ignored if \code{boot == FALSE}.}
 The sensitivity and specificity functions return numeric values.
 \code{confusion_matrix} returns a list with elements:
 \itemize{
-  \item tab the confusion matrix,
-  \item stats a matrix of summary statistics and confidence intervals.
+  \item \code{tab} the confusion matrix,
+  \item \code{cells}
+  \item \code{stats} a matrix of summary statistics and confidence intervals.
 }
 }
 \description{
@@ -86,17 +87,33 @@ Predicted Condition \tab -    \tab FN   \tab TN        \cr
 where
 \itemize{
   \item FN: False Negative, and
-  \item FP: False Positive, 
+  \item FP: False Positive,
   \item TN: True Negative,
   \item TP: True Positive.
 }
 
-Recall: 
+The statistics returned in the \code{stats} element are:
 \itemize{
+  \item accuracy    = (TP + TN) / (TP + TN + FP + FN)
   \item sensitivity = TP / (TP + FN)
-  \item specificity = TN / (TN + FP) 
+  \item specificity = TN / (TN + FP)
   \item positive predictive value (PPV) = TP / (TP + FP)
   \item negative predictive value (NPV) = TN / (TN + FN)
+  \item false negative rate (FNR) = 1 - Sensitivity
+  \item false positive rate (FPR) = 1 - Specificity
+  \item false discvery rate (FDR) = 1 - PPV
+  \item false omission rate (FOR) = 1 - NPV
+  \item F1 score
+  \item Matthews Correlation Coefficient (MCC) =
+    ((TP * TN) - (FP * FN)) / sqrt((TP + FP) (TP+FN) (TN+FP) (TN+FN))
+}
+
+Synonyms for the statistics:
+\itemize{
+\item Sensitivity: true positive rate (TPR), recall, hit rate
+\item Specificity: true negative rate (TNR), selectivity
+\item PPV: precision
+\item FNR: miss rate
 }
 }
 \examples{
@@ -106,7 +123,18 @@ test  <- c(rep(1, 53), rep(0, 47))
 truth <- c(rep(1, 20), rep(0, 33), rep(1, 10), rep(0, 37))
 con_mat <- confusion_matrix(test, truth, positive = "1")
 str(con_mat)
+
 con_mat
+
+con_mat$cells$true_positives  # 20
+con_mat$cells$true_negatives  # 37
+con_mat$cells$false_positives # 33
+con_mat$cells$false_negatives # 10
+
+con_mat_with_boot <- confusion_matrix(test, truth, positive = "1", boot = TRUE)
+con_mat_with_boot
+
+
 
 ################################################################################
 ## Example 2: based on an example from the wikipedia page:
@@ -134,6 +162,11 @@ confusion_matrix(cats[, "Predicted"], cats[, "Actual"], positive = "Non-Cat")
 confusion_matrix(formula = I(Actual == "Cat") ~ I(Predicted == "Cat"),
                  data = animals,
                  positive = "TRUE")
+
+confusion_matrix(formula = I(Actual == "Cat") ~ I(Predicted == "Cat"),
+                 data = animals,
+                 positive = "TRUE",
+                 boot = TRUE)
 
 ################################################################################
 ## Example 3

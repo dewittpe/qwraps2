@@ -22,31 +22,48 @@
 #' where
 #' \itemize{
 #'   \item FN: False Negative, and
-#'   \item FP: False Positive, 
+#'   \item FP: False Positive,
 #'   \item TN: True Negative,
 #'   \item TP: True Positive.
 #' }
 #'
-#' Recall: 
+#' The statistics returned in the \code{stats} element are:
 #' \itemize{
+#'   \item accuracy    = (TP + TN) / (TP + TN + FP + FN)
 #'   \item sensitivity = TP / (TP + FN)
-#'   \item specificity = TN / (TN + FP) 
+#'   \item specificity = TN / (TN + FP)
 #'   \item positive predictive value (PPV) = TP / (TP + FP)
 #'   \item negative predictive value (NPV) = TN / (TN + FN)
+#'   \item false negative rate (FNR) = 1 - Sensitivity
+#'   \item false positive rate (FPR) = 1 - Specificity
+#'   \item false discvery rate (FDR) = 1 - PPV
+#'   \item false omission rate (FOR) = 1 - NPV
+#'   \item F1 score
+#'   \item Matthews Correlation Coefficient (MCC) =
+#'     ((TP * TN) - (FP * FN)) / sqrt((TP + FP) (TP+FN) (TN+FP) (TN+FN))
+#' }
+#'
+#' Synonyms for the statistics:
+#' \itemize{
+#' \item Sensitivity: true positive rate (TPR), recall, hit rate
+#' \item Specificity: true negative rate (TNR), selectivity
+#' \item PPV: precision
+#' \item FNR: miss rate
 #' }
 #'
 #' @return The sensitivity and specificity functions return numeric values.
 #' \code{confusion_matrix} returns a list with elements:
 #' \itemize{
-#'   \item tab the confusion matrix,
-#'   \item stats a matrix of summary statistics and confidence intervals.
+#'   \item \code{tab} the confusion matrix,
+#'   \item \code{cells}
+#'   \item \code{stats} a matrix of summary statistics and confidence intervals.
 #' }
 #'
 #' @example examples/confusion_matrix.R
-#' 
+#'
 #' @export
 #' @rdname confusion_matrix
-confusion_matrix <- function(x, ...) { 
+confusion_matrix <- function(x, ...) {
   UseMethod("confusion_matrix")
 }
 
@@ -62,7 +79,7 @@ confusion_matrix <- function(x, ...) {
 #' sensitivity.  Ignored if \code{boot == FALSE}.
 #' @export
 #' @rdname confusion_matrix
-confusion_matrix.default <- function(x, y, positive = NULL, boot = FALSE, boot_samples = 1000L, alpha = 0.05, ...) { 
+confusion_matrix.default <- function(x, y, positive = NULL, boot = FALSE, boot_samples = 1000L, alpha = 0.05, ...) {
   cl <- as.list(match.call())
   xname <- deparse(cl$x)
   yname <- deparse(cl$y)
@@ -76,7 +93,7 @@ confusion_matrix.default <- function(x, y, positive = NULL, boot = FALSE, boot_s
                 yname, "` has ", nlevels(y), " unique values."),
          call. = FALSE)
   }
-  if (!identical(levels(x), levels(y))) { 
+  if (!identical(levels(x), levels(y))) {
     stop("levels of x and y need to be identical.",
          call. = FALSE)
   }
@@ -90,9 +107,13 @@ confusion_matrix.default <- function(x, y, positive = NULL, boot = FALSE, boot_s
     positive <- levels(x)[1]
   }
   x <- stats::relevel(x, positive)
-  y <- stats::relevel(y, positive) 
+  y <- stats::relevel(y, positive)
 
-  tab <- table(x, y, dnn = c("Prediction", "Truth"))
+  tab <- table(x, y, dnn = c("Prediction condition", "True Condition"))
+  rownames(tab)[1] <- paste0("pos. (", rownames(tab)[1], ")")
+  rownames(tab)[2] <- paste0("neg. (", rownames(tab)[2], ")")
+  colnames(tab)[1] <- paste0("pos. (", colnames(tab)[1], ")")
+  colnames(tab)[2] <- paste0("neg. (", colnames(tab)[2], ")")
 
   cells <- list(true_positives  = tab[1, 1],
                 true_negatives  = tab[2, 2],
@@ -101,33 +122,48 @@ confusion_matrix.default <- function(x, y, positive = NULL, boot = FALSE, boot_s
                 positives       = sum(tab[1, ]),
                 negatives       = sum(tab[2, ]))
 
-  stats <- rbind(Accuracy = accuracy(tab), 
+  stats <- rbind(Accuracy    = accuracy(tab),
                  Sensitivity = sensitivity(tab),
-                 Specificity = specificity(tab), 
-                 PPV = ppv(tab), 
-                 NPV = npv(tab))
+                 Specificity = specificity(tab),
+                 PPV         = ppv(tab),
+                 NPV         = npv(tab),
+                 FNR         = 1 - sensitivity(tab),
+                 FPR         = 1 - specificity(tab),
+                 FDR         = 1 - ppv(tab),
+                 FOR         = 1 - npv(tab)
+                 )
 
-  stats <- cbind(stats, t(apply(stats, 1, wilson_score_interval, n = length(x), alpha = alpha))) 
+  stats <- cbind(stats, t(apply(stats, 1, wilson_score_interval, n = length(x), alpha = alpha)))
   colnames(stats) <- c("Est", "LCL", "UCL")
+  stats <- rbind(stats, cbind(f1(tab), NA, NA), cbind(mcc(tab), NA, NA))
+  rownames(stats)[nrow(stats) - c(1, 0)] <- c("F1", "MCC")
 
-  if (boot) { 
-    rows <- replicate(boot_samples, 
-                      sample(seq(1, length(x), by = 1), length(x), replace = TRUE), 
+
+  if (boot) {
+    rows <- replicate(boot_samples,
+                      sample(seq(1, length(x), by = 1), length(x), replace = TRUE),
                       simplify = FALSE)
-    boot_stats <- 
-      lapply(rows, 
-             function(xx) { 
+    boot_stats <-
+      lapply(rows,
+             function(xx) {
                tab <- table(y[xx], x[xx], dnn = c("Prediction", "Truth"))
 
-               rbind(Accuracy = accuracy(tab), 
+               rbind(Accuracy    = accuracy(tab),
                      Sensitivity = sensitivity(tab),
                      Specificity = specificity(tab),
-                     PPV = ppv(tab), 
-                     NPV = npv(tab))
-             }) 
+                     PPV         = ppv(tab),
+                     NPV         = npv(tab),
+                     FNR         = 1 - sensitivity(tab),
+                     FPR         = 1 - specificity(tab),
+                     FDR         = 1 - ppv(tab),
+                     FOR         = 1 - npv(tab),
+                     F1          = f1(tab),
+                     MCC         = mcc(tab))
+
+             })
     boot_stats <- do.call(cbind, boot_stats)
 
-    boot_stats <- apply(boot_stats, 1, 
+    boot_stats <- apply(boot_stats, 1,
                          function(x) {
                            c(mean(x), stats::quantile(x, probs = c(alpha / 2, 1 - alpha / 2)))
                          })
@@ -146,14 +182,14 @@ confusion_matrix.default <- function(x, y, positive = NULL, boot = FALSE, boot_s
   attr(rtn, "positive_value") <- positive
   attr(rtn, "call") <- match.call()
 
-  rtn 
+  rtn
 }
 
 #' @param formula column (known) ~ row (test) for building the confusion matrix
 #' @param data environment containing the variables listed in the formula
 #' @export
 #' @rdname confusion_matrix
-confusion_matrix.formula <- function(formula, data = parent.frame(), positive = NULL, boot = FALSE, boot_samples = 1000L, alpha = 0.05, ...) { 
+confusion_matrix.formula <- function(formula, data = parent.frame(), positive = NULL, boot = FALSE, boot_samples = 1000L, alpha = 0.05, ...) {
   cl <- as.list(match.call())[-1]
 
   mf <- stats::model.frame(formula, data)
@@ -174,39 +210,47 @@ is.confusion_matrix <- function(x) inherits(x, "confusion_matrix")
 
 #' @rdname confusion_matrix
 #' @export
-print.confusion_matrix <- function(x, ...) { 
-  cat("\nTruth:          ", attr(x, "var_names")[[1]], 
+print.confusion_matrix <- function(x, ...) {
+  cat("\nTruth:          ", attr(x, "var_names")[[1]],
       "\nPrediction:     ", attr(x, "var_names")[[2]],
       "\nPositive Value: ", attr(x, "positive"),
       "\n\n")
 
-  print.table(apply(x$tab, 1:2, frmt)) 
+  print.table(apply(x$tab, 1:2, frmt), right = TRUE)
   cat("\n")
-  print(x$stats) 
-  invisible(x) 
+  print(x$stats)
+  invisible(x)
 }
 
-accuracy <- function(tab) { 
+accuracy <- function(tab) {
   as.numeric(sum(diag(tab)) / sum(tab))
 }
 
-ppv <- function(tab) { 
+ppv <- function(tab) {
   as.numeric(tab[1, 1] / sum(tab[1, ]))
 }
 
-npv <- function(tab) { 
+npv <- function(tab) {
   as.numeric(tab[2, 2] / sum(tab[2, ]))
 }
 
-sensitivity <- function(tab) { 
+sensitivity <- function(tab) {
   as.numeric(tab[1, 1] / sum(tab[, 1]))
 }
 
-specificity <- function(tab, ...) { 
+specificity <- function(tab, ...) {
   as.numeric(tab[2, 2] / sum(tab[, 2]))
 }
 
-wilson_score_interval <- function(p, n, alpha = 0.05) { 
-  z <- stats::qnorm(1 - alpha/2) 
-  1 / (1 + 1/n * z^2) * (p + 1 / (2 * n) * z^2 + c(-z, z) * sqrt( 1 / n * p * (1 - p) + 1 / (4 * n^2) * z^2)) 
+f1 <- function(tab, ...) {
+  as.numeric(2 * tab[1, 1] / (2 * tab[1, 1] + tab[1, 2] + tab[2, 2]))
+}
+
+mcc <- function(tab, ...) {
+  as.numeric((tab[1, 1] * tab[2, 2] - tab[1, 2] * tab[2, 1]) / sqrt(prod(prod(rowSums(tab)), prod(colSums(tab)))))
+}
+
+wilson_score_interval <- function(p, n, alpha = 0.05) {
+  z <- stats::qnorm(1 - alpha/2)
+  1 / (1 + 1/n * z^2) * (p + 1 / (2 * n) * z^2 + c(-z, z) * sqrt( 1 / n * p * (1 - p) + 1 / (4 * n^2) * z^2))
 }

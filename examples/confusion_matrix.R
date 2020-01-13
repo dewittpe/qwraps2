@@ -4,7 +4,18 @@ test  <- c(rep(1, 53), rep(0, 47))
 truth <- c(rep(1, 20), rep(0, 33), rep(1, 10), rep(0, 37))
 con_mat <- confusion_matrix(test, truth, positive = "1")
 str(con_mat)
+
 con_mat
+
+con_mat$cells$true_positives  # 20
+con_mat$cells$true_negatives  # 37
+con_mat$cells$false_positives # 33
+con_mat$cells$false_negatives # 10
+
+con_mat_with_boot <- confusion_matrix(test, truth, positive = "1", boot = TRUE)
+con_mat_with_boot
+
+
 
 ################################################################################
 ## Example 2: based on an example from the wikipedia page:
@@ -32,6 +43,11 @@ confusion_matrix(cats[, "Predicted"], cats[, "Actual"], positive = "Non-Cat")
 confusion_matrix(formula = I(Actual == "Cat") ~ I(Predicted == "Cat"),
                  data = animals,
                  positive = "TRUE")
+
+confusion_matrix(formula = I(Actual == "Cat") ~ I(Predicted == "Cat"),
+                 data = animals,
+                 positive = "TRUE",
+                 boot = TRUE)
 
 ################################################################################
 ## Example 3

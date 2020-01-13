@@ -1,3 +1,15 @@
+# qwraps2 0.4.2.9000
+
+## Bug Fixes
+
+* Scoping issue (#85) in the confusion matrix call
+
+## Improvements
+
+* confusion matrix returns additional statistics (#87)
+  * F1
+  * MCC
+
 # qwraps2 0.4.2
 
 ## New Features
