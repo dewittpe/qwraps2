@@ -115,13 +115,20 @@ Synonyms for the statistics:
 \item PPV: precision
 \item FNR: miss rate
 }
+
+Sensitivity and PPV could, in some cases, be indeterminate due to devision by
+zero.  To address this we will use the following rule based on the DICE group
+\url{https://github.com/dice-group/gerbil/wiki/Precision,-Recall-and-F1-measure}:
+If TP, FP, and FN are all 0, then PPV, sensitivity, and F1 will be defined to
+be 1.  If TP are 0 and at FP + FN > 0, then PPV, sensitivity, and F1 are all
+defined to be 0.
 }
 \examples{
 ################################################################################
 ## Example 1
 test  <- c(rep(1, 53), rep(0, 47))
 truth <- c(rep(1, 20), rep(0, 33), rep(1, 10), rep(0, 37))
-con_mat <- confusion_matrix(test, truth, positive = "1")
+con_mat <- confusion_matrix(x = test, y = truth, positive = "1")
 str(con_mat)
 
 con_mat

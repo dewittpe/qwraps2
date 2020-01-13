@@ -2,7 +2,7 @@
 ## Example 1
 test  <- c(rep(1, 53), rep(0, 47))
 truth <- c(rep(1, 20), rep(0, 33), rep(1, 10), rep(0, 37))
-con_mat <- confusion_matrix(test, truth, positive = "1")
+con_mat <- confusion_matrix(x = test, y = truth, positive = "1")
 str(con_mat)
 
 con_mat

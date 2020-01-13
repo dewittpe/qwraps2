@@ -51,6 +51,13 @@
 #' \item FNR: miss rate
 #' }
 #'
+#' Sensitivity and PPV could, in some cases, be indeterminate due to devision by
+#' zero.  To address this we will use the following rule based on the DICE group
+#' \url{https://github.com/dice-group/gerbil/wiki/Precision,-Recall-and-F1-measure}:
+#' If TP, FP, and FN are all 0, then PPV, sensitivity, and F1 will be defined to
+#' be 1.  If TP are 0 and at FP + FN > 0, then PPV, sensitivity, and F1 are all
+#' defined to be 0.
+#'
 #' @return The sensitivity and specificity functions return numeric values.
 #' \code{confusion_matrix} returns a list with elements:
 #' \itemize{
@@ -226,24 +233,57 @@ accuracy <- function(tab) {
   as.numeric(sum(diag(tab)) / sum(tab))
 }
 
-ppv <- function(tab) {
-  as.numeric(tab[1, 1] / sum(tab[1, ]))
+precision <- ppv <- function(tab) {
+  if (tab[1, 1] == 0) {
+    if ((tab[2, 1] + tab[1, 2]) == 0) {
+      return(1)
+    } else {
+      return(0)
+    }
+  } else {
+    as.numeric(tab[1, 1] / sum(tab[1, ]))
+  }
 }
 
 npv <- function(tab) {
   as.numeric(tab[2, 2] / sum(tab[2, ]))
 }
 
-sensitivity <- function(tab) {
-  as.numeric(tab[1, 1] / sum(tab[, 1]))
+tpr <- recall <- sensitivity <- function(tab) {
+  if (tab[1, 1] == 0) {
+    if ((tab[2, 1] + tab[1, 2]) == 0) {
+      return(1)
+    } else {
+      return(0)
+    }
+  } else {
+    as.numeric(tab[1, 1] / sum(tab[, 1]))
+  }
 }
 
-specificity <- function(tab, ...) {
+tnr <- specificity <- function(tab, ...) {
   as.numeric(tab[2, 2] / sum(tab[, 2]))
 }
 
-f1 <- function(tab, ...) {
-  as.numeric(2 * tab[1, 1] / (2 * tab[1, 1] + tab[1, 2] + tab[2, 2]))
+f1 <- function(tab, beta = 1, ...) {
+  fbeta(tab, beta = beta, ...)
+}
+
+fbeta <- function(tab, beta, ...) {
+  if (beta < 0) {
+    stop("beta needs to be non-negative.")
+  }
+
+  if (tab[1, 1] == 0) {
+    if ((tab[2, 1] + tab[1, 2]) == 0) {
+      return(1)
+    } else {
+      return(0)
+    }
+  } else {
+    # as.numeric(2 * tab[1, 1] / (2 * tab[1, 1] + tab[1, 2] + tab[2, 2]))
+    as.numeric((1 + beta^2) * tab[1, 1] / ( (1 + beta^2) * tab[1, 1] + beta^2 * tab[2, 1] + tab[1, 2] ))
+  }
 }
 
 mcc <- function(tab, ...) {
