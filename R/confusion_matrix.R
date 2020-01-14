@@ -55,7 +55,7 @@
 #' zero.  To address this we will use the following rule based on the DICE group
 #' \url{https://github.com/dice-group/gerbil/wiki/Precision,-Recall-and-F1-measure}:
 #' If TP, FP, and FN are all 0, then PPV, sensitivity, and F1 will be defined to
-#' be 1.  If TP are 0 and at FP + FN > 0, then PPV, sensitivity, and F1 are all
+#' be 1.  If TP are 0 and FP + FN > 0, then PPV, sensitivity, and F1 are all
 #' defined to be 0.
 #'
 #' @return The sensitivity and specificity functions return numeric values.
