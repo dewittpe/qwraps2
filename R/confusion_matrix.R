@@ -91,10 +91,14 @@ confusion_matrix.default <- function(x, y, positive = NULL, boot = FALSE, boot_s
   xname <- deparse(cl$x)
   yname <- deparse(cl$y)
 
-  x <- factor(x)  # Truth
-  y <- factor(y)  # Predicited
+  if (!is.factor(x)) {
+    x <- factor(x)  # Truth
+  }
+  if (!is.factor(y)) {
+    y <- factor(y)  # Predicted
+  }
 
-  if (nlevels(x) != 2L || nlevels(x) != 2L) {
+  if (nlevels(x) != 2L || nlevels(y) != 2L) {
     stop(paste0("qwraps2::confusion_matrix only supports inputs with two unique values.",
                 "\n  `", xname, "` has ", nlevels(x), " unique values and \n  `",
                 yname, "` has ", nlevels(y), " unique values."),
