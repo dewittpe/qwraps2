@@ -1,5 +1,9 @@
 # qwraps2 0.4.2.9000
 
+## New Features
+
+* `set_diff`
+
 ## Bug Fixes
 
 * Scoping issue (#85) in the confusion matrix call
