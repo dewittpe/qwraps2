@@ -91,21 +91,39 @@ confusion_matrix.default <- function(x, y, positive = NULL, boot = FALSE, boot_s
   xname <- deparse(cl$x)
   yname <- deparse(cl$y)
 
-  if (!is.factor(x)) {
-    x <- factor(x)  # Truth
-  }
-  if (!is.factor(y)) {
-    y <- factor(y)  # Predicted
+  if (is.factor(x)) {
+    ux <- levels(x)
+  } else {
+    ux <- unique(x)
   }
 
-  if (nlevels(x) != 2L || nlevels(y) != 2L) {
+  if (is.factor(y)) {
+    uy <- levels(y)
+  } else {
+    uy <- unique(y)
+  }
+
+  if (length(ux) == 1 & length(uy) == 2 & all(ux %in% uy)) {
+    x <- factor(x, levels = uy)
+  } else {
+    x <- factor(x, levels = ux)
+  }
+
+  if (length(uy) == 1 & length(ux) == 2 & all(uy %in% ux)) {
+    y <- factor(y, levels = ux)
+  } else {
+    y <- factor(y, levels = uy)
+  }
+
+  if (nlevels(x) != 2L | nlevels(y) != 2L) {
     stop(paste0("qwraps2::confusion_matrix only supports inputs with two unique values.",
                 "\n  `", xname, "` has ", nlevels(x), " unique values and \n  `",
                 yname, "` has ", nlevels(y), " unique values."),
          call. = FALSE)
   }
-  if (!identical(levels(x), levels(y))) {
-    stop("levels of x and y need to be identical.",
+  if (!identical(levels(x), levels(y))) { 
+    print(do.call(set_diff, args = list(x = as.name(xname), y = as.name(yname)))) 
+    stop(paste0("levels of `", xname, "` and `", yname, "` need to be identical."),
          call. = FALSE)
   }
 

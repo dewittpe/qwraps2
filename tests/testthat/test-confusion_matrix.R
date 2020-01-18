@@ -64,6 +64,6 @@ test_that("errors for levels",
             expect_equal(attr(confusion_matrix(x, y), "positive") , "B")
 
             x <- factor(sample(c("C", "D"), 100, replace = TRUE))
-            expect_error(confusion_matrix(x, y), "levels of x and y need to be identical.")
+            expect_error(confusion_matrix(x, y))
           })
 

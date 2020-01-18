@@ -15,6 +15,14 @@ con_mat$cells$false_negatives # 10
 con_mat_with_boot <- confusion_matrix(test, truth, positive = "1", boot = TRUE)
 con_mat_with_boot
 
+# only one value in one of the vectors
+a <- c(0,0,0,0,0,0,0,0,0,0,0,0,0,0)  # all zeros
+b <- c(1,0,1,0,1,0,0,0,0,0,0,0,0,1)  # some zeros and ones
+
+confusion_matrix(a, b)
+confusion_matrix(b, a)
+confusion_matrix(a, b, positive = 1)
+confusion_matrix(b, a, positive = 1)
 
 
 ################################################################################
