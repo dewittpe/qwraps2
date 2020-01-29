@@ -77,3 +77,35 @@ str(
 #'
 
 })
+
+# After the fix:
+reprex({
+library(qwraps2)
+packageVersion('qwraps2')
+library(magrittr)
+options(qwraps2_markup = "markdown")
+
+set.seed(42)
+
+by_arm_counts <-
+  list("ARM?" =
+       list(
+            "Active Drug" = ~ qwraps2::n_perc(.data$ARM == "Active"),
+            "Placebo" = ~ qwraps2::n_perc(.data$ARM == "Placebo")
+           )
+      )
+
+test12345678912345 <- test <-
+  data.frame(ARM = sample(c("Active", "Placebo"), size = 200, replace = TRUE),
+             USUBJID = sample(LETTERS, size = 200, replace = TRUE))
+
+#' summary table works as expected
+summary_table(test, by_arm_counts)
+summary_table(test12345678912345, by_arm_counts)
+summary_table(test[!duplicated(test[, c("USUBJID")]), ], by_arm_counts)
+summary_table(test12345678912345[!duplicated(test12345678912345[, c("USUBJID")]), ], by_arm_counts)
+
+test12345678912345 %>%
+  dplyr::filter(!duplicated(.data$USUBJID)) %>%
+  summary_table(., by_arm_counts)
+})
