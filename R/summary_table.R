@@ -54,7 +54,7 @@ summary_table.data.frame <- function(x, summaries = qsummary(x)) {
     lapply(t) %>%
     do.call(rbind, .)
 
-  colnames(out) <- paste0(deparse(substitute(x), backtick = TRUE), " (N = ", frmt(nrow(x)), ")")
+  colnames(out) <- paste0(deparse(substitute(x), nlines = 1L, backtick = TRUE), " (N = ", frmt(nrow(x)), ")")
   attr(out, "rgroups") <- sapply(summaries, length)
   class(out) <- c("qwraps2_summary_table", class(out))
   out
@@ -304,7 +304,7 @@ tab_summary <- function(x, n_perc_args = list(digits = 0, show_symbol = FALSE), 
 
 #' @export
 tab_summary.numeric <- function(x, n_perc_args = list(digits = 0, show_symbol = FALSE), envir = parent.frame()) {
-  v <- deparse(substitute(x), backtick = TRUE)
+  v <- deparse(substitute(x), nlines = 1L, backtick = TRUE)
 
   if (length(n_perc_args)) {
     n_args <- paste(", ", paste(paste(names(n_perc_args), lapply(n_perc_args, function(x) if (is.character(x)) paste0("'", x, "'") else x), sep = " = "), collapse = ", "))
@@ -331,7 +331,7 @@ tab_summary.numeric <- function(x, n_perc_args = list(digits = 0, show_symbol = 
 
 #' @export
 tab_summary.character <- function(x, n_perc_args = list(digits = 0, show_symbol = FALSE), envir = parent.frame()) {
-  v <- deparse(substitute(x), backtick = TRUE)
+  v <- deparse(substitute(x), nlines = 1L, backtick = TRUE)
 
   if (length(n_perc_args)) {
     n_args <- paste(", ", paste(paste(names(n_perc_args), lapply(n_perc_args, function(x) if (is.character(x)) paste0("'", x, "'") else x), sep = " = "), collapse = ", "))
@@ -359,7 +359,7 @@ tab_summary.character <- function(x, n_perc_args = list(digits = 0, show_symbol 
 
 #' @export
 tab_summary.factor <- function(x, n_perc_args = list(digits = 0, show_symbol = FALSE), envir = parent.frame()) {
-  v <- deparse(substitute(x), backtick = TRUE)
+  v <- deparse(substitute(x), nlines = 1L, backtick = TRUE)
 
   if (length(n_perc_args)) {
     n_args <- paste(", ", paste(paste(names(n_perc_args), lapply(n_perc_args, function(x) if (is.character(x)) paste0("'", x, "'") else x), sep = " = "), collapse = ", "))

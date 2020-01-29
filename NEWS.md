@@ -1,4 +1,4 @@
-# qwraps2 0.4.2.9000
+# qwraps2 0.4.2.9001
 
 ## New Features
 
@@ -7,6 +7,7 @@
 ## Bug Fixes
 
 * Scoping issue (#85) in the confusion matrix call
+* Long object names passed to `summary_table` no longer generate an error (#90)
 
 ## Improvements
 
