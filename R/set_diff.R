@@ -41,6 +41,7 @@ set_diff <- function(x, y) {
   out
 }
 
+#' @export
 print.qwraps2.set_diff <- function(x, ...) {
   cat("Total number of unique values: ", length(x$all_values), "\n",
       "Number of elements in both ", attr(x, "xname"), " and ", attr(x, "yname"), ": ", length(x$both), "\n",
