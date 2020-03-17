@@ -1,4 +1,4 @@
-# qwraps2 0.4.2.9001
+# qwraps2 0.4.2.9003
 
 ## New Features
 
@@ -14,6 +14,9 @@
 * confusion matrix returns additional statistics (#87)
   * F1
   * MCC
+
+* `...` passes values arguments to `stats::predict` via `qroc` and
+  `qroc_build_data_frame`
 
 # qwraps2 0.4.2
 
