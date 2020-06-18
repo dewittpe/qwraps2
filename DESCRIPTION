@@ -1,6 +1,6 @@
 Package: qwraps2
 Title: Quick Wraps 2
-Version: 0.4.2.9003
+Version: 0.4.2.9004
 Authors@R: c(
     person("Peter", "DeWitt", , "dewittpe@gmail.com", role = c("aut", "cre")),
     person("Tell",  "Bennett", , "tell.bennett@cuanschutz.edu", role = c("ctb"))
@@ -28,7 +28,8 @@ Imports:
     Rcpp (>= 0.12.11),
     rlang,
     tidyr,
-    utils
+    utils,
+    xfun
 Suggests:
     survival,
     testthat,

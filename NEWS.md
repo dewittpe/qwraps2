@@ -1,8 +1,12 @@
-# qwraps2 0.4.2.9003
+# qwraps2 0.4.2.9004
 
 ## New Features
 
 * `set_diff`
+* `spin_comments` - a tool to identify opening and closing pairs of comments in
+  a .R file expected to go through knitr::spin.  Built to help resolve the
+  "comments must be put in pair of start and end delimiters" error that can be
+  thrown by knitr::spin.
 
 ## Bug Fixes
 
