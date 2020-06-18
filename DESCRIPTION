@@ -21,13 +21,14 @@ Encoding: UTF-8
 URL: https://github.com/dewittpe/qwraps2/
 LazyData: true
 Imports:
-    dplyr,
+    dplyr (>= 1.0.0),
     ggplot2,
     knitr,
     magrittr,
     Rcpp (>= 0.12.11),
     rlang,
     tidyr,
+    tibble (>= 2.0.0),
     utils,
     xfun
 Suggests:

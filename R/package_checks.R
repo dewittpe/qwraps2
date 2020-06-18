@@ -45,7 +45,7 @@ pkg_check <- function(pkgs, versions, stop = FALSE) {
           out 
   },
            p = pkgs, v = versions) %>%
-    lapply(dplyr::as_data_frame) %>%
+    lapply(tibble::as_tibble) %>%
     dplyr::bind_rows(.)
 
   out <- all(checks$available)

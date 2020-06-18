@@ -63,7 +63,7 @@ qblandaltman_build_data_frame <- function(x, alpha = getOption("qwraps2_alpha", 
                   sd_diff   = stats::sd(.data$diff), 
                   lcl       = .data$mean_diff + stats::qnorm(alpha / 2) * .data$sd_diff,
                   ucl       = .data$mean_diff + stats::qnorm(1 - alpha / 2) * .data$sd_diff) 
-  rtn <- dplyr::tbl_df(rtn)
+  rtn <- tibble::as_tibble(rtn)
 
   attr(rtn, "qwraps2_generated") = TRUE
 

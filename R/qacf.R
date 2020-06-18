@@ -66,8 +66,8 @@ qacf.data.frame <- function(x, conf_level = 0.95, show_sig = FALSE, ...) {
   acf_data <- stats::acf(x, plot = FALSE, ...)
   ciline <- stats::qnorm((1 - conf_level) / 2) / sqrt(acf_data$n.used)
 
-  lags <- dplyr::as_data_frame(acf_data$lag)
-  acfs <- dplyr::as_data_frame(acf_data$acf)
+  lags <- tibble::as_tibble(acf_data$lag)
+  acfs <- tibble::as_tibble(acf_data$acf)
 
   acf_df <- 
     dplyr::bind_cols(tidyr::gather(lags, key = 'key', value = 'lag'),
