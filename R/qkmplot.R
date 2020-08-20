@@ -52,8 +52,7 @@ qkmplot_ggplot <- function(dat, conf_int = FALSE, ...) {
                  ggplot2::geom_step(),
                  ggplot2::ylim(c(0, 1)),
                  ggplot2::ylab("Survivial"),
-                 ggplot2::geom_point(data = dplyr::filter(dat, .data$n.censor > 0), shape = 3, alpha = 0.9)
-                 )
+                 ggplot2::geom_point(data = dat[dat$n.censor > 0, ], shape = 3, alpha = 0.9))
 
   if (conf_int) {
     layers <- append(layers,
