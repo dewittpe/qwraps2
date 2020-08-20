@@ -93,6 +93,6 @@ qkmplot_bulid_data_frame <- function(x) {
 
   dat <- rbind(plot_data, first_data)
   class(dat) <- c("qwraps2_generated", class(dat))
-  tibble::as_tibble(dat)
+  dat
 }
 
