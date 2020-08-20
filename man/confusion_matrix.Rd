@@ -196,4 +196,5 @@ confusion_matrix(x = russell$Pred, y = russell$Truth, positive = "1")
 
 confusion_matrix(Truth ~ Pred, data = russell, positive = "0")
 confusion_matrix(Truth ~ Pred, data = russell, positive = "1")
+
 }
