@@ -27,7 +27,6 @@ Imports:
     magrittr,
     Rcpp (>= 0.12.11),
     rlang,
-    tidyr,
     tibble (>= 2.0.0),
     utils,
     xfun
@@ -37,7 +36,7 @@ Suggests:
     covr,
     rbenchmark,
     rmarkdown
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 LinkingTo: Rcpp (>= 0.12.11),
     RcppArmadillo
 VignetteBuilder: knitr
