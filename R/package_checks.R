@@ -19,6 +19,12 @@
 #' @param stop if \code{TRUE} then an error is thrown if any of the checks fail.
 #' If \code{FALSE} (default) a logical is returned.
 #'
+#' @examples
+#'
+#' pkg_check("qwraps2")
+#' pkg_check("not a package")
+#' pkg_check(c("qwraps2", "not a package"))
+#'
 #' @export
 pkg_check <- function(pkgs, versions, stop = FALSE) {
   if (missing(versions)) {
@@ -44,9 +50,9 @@ pkg_check <- function(pkgs, versions, stop = FALSE) {
           }
           out 
   },
-           p = pkgs, v = versions) %>%
-    lapply(tibble::as_tibble) %>%
-    dplyr::bind_rows(.)
+           p = pkgs, v = versions)
+  checks <- lapply(checks, as.data.frame)
+  checks <- do.call(rbind, checks)
 
   out <- all(checks$available)
   attr(out, "checks") <- checks

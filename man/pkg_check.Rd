@@ -30,3 +30,10 @@ Testing for package versions will is done as \code{packageVersion(x) >=
 version}.  If you need a specific version of a package you should explicitly
 use \code{packageVersion(x) == version} in your script.
 }
+\examples{
+
+pkg_check("qwraps2")
+pkg_check("not a package")
+pkg_check(c("qwraps2", "not a package"))
+
+}
