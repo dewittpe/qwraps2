@@ -16,7 +16,7 @@
 #' @param x a \code{data.frame} with two columns.  If a \code{data.frame}
 #' with more than two columns is used only the first two columns will be used.
 #' @param alpha (Defaults to 0.05) place (1 - alpha)*100% confidence levels to
-#' place on the plot. 
+#' place on the plot.
 #' @param generate_data logical, defaults to TRUE.  If TRUE, then the call to
 #' \code{qblandaltman_build_data_frame} is done automatically for you.  If
 #' FALSE, then you should explicitly call \code{qblandaltman_build_data_frame}
@@ -28,42 +28,71 @@
 #' @references
 #' Altman, Douglas G., and J. Martin Bland. "Measurement in medicine: the analysis
 #' of method comparison studies." The statistician (1983): 307-317.
-#' 
+#'
 #' Bland, J. Martin, and DouglasG Altman. "Statistical methods for assessing
 #' agreement between two methods of clinical measurement." The lancet 327, no. 8476
 #' (1986): 307-310.
 #'
-#' @example examples/blandaltman.R
-#' @export   
+#' @examples
+#' 
+#' # load ggplot2 and the diamonds data set
+#' data(diamonds, package = "ggplot2")
+#' 
+#' # compare a simple regression to random noise
+#' dat <- 
+#'   data.frame(fitted(lm(price ~ poly(carat, 4), data = diamonds)),  # fitted values
+#'              diamonds$price + rnorm(nrow(diamonds), sd = 0.2),     # observed with noise
+#'              pi)                                                   # extra column
+#' qblandaltman(dat)
+#' 
+#' # simple example
+#' dat <- data.frame(eval1 = rpois(100, 3), eval2 = rpois(100, 3.4)) 
+#' qblandaltman(dat)
+#' 
+#' ggplot2::last_plot() + ggplot2::theme_bw()
+#' 
+#' # Two plots in one ggplot object
+#' set.seed(42)
+#' dat1 <- data.frame(eval1 = rnorm(100), eval2 = rt(100, df = 1))
+#' dat2 <- data.frame(eval1 = rpois(50, 3), eval2 = rpois(50, 4))
+#' 
+#' # individual plots
+#' qblandaltman(dat1)
+#' qblandaltman(dat2)
+#' 
+#' # combined plots
+#' dat <- rbind(cbind(set = "rnorm", qblandaltman_build_data_frame(dat1)), 
+#'              cbind(set = "rpois", qblandaltman_build_data_frame(dat2)))
+#' qblandaltman(dat, generate_data = FALSE) + ggplot2::facet_wrap( ~ set)
+#' 
+#' @export
 #' @rdname qblandaltman
-qblandaltman <- function(x, alpha = getOption("qwraps2_alpha", 0.05), generate_data = TRUE) { 
+qblandaltman <- function(x, alpha = getOption("qwraps2_alpha", 0.05), generate_data = TRUE) {
 
-  if (is.null(attr(x, "qwraps2_generated"))) { 
+  if (is.null(attr(x, "qwraps2_generated"))) {
     if (generate_data) {
       x <- qblandaltman_build_data_frame(x, alpha)
     }
   }
 
-  ggplot2::ggplot(x) + 
-  ggplot2::aes_string(x = 'avg', y = 'diff') + 
-  ggplot2::geom_point() + 
-  ggplot2::geom_hline(ggplot2::aes_string(yintercept = 'lcl'), lty = 2) + 
-  ggplot2::geom_hline(ggplot2::aes_string(yintercept = 'ucl'), lty = 2) + 
-  ggplot2::geom_hline(ggplot2::aes_string(yintercept = 'mean_diff'), lty = 3) 
+  ggplot2::ggplot(x) +
+  ggplot2::aes_string(x = 'avg', y = 'diff') +
+  ggplot2::geom_point() +
+  ggplot2::geom_hline(ggplot2::aes_string(yintercept = 'lcl'), lty = 2) +
+  ggplot2::geom_hline(ggplot2::aes_string(yintercept = 'ucl'), lty = 2) +
+  ggplot2::geom_hline(ggplot2::aes_string(yintercept = 'mean_diff'), lty = 3)
 }
 
 #' @export
 #' @rdname qblandaltman
-qblandaltman_build_data_frame <- function(x, alpha = getOption("qwraps2_alpha", 0.05)) { 
-  rtn <-
-    dplyr::mutate(data.frame(x1 = x[[1]], x2 = x[[2]]),
-                  avg       = (.data$x1 + .data$x2) / 2, 
-                  diff      = (.data$x2 - .data$x1), 
-                  mean_diff = mean(.data$diff), 
-                  sd_diff   = stats::sd(.data$diff), 
-                  lcl       = .data$mean_diff + stats::qnorm(alpha / 2) * .data$sd_diff,
-                  ucl       = .data$mean_diff + stats::qnorm(1 - alpha / 2) * .data$sd_diff) 
-  rtn <- tibble::as_tibble(rtn)
+qblandaltman_build_data_frame <- function(x, alpha = getOption("qwraps2_alpha", 0.05)) {
+  rtn      <- data.frame(x1 = x[[1]], x2 = x[[2]])
+  rtn$avg  <- (rtn$x1 + rtn$x2) / 2
+  rtn$diff <- (rtn$x2 - rtn$x1)
+  rtn$mean_diff <- mean(rtn$diff)
+  rtn$sd_diff   <- stats::sd(rtn$diff)
+  rtn$lcl       <- rtn$mean_diff + stats::qnorm(alpha / 2) * rtn$sd_diff
+  rtn$ucl       <- rtn$mean_diff + stats::qnorm(1 - alpha / 2) * rtn$sd_diff
 
   attr(rtn, "qwraps2_generated") = TRUE
 

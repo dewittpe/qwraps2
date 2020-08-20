@@ -40,7 +40,6 @@ then call \code{qblandaltman}.  This might be helpful if you are putting
 multiple Bland Altman plots together into one ggplot object.  See Examples.
 }
 \examples{
-\dontrun{
 
 # load ggplot2 and the diamonds data set
 data(diamonds, package = "ggplot2")
@@ -72,7 +71,6 @@ dat <- rbind(cbind(set = "rnorm", qblandaltman_build_data_frame(dat1)),
              cbind(set = "rpois", qblandaltman_build_data_frame(dat2)))
 qblandaltman(dat, generate_data = FALSE) + ggplot2::facet_wrap( ~ set)
 
-}
 }
 \references{
 Altman, Douglas G., and J. Martin Bland. "Measurement in medicine: the analysis
