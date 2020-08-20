@@ -45,7 +45,15 @@ knitr::opts_chunk$set(collapse = TRUE)
 #' original numeric values in `cyl`, a `character` version, and a `factor` version.
 set.seed(42)
 library(magrittr)
+# /*
+if (interactive()) {
+  devtools::load_all()
+} else {
+# */
 library(qwraps2)
+# /*
+}
+# */
 
 # define the markup language we are working in.
 # options(qwraps2_markup = "latex") is also supported.
