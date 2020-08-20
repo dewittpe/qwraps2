@@ -27,7 +27,6 @@ Imports:
     magrittr,
     Rcpp (>= 0.12.11),
     rlang,
-    tibble (>= 2.0.0),
     utils,
     xfun
 Suggests:
