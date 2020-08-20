@@ -23,4 +23,5 @@ plot(xvec, yvec, type = "l")
 
 integrate(f = foo, lower = -2 * pi, upper = 3 * pi)
 traprule(xvec, yvec)
+
 }
