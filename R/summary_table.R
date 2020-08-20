@@ -44,16 +44,25 @@ summary_table <- function(x, summaries = qsummary(x)) {
 
 #' @export
 summary_table.default <- function(x, summaries = qsummary(x)) {
-  warning("Use of the data pronoun is no longer required/encouraged.  The ability to use it has been deprecated.  See the documentation for summary_table, qsummary, and the vignettes for more detail.  The use of the data pronoun will be supported in version 0.5.0 of qwraps2 with this warning.  Eventually an error will be thrown before support is removed from the package completely.")
 
-  if (missing(summaries)) {
-    summary_table_042(x, summaries = qsummary_042(x))
-  } else {
-    summary_table_042(x, summaries = summaries)
+  if (!missing(summaries)) {
+    if ( any(grepl("\\.data\\$", parse(text = summaries))) ) {
+      warning("Use of the data pronoun is no longer required/encouraged.  The
+              ability to use it has been deprecated.  See the documentation for
+              summary_table, qsummary, and the vignettes for more detail.  The
+              use of the data pronoun will be supported in version 0.5.0 of
+              qwraps2 with this warning.  Eventually an error will be thrown
+              before support is removed from the package completely.")
+      summary_table_042(x, summaries = summaries)
+    }
   }
+
+  return("I'm the king!")
+
 }
 
-#' @export summary_table
+#' @rdname summary_table
+#' @export
 qsummary <- function(x, ...) {
   qsummary_042(x, ...)
 }

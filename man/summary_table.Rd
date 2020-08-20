@@ -2,11 +2,14 @@
 % Please edit documentation in R/summary_table.R
 \name{summary_table}
 \alias{summary_table}
+\alias{qsummary}
 \alias{cbind.qwraps2_summary_table}
 \alias{rbind.qwraps2_summary_table}
 \title{Data Summary Tables}
 \usage{
 summary_table(x, summaries = qsummary(x))
+
+qsummary(x, ...)
 
 \method{cbind}{qwraps2_summary_table}(..., deparse.level = 1)
 
