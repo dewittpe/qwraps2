@@ -39,8 +39,7 @@ Good practice would be to use relative paths, a warning will be given if any
 of the \code{paths} are determined to be absolute paths.
 }
 \examples{
-\dontrun{
-# create two example files in the working directory: 
+# create two example files in the working directory:
 cat("example file.", file = "QWRAPS2_EXAMPLE_1.txt")
 cat("Another example file.", file = "QWRAPS2_EXAMPLE_2.txt")
 
@@ -58,8 +57,10 @@ test2 <- file_check(c("UNLIKELYFILENAME", "QWRAPS2_EXAMPLE_1.txt", "QWRAPS2_EXAM
 test2
 
 # Or have an error thrown:
+\dontrun{
 file_check(c("UNLIKELYFILENAME", "QWRAPS2_EXAMPLE_1.txt", "QWRAPS2_EXAMPLE_2.txt"),
            stop = TRUE)
+}
 
 # Verify the md5sums as well as file access:
 file_check("QWRAPS2_EXAMPLE_1.txt", "7a3409e17f9de067740e64448a86e708")
@@ -77,7 +78,5 @@ file_check(c("QWRAPS2_EXAMPLE_1.txt", "QWRAPS2_EXAMPLE_2.txt"),
 # clean up working directory
 unlink("QWRAPS2_EXAMPLE_1.txt")
 unlink("QWRAPS2_EXAMPLE_2.txt")
-
-}
 
 }

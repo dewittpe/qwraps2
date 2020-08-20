@@ -46,8 +46,10 @@
 #' test2
 #'
 #' # Or have an error thrown:
+#' \dontrun{
 #' file_check(c("UNLIKELYFILENAME", "QWRAPS2_EXAMPLE_1.txt", "QWRAPS2_EXAMPLE_2.txt"),
 #'            stop = TRUE)
+#' }
 #'
 #' # Verify the md5sums as well as file access:
 #' file_check("QWRAPS2_EXAMPLE_1.txt", "7a3409e17f9de067740e64448a86e708")
@@ -65,9 +67,6 @@
 #' # clean up working directory
 #' unlink("QWRAPS2_EXAMPLE_1.txt")
 #' unlink("QWRAPS2_EXAMPLE_2.txt")
-#'
-#' }
-#'
 #'
 #' @export
 file_check <- function(paths, md5sums = NULL, stop = FALSE) {
@@ -92,12 +91,13 @@ file_check <- function(paths, md5sums = NULL, stop = FALSE) {
   }
 
   checks <-
-    dplyr::data_frame(path          = paths,
-                      absolute_path = absolute_paths,
-                      accessible    = file.access(paths, mode = 4) != -1L,
-                      current_md5sum = current_md5sums,
-                      expected_md5sum = NA_character_,
-                      md5check = md5check)
+    data.frame(path          = paths,
+               absolute_path = absolute_paths,
+               accessible    = file.access(paths, mode = 4) != -1L,
+               current_md5sum = current_md5sums,
+               expected_md5sum = NA_character_,
+               md5check = md5check,
+               stringsAsFactors = FALSE)
 
   if (length(md5sums) > 0L) {
     checks$expected_md5sum <- md5sums
