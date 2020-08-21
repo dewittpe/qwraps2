@@ -53,18 +53,84 @@ summary_table.default <- function(x, summaries = qsummary(x)) {
               use of the data pronoun will be supported in version 0.5.0 of
               qwraps2 with this warning.  Eventually an error will be thrown
               before support is removed from the package completely.")
-      summary_table_042(x, summaries = summaries)
+      return(summary_table_042(x, summaries = summaries))
     }
   }
 
-  return("I'm the king!")
+  rtn <- lapply(summaries, lapply, model.frame, x)
+  rtn <- lapply(rtn, lapply, function(y) {attr(y, "terms") <- NULL; y})
+  rtn <- lapply(rtn, lapply, unlist)
+  rtn <- lapply(rtn, lapply, function(y) {attr(y, "names") <- NULL; y})
+  rtn <- lapply(rtn, unlist)
+  rtn <- lapply(rtn, as.matrix, ncol = 1)
 
+  rgroups <- sapply(rtn, nrow)
+
+  rtn <- do.call(rbind, rtn)
+  attr(rtn, "rgroups") <- rgroups
+
+  colnames(rtn) <- paste0(deparse(substitute(x), nlines = 1L, backtick = TRUE), " (N = ", frmt(nrow(x)), ")")
+
+  class(rtn) <- c("qwraps2_summary_table", class(rtn))
+  rtn
 }
 
 #' @rdname summary_table
 #' @export
-qsummary <- function(x, ...) {
-  qsummary_042(x, ...)
+qsummary <- function(x, numeric_summaries, n_perc_args, env = parent.frame()) {
+  UseMethod("qsummary")
+}
+
+#' @export
+qsummary.data.frame <- function(x,
+                                numeric_summaries =
+                                  list("minimum"      = "~ qwraps2::frmt(min(%s))",
+                                       "median (IQR)" = "~ qwraps2::median_iqr(%s)",
+                                       "mean (sd)"    = "~ qwraps2::mean_sd(%s)",
+                                       "maximum"      = "~ qwraps2::frmt(max(%s))"),
+                                n_perc_args = list(digits = 0, show_symbol = FALSE)
+                                ,
+                                env = parent.frame()) {
+
+  npa <- lapply(n_perc_args, deparse)
+  npa <- paste(paste(names(npa), npa, sep = " = "), collapse = ", ")
+
+  rtn <-
+    lapply(names(x),
+           function(variable) {
+             if (is.numeric(x[[variable]])) {
+               summaries <- numeric_summaries
+             } else if (is.character(x[[variable]]) | is.factor(x[[variable]])) {
+               lvls <- levels(as.factor(x[[variable]]))
+               summaries <- as.list(paste0("~ qwraps2::n_perc(%s == ", lvls, ", ", npa, ")"))
+               summaries <- stats::setNames(summaries, lvls)
+             } else if (is.logical(x[[variable]])) {
+               summaries <- as.list(paste0("~ qwraps2::n_perc(%s, ", npa, ")"))
+             } else if (inherits(x[[variable]], "Date")) {
+               summaries <- list("first" = " ~ as.character(min(%s))", "last" = "~ as.character(max(%s))")
+             } else {
+               warning(sprintf("no default summary method for class '%s'", class(x[[variable]])))
+               return(NULL)
+             }
+
+             if (any(is.na(x[[variable]]))) {
+               summaries <- lapply(summaries, sprintf, "na.omit(%s)")
+               summaries <- c(summaries, list("Unknown/Missing" = "~ qwraps2::n_perc(is.na(%s))"))
+             }
+
+             lapply(summaries, sprintf, variable)
+
+           })
+  rtn <- stats::setNames(rtn, names(x))
+
+  rtn <- lapply(rtn, lapply, as.formula, env = env)
+
+  # if there is a label for the column use that as the name for the summary
+  labs   <- lapply(x, attr, "label")
+  labs_i <- which(!sapply(labs, is.null))
+  names(rtn)[labs_i] <- labs[[labs_i]]
+
+  rtn
 }
 
 
