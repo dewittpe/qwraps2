@@ -166,10 +166,10 @@ cbind(tab4, tab5, tab6)
 rbind(tab1, tab4)
 all.equal(rbind(tab1, tab4), summary_table(mtcars, c(our_summary1, our_summary2)))
 
-# \dontrun{
-#   cbind(tab1, tab4) # error because rows are not the same
-#   rbind(tab1, tab2) # error because columns are not the same
-# }
+\dontrun{
+  cbind(tab1, tab4) # error because rows are not the same
+  rbind(tab1, tab2) # error because columns are not the same
+}
 
 ################################################################################
 # reset the original markup option that was used before this example was
