@@ -9,7 +9,7 @@
 \usage{
 summary_table(x, summaries = qsummary(x))
 
-qsummary(x, ...)
+qsummary(x, numeric_summaries, n_perc_args, env = parent.frame())
 
 \method{cbind}{qwraps2_summary_table}(..., deparse.level = 1)
 

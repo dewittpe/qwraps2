@@ -1,7 +1,6 @@
 #'---
 #'title: "Formatted Summary Statistics and Data Summary Tables with qwraps2"
 #'author: "Peter DeWitt"
-#'date: "`r Sys.Date()`"
 #'output:
 #'  rmarkdown::html_vignette:
 #'    toc: true
@@ -16,11 +15,8 @@
 knitr::opts_chunk$set(collapse = TRUE)
 
 #'
-# /*
-# {{{ Introduction -------------------------------------------------------------
-# */
-#'
 #' # Introduction
+# /* {{{ */
 #'
 #' It is common for a manuscript to require a data summary table.  The table might
 #' include simple summary statistics for the whole sample and for subgroups.
@@ -30,21 +26,23 @@ knitr::opts_chunk$set(collapse = TRUE)
 #' I wrote this package to be as flexible and general as possible.  I hope you like
 #' these tools and will be able to use them in your work.
 #'
-#' This vignette presents the use of the `summary_table`, `qsummary`, and
-#' `qable` functions for quickly building data summary tables.  These functions
-#' implicitly use the `mean_sd`, `median_iqr`, and `n_perc0` functions from
-#' `qwraps2` as well.
+#' This vignette presents the use of the
+{{ paste0(backtick(summary_table), ",") }}
+{{ paste0(backtick(qsummary), ",") }}
+#' and
+{{ backtick(qable) }}
+#' functions for quickly building data summary tables.  We will be using summary
+#' statistic functions,
+{{ paste0(backtick(mean_sd), ",") }}
+{{ paste0(backtick(median_iqr), ",") }}
+{{ paste0(backtick(n_perc), ",") }}
+#' and others, from
+{{ CRANpkg(qwraps2) }}
+#' as well.
 #'
 #' ## Prerequisites Example Data Set
 #'
-#' We will use a modified version of the `mtcars` data set for examples throughout
-#' this vignette. The following packages are required to run the code in this
-#' vignette and to construct the `mtcars2` `data.frame`.
-#'
-#' The `mtcars2` data frame will have three versions of the `cyl` vector: the
-#' original numeric values in `cyl`, a `character` version, and a `factor` version.
 set.seed(42)
-library(magrittr)
 # /*
 if (interactive()) {
   devtools::load_all()
@@ -54,112 +52,113 @@ library(qwraps2)
 # /*
 }
 # */
-
 # define the markup language we are working in.
 # options(qwraps2_markup = "latex") is also supported.
 options(qwraps2_markup = "markdown")
 
+#'
+#' We will use a modified version of the
+{{ backtick(mtcars) }}
+#' data set for examples throughout this vignette.  The modified version,
+{{ backtick(mtcars2) }}
+#' data.frame will have three versions of the cyl vector: the
+#' original numeric values in cyl, a character version, and a factor version.
 data(mtcars)
 
-mtcars2 <-
-  dplyr::mutate(mtcars,
-                cyl_factor = factor(cyl,
-                                    levels = c(6, 4, 8),
-                                    labels = paste(c(6, 4, 8), "cylinders")),
-                cyl_character = paste(cyl, "cylinders"))
+mtcars2 <- mtcars
+
+mtcars2$cyl_factor <-
+  factor(mtcars$cyl,
+         levels = c(6, 4, 8),
+         labels = paste(c(6, 4, 8), "cylinders"))
+
+mtcars2$cyl_character <- paste(mtcars$cyl, "cylinders")
 
 str(mtcars2)
 
 #'
-#' Notice that the construction of the `cyl_factor` and `cyl_character` vectors
-#' was done such that the coercion of `cyl_character` to a `factor` will not be the
-#' same as the `cyl_factor` vector; the levels are in a different order.
-#'
+#' Notice that the construction of the
+{{ backtick(cyl_factor) }}
+#' and
+{{ backtick(cyl_character) }}
+#' vectors was done such that the coercion of
+{{ backtick(cyl_character) }}
+#' to a factor will not be the same as the
+{{ backtick(cyl_factor) }}
+#' vector; the levels are in a different order.
 with(mtcars2, table(cyl_factor, cyl_character))
 with(mtcars2, all.equal(factor(cyl_character), cyl_factor))
 
-#'
-#/*
-# End of Introduction ------------------------------------------------------ }}}
-#*/
-#'
-#'
-#'
-#/*
-# {{{ Review of Summary Statistic Functions and Formatting ---------------------
-#*/
+# /* End of Introduction ------------------------------------------------ }}} */
 #'
 #' # Review of Summary Statistic Functions and Formatting
+# /* {{{ */
 #'
-#/*
-# {{{ Subsection: Means and Standard Deviations --------------------------------
-#*/
 #'
 #' ## Means and Standard Deviations
+# /* {{{ */
 #'
-#' `mean_sd` will return the (arithmetic) mean and standard deviation for numeric
-#' vector. For example, `mean_sd(mtcars2$mpg)` will return the formatted string.
-#'
+{{ backtick(mean_sd) }}
+#' returns the (arithmetic) mean and standard deviation for numeric
+#' vector as a formated character string. For example,
+{{ backtick(mean_sd(mtcars2$mpg)) }}
+#' returns the formatted string
+{{ paste0(mean_sd(mtcars2$mpg), ".") }}
+#' There are other options for formatting character string:
 mean_sd(mtcars2$mpg)
 mean_sd(mtcars2$mpg, denote_sd = "paren")
 
 #'
-#' The default setting for `mean_sd` is to return the mean &plusmn; sd.  In a
-#' table this default is helpful because the default table formatting for counts
-#' and percentages is n (%).
-#'
-#' `mean_sd` and other functions are helpful for in-line text too:
-#'
-#'     The `r nrow(mtcars2)` vehicles in the `mtcars` data set had an average fuel
-#'     economy of `r mean_sd(mtcars$mpg)` miles per gallon.
-#'
-#' produces
-#'
-#'> The `r nrow(mtcars2)` vehicles in the `mtcars` data set had an average fuel
-#'> economy of `r mean_sd(mtcars$mpg)` miles per gallon.
-#'
 #' ## Mean and Confidence intervals
-#' If you need the mean and a confidence interval there is `mean_ci`.
-#' `mean_ci` returns a `qwraps2_mean_ci` object which is a
+#'
+#' If you need the mean and a confidence interval there is the function
+{{ paste0(backtick(mean_ci), ".") }}
+#' which returns a
+{{ backtick(qwraps2_mean_ci) }}
+#' object which is a
 #' named vector with the mean, lower confidence limit, and the upper confidence
-#' limit.   The printing method for `qwraps2_mean_ci` objects is a call to the
-#' `frmtci` function.  You an modify the formatting of printed result by adjusting
-#' the arguments pasted to `frmtci`.
+#' limit.   The printing method for
+{{ backtick(qwraps2_mean_ci) }}
+#' objects is a call to the
+{{ backtick(frmtci) }}
+#' function.  You an modify the formatting of printed result by adjusting
+#' the arguments pasted to
+{{ paste0(backtick(frmtci), ".") }}
 mci <- mean_ci(mtcars2$mpg)
+str(mci)
 mci
 print(mci, show_level = TRUE)
 
-#'
-#/*
-# End Subsection: Means and Standard Deviations ---------------------------- }}}
-#*/
-#'
-#/*
-# {{{ Subsection: Median and Inner Quartile Range ------------------------------
-#*/
+# /* End Subsection: Means and Standard Deviations ---------------------- }}} */
 #'
 #' ## Median and Inner Quartile Range
+# /* {{{ */
 #'
-#' Similar to the `mean_sd` function, the `median_iqr` returns the median and the
-#' inner quartile range (IQR) of a data vector.
+#' Similar to the
+{{ backtick(mean_sd) }}
+#' function, the
+{{ backtick(median_iqr) }}
+#' returns the median and the inner quartile range (IQR) of a data vector.
 median_iqr(mtcars2$mpg)
 
-#'
-#/*
-# End Subsection: Median and Inner Quartile Range -------------------------- }}}
-#*/
-#'
-#/*
-# {{{ Subsection: Count and Percentages ----------------------------------------
-#*/
+# /* End Subsection: Median and Inner Quartile Range -------------------- }}} */
 #'
 #' ## Count and Percentages
+# /* {{{ */
 #'
-#' The `n_perc` function is the workhorse, but `n_perc0` is also provided for ease
-#' of use in the same way that base R has `paste` and `paste0`.  `n_perc` returns
-#' the n (%) with the percentage sign in the string, `n_perc0` omits the
-#' percentage sign from the string.  The latter is good for tables, the former for
-#' in-line text.
+#' The
+{{ backtick(n_perc) }}
+#' function is the workhorse.
+{{ backtick(n_perc0) }}
+#' is also provided for ease of use in the same way that base R has
+{{ backtick(paste) }}
+#' and
+{{ paste(backtick(paste0), ".") }}
+{{ backtick(n_perc) }}
+#' returns the n (%) with the percentage sign in the string,
+{{ backtick(n_perc0) }}
+#' omits the percentage sign from the string.  The latter is good for tables,
+#' the former for in-line text.
 #'
 n_perc(mtcars2$cyl == 4)
 n_perc0(mtcars2$cyl == 4)
@@ -171,16 +170,10 @@ n_perc(mtcars2$cyl_factor == levels(mtcars2$cyl_factor)[2])
 # The count and percentage of 4 or 6 cylinders vehicles in the data set is
 n_perc(mtcars2$cyl %in% c(4, 6))
 
-#'
-#/*
-# End Subsection: Count and Percentages ------------------------------------ }}}
-#*/
-#'
-#/*
-# {{{ Subsection: Geometric Means and Standard Deviations ----------------------
-#*/
+# /* End Subsection: Count and Percentages ------------------------------ }}} */
 #'
 #' ## Geometric Means and Standard Deviations
+# /* {{{ */
 #'
 #' Let $\left\{x_1, x_2, x_3, \ldots, x_n \right\}$ be a sample of size $n$ with
 #' $x_i > 0$ for all $i.$  Then the geometric mean, $\mu_g,$ and geometric standard
@@ -212,9 +205,14 @@ n_perc(mtcars2$cyl %in% c(4, 6))
 #' $$
 #'
 #' When looking for the geometric standard deviation in R, the simple
-#' `exp(sd(log(x)))` is not exactly correct.  The geometric standard deviation
+{{ backtick(exp(sd(log(x)))) }}
+#' is not exactly correct.  The geometric standard deviation
 #' uses $n,$ the full sample size, in the denominator, where as
-#' the `sd` and `var` functions in R use the denominator $n - 1.$  To get
+#' the
+{{ backtick(sd) }}
+#' and
+{{ backtick(var) }}
+#' functions in R use the denominator $n - 1.$  To get
 #' the geometric standard deviation one should adjust the result by multiplying the
 #' variance by $(n - 1) / n$ or the standard deviation by $\sqrt{(n - 1) / n}.$
 #' See the example below.
@@ -236,9 +234,13 @@ sigma_g
 exp(sqrt((length(x) - 1) / length(x)) * sd(log(x)))
 
 #'
-#' The functions `gmean`, `gvar`, and `gsd` in the
-#' package, provide the geometric
-#' mean, variance, and standard deviation for a sample.
+#' The functions
+{{ paste0(backtick(gmean), ",") }}
+{{ paste0(backtick(gvar), ",") }}
+#' and
+{{ backtick(gsd) }}
+#' provide the geometric mean, variance, and standard deviation for a numeric
+#' vector.
 gmean(x)
 all.equal(gmean(x), mu_g)
 
@@ -250,81 +252,107 @@ gsd(x)
 all.equal(gsd(x), sigma_g)
 
 #'
-#' `gmean_sd` will provide a quick way for reporting the geometric mean and
-#' geometric standard deviation in the same way that `mean_sd` does for the
-#' arithmetic mean and arithmetic standard deviation:
+{{ backtick(gmean_sd) }}
+#' will provide a quick way for reporting the geometric mean and
+#' geometric standard deviation in the same way that
+{{ backtick(mean_sd) }}
+#' does for the arithmetic mean and arithmetic standard deviation:
 gmean_sd(x)
 
 #'
-#/*
-# End Subsection: Geometric Means and Standard Deviations ------------------ }}}
-#*/
+# /* End Subsection: Geometric Means and Standard Deviations ------------ }}} */
 #'
-#/*
-# End Section: Review of Summary Statistics and Functions ------------------ }}}
-#*/
-#'
-#/*
-# {{{ Section: Building a Data Summary Table -----------------------------------
-#*/
+# /* End Section: Review of Summary Statistics and Functions ------------ }}} */
 #'
 #' # Building a Data Summary Table
+# /* {{{ */
 #'
 #' Objective: build a table reporting summary statistics for some of the variables
-#' in the `mtcars2` `data.frame` overall and within subgroups.  We'll start with
+#' in the
+{{ backtick(mtcars2) }}
+#' `data.frame` overall and within subgroups.  We'll start with
 #' something very simple and build up to something bigger.
 #'
 #' Let's report the min, max, and mean (sd) for continuous variables and n (%) for
-#' categorical variables.  We will report `mpg`, `disp`, `wt`, and `gear` overall
-#' and by number of cylinders.
+#' categorical variables.  We will report mpg, disp(lacement), wt, and gear overall
+#' and by number of cylinders and transmission type.
 #'
-#' The function `summary_table`, along with some `dplyr` functions will do the work
-#' for us.  `summary_table` takes two arguments:
+#' **END USER VISIBLE CHANGE:** for qwraps2 version before 0.4.2 the
+{{ backtick(summary_table) }}
+#' method relied on
+{{ CRANpkg(dplyr) }}
+#' verbs for the implementation and end user specifications.  This created
+#' several limitations and required what could be considered a non-intuitive api
+#' due to the use of the rlang data pronoun
+{{ paste0(backtick(.data), ".") }}
+#' Building a table with the summary based on a grouping, e.g., mpg by number of
+#' cylinders, was achieved by the use of
+{{ backtick(dplyr::group_by) }}
+#' to specify the group.  Further only one grouping variable was supported.
+#' Starting with version 0.5.0 the implementation of the
+{{ backtick(summary_table) }}
+#' and
+{{ backtick(qsummary) }}
+#' is based on base R methods.  The change in the implementation will make it
+#' easier for all users as the use of the tidyverse is no longer required or
+#' assumed.  The use of
+{{ backtick(dplyr::group_by) }}
+#' is still supported, and has been improved.
 #'
-#' 1. `x` a (`grouped_df`) data.frame.
-#' 2. `summaries` a list of summaries.  This is a list-of-lists.  The outer list
-#'    defines the row groups and the inner lists define the specif summaries.
-#'    The default is generated by the `qsummary` function.
+#' There are two changes to the API:
+#' 1. Use of the data pronoun
+{{ paste0(backtick(.data), ".") }}
+#' is no longer recommend.  In fact, it is now discouraged.  There is a test in
+#' place in version 0.5.0 which will provided a message to this effect.
+#' 2. A new function argument
+{{ backtick(by) }}
+#' as been added to the
+{{ backtick(summary_table) }}
+#' method such that the use of
+{{ backtick(dplyr::group_by) }}
+#' is no longer needed.
 #'
-args(summary_table)
+#' In the following examples we will produce the same tables using the standard
+#' data.frame
+{{ backtick(mtcars2) }}
+#' along with a version using tibbles or data.table.
+#'
+mtcars2_tibble <- tibble::as_tibble(mtcars2)
+mtcars2_DT     <- data.table::as.data.table(mtcars2)
 
 #'
-#' Let's build a list-of-lists to pass to the `summaries` argument of
-#' `summary_table`.  Additional examples and tools for building the
-#' list-of-lists are given in the following section.  The immediate example is
-#' provided to demonstrate how to use the `summary_table` method.
+#' The use of the
+{{ backtick(summary_table) }}
+#' use to define a summary, that is, a list-of-lists of formulas for summarizing
+#' the data.frame.
 #'
 #' The inner lists are named `formula`e defining the wanted
-#' summary.  These `formula`e are passed through `dplyr::summarize` to generate
-#' the table.  The names are important, as they are used to label row groups and row
-#' names in the table.  The arguemnt for the functions below use the `.data`
-#' pronoun for tidy evaluation (see `help(topic = ".data", package = "rlang")`).
-#' The use of this pronoun is not mandatory, however, the use of the pronoun is
-#' strongly encouraged.
+#' summary.  The names are important, as they are used to label row groups and row
+#' names in the table.
 #'
 our_summary1 <-
   list("Miles Per Gallon" =
-       list("min" = ~ min(.data$mpg),
-            "max" = ~ max(.data$mpg),
-            "mean (sd)" = ~ qwraps2::mean_sd(.data$mpg)),
+       list("min"       = ~ min(mpg),
+            "max"       = ~ max(mpg),
+            "mean (sd)" = ~ qwraps2::mean_sd(mpg)),
        "Displacement" =
-       list("min" = ~ min(.data$disp),
-            "median" = ~ median(.data$disp),
-            "max" = ~ max(.data$disp),
-            "mean (sd)" = ~ qwraps2::mean_sd(.data$disp)),
+       list("min"       = ~ min(disp),
+            "median"    = ~ median(disp),
+            "max"       = ~ max(disp),
+            "mean (sd)" = ~ qwraps2::mean_sd(disp)),
        "Weight (1000 lbs)" =
-       list("min" = ~ min(.data$wt),
-            "max" = ~ max(.data$wt),
-            "mean (sd)" = ~ qwraps2::mean_sd(.data$wt)),
+       list("min"       = ~ min(wt),
+            "max"       = ~ max(wt),
+            "mean (sd)" = ~ qwraps2::mean_sd(wt)),
        "Forward Gears" =
-       list("Three" = ~ qwraps2::n_perc0(.data$gear == 3),
-            "Four"  = ~ qwraps2::n_perc0(.data$gear == 4),
-            "Five"  = ~ qwraps2::n_perc0(.data$gear == 5))
+       list("Three" = ~ qwraps2::n_perc0(gear == 3),
+            "Four"  = ~ qwraps2::n_perc0(gear == 4),
+            "Five"  = ~ qwraps2::n_perc0(gear == 5))
        )
 
 #'
-#' Building the table is done with a call to `summary_table`:
-#'
+#' Building the table is done with a call to
+{{ backtick(summary_table) }}
 #+ results = "asis"
 ### Overall
 whole <- summary_table(mtcars2, our_summary1)
