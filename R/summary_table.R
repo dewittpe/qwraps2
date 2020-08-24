@@ -27,23 +27,37 @@
 #' @param x a \code{data.frame} or \code{grouped_df}.
 #' @param summaries a list of lists of formulea for summarizing the data set.
 #' See Details and examples.
+#' @param by a character vector of variable names to generate the summary by,
+#' that is one column for each unique values of the variables specified.
 #'
-#' @seealso \code{\link{qable}} for marking up \code{qwraps2_data_summary}
-#' objects.  \code{\link[dplyr]{group_by}} for \code{\link[dplyr]{grouped_df}}
-#' objects.  The \code{vignette("summary-statistics", package = "qwraps2")} for
-#' detailed use of these functions and cavets.
+#' @seealso \code{\link{qsummary}} for generating the summaries,
+#' \code{\link{qable}} for marking up \code{qwraps2_data_summary} objects.
+#' \code{\link[dplyr]{group_by}} for \code{\link[dplyr]{grouped_df}} objects.
+#' The \code{vignette("summary-statistics", package = "qwraps2")} for detailed
+#' use of these functions and cavets.
 #'
 #' @return a \code{qwraps2_summary_table} object.
 #'
 #'
 #' @export
 #' @rdname summary_table
-summary_table <- function(x, summaries = qsummary(x)) {
+summary_table <- function(x, summaries = qsummary(x), by = NULL) {
   UseMethod("summary_table")
 }
 
 #' @export
-summary_table.default <- function(x, summaries = qsummary(x)) {
+summary_table.grouped_df <- function(x, summaries = qsummary(x), by = NULL) {
+  if (!is.null(by)) {
+    warning("You've passed a grouped_df to summary_table and specified the by argument.  The by argument will be ignored.")
+  }
+
+  # this assumes dplyr version 0.8.0 or newer
+  lbs <- names(attr(x, "groups"))
+  lbs <- lbs[-length(lbs)]
+  NextMethod(object = x, by = lbs)
+}
+#' @export
+summary_table.data.frame <- function(x, summaries = qsummary(x), by = NULL) {
 
   if (!missing(summaries)) {
     if ( any(grepl("\\.data\\$", parse(text = summaries))) ) {
@@ -57,7 +71,27 @@ summary_table.default <- function(x, summaries = qsummary(x)) {
     }
   }
 
-  rtn <- lapply(summaries, lapply, model.frame, x)
+  if (!is.null(by)) {
+    subsets <- split(x, interaction(x[, by]))
+  } else {
+    subsets <- list(x)
+  }
+
+  rtn <- lapply(subsets, apply_summaries, summaries = summaries)
+  if (length(rtn) > 1L) {
+    cn <- paste0(names(rtn), " (N = ", sapply(rtn, attr, "n"), ")")
+    rtn <- do.call(cbind, rtn)
+    colnames(rtn) <- cn
+  } else {
+    rtn <- rtn[[1]]
+    colnames(rtn) <- paste0(deparse(substitute(x), nlines = 1L, backtick = TRUE), " (N = ", frmt(nrow(x)), ")")
+  }
+
+  rtn
+}
+
+apply_summaries <- function(summaries, x) {
+  rtn <- lapply(summaries, lapply, stats::model.frame, x)
   rtn <- lapply(rtn, lapply, function(y) {attr(y, "terms") <- NULL; y})
   rtn <- lapply(rtn, lapply, unlist)
   rtn <- lapply(rtn, lapply, function(y) {attr(y, "names") <- NULL; y})
@@ -68,17 +102,29 @@ summary_table.default <- function(x, summaries = qsummary(x)) {
 
   rtn <- do.call(rbind, rtn)
   attr(rtn, "rgroups") <- rgroups
-
-  colnames(rtn) <- paste0(deparse(substitute(x), nlines = 1L, backtick = TRUE), " (N = ", frmt(nrow(x)), ")")
-
+  attr(rtn, "n") <- nrow(x)
   class(rtn) <- c("qwraps2_summary_table", class(rtn))
   rtn
 }
+
+
+#' @param numeric_summaries a list of functions to use for summarizing numeric
+#' variables.  The functions need to be provided as character strings with the
+#' single argument defined by the \code{\%s} symbol.
+#' @param n_perc_args a list of arguments to pass to
+#' \code{\link[qwraps2]{n_perc}} to be used with \code{character} or
+#' \code{factor} variables in \code{.data}.
+#' @param env environment to assign to the resulting formulae
 
 #' @rdname summary_table
 #' @export
 qsummary <- function(x, numeric_summaries, n_perc_args, env = parent.frame()) {
   UseMethod("qsummary")
+}
+
+#' @export
+qsummary.grouped_df <- function(x, numeric_summaries, n_perc_args, env = parent.frame()) {
+  NextMethod()
 }
 
 #' @export
@@ -102,7 +148,7 @@ qsummary.data.frame <- function(x,
                summaries <- numeric_summaries
              } else if (is.character(x[[variable]]) | is.factor(x[[variable]])) {
                lvls <- levels(as.factor(x[[variable]]))
-               summaries <- as.list(paste0("~ qwraps2::n_perc(%s == ", lvls, ", ", npa, ")"))
+               summaries <- as.list(paste0("~ qwraps2::n_perc(%s == '", lvls, "', ", npa, ")"))
                summaries <- stats::setNames(summaries, lvls)
              } else if (is.logical(x[[variable]])) {
                summaries <- as.list(paste0("~ qwraps2::n_perc(%s, ", npa, ")"))
@@ -123,16 +169,17 @@ qsummary.data.frame <- function(x,
            })
   rtn <- stats::setNames(rtn, names(x))
 
-  rtn <- lapply(rtn, lapply, as.formula, env = env)
+  rtn <- lapply(rtn, lapply, stats::as.formula, env = env)
 
   # if there is a label for the column use that as the name for the summary
-  labs   <- lapply(x, attr, "label")
-  labs_i <- which(!sapply(labs, is.null))
-  names(rtn)[labs_i] <- labs[[labs_i]]
+  labs <- lapply(x, attr, "label")
+  if (!all(sapply(labs, is.null))) {
+    labs_i <- which(!sapply(labs, is.null))
+    names(rtn)[labs_i] <- labs[labs_i]
+  }
 
   rtn
 }
-
 
 #' @rdname summary_table
 #' @export
@@ -185,4 +232,9 @@ rbind.qwraps2_summary_table <- function(..., deparse.level = 1) {
   class(out) <- class(tabs[[1]])
 
   out
+}
+
+#' @export
+print.qwraps2_summary_table <- function(x, rgroup = attr(x, "rgroups"), rnames = rownames(x), cnames = colnames(x), ...) {
+  print(qable(x, rgroup = rgroup, rnames = rnames, cnames = cnames, ...))
 }

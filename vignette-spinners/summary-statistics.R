@@ -13,6 +13,21 @@
 #'
 #+ label = "setup", include = FALSE
 knitr::opts_chunk$set(collapse = TRUE)
+#'
+set.seed(42)
+# /*  if interactive load_all, else, a library(qwraps2) is called below for the
+# vignette
+if (interactive()) {
+  devtools::load_all()
+} else {
+# */
+  library(qwraps2)
+# /*
+}
+# */
+# define the markup language we are working in.
+# options(qwraps2_markup = "latex") is also supported.
+options(qwraps2_markup = "markdown")
 
 #'
 #' # Introduction
@@ -41,21 +56,13 @@ knitr::opts_chunk$set(collapse = TRUE)
 #' as well.
 #'
 #' ## Prerequisites Example Data Set
-#'
-set.seed(42)
 # /*
-if (interactive()) {
-  devtools::load_all()
-} else {
+while (FALSE) {
 # */
 library(qwraps2)
 # /*
 }
 # */
-# define the markup language we are working in.
-# options(qwraps2_markup = "latex") is also supported.
-options(qwraps2_markup = "markdown")
-
 #'
 #' We will use a modified version of the
 {{ backtick(mtcars) }}
@@ -312,15 +319,6 @@ gmean_sd(x)
 {{ backtick(dplyr::group_by) }}
 #' is no longer needed.
 #'
-#' In the following examples we will produce the same tables using the standard
-#' data.frame
-{{ backtick(mtcars2) }}
-#' along with a version using tibbles or data.table.
-#'
-mtcars2_tibble <- tibble::as_tibble(mtcars2)
-mtcars2_DT     <- data.table::as.data.table(mtcars2)
-
-#'
 #' The use of the
 {{ backtick(summary_table) }}
 #' use to define a summary, that is, a list-of-lists of formulas for summarizing
@@ -359,11 +357,51 @@ whole <- summary_table(mtcars2, our_summary1)
 whole
 
 #'
-#' The `summary_table` will work with grouped data frames too.
+#' If a
+{{ backtick(grouped_df) }}
+#' created by a call to
+{{ backtick(dplyr::group_by) }}
+#' is passed to
+{{ backtick(summary_table) }}
+#' then the resulting table will have one column for each group.
 #+ results = "asis"
 ### By number of Cylinders
 by_cyl <- summary_table(dplyr::group_by(mtcars2, cyl_factor), our_summary1)
 by_cyl
+
+#'
+#' If you are not working in the tidyverse you can explicitly define the
+#' variables in the data.frame to group by, e.g.,
+#+ results = "asis"
+summary_table(mtcars2, summaries = our_summary1, by = c("cyl_factor"))
+
+#'
+#' With the refactor of the
+{{ backtick(summary_table) }}
+#' method in version 0.5.0 it is easier to group by multiple variables.  For
+#' example, getting a column for combination of cylinders and transmission type:
+#+
+by_cyl_am <- summary_table(mtcars2, summaries = our_summary1, by = c("cyl_factor", "am"))
+by_cyl_am
+
+#'
+#' A quick check here shows that the multiple grouping via dplyr is the same as
+#' above.
+all.equal(summary_table(dplyr::group_by(mtcars2, cyl_factor, am), summaries = our_summary1),
+          by_cyl_am)
+
+#'
+#' One more note, if you pass a
+{{ backtick(grouped_df) }}
+#' to
+{{ backtick(summary_table) }}
+#' while specifying the
+{{ backtick(by) }}
+#' argument a warning will be thrown and the
+{{ backtick(grouped_df) }}
+#' groupings will take precedence.
+#+ results = "asis"
+summary_table(dplyr::group_by(mtcars2, carb), summaries = our_summary1, by = c("cyl_factor", "am"))
 
 #'
 #' To report a table with both the whole sample summary and conditional columns
@@ -373,42 +411,60 @@ both <- cbind(whole, by_cyl)
 both
 
 #'
-#' If you want to change the column names, do so via the `cnames` argument to
-#' `qable` via the print method for `qwraps2_summary_table` objects.  Any argument
-#' that you want to send to `qable` can be sent there when explicitly using the
-#' `print` method for `qwraps2_summary_table` objects.
+#' If you want to change the column names, do so via the
+{{ backtick(cnames) }}
+#' argument to
+{{ backtick(qable) }}
+#' via the print method for
+{{ backtick(qwraps2_summary_table) }}
+#' objects.  Any argument
+#' that you want to send to
+{{ backtick(qable) }}
+#'  can be sent there when explicitly using the
+{{ backtick(print) }}
+#' method for
+{{ backtick(qwraps2_summary_table) }}
+#' objects.
 #+ results = "asis"
 print(both,
       rtitle = "Summary Statistics",
       cnames = c("Col 0", "Col 1", "Col 2", "Col 3"))
-#'
-#/*
-# {{{ Subsection: Easy building of the summaries -------------------------------
-#*/
+
 #'
 #' ## Easy building of the summaries
+# /* {{{ */
 #'
-#' The task of building the `summaries` list-of-lists can be tedious.  `qsummary`
-#' is designed to make it easier.  `qsummary` will use a set of predefined
-#' functions to summarize numeric columns of a `data.frame`, a set of arguments
-#' to pass to `qwraps2::n_perc` for categorical (`character` and `factors`)
-#' variables.
+#' The task of building the
+{{ backtick(summaries) }}
+#' list-of-lists can be tedious. The function
+{{ backtick(qummaries) }}
+#' is designed to make it easier.
+{{ backtick(qummaries) }}
+#' will use a set of predefined
+#' functions to summarize numeric columns of a data.frame, a set of arguments
+#' to pass to
+{{ backtick(n_perc) }}
+#' for categorical (character and factor) variables.
 #'
-#' By default, calling `summary_table` will use the default summary metrics
-#' defined by `qsummary`.  The purpose of `qsummary` is to provide the same
+#' By default, calling
+{{ backtick(summary_table) }}
+#' will use the default summary metrics
+#' defined by
+{{ paste0(backtick(qsummary), ".") }}
+#' The purpose of
+{{ backtick(qsummary) }}
+#' is to provide the same
 #' summary for all numeric variables within a data.frame and a single style of
 #' summary for categorical variables within the data.frame.  For example, the
-#' default summary for a set of variables from the the `mtcars2` data set is
-mtcars2 %>%
-  dplyr::select(.data$mpg, .data$cyl_factor, .data$wt) %>%
-  qsummary(.)
+#' default summary for a set of variables from the
+{{ backtick(mtcars2) }}
+#' data set is
+qsummary(mtcars2[, c("mpg", "cyl_factor", "wt")])
 
 #'
 #' That default summary is used for a table as follows:
 #+label="summary_table_mtcars2_default", results = "asis"
-mtcars2 %>%
-  dplyr::select(.data$mpg, .data$cyl_factor, .data$wt) %>%
-  summary_table(.)
+summary_table(mtcars2[, c("mpg", "cyl_factor", "wt")])
 
 #'
 #' Now, say we want to only report the minimum and maximum for each of the
@@ -418,12 +474,11 @@ mtcars2 %>%
 #' Note that when defining the list of numeric_summaries that the argument place
 #' holder is the `%s` character.
 new_summary <-
-  mtcars2 %>%
-  dplyr::select(.data$mpg, .data$cyl_factor, .data$wt) %>%
-  qsummary(.,
+  qsummary(mtcars2[, c("mpg", "cyl_factor", "wt")],
            numeric_summaries = list("Minimum" = "~ min(%s)",
                                     "Maximum" = "~ max(%s)"),
            n_perc_args = list(digits = 1, show_symbol = TRUE, show_denom = "always"))
+str(new_summary)
 
 #'
 #' The resulting table is:
@@ -431,26 +486,22 @@ new_summary <-
 summary_table(mtcars2, new_summary)
 
 #'
-#' The summary can easily be used on a grouped `data.frame`.
+#' The summary can easily be used with a
+{{ backtick(by) }}
+#' argument
 #+results = "asis"
-mtcars2 %>%
-  dplyr::group_by(.data$am) %>%
-  summary_table(., new_summary)
+summary_table(mtcars2, new_summary, by = c("cyl_factor"))
 
-#'
 #'
 #/*
 # End Subsection: Easy building of the summaries --------------------------- }}}
 #*/
 #'
 #'
-#/*
-# {{{ Subsection: Adding p-values to a summary table ---------------------------
-#*/
-#'
 #' ## Adding P-values to a Summary Table
+# /* {{{ */
 #'
-#' There are many, many different ways to format data summary tables. Adding
+#' There are many different ways to format data summary tables. Adding
 #' p-values to a table is just one thing that can be done in more than one way.
 #' For example, if a row group reports the counts and percentages for each level
 #' of a categorical variable across multiple (column) groups, then I would argue
@@ -465,24 +516,23 @@ mtcars2 %>%
 #' to be ad hoc.  Perhaps an additional column wouldn't be used and the p-values
 #' are edited into row group labels, for example.
 #'
-#' If you want to add a p-value column to a `qwraps2_summary_table` object you
-#' can with some degree of ease.  Note that `qwraps2_summary_table` objects are
-#' just character matrices.
-both %>% str
+#' If you want to add a p-value column to a
+{{ backtick(qwraps2_summary_table) }}
+#' object you can with some degree of ease.  Note that
+{{ backtick(qwraps2_summary_table) }}
+#' objects are just character matrices.
+str(both)
 
 #'
 #' Let's added p-values for testing the difference in the mean between the three
 #' cylinder groups.
 # difference in means
 mpvals <-
-  list(lm(mpg ~ cyl_factor,  data = mtcars2),
-       lm(disp ~ cyl_factor, data = mtcars2),
-       lm(wt ~ cyl_factor,   data = mtcars2)) %>%
-  lapply(aov) %>%
-  lapply(summary) %>%
-  lapply(function(x) x[[1]][["Pr(>F)"]][1]) %>%
-  lapply(frmtp) %>%
-  do.call(c, .)
+  sapply(
+         list(lm(mpg ~ cyl_factor,  data = mtcars2),
+              lm(disp ~ cyl_factor, data = mtcars2),
+              lm(wt ~ cyl_factor,   data = mtcars2)),
+         extract_fpvalue)
 
 # Fisher test
 fpval <- frmtp(fisher.test(table(mtcars2$gear, mtcars2$cyl_factor))$p.value)
@@ -492,7 +542,8 @@ fpval <- frmtp(fisher.test(table(mtcars2$gear, mtcars2$cyl_factor))$p.value)
 both <- cbind(both, "P-value" = "")
 both[grepl("mean \\(sd\\)", rownames(both)), "P-value"] <- mpvals
 a <- capture.output(print(both))
-a[grepl("Forward Gears", a)] %<>% sub("&nbsp;&nbsp;\\ \\|$", paste(fpval, "|"), .)
+a[grepl("Forward Gears", a)] <-
+  sub("&nbsp;&nbsp;\\ \\|$", paste(fpval, "|"), a[grepl("Forward Gears", a)])
 
 #'
 #' and the resulting table is:
@@ -506,40 +557,36 @@ cat(a, sep = "\n")
 #+ results = "asis"
 gear_summary <-
   list("Forward Gears" =
-       list("Three" = ~ qwraps2::n_perc0(.data$gear == 3),
-            "Four"  = ~ qwraps2::n_perc0(.data$gear == 4),
-            "Five"  = ~ qwraps2::n_perc0(.data$gear == 5)),
+       list("Three" = ~ qwraps2::n_perc0(gear == 3),
+            "Four"  = ~ qwraps2::n_perc0(gear == 4),
+            "Five"  = ~ qwraps2::n_perc0(gear == 5)),
        "Transmission" =
-       list("Automatic" = ~ qwraps2::n_perc0(.data$am == 0),
-            "Manual"  = ~ qwraps2::n_perc0(.data$am == 1))
-       ) %>%
-setNames(.,
+       list("Automatic" = ~ qwraps2::n_perc0(am == 0),
+            "Manual"    = ~ qwraps2::n_perc0(am == 1))
+       )
+
+gear_summary <-
+setNames(gear_summary,
          c(
          paste("Forward Gears: ", frmtp(fisher.test(xtabs( ~ gear + cyl_factor, data = mtcars2))$p.value)),
          paste("Transmission: ",  frmtp(fisher.test(xtabs( ~ am + cyl_factor, data = mtcars2))$p.value)))
          )
 
-summary_table(dplyr::group_by(mtcars2, cyl_factor), gear_summary)
+summary_table(mtcars2, gear_summary, by = "cyl_factor")
 
-
 #'
-#/*
-# End Subsection: Adding p-values to a summary table ----------------------- }}}
-#*/
-#'
-#'
-#/*
-# Subsection: Using Variable labels ---------------------------------------- {{{
-#*/
+# /* End Subsection: Adding p-values to a summary table ----------------- }}} */
 #'
 #' ## Using Variable Labels
+# /* {{{ */
 #'
 #' Some data management paradigms will use attributes to keep a label associated
 #' with a variable in a data.frame.  Notable examples are the
-#' [Hmisc](https://cran.r-project.org/package=Hmisc) and
-#' [sjPlot](https://cran.r-project.org/package=sjPlot).  If you associate a
-#' label with a variable in the data frame the that label will be used when
-#' building a summary table.  This feature was suggested
+{{ CRANpkg(Hmisc) }}
+#' and
+{{ paste0(CRANpkg(sjPlot), ".") }}
+#' If you associate a label with a variable in the data frame the that label
+#' will be used when building a summary table.  This feature was suggested
 #' https://github.com/dewittpe/qwraps2/issues/74 and implemented thusly:
 
 new_data_frame <-
@@ -555,7 +602,9 @@ attr(new_data_frame$rt,  "label") <- "Reaction time"
 attr(new_data_frame$edu, "name") <- "Education"
 
 #'
-#' When calling `qsummary` the provide labels for the age and rt variables will
+#' When calling
+{{ backtick(qsummary) }}
+#' the provide labels for the age and rt variables will
 #' be used.  Since the attribute "label" does not exist for the edu variable,
 #' edu will be used in the output.
 qsummary(new_data_frame)
@@ -566,14 +615,10 @@ qsummary(new_data_frame)
 summary_table(new_data_frame)
 
 #'
-#/*
-# End Subsection: Using Variable labels------------------------------------- }}}
-#*/
+# /* End Subsection: Using Variable labels ------------------------------ }}} */
 #'
 #'
-#/*
-# End Section: Building a Data Summary Table ------------------------------- }}}
-#*/
+# /* End Section: Building a Data Summary Table ------------------------- }}} */
 #'
 #' # Session Info
 #'

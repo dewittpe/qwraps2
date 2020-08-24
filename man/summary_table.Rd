@@ -7,7 +7,7 @@
 \alias{rbind.qwraps2_summary_table}
 \title{Data Summary Tables}
 \usage{
-summary_table(x, summaries = qsummary(x))
+summary_table(x, summaries = qsummary(x), by = NULL)
 
 qsummary(x, numeric_summaries, n_perc_args, env = parent.frame())
 
@@ -20,6 +20,19 @@ qsummary(x, numeric_summaries, n_perc_args, env = parent.frame())
 
 \item{summaries}{a list of lists of formulea for summarizing the data set.
 See Details and examples.}
+
+\item{by}{a character vector of variable names to generate the summary by,
+that is one column for each unique values of the variables specified.}
+
+\item{numeric_summaries}{a list of functions to use for summarizing numeric
+variables.  The functions need to be provided as character strings with the
+single argument defined by the \code{\%s} symbol.}
+
+\item{n_perc_args}{a list of arguments to pass to
+\code{\link[qwraps2]{n_perc}} to be used with \code{character} or
+\code{factor} variables in \code{.data}.}
+
+\item{env}{environment to assign to the resulting formulae}
 
 \item{...}{\code{qwraps2_summary_table} objects to bind together}
 
@@ -58,10 +71,11 @@ The \code{print} method for the \code{qwraps2_summary_table} objects is just
 a simple wrapper for \code{\link{qable}}.
 }
 \seealso{
-\code{\link{qable}} for marking up \code{qwraps2_data_summary}
-objects.  \code{\link[dplyr]{group_by}} for \code{\link[dplyr]{grouped_df}}
-objects.  The \code{vignette("summary-statistics", package = "qwraps2")} for
-detailed use of these functions and cavets.
+\code{\link{qsummary}} for generating the summaries,
+\code{\link{qable}} for marking up \code{qwraps2_data_summary} objects.
+\code{\link[dplyr]{group_by}} for \code{\link[dplyr]{grouped_df}} objects.
+The \code{vignette("summary-statistics", package = "qwraps2")} for detailed
+use of these functions and cavets.
 
 \code{cbind}
 
