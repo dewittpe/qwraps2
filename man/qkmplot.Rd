@@ -27,16 +27,26 @@ Functions to build, explicitly or implicitly, data.frames and then creating a
 ggplot2 KM plot.
 }
 \examples{
+# create a survfit object
 require(survival)
 leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x, data = survival::aml)
+
+# base R km plot
 survival:::plot.survfit(leukemia.surv, conf.int = TRUE, lty = 2:3, col = 1:2)
 
-qkmplot_bulid_data_frame(leukemia.surv)
+# qkmplot
 qkmplot(leukemia.surv, conf_int = TRUE)
 
+# build a data.frame for plotting km curves, this could be helpful for
+# creating bespoke plots
+leukemia_km_data <- qkmplot_bulid_data_frame(leukemia.surv)
+leukemia_km_data
+
+qkmplot(leukemia_km_data)
+
+# intercept only plot
 intonly_fit <- survival::survfit(survival::Surv(time, status) ~ 1, data = survival::aml)
 survival:::plot.survfit(intonly_fit, conf.int = TRUE)
-
-qkmplot_bulid_data_frame(intonly_fit)
 qkmplot(intonly_fit, conf_int = TRUE)
+
 }
