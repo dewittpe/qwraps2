@@ -16,7 +16,7 @@ These or similar functions can be found in other R packages on github.com or
 on CRAN.  However, this is a collection of methods I have generated to help with
 particular projects I have worked on over the last several years.  Using my
 original `qwraps` package as the foundation, this work is aimed at simplicity
-and ease of use.  
+and ease of use.
 
 Some of the tools provided by `qwraps2` are:
 
@@ -52,14 +52,14 @@ Some of the tools provided by `qwraps2` are:
 ## Contribute!
 If you have a particular task or function used for data summaries or for
 reporting that you think would be helpful to include in this package please fork
-the repo, add the feature, and send me a pull request.  
+the repo, add the feature, and send me a pull request.
 
 ### Cloning the repo
 
 **IMPORTANT NOTE FOR WINDOW USERS**
 This package uses soft links.  Those on unix-like systems, this shouldn't be an
 issue.  If you are on windows then you will need to clone, or re-clone, the
-repository using 
+repository using
 
     # Using https
     git clone -c core.symlinks=true https://github.com/dewittpe/qwraps2
@@ -85,7 +85,7 @@ For example, building the package without the vignettes is done via:
     make build-options=--no-build-vignettes
 
 ---
- 
+
 ## Install
 
 ### From CRAN
@@ -95,19 +95,19 @@ Download and install from
     install.packages("qwraps2", repo = "http://cran.rstudio.com")
 
 ### Developmental
-Install the development version of `qwraps2` directly from github via the 
-[`devtools`](https://github.com/hadley/devtools/) package:
+Install the development version of `qwraps2` directly from github via the
+[`remotes`](https://github.com/hadley/remotes/) package:
 
-    if (!("devtools" %in% rownames(installed.packages()))) { 
-      warning("installing devtools from https://cran.rstudio.com")
-      install.packages("devtools", repo = "https://cran.rstudio.com")
+    if (!("remotes" %in% rownames(installed.packages()))) {
+      warning("installing remotes from https://cran.rstudio.com")
+      install.packages("remotes", repo = "https://cran.rstudio.com")
     }
 
-    devtools::install_github("dewittpe/qwraps2", build_vignettes = TRUE)
+    remotes::install_github("dewittpe/qwraps2", build_vignettes = TRUE)
 
 *NOTE:* If you are working on a Windows machine you will need to download and
 install [`Rtools`](https://cran.r-project.org/bin/windows/Rtools/) before
-`devtools` will work for you.
+`remotes` will work for you.
 
 ### Cloned repo
 Install with GNU `make`
