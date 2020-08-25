@@ -97,6 +97,9 @@ endef
 # Other Recipes for checking the package, (un)installing, and cleaning the
 # working directory.
 #
+#
+covr : .document.Rout
+	R --vanilla --quiet -e 'covr::package_coverage(type = "all")'
 
 check: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 	R --vanilla --quiet -e 'rcmdcheck::rcmdcheck("$<", error_on = "note")'
