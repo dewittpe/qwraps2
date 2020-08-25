@@ -37,7 +37,7 @@ the plot data. The return value must be a \code{data.frame}, and
 will be used as the layer data. A \code{function} can be created
 from a \code{formula} (e.g. \code{~ head(.x, 10)}).}
 
-\item{geom}{which geom to use; defaults to "\code{ribbon}"}
+\item{geom}{which geom to use; defaults to code{ribbon}}
 
 \item{position}{Position adjustment, either as a string, or the result of
 a call to a position adjustment function.}
@@ -56,7 +56,7 @@ rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
-\item{direction}{\code{hv} for horizontal-veritcal steps, `vh`` for
+\item{direction}{\code{hv} for horizontal-veritcal steps, \code{vh} for
 vertical-horizontal steps}
 
 \item{...}{Other arguments passed on to \code{\link[ggplot2:layer]{layer()}}. These are
@@ -73,18 +73,29 @@ Some minor modificiations to the file have been made).
 x <- 1:10
 df <- data.frame(x=x, y=x+10, ymin=x+7, ymax=x+12)
 
-gg <- ggplot2::ggplot(df, ggplot2::aes(x, y))
-gg <- gg + ggplot2::geom_ribbon(ggplot2::aes(ymin=ymin, ymax=ymax),
-                                stat="stepribbon", fill="#b2b2b2")
-gg <- gg + ggplot2::geom_step(color="#2b2b2b")
-gg
-
+# horizontal-vertical steps (default)
 gg <- ggplot2::ggplot(df, ggplot2::aes(x, y))
 gg <- gg + ggplot2::geom_ribbon(ggplot2::aes(ymin=ymin, ymax=ymax),
                                 stat="stepribbon", fill="#b2b2b2",
                                 direction="hv")
 gg <- gg + ggplot2::geom_step(color="#2b2b2b")
 gg
+
+# vertical-horizontal steps (default)
+gg <- ggplot2::ggplot(df, ggplot2::aes(x, y))
+gg <- gg + ggplot2::geom_ribbon(ggplot2::aes(ymin=ymin, ymax=ymax),
+                                stat="stepribbon", fill="#b2b2b2",
+                                direction="vh")
+gg <- gg + ggplot2::geom_step(color="#2b2b2b")
+gg
+
+# The same plot calling stat_stepribbon directly
+gg <- ggplot2::ggplot(df, ggplot2::aes(x, y))
+gg <- gg + stat_stepribbon(mapping = ggplot2::aes(ymin=ymin, ymax=ymax),
+                           fill="#b2b2b2", direction="vh")
+gg <- gg + ggplot2::geom_step(color="#2b2b2b")
+gg
+
 }
 \references{
 \url{https://groups.google.com/forum/?fromgroups=#!topic/ggplot2/9cFWHaH1CPs}

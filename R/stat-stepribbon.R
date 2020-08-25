@@ -4,34 +4,43 @@
 #' https://github.com/hrbrmstr/ggalt version 0.6.0, which is not yet on CRAN.
 #' Some minor modificiations to the file have been made).
 #'
-#' @md
 #' @inheritParams ggplot2::geom_ribbon
-#' @param geom which geom to use; defaults to "`ribbon`"
-#' @param direction \code{hv} for horizontal-veritcal steps, `vh`` for
+#' @param geom which geom to use; defaults to code{ribbon}
+#' @param direction \code{hv} for horizontal-veritcal steps, \code{vh} for
 #'   vertical-horizontal steps
 #' @references \url{https://groups.google.com/forum/?fromgroups=#!topic/ggplot2/9cFWHaH1CPs}
-#' @export
 #' @examples
 #' x <- 1:10
 #' df <- data.frame(x=x, y=x+10, ymin=x+7, ymax=x+12)
 #'
-#' gg <- ggplot2::ggplot(df, ggplot2::aes(x, y))
-#' gg <- gg + ggplot2::geom_ribbon(ggplot2::aes(ymin=ymin, ymax=ymax),
-#'                                 stat="stepribbon", fill="#b2b2b2")
-#' gg <- gg + ggplot2::geom_step(color="#2b2b2b")
-#' gg
-#'
+#' # horizontal-vertical steps (default)
 #' gg <- ggplot2::ggplot(df, ggplot2::aes(x, y))
 #' gg <- gg + ggplot2::geom_ribbon(ggplot2::aes(ymin=ymin, ymax=ymax),
 #'                                 stat="stepribbon", fill="#b2b2b2",
 #'                                 direction="hv")
 #' gg <- gg + ggplot2::geom_step(color="#2b2b2b")
 #' gg
+#'
+#' # vertical-horizontal steps (default)
+#' gg <- ggplot2::ggplot(df, ggplot2::aes(x, y))
+#' gg <- gg + ggplot2::geom_ribbon(ggplot2::aes(ymin=ymin, ymax=ymax),
+#'                                 stat="stepribbon", fill="#b2b2b2",
+#'                                 direction="vh")
+#' gg <- gg + ggplot2::geom_step(color="#2b2b2b")
+#' gg
+#'
+#' # The same plot calling stat_stepribbon directly
+#' gg <- ggplot2::ggplot(df, ggplot2::aes(x, y))
+#' gg <- gg + stat_stepribbon(mapping = ggplot2::aes(ymin=ymin, ymax=ymax),
+#'                            fill="#b2b2b2", direction="vh")
+#' gg <- gg + ggplot2::geom_step(color="#2b2b2b")
+#' gg
+#'
+#' @export
 stat_stepribbon <- function(mapping=NULL, data=NULL, geom="ribbon",
                             position="identity",
                             na.rm=FALSE, show.legend=NA, inherit.aes=TRUE,
                             direction="hv", ...) {
-
   ggplot2::layer(
     data = data,
     mapping = mapping,
@@ -49,7 +58,7 @@ stat_stepribbon <- function(mapping=NULL, data=NULL, geom="ribbon",
 }
 
 #' @title Stat Step Ribbon
-#' @description 
+#' @description
 #' Provides stairstep values for ribbon plots (Copied this from the
 #' https://github.com/hrbrmstr/ggalt version 0.6.0, which is not yet on CRAN.
 #' Some minor modificiations to the file have been made).
