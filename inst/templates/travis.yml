@@ -13,4 +13,4 @@ branches:
     - master
 
 after_success:
-  - Rscript -e 'covr::codecov(type = "all", commentDontrun = FALSE, commentDonttest = FALSE)'
+  - Rscript -e 'covr::codecov(type = "all")'
