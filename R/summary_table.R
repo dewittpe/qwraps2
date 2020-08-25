@@ -164,7 +164,11 @@ qsummary.data.frame <- function(x,
                summaries <- c(summaries, list("Unknown/Missing" = "~ qwraps2::n_perc(is.na(%s))"))
              }
 
-             lapply(summaries, sprintf, variable)
+             if (make.names(variable) == variable) {
+               lapply(summaries, sprintf, variable)
+             } else {
+               lapply(summaries, sprintf, paste0("`", variable, "`"))
+             }
 
            })
   rtn <- stats::setNames(rtn, names(x))
