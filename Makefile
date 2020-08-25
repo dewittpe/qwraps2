@@ -41,6 +41,7 @@ $(PKG_NAME)_$(PKG_VERSION).tar.gz: .install_dev_deps.Rout .document.Rout $(VIGNE
 
 .install_dev_deps.Rout : $(PKG_ROOT)/DESCRIPTION
 	Rscript --vanilla --quiet -e "options(repo = c('$(CRAN)'))" \
+		-e "if (!require(devtools)) {install.packages('devtools')}" \
 		-e "options(warn = 2)" \
 		-e "devtools::install_dev_deps()"
 	touch $@
