@@ -28,11 +28,10 @@ summary_table_042 <- function(x, summaries = qsummary_042(x)) {
 #' @export
 summary_table_042.data.frame <- function(x, summaries = qsummary_042(x)) {
 
-  out <-
-    lapply(summaries, function(s) { lapply(s, function(y) { rlang::f_rhs(y) }) }) %>%
-    lapply(function(dots) { dplyr::summarize(x, !!!(dots)) }) %>%
-    lapply(t) %>%
-    do.call(rbind, .)
+  out <- lapply(summaries, function(s) { lapply(s, function(y) { rlang::f_rhs(y) }) })
+  out <- lapply(out, function(dots) { dplyr::summarize(x, !!!(dots)) })
+  out <- lapply(out, t)
+  out <- do.call(rbind, out)
 
   colnames(out) <- paste0(deparse(substitute(x), nlines = 1L, backtick = TRUE), " (N = ", frmt(nrow(x)), ")")
   attr(out, "rgroups") <- sapply(summaries, length)
@@ -59,12 +58,11 @@ summary_table_042.grouped_df <- function(x, summaries = qsummary_042(x)) {
     lbs <- apply(cbind(matrix(paste(rep(names(lbs), each = nrow(lbs)), as.matrix(lbs), sep= ": "), nrow = nrow(lbs)), paste0("(N = ", grpsz, ")")), 1, paste, collapse = " ")
   }
 
-  out <-
-    lapply(summaries, function(s) { lapply(s, function(y) { rlang::f_rhs(y) }) }) %>%
-    lapply(function(dots) { dplyr::summarize(x, !!!(dots)) }) %>%
-    lapply(t) %>%
-    lapply(function(y) `[`(y, -1, )) %>%
-    do.call(rbind, .)
+  out <- lapply(summaries, function(s) { lapply(s, function(y) { rlang::f_rhs(y) }) })
+  out <- lapply(out, function(dots) { dplyr::summarize(x, !!!(dots)) })
+  out <- lapply(out, t)
+  out <- lapply(out, function(y) `[`(y, -1, ))
+  out <- do.call(rbind, out)
 
   colnames(out) <- lbs
   rownames(out) <- unlist(lapply(summaries, names), use.names = FALSE)
