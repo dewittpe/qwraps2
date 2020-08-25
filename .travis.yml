@@ -1,1 +1,16 @@
-inst/templates/travis.yml
+sudo: false
+language: r
+r:
+  - oldrel
+  - release
+  - devel
+cache: packages
+warnings_are_errors: true
+
+# whitelist
+branches:
+  only:
+    - master
+
+after_success:
+  - Rscript -e 'covr::codecov(type = "all")'
