@@ -27,7 +27,7 @@ median_iqr(
 a character vector of the formatted values
 }
 \description{
-A function for calculating and formatting the median and 
+A function for calculating and formatting the median and
 inner quartile range of a data vector.
 #' @details
 Given a numeric vector, \code{median_iqr} will return a character string with
@@ -45,6 +45,5 @@ median_iqr(x, show_n = "always")
 x[187] <- NA
 # median_iqr(x) ## Will error
 median_iqr(x, na_rm = TRUE)
-
 
 }
