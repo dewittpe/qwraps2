@@ -1,7 +1,8 @@
 ^examples/*
 ^vignette-spinners/*
+^\.github/*
 ^\.travis\.yml$
-^.gitlab-ci.yml$
+^\.gitlab-ci.yml$
 ^codecov\.yml$
 ^CONTRIBUTING.md$
 ^NEWS.md$
