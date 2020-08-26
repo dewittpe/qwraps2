@@ -64,37 +64,19 @@ library(qwraps2)
 }
 # */
 #'
-#' We will use a modified version of the
-{{ backtick(mtcars) }}
-#' data set for examples throughout this vignette.  The modified version,
+#' We will use the data set
 {{ backtick(mtcars2) }}
-#' data.frame will have three versions of the cyl vector: the
-#' original numeric values in cyl, a character version, and a factor version.
-data(mtcars)
-
-mtcars2 <- mtcars
-
-mtcars2$cyl_factor <-
-  factor(mtcars$cyl,
-         levels = c(6, 4, 8),
-         labels = paste(c(6, 4, 8), "cylinders"))
-
-mtcars2$cyl_character <- paste(mtcars$cyl, "cylinders")
-
+#' for the examples throughout this vignette
+#' data set for examples throughout this vignette.
+{{ backtick(mtcars2) }}
+#' is a modified and extended version of the base R data set
+{{ paste(backtick(mtcars), ".") }}
+#' For details on the construction of the
+{{ backtick(mtcars2) }}
+#' data set please view the vignette:
+{{ backtick(vignette('mtcars', package = "qwraps2")) }}
+data(mtcars2)
 str(mtcars2)
-
-#'
-#' Notice that the construction of the
-{{ backtick(cyl_factor) }}
-#' and
-{{ backtick(cyl_character) }}
-#' vectors was done such that the coercion of
-{{ backtick(cyl_character) }}
-#' to a factor will not be the same as the
-{{ backtick(cyl_factor) }}
-#' vector; the levels are in a different order.
-with(mtcars2, table(cyl_factor, cyl_character))
-with(mtcars2, all.equal(factor(cyl_character), cyl_factor))
 
 # /* End of Introduction ------------------------------------------------ }}} */
 #'
