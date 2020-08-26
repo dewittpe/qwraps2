@@ -12,7 +12,7 @@
 #' quickly (lazy)load the chunks into an active R session.
 #'
 #' Use \code{lazyload_cache_dir} to load a whole directory of cached objects.
-#' 
+#'
 #' Use \code{lazyload_cache_labels} to load and explicit set of cached chunks.
 #'
 #' @param path the path to the cache directory.
@@ -24,11 +24,70 @@
 #' label? This argument is passed to \code{\link[base]{list.files}}.
 #' @param ... additional arguments passed to \code{\link[base]{list.files}}.
 #'
+#' @examples
+#' # this example is based on \url{https://stackoverflow.com/a/41439691/1104685}
+#'
+#' # create a temp directory for a and place a .Rmd file within
+#' tmpdr <- paste0(tempdir(), "/llcache_eg")
+#' dir.create(tmpdr)
+#' old_wd <- getwd()
+#' setwd(tmpdr)
+#'
+#' cat("---",
+#'     "title: \"A Report\"",
+#'     "output: html_document",
+#'     "---",
+#'     "",
+#'     "```{r first-chunk, cache = TRUE}",
+#'     "mpg_by_wt_hp <- lm(mpg ~ wt + hp, data = mtcars)",
+#'     "x_is_pi <- pi",
+#'     "```",
+#'     "",
+#'     "```{r second-chunk, cache = TRUE}",
+#'     "mpg_by_wt_hp_am <- lm(mpg ~ wt + hp + am, data = mtcars)",
+#'     "x_is_e <- exp(1)",
+#'     "```",
+#'     sep = "\n",
+#'     file = paste0(tmpdr, "/report.Rmd"))
+#'
+#' # knit the file.  evaluate the chuncks in a new environment so we can compare
+#' # the objects after loading the cache.
+#' kenv <- new.env()
+#' knitr::knit(input = paste0(tmpdr, "/report.Rmd"), envir = kenv)
+#'
+#' # The objects defined in the .Rmd file are now in kenv
+#' ls(envir = kenv)
+#'
+#' # view the cache
+#' list.files(path = tmpdr, recursive = TRUE)
+#'
+#' # create another environment, and load only the second chunk
+#' lenv <- new.env()
+#' ls(envir = lenv)
+#'
+#' lazyload_cache_labels(labels = "second-chunk",
+#'                       path = paste0(tmpdr, "/cache"),
+#'                       envir = lenv)
+#' lenv$x_is_e
+#' lenv$mpg_by_wt_hp_am
+#'
+#' # load all the chuncks
+#' menv <- new.env()
+#' lazyload_cache_dir(path = paste0(tmpdr, "/cache"), envir = menv)
+#'
+#' ls(envir = menv)
+#' menv$x_is_pi
+#' menv$x_is_e
+#'
+#' # cleanup
+#' setwd(old_wd)
+#' unlink(tmpdr, recursive = TRUE)
+#'
 #' @export
 #' @rdname lazyload_cache
 lazyload_cache_dir <- function(path = "./cache", envir = parent.frame(), ask = FALSE, verbose = TRUE, full.names = TRUE, ...) {
   files <- do.call(list.files, list(path = path, pattern = "\\.rdx$", full.names = full.names, ...))
-  files <- gsub("\\.rdx", "", files) 
+  files <- gsub("\\.rdx", "", files)
 
   load_these <- rep(TRUE, length(files))
 
@@ -44,14 +103,14 @@ lazyload_cache_dir <- function(path = "./cache", envir = parent.frame(), ask = F
   if (!verbose) {
     sapply(files, lazyLoad, envir = envir)
   } else {
-    sapply(files, 
-           function(x, envir) { 
+    sapply(files,
+           function(x, envir) {
              message(paste("Lazyloading:", gsub("_[0-9a-f]{32}", "", x)))
              lazyLoad(x, envir = envir) },
            envir = envir)
-  } 
+  }
 
-  invisible() 
+  invisible()
 }
 
 #' @param labels a character vector of the chunk labels to load.
@@ -77,13 +136,13 @@ lazyload_cache_labels <- function(labels, path = "./cache/", envir = parent.fram
     if (!verbose) {
       sapply(files, lazyLoad, envir = envir, filter = filter)
     } else {
-      sapply(files, 
-             function(x, envir, filter) { 
+      sapply(files,
+             function(x, envir, filter) {
                message(paste("Lazyloading", x))
                lazyLoad(x, envir = envir, filter = filter) },
-             envir = envir, 
+             envir = envir,
              filter = filter)
-    } 
+    }
   }
   invisible()
 }
