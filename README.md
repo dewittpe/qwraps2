@@ -93,8 +93,7 @@ Install the development version of `qwraps2` directly from github via the
     remotes::install_github("dewittpe/qwraps2", build_vignettes = TRUE)
 
 *NOTE:* If you are working on a Windows machine you will need to download and
-install [`Rtools`](https://cran.r-project.org/bin/windows/Rtools/) before
-`remotes` will work for you.
+install [`Rtools`](https://cran.r-project.org/bin/windows/Rtools/).
 
 ### Cloned repo
 Install with GNU `make`
