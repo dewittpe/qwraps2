@@ -58,6 +58,25 @@ up through version 0.4.2 have been placed here with the appended _042 on the
 function names.  This will will for soft deprecation in 0.5.0 (warning), hard
 deprecation in later (error), and eventual removal from the package.
 }
+\examples{
+
+data(mtcars2)
+st <- summary_table_042(mtcars2[, c("mpg", "wt", "cyl_factor")])
+print(st, markup = "markdown")
+
+# build the summaries quickly
+qs <- qsummary_042(mtcars2)
+
+summary_table_042(mtcars2, summaries = qs[c("mpg", "cyl", "wt", "gear_factor")])
+
+# the _042 method would only allow for summary by a variable is
+# dplyr::group_by was used.  The updated version for qwraps2 version 0.5.0
+# has a improved api to summarize by a variable much easier.
+st <- summary_table_042(dplyr::group_by(mtcars2, transmission),
+                  summaries = qs[c("mpg", "wt", "cyl", "cyl_character", "cyl_factor")])
+print(st, markup = "markdown")
+
+}
 \seealso{
 \code{\link{qable}} for marking up \code{qwraps2_data_summary}
 objects.  \code{\link[dplyr]{group_by}} for \code{\link[dplyr]{grouped_df}}

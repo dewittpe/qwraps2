@@ -18,6 +18,24 @@
 #' objects.  The \code{vignette("summary-statistics", package = "qwraps2")} for
 #' detailed use of these functions and cavets.
 #'
+#' @examples
+#'
+#' data(mtcars2)
+#' st <- summary_table_042(mtcars2[, c("mpg", "wt", "cyl_factor")])
+#' print(st, markup = "markdown")
+#'
+#' # build the summaries quickly
+#' qs <- qsummary_042(mtcars2)
+#'
+#' summary_table_042(mtcars2, summaries = qs[c("mpg", "cyl", "wt", "gear_factor")])
+#'
+#' # the _042 method would only allow for summary by a variable is
+#' # dplyr::group_by was used.  The updated version for qwraps2 version 0.5.0
+#' # has a improved api to summarize by a variable much easier.
+#' st <- summary_table_042(dplyr::group_by(mtcars2, transmission),
+#'                   summaries = qs[c("mpg", "wt", "cyl", "cyl_character", "cyl_factor")])
+#' print(st, markup = "markdown")
+#'
 #' @export
 #' @rdname deprecated
 summary_table_042 <- function(x, summaries = qsummary_042(x)) {
