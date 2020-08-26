@@ -23,16 +23,16 @@ TESTS     = $(wildcard $(PKG_ROOT)/tests/testthat/*.R)
 ## Vignettes
 # These are both targets for building and dependencies for the package tar.gz
 # file
-VIGNETTES = $(PKG_ROOT)/vignettes/summary-statistics.Rmd
+VIGNETTES  = $(PKG_ROOT)/vignettes/summary-statistics.Rmd
+VIGNETTES += $(PKG_ROOT)/vignettes/mtcars2.Rmd
 
-## Data targets (none for qwraps2, define as needed in other packages.)
-#DATATARGETS  = $(PKG_ROOT)/data/dataset.rda  # Data object
-#DATATARGETS += $(PKG_ROOT)/R/dataset.R       # Data object documentation
+## Data targets
+DATATARGETS  = $(PKG_ROOT)/data/mtcars2.rda  # Data object
 
 ################################################################################
 # Recipes
 
-.PHONY: all check install clean
+.PHONY: all check install clean covr
 
 all: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
@@ -65,34 +65,10 @@ $(PKG_ROOT)/vignettes/%.Rmd : $(PKG_ROOT)/vignette-spinners/%.R
 ################################################################################
 # Data Sets
 #
-# qwraps2 does not have data sets but many other packages do.  Some useful
-# notes:
-#
-# say one .R creates several data sets and documentation, i.e, multiple targets
-# for one dependency.  A way to handle this situation is to have the targets
-# depend on a .Rout file which depends on the .R file.  If the .R file is
-# updated then the .Rout file will be updated which will update all the targets.
-# If a target is missing, i.e., the .R script fails to run to completion, then
-# there needs to be a way for Make to know to call the .R file again.  That is
-# accomplished by the $(testiftargetexists) recipe, if the target exists, do
-# nothing, if the target does not exists then delete the .Rout file and call
-# Make on the .Rout file.
-#
-# Commented out lines are below as an example.  The .R file could be in the
-# data-raw directory or in the vignette-spinners directory depending on if
-#
-define testiftargetexists
-@if test -f $@; then :; else\
-	$(RM) $<;\
-	$(MAKE) $<;\
-fi
-endef
+$(DATATARGETS) &: .data-export.Rout
 
-# $(DATATARGETS) : $(PKG_ROOT)/data-raw/makedataset.Rout
-# 	$(testiftargetexists)
-#
-# $(PKG_ROOT)/data-raw/makedataset.Rout : $(PKG_ROOT)/data-raw/makedataset.R
-# 	R CMD BATCH --vanilla $< $@
+.data-export.Rout : vignette-spinners/mtcars2.R
+	R CMD BATCH --vanilla $< $@
 
 ################################################################################
 # Other Recipes for checking the package, (un)installing, and cleaning the

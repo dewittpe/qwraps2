@@ -7,6 +7,7 @@
   a .R file expected to go through knitr::spin.  Built to help resolve the
   "comments must be put in pair of start and end delimiters" error that can be
   thrown by knitr::spin.
+* `mtcars2` is a fully documented data set provided as part of the qwraps2 package.
 
 ## Bug Fixes
 
