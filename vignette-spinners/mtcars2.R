@@ -5,6 +5,7 @@
 #'  rmarkdown::html_vignette:
 #'    toc: true
 #'    number_sections: true
+#'bibliography: references.bib
 #'vignette: >
 #'  %\VignetteIndexEntry{mtcars2}
 #'  %\VignetteEngine{knitr::rmarkdown}
@@ -142,7 +143,7 @@ str(mtcars2)
 #' | [, 19]  | test_date     | arbitrary date - created to approximate when the vehicle would have been assessed. |
 #'
 #'
-#' References
+#' # References
 #'
 #'<div id="refs"></div>
 #'
