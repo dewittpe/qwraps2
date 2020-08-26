@@ -5,3 +5,8 @@ all :  $(REPREXS)
 
 %_reprex.md : %.R
 	R --vanilla --quiet -e 'reprex::reprex(input = "$<", outfile = "$(basename $<)", venue = "gh", si = TRUE)'
+
+clean :
+	$(RM) *_reprex.html
+	$(RM) *_reprex.utf8.md
+	$(RM) *_reprex.R
