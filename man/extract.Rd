@@ -25,11 +25,11 @@ A collection of functions for extracting summary statistics and
 reporting regression results from \code{lm}, \code{glm} and other regression
 objects.
 }
-\details{
-TO DO
-}
 \examples{
-# TODO
+fit <- lm(mpg ~ wt + hp + drat, data = mtcars)
+summary(fit)
+extract_fstat(fit)
+extract_fpvalue(fit)
 
 }
 \seealso{
