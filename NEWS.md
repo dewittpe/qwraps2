@@ -8,6 +8,8 @@
   "comments must be put in pair of start and end delimiters" error that can be
   thrown by knitr::spin.
 * `mtcars2` is a fully documented data set provided as part of the qwraps2 package.
+* `summary_table` has a `by` argument and supports summaries by more than one
+  variable.
 
 ## Bug Fixes
 
