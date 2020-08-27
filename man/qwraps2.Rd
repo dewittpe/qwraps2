@@ -72,7 +72,7 @@ different options which are available and what they control.
 \itemize{
   \item Obstetrics \& Gynecology
   \itemize{
-     \item \url{http://www.editorialmanager.com/ong/default.aspx}
+     \item \url{https://www.editorialmanager.com/ong/default.aspx}
      \item \code{options(qwraps2_journal = "obstetrics_gynecology")}
      \item P-value formatting as of April 2015:
 

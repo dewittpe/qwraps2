@@ -52,7 +52,7 @@ ll(e, head = TRUE)
 }
 \references{
 The basis for this work came from a Stack Overflow posting:
-\url{http://stackoverflow.com/questions/1358003/tricks-to-manage-the-available-memory-in-an-r-session}
+\url{https://stackoverflow.com/q/1358003/1104685}
 }
 \seealso{
 \code{\link[base]{ls}}
