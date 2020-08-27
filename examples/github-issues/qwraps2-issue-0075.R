@@ -1,7 +1,3 @@
-library(reprex)
-
-reprex({
-
 library(magrittr)
 library(dplyr)  
 library(qwraps2)
@@ -33,15 +29,3 @@ sev <- summary_table(dplyr::group_by(data, group_2), our_summary1)
 whole <- cbind(sev, all)
 print(whole, rtitle="summary", booktabs = TRUE)
 
-})
-
-#> 
-#> 
-#> |summary                 |group_2: 1 (N = 5) |group_2: 2 (N = 5) |group_1: a (N = 5) |group_1: b (N = 5) |
-#> |:-----------------------|:------------------|:------------------|:------------------|:------------------|
-#> |**Responses 1:2**       |&nbsp;&nbsp;       |&nbsp;&nbsp;       |&nbsp;&nbsp;       |&nbsp;&nbsp;       |
-#> |&nbsp;&nbsp; Response 1 |2 (40)             |1 (20)             |2 (40)             |1 (20)             |
-#> |&nbsp;&nbsp; Response 2 |4 (80)             |1 (20)             |3 (60)             |2 (40)             |
-#> |**Responses 3:4**       |&nbsp;&nbsp;       |&nbsp;&nbsp;       |&nbsp;&nbsp;       |&nbsp;&nbsp;       |
-#> |&nbsp;&nbsp; Response 3 |3 (60)             |4 (80)             |3 (60)             |4 (80)             |
-#> |&nbsp;&nbsp; Response 4 |0 (0)              |1 (20)             |1 (20)             |0 (0)              |
