@@ -14,3 +14,4 @@
 ^\.Rproj\.user$
 ^.*makefile$
 ^.*\.tar\.gz$
+^cran-comments\.md$
