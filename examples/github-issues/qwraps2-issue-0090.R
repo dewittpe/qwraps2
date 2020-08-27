@@ -1,6 +1,3 @@
-library(reprex)
-
-reprex({
 #' @billudada78, thank you for posting this issue.  You are correct that the
 #' cause of the problem is in the qwraps2 code base.
 #'
@@ -76,10 +73,9 @@ str(
 #' I will be posting the patch to kill this bug shortly.
 #'
 
-})
 
-# After the fix:
-reprex({
+#' 
+#' # After the fix:
 library(qwraps2)
 packageVersion('qwraps2')
 library(magrittr)
@@ -108,4 +104,29 @@ summary_table(test12345678912345[!duplicated(test12345678912345[, c("USUBJID")])
 test12345678912345 %>%
   dplyr::filter(!duplicated(.data$USUBJID)) %>%
   summary_table(., by_arm_counts)
-})
+
+#' 
+#' # For version 0.5.0
+library(qwraps2)
+options(qwraps2_markup = "markdown")
+
+set.seed(42)
+
+by_arm_counts <-
+  list("ARM?" =
+       list(
+            "Active Drug" = ~ qwraps2::n_perc(ARM == "Active"),
+            "Placebo" = ~ qwraps2::n_perc(ARM == "Placebo")
+           )
+      )
+
+test12345678912345 <- test <-
+  data.frame(ARM = sample(c("Active", "Placebo"), size = 200, replace = TRUE),
+             USUBJID = sample(LETTERS, size = 200, replace = TRUE))
+
+#' summary table works as expected
+summary_table(test, by_arm_counts)
+summary_table(test12345678912345, by_arm_counts)
+summary_table(test[!duplicated(test[, c("USUBJID")]), ], by_arm_counts)
+summary_table(test12345678912345[!duplicated(test12345678912345[, c("USUBJID")]), ], by_arm_counts)
+
