@@ -89,7 +89,7 @@ str(mtcars2)
 #'
 {{ backtick(mean_sd) }}
 #' returns the (arithmetic) mean and standard deviation for numeric
-#' vector as a formated character string. For example,
+#' vector as a formatted character string. For example,
 {{ backtick(mean_sd(mtcars2$mpg)) }}
 #' returns the formatted string
 {{ paste0(mean_sd(mtcars2$mpg), ".") }}
@@ -263,8 +263,8 @@ gmean_sd(x)
 #' something very simple and build up to something bigger.
 #'
 #' Let's report the min, max, and mean (sd) for continuous variables and n (%) for
-#' categorical variables.  We will report mpg, disp(lacement), wt, and gear overall
-#' and by number of cylinders and transmission type.
+#' categorical variables.  We will report mpg, displacement (disp), wt (weight),
+#' and gear overall and by number of cylinders and transmission type.
 #'
 #' **END USER VISIBLE CHANGE:** for qwraps2 version before 0.4.2 the
 {{ backtick(summary_table) }}

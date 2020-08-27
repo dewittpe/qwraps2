@@ -5,7 +5,7 @@
 #'
 #' @details
 #' Given a numeric vector, \code{mean_sd} will return a character string with
-#' the mean and standard deviation.  Formating of the output will be extended in
+#' the mean and standard deviation.  Formatting of the output will be extended in
 #' future versions.  
 #'
 #' \code{gmean_sd} returns the geometric mean and geometric standard deviation.

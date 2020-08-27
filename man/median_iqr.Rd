@@ -32,7 +32,7 @@ inner quartile range of a data vector.
 }
 \details{
 Given a numeric vector, \code{median_iqr} will return a character string with
-the median and IQR.  Formating of the output will be extended in
+the median and IQR.  Formatting of the output will be extended in
 future versions.
 }
 \examples{

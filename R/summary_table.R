@@ -4,7 +4,7 @@
 #'
 #' \code{summary_table} can be used to generate good looking, simple tables in
 #' LaTeX or markdown.  Functions like xtables::print.xtable and Hmisc::latex
-#' provide many more tools for formating tables.  The purpose of
+#' provide many more tools for formatting tables.  The purpose of
 #' \code{summary_table} is to generate good looking tables quickly within
 #' workflow for summarizing a data set.
 #'

@@ -81,7 +81,7 @@ print(st, markup = "markdown")
 \code{\link{qable}} for marking up \code{qwraps2_data_summary}
 objects.  \code{\link[dplyr]{group_by}} for \code{\link[dplyr]{grouped_df}}
 objects.  The \code{vignette("summary-statistics", package = "qwraps2")} for
-detailed use of these functions and cavets.
+detailed use of these functions and caveats.
 
 \code{cbind}
 

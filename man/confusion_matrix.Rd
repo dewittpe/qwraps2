@@ -101,7 +101,7 @@ The statistics returned in the \code{stats} element are:
   \item negative predictive value (NPV) = TN / (TN + FN)
   \item false negative rate (FNR) = 1 - Sensitivity
   \item false positive rate (FPR) = 1 - Specificity
-  \item false discvery rate (FDR) = 1 - PPV
+  \item false discovery rate (FDR) = 1 - PPV
   \item false omission rate (FOR) = 1 - NPV
   \item F1 score
   \item Matthews Correlation Coefficient (MCC) =
@@ -116,7 +116,7 @@ Synonyms for the statistics:
 \item FNR: miss rate
 }
 
-Sensitivity and PPV could, in some cases, be indeterminate due to devision by
+Sensitivity and PPV could, in some cases, be indeterminate due to division by
 zero.  To address this we will use the following rule based on the DICE group
 \url{https://github.com/dice-group/gerbil/wiki/Precision,-Recall-and-F1-measure}:
 If TP, FP, and FN are all 0, then PPV, sensitivity, and F1 will be defined to

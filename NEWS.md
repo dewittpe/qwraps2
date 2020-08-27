@@ -60,14 +60,14 @@ Comment out a test due to the change in random number generating for `sample`.
 
 ## Improvements:
 
-* `cbind.qwrap2_summary_table` check attributes of objects to be binded
+* `cbind.qwrap2_summary_table` check attributes of objects to be combined
   together. (#56)
 * Added example to vignette to address the use `tab_summary` with more than one
   variable, e.g., in a `sapply` call. (#53)
 * `qsummary` will return the first (min) and last (max) for variables where
   `inherit(var, "Date")` is `TRUE`.
 
-## Deprecations
+## Deprecation
 
 * `tab_summary` has been deprecated, use `qsummary` instead.  A warning message
   will be given to the user at this time.  `tab_summary` will be removed
@@ -118,7 +118,7 @@ Comment out a test due to the change in random number generating for `sample`.
 ## New Features
 * `frmtci.data.frame` method added.
 * for the `tab_summary` methods to new arguments: `n_perc_args` and `envir`.
-  The former gives the end user control over the formating options passed to
+  The former gives the end user control over the formatting options passed to
   `n_perc` and the latter controls the `environment` associated with the
   generated formulae.
 
@@ -170,7 +170,7 @@ made since 0.1.0.
 * `gmean_sd` displays the correct geometric standard deviation
 
 ## Improvements
-* `mean_sd` and `gmean_sd` have better `show_n` handeling.
+* `mean_sd` and `gmean_sd` have better `show_n` handling.
 
 ## New Features
 * `print.confusion_matrix` provides more detail to make it clear which variable
@@ -218,7 +218,7 @@ Pushed to CRAN on 20 April 2015.
 
 * `extract_fstat` extracts the F-statistic from `lm`
 * `extract_fpvalue` extracts and formats the omnibus F-test p-value from `lm`
-* P-value formating for [Obstetrics & Gynecology](http://www.editorialmanager.com/ong/default.aspx)
+* P-value formatting for [Obstetrics & Gynecology](http://www.editorialmanager.com/ong/default.aspx)
 
 ## New vignettes
 

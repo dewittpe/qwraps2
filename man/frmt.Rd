@@ -56,9 +56,9 @@ containing the upper confidence limit.}
 
 \item{format}{a string with "est" "lcl", and "ucl" to denote the location of
 the estimate, lower confidence limit, and upper confidence limit for the
-formated string.  Defaults to "est (lcl, ucl)".}
+formatted string.  Defaults to "est (lcl, ucl)".}
 
-\item{show_level}{defualts to FALSE.  If TRUE and \code{format} is the
+\item{show_level}{defaults to FALSE.  If TRUE and \code{format} is the
 default, then
 "100*(1-options()$qwraps2_alpha)% CI:" will be placed between the left
 parenthesis and the lcl.  If set to a string, then the given string will be
@@ -71,7 +71,7 @@ the default, then this argument is ignored.}
 a character vector of the formatted numbers
 }
 \description{
-Functions for formating numeric values for consistent display
+Functions for formatting numeric values for consistent display
 in reports.
 }
 \details{
@@ -107,7 +107,7 @@ sting will be of the form "est (lcl, ucl; p-value)".
 
 The `Rpkg`, `CRANpkg`, and `Githubpkg` functions are used to help make
 documenting packages stylistically consistent and with valid urls.  These
-functions were inspired by similar ones found in BioConductor's BiocStyle
+functions were inspired by similar ones found in the BioConductor BiocStyle
 package.
 }
 \examples{

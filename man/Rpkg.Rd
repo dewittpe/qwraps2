@@ -21,8 +21,8 @@ Gitlabpkg(pkg, username)
 \item{username}{username for Github.com or Gitlab.com}
 }
 \description{
-Functions for controling the look of package names in markdown created
-vignettes and easy currating of URLs for the packages.
+Functions for controlling the look of package names in markdown created
+vignettes and easy curating of URLs for the packages.
 }
 \examples{
 

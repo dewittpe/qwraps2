@@ -1,6 +1,6 @@
 #' @title Format Wrappers
 #'
-#' @description Functions for formating numeric values for consistent display
+#' @description Functions for formatting numeric values for consistent display
 #' in reports.
 #'
 #' @details
@@ -36,7 +36,7 @@
 #'
 #' The `Rpkg`, `CRANpkg`, and `Githubpkg` functions are used to help make
 #' documenting packages stylistically consistent and with valid urls.  These
-#' functions were inspired by similar ones found in BioConductor's BiocStyle
+#' functions were inspired by similar ones found in the BioConductor BiocStyle
 #' package.
 #'
 #' @seealso
@@ -169,8 +169,10 @@ frmtp_obstetrics_gynecology <- function(x) {
       })
 }
 
+
 #' @export
 #' @rdname frmt
+#'
 #' @param est the numeric index of the vector element or the matrix column
 #' containing the point estimate.
 #' @param lcl the numeric index of the vector element or the matrix column
@@ -179,8 +181,8 @@ frmtp_obstetrics_gynecology <- function(x) {
 #' containing the upper confidence limit.
 #' @param format a string with "est" "lcl", and "ucl" to denote the location of
 #' the estimate, lower confidence limit, and upper confidence limit for the
-#' formated string.  Defaults to "est (lcl, ucl)".
-#' @param show_level defualts to FALSE.  If TRUE and \code{format} is the
+#' formatted string.  Defaults to "est (lcl, ucl)".
+#' @param show_level defaults to FALSE.  If TRUE and \code{format} is the
 #' default, then
 #' "100*(1-options()$qwraps2_alpha)% CI:" will be placed between the left
 #' parenthesis and the lcl.  If set to a string, then the given string will be
@@ -266,8 +268,8 @@ frmtci.qwraps2_mean_ci <- function(x, est = 1, lcl = 2, ucl = 3, format = "est (
 
 #' Formatting Style on URLs for packages on CRAN, Github, and Gitlab.
 #'
-#' Functions for controling the look of package names in markdown created
-#' vignettes and easy currating of URLs for the packages.
+#' Functions for controlling the look of package names in markdown created
+#' vignettes and easy curating of URLs for the packages.
 #'
 #' @param pkg The name of the package, will work as a quoted or raw name.
 #' @param username username for Github.com or Gitlab.com

@@ -8,7 +8,7 @@
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/qwraps2)](http://www.r-pkg.org/pkg/qwraps2)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/qwraps2)](http://www.r-pkg.org/pkg/qwraps2)
 
-[![Licence](https://img.shields.io/badge/licence-GPL--2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+[![License](https://img.shields.io/badge/licence-GPL--2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
 [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.5.0-6666ff.svg)](https://cran.r-project.org/)
 
 A collection of helpful functions for summarizing data and formatting results.
@@ -21,12 +21,12 @@ and ease of use.
 Some of the tools provided by `qwraps2` are:
 
 * Formatting results:
-  * `frmt`, `frmtci`, and `frmtp` make it easier to consistently formate numeric
+  * `frmt`, `frmtci`, and `frmtp` make it easier to consistently format numeric
     values, confidence intervals, and p-values in reports.
   * `qable` is a wrapper around `knitr::kable` with my preferred defaults.
   * `summary_table` is used to generate data summary tables in markdown or LaTeX
     with the look of well formatted tables from the xtables or Hmisc::latex.
-  * `mean_ci`, `mean_sd`, `median_iqr`, `n_perc` make it easy to report formated
+  * `mean_ci`, `mean_sd`, `median_iqr`, `n_perc` make it easy to report formatted
     summary statistics.
 
 * Plotting:

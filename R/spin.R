@@ -1,11 +1,11 @@
 #' Spin Comment Check
 #'
 #' A tool to help identify the opening and closing of comments in a spin
-#' document.  This funciton is designed to help the user resolve the error
+#' document.  This function is designed to help the user resolve the error
 #' "comments must be put in pairs of start and end delimiters."
 #'
 #' @param hair Path to the R script. The script must be encoded in UTF-8 if it
-#'   contains multibyte characters.
+#'   contains multi-byte characters.
 #' @param comment A pair of regular expressions for the start and end delimiters
 #'   of comments; the lines between a start and an end delimiter will be
 #'   ignored. By default, the delimiters are \verb{/*} at the beginning of a
