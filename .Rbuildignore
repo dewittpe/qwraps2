@@ -5,7 +5,6 @@
 ^\.gitlab-ci.yml$
 ^codecov\.yml$
 ^CONTRIBUTING.md$
-^NEWS.md$
 ^README.md$
 ^logo.png$
 ^logo-518x600.png$
