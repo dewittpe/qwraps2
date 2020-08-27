@@ -1,6 +1,3 @@
-library(reprex)
-reprex({
-
 #'
 #' Hi @estephanmoana, thank you for the suggestions.  I am unable to reproduce your example.  In the future you may find the [reprex](https://cran.r-project.org/package=reprex) package helpful for producing reproducable examples and posts for github issues.
 #'
@@ -46,4 +43,3 @@ summary_table(mtcars2, qs)
 summary_table(mtcars2, qs[-which(names(qs) == "cyl")], by = c("cyl"))
 summary_table(mtcars2, qs[-which(names(qs) %in% c("cyl", "am"))], by = c("cyl", "am"))
 
-})
