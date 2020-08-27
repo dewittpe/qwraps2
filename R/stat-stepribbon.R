@@ -1,12 +1,12 @@
 #' Step ribbon statistic
 #'
-#' Provides stairstep values for ribbon plots (Copied this from the
+#' Provides stair step values for ribbon plots (Copied this from the
 #' https://github.com/hrbrmstr/ggalt version 0.6.0, which is not yet on CRAN.
-#' Some minor modificiations to the file have been made).
+#' Some minor modifications to the file have been made).
 #'
 #' @inheritParams ggplot2::geom_ribbon
 #' @param geom which geom to use; defaults to code{ribbon}
-#' @param direction \code{hv} for horizontal-veritcal steps, \code{vh} for
+#' @param direction \code{hv} for horizontal-vertical steps, \code{vh} for
 #'   vertical-horizontal steps
 #' @references \url{https://groups.google.com/forum/?fromgroups=#!topic/ggplot2/9cFWHaH1CPs}
 #' @examples
@@ -59,9 +59,9 @@ stat_stepribbon <- function(mapping=NULL, data=NULL, geom="ribbon",
 
 #' @title Stat Step Ribbon
 #' @description
-#' Provides stairstep values for ribbon plots (Copied this from the
+#' Provides stair step values for ribbon plots (Copied this from the
 #' https://github.com/hrbrmstr/ggalt version 0.6.0, which is not yet on CRAN.
-#' Some minor modificiations to the file have been made).
+#' Some minor modifications to the file have been made).
 #' @format NULL
 #' @usage NULL
 #' @references \url{https://groups.google.com/forum/?fromgroups=#!topic/ggplot2/9cFWHaH1CPs}

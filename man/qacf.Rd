@@ -9,7 +9,7 @@ qacf(x, conf_level = 0.95, show_sig = FALSE, ...)
 \arguments{
 \item{x}{object}
 
-\item{conf_level}{confidence level for determining \sQuote{sigificant}
+\item{conf_level}{confidence level for determining \sQuote{significant}
 correlations.}
 
 \item{show_sig}{logical, highlight significant correlations.}

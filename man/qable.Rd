@@ -2,7 +2,7 @@
 % Please edit documentation in R/qable.R
 \name{qable}
 \alias{qable}
-\title{Qable: an extended verion of knitr::kable}
+\title{Qable: an extended version of knitr::kable}
 \usage{
 qable(
   x,
@@ -70,7 +70,7 @@ make <- sub("^(\\\\w+)\\\\s?(.*)$", "\\\\1", rownames(mtcars))
 make <- c(table(make))
 
 # A LaTeX table with a vertical bar between each column
-qable(mtcars[sort(rownames(mtcars)), ], rgroup = make) 
+qable(mtcars[sort(rownames(mtcars)), ], rgroup = make)
 
 # A LaTeX table with no vertical bars between columns
 qable(mtcars[sort(rownames(mtcars)), ], rgroup = make, vline = "")
@@ -79,16 +79,16 @@ qable(mtcars[sort(rownames(mtcars)), ], rgroup = make, vline = "")
 qable(mtcars[sort(rownames(mtcars)), ], rgroup = make, markup = "markdown")
 
 # define your own column names
-qable(mtcars[sort(rownames(mtcars)), ], 
-      rgroup = make, 
-      cnames = toupper(colnames(mtcars)), 
+qable(mtcars[sort(rownames(mtcars)), ],
+      rgroup = make,
+      cnames = toupper(colnames(mtcars)),
       markup = "markdown")
 
 # define your own column names and add a title
-qable(mtcars[sort(rownames(mtcars)), ], 
+qable(mtcars[sort(rownames(mtcars)), ],
       rtitle = "Make & Model",
-      rgroup = make, 
-      cnames = toupper(colnames(mtcars)), 
+      rgroup = make,
+      cnames = toupper(colnames(mtcars)),
       markup = "markdown")
 
 }

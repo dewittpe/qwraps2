@@ -56,7 +56,7 @@ rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
-\item{direction}{\code{hv} for horizontal-veritcal steps, \code{vh} for
+\item{direction}{\code{hv} for horizontal-vertical steps, \code{vh} for
 vertical-horizontal steps}
 
 \item{...}{Other arguments passed on to \code{\link[ggplot2:layer]{layer()}}. These are
@@ -65,9 +65,9 @@ often aesthetics, used to set an aesthetic to a fixed value, like
 to the paired geom/stat.}
 }
 \description{
-Provides stairstep values for ribbon plots (Copied this from the
+Provides stair step values for ribbon plots (Copied this from the
 https://github.com/hrbrmstr/ggalt version 0.6.0, which is not yet on CRAN.
-Some minor modificiations to the file have been made).
+Some minor modifications to the file have been made).
 }
 \examples{
 x <- 1:10

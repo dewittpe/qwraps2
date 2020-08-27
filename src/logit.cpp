@@ -7,7 +7,7 @@
 //' transform \code{x} either via the logit, or inverse logit.
 //'
 //' @details
-//' The loogit and inverse logit functions are part of R via the
+//' The logit and inverse logit functions are part of R via the
 //' logistic distribution functions in the stats package.  
 //' Quoting from the documentation for the logistic distribution
 //'

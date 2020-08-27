@@ -8,10 +8,10 @@
 mean_ci(
   x,
   na_rm = FALSE,
-  transform,
   alpha = getOption("qwraps2_alpha", 0.05),
   qdist = stats::qnorm,
-  qdist.args = list()
+  qdist.args = list(),
+  ...
 )
 
 \method{print}{qwraps2_mean_ci}(x, ...)
@@ -20,9 +20,6 @@ mean_ci(
 \item{x}{a numeric vector}
 
 \item{na_rm}{if true, omit NA values}
-
-\item{transform}{function transform to the mean and the confidence limits.
-See Details.}
 
 \item{alpha}{defaults to \code{getOption('qwraps2_alpha', 0.05)}.  The
 symmetric 100(1-alpha)\% CI will be determined.}
@@ -39,17 +36,13 @@ a vector with the mean, lower confidence limit (LCL), and the upper
 confidence limit (UCL).
 }
 \description{
-A function for calculating and formatting means and 
+A function for calculating and formatting means and
 confidence interval.
 }
 \details{
 Given a numeric vector, \code{mean_ci} will return a vector with the mean,
-LCL, and UCL.  Using \code{frmtci} will be helpfull for reporting the results
+LCL, and UCL.  Using \code{frmtci} will be helpful for reporting the results
 in print.
-
-The \code{transform} arguement allows the use to transform the data.  A
-common occurance of using \code{mean_ci(log(x), transform = exp)} will return
-the geometric mean and confidence interval for x.
 }
 \examples{
 # using the standard normal for the CI
@@ -64,9 +57,6 @@ qwraps2::frmtci(mean_ci(mtcars$mpg, alpha = 0.01), show_level = TRUE)
 t.test(mtcars$mpg)
 t.test(mtcars$mpg)$conf.int
 mean_ci(mtcars$mpg, qdist = stats::qt, qdist.args = list(df = 31))
-
-# geometric version
-mean_ci(log(mtcars$mpg), transform = exp, qdist = stats::qt, qdist.args = list(df = 31))
 
 }
 \seealso{

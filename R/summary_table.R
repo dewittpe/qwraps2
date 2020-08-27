@@ -2,7 +2,7 @@
 #'
 #' Tools useful for building data summary tables.
 #'
-#' \code{summary_table} can be used to generate good looking, simple tabels in
+#' \code{summary_table} can be used to generate good looking, simple tables in
 #' LaTeX or markdown.  Functions like xtables::print.xtable and Hmisc::latex
 #' provide many more tools for formating tables.  The purpose of
 #' \code{summary_table} is to generate good looking tables quickly within
@@ -32,9 +32,8 @@
 #'
 #' @seealso \code{\link{qsummary}} for generating the summaries,
 #' \code{\link{qable}} for marking up \code{qwraps2_data_summary} objects.
-#' \code{\link[dplyr]{group_by}} for \code{\link[dplyr]{grouped_df}} objects.
 #' The \code{vignette("summary-statistics", package = "qwraps2")} for detailed
-#' use of these functions and cavets.
+#' use of these functions and caveats.
 #'
 #' @return a \code{qwraps2_summary_table} object.
 #'

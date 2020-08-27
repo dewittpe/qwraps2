@@ -29,7 +29,8 @@ a character vector of the formatted values
 \description{
 A function for calculating and formatting the median and
 inner quartile range of a data vector.
-#' @details
+}
+\details{
 Given a numeric vector, \code{median_iqr} will return a character string with
 the median and IQR.  Formating of the output will be extended in
 future versions.

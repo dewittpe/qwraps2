@@ -57,7 +57,7 @@ different options which are available and what they control.
   implemented journal style methods.
 
   \item \code{getOptions("qwraps2_markup", latex)} value set to 'latex' or
-  to 'markdowm'.  Output is formatted to meet requirements of either markup
+  to 'markdown'.  Output is formatted to meet requirements of either markup
   language.
 
   \item \code{getOptions("qwraps2_style", "default")} By setting this option

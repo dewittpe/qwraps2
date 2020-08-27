@@ -42,7 +42,7 @@ percentage estimate.}
 
 \item{show_denom}{defaults to "ifNA".  Other options are "always" or "never".}
 
-\item{show_symbol}{if TRUE (default) the percent symbol is shown, else it is supressed.}
+\item{show_symbol}{if TRUE (default) the percent symbol is shown, else it is suppressed.}
 
 \item{markup}{latex or markdown}
 }

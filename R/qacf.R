@@ -6,7 +6,7 @@
 #' TO DO
 #'
 #' @param x object
-#' @param conf_level confidence level for determining \sQuote{sigificant}
+#' @param conf_level confidence level for determining \sQuote{significant}
 #' correlations.
 #' @param show_sig logical, highlight significant correlations.
 #' @param ... Other arguments passed to stats::acf

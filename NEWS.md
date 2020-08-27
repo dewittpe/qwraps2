@@ -207,7 +207,7 @@ made since 0.1.0.
 * `perc_n` similar to the `n_perc` but returns a string of the form `p% (n = N)`.
 * `n_perc` has option to suppress the percent symbol
 * `n_perc0` added in 0.1.1.9004 sets defaults which may be preferred for tables.
-* `qkmplot` for plotting kaplan meier curves
+* `qkmplot` for plotting Kaplan Meier curves
 * `qable` creates `knitr::kable` tables with row groups and names similar to
   `hmisc::latex` or `htmlTable::htmlTable`.
 
