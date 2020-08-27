@@ -69,15 +69,15 @@ qroc(data2) + ggtitle(paste("Fit 2\nAUC =", round(auc(data2), 2)))
 # build a data set for plotting to ROCs on one plot
 plot_data <- rbind(cbind(Model = "fit1", data1),
                    cbind(Model = "fit2", data2))
-qroc(plot_data) + aes(color = Model) 
+qroc(plot_data) + aes(color = Model)
 
 # with AUC in the legend
 plot_data <- rbind(cbind(Model = paste("Fit1\nauc =", round(auc(data1), 3)), data1),
                    cbind(Model = paste("Fit2\nauc =", round(auc(data2), 3)), data2))
-qroc(plot_data) + 
-  theme_bw() + 
+qroc(plot_data) +
+  theme_bw() +
   aes(color = Model, linetype = Model) +
-  theme(legend.position   = "bottom", 
+  theme(legend.position   = "bottom",
         legend.text.align = 0.5)
 
 }
