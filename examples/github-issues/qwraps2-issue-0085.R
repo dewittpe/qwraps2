@@ -1,9 +1,6 @@
-reprex::reprex(
-{
-
-  # update qwraps2 to the development version
-  # devtools::install_github("dewittpe/qwraps2")
-  library(qwraps2)
+# update qwraps2 to the development version
+# devtools::install_github("dewittpe/qwraps2")
+library(qwraps2)
 
 first_func <- function() {
   myresults <- list(
@@ -49,7 +46,3 @@ fifth_func <- function(func_input) {
 }
 
 first_func()
-
-},
-outfile = "foo"
-)
