@@ -1,6 +1,3 @@
-library(reprex)
-
-reprex({
 #'
 #' Version 0.5.0 of qwraps2, which will be published soon, refactored how
 #' `summary_table` was implmented.  The changes allow for grouping by multiple
@@ -41,6 +38,3 @@ grpby_cyl_am <- summary_table(dplyr::group_by(mtcars, cyl, am), our_summary)
 grpby_cyl
 grpby_am
 grpby_cyl_am
-},
-venue = "gh"
-)
