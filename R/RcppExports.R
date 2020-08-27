@@ -2,13 +2,13 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 #' @title logit and inverse logit functions
-#' 
+#'
 #' @description
 #' transform \code{x} either via the logit, or inverse logit.
 #'
 #' @details
 #' The logit and inverse logit functions are part of R via the
-#' logistic distribution functions in the stats package.  
+#' logistic distribution functions in the stats package.
 #' Quoting from the documentation for the logistic distribution
 #'
 #' "\code{qlogis(p)} is the same as the \code{logit} function, \code{logit(p) =
@@ -19,17 +19,17 @@
 #' \code{invlogit} functions are faster than the \code{qlogis} and \code{plogis}
 #' functions.
 #'
-#' @seealso \code{\link[stats]{qlogis}}
+#' @seealso \code{\link[stats:Logistic]{qlogis}}
 #'
 #' @examples
 #' library(qwraps2)
 #' library(rbenchmark)
-#' 
+#'
 #' # compare logit to qlogis
 #' p <- runif(1e5)
-#' identical(logit(p), qlogis(p)) 
+#' identical(logit(p), qlogis(p))
 #' benchmark(logit(p), qlogis(p))
-#' 
+#'
 #' # compare invlogit to plogis
 #' x <- runif(1e5, -1000, 1000)
 #' identical(invlogit(x), plogis(x))

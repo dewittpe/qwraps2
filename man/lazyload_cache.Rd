@@ -41,7 +41,7 @@ label? This argument is passed to \code{\link[base]{list.files}}.}
 
 \item{labels}{a character vector of the chunk labels to load.}
 
-\item{filter}{an optional function passed to \code{\link[base]{lazyLoad}}.
+\item{filter}{an optional function passed to \code{\link[base:lazyload]{lazyLoad}}.
 when called on a character vector of object names returns a logical vector:
 only objects for which this is true will be loaded.}
 }
