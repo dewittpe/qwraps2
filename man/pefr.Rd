@@ -5,6 +5,8 @@
 \alias{pefr}
 \title{pefr}
 \format{
+a data frame with four columns
+
 [, 1] subject id number
 
 [, 2] measurement first or second
