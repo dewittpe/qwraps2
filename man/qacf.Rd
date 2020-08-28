@@ -20,10 +20,7 @@ correlations.}
 a ggplot.
 }
 \description{
-TO BE CONSTRUCTED
-}
-\details{
-TO DO
+ggplot2 style autocorrelation plot
 }
 \examples{
 # Generate a random data set
@@ -42,23 +39,22 @@ Z.3 <- rnorm(n, 0, 5)
 
 for(i in 2:n)
 {
-	x1[i] <- x1[i-1] + Z.1[i] - Z.1[i-1] + x4[i-1] - x2[i-1]
-	x2[i] <- x2[i-1] - 2 * Z.2[i] + Z.2[i-1] - x4[i-1]
-	x3[i] <- x3[i-1] + x2[i-1] + 0.2 * Z.3[i] + Z.3[i-1]
-	x4[i] <- x4[i-1] + runif(1, 0.5, 1.5) * x4[i-1]
+  x1[i] <- x1[i-1] + Z.1[i] - Z.1[i-1] + x4[i-1] - x2[i-1]
+  x2[i] <- x2[i-1] - 2 * Z.2[i] + Z.2[i-1] - x4[i-1]
+  x3[i] <- x3[i-1] + x2[i-1] + 0.2 * Z.3[i] + Z.3[i-1]
+  x4[i] <- x4[i-1] + runif(1, 0.5, 1.5) * x4[i-1]
 }
 testdf <- data.frame(x1, x2, x3, x4)
-
-# Base acf plot for one variable
-acf(testdf$x1)
 
 # qacf plot for one variable
 qacf(testdf$x1)
 qacf(testdf$x1, show_sig = TRUE)
 
 # more than one variable
-acf(testdf)
 qacf(testdf)
 qacf(testdf, show_sig = TRUE)
 
+}
+\seealso{
+\code{vignette("qwraps2-graphics", pacakge = "qwraps2")}
 }

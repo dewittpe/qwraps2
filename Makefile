@@ -25,6 +25,7 @@ TESTS     = $(wildcard $(PKG_ROOT)/tests/testthat/*.R)
 # file
 VIGNETTES  = $(PKG_ROOT)/vignettes/summary-statistics.Rmd
 VIGNETTES += $(PKG_ROOT)/vignettes/mtcars2.Rmd
+VIGNETTES += $(PKG_ROOT)/vignettes/qwraps2-graphics.Rmd
 
 ## Data targets
 DATATARGETS  = $(PKG_ROOT)/data/mtcars2.rda  # Data object
