@@ -28,7 +28,8 @@ VIGNETTES += $(PKG_ROOT)/vignettes/mtcars2.Rmd
 VIGNETTES += $(PKG_ROOT)/vignettes/qwraps2-graphics.Rmd
 
 ## Data targets
-DATATARGETS  = $(PKG_ROOT)/data/mtcars2.rda  # Data object
+DATATARGETS  = $(PKG_ROOT)/data/mtcars2.rda
+DATATARGETS += $(PKG_ROOT)/data/pefr.rda
 
 ################################################################################
 # Recipes

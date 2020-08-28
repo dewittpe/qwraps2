@@ -28,6 +28,7 @@ packageVersion("qwraps2")
 #' and tricks" are provided.
 #'
 #' # qacf : Autocorrelation Plots
+# /* {{{ */
 #'
 #' Generate an example data set.
 set.seed(42)
@@ -74,6 +75,15 @@ qacf(testdf, show_sig = TRUE)
 #' the qacf return:
 acf_plot_data <- qacf(testdf)$data
 head(acf_plot_data)
+
+# /* end of qacf }}} */
+#'
+#' # qblandaltman : Bland Altman Plot
+# /* {{{ */
+#'
+#' Introduced in [@altman1983measurement] and [@bland1986statistical],
+#'
+# /* end of qblandaltman }}} */
 
 #'
 #' # Session Info

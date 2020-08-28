@@ -78,6 +78,11 @@ head(acf_plot_data)
 ```
 
 
+# qblandaltman : Bland Altman Plot
+
+Introduced in [@altman1983measurement] and [@bland1986statistical],
+
+
 # Session Info
 
 ```{r label = "sessioninfo"}
