@@ -92,7 +92,7 @@ head(acf_plot_data)
 #' The following replicates the figures in [@bland1986statistical].
 #'
 #' Using the first measurement only:
-pefr_m1 <- 
+pefr_m1 <-
   cbind("Large" = pefr[pefr$measurement == 1 & pefr$meter == "Wright peak flow meter", "pefr"],
         "Mini"  = pefr[pefr$measurement == 1 & pefr$meter == "Mini Wright peak flow meter", "pefr"])
 
@@ -113,7 +113,7 @@ geom_abline(slope = 1)
 #'
 #' The Bland Altman plot plots the average value on the x-asis and the
 #' difference in the measuremnts on the y-axis:
-qblandaltman(as.data.frame(pefr_m1)) +
+qblandaltman(pefr_m1) +
 xlim(0, 800) +
 ylim(-100, 100)
 

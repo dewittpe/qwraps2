@@ -13,8 +13,9 @@
 #' then call \code{qblandaltman}.  This might be helpful if you are putting
 #' multiple Bland Altman plots together into one ggplot object.  See Examples.
 #'
-#' @param x a \code{data.frame} with two columns.  If a \code{data.frame}
-#' with more than two columns is used only the first two columns will be used.
+#' @param x a \code{data.frame} with two columns, or an object that can be
+#' coerced to a data frame.  If a \code{data.frame} with more than two columns
+#' is used only the first two columns will be used.
 #' @param alpha (Defaults to 0.05) place (1 - alpha)*100% confidence levels to
 #' place on the plot.
 #' @param generate_data logical, defaults to TRUE.  If TRUE, then the call to
@@ -68,6 +69,16 @@
 #' @export
 #' @rdname qblandaltman
 qblandaltman <- function(x, alpha = getOption("qwraps2_alpha", 0.05), generate_data = TRUE) {
+  UseMethod("qblandaltman")
+}
+
+#' @export
+qblandaltman.default <- function(x, alpha = getOption("qwraps2_alpha", 0.05), generate_data = TRUE) {
+  qblandaltman(as.data.frame(x), alpha = alpha, generate_data = generate_data)
+}
+
+#' @export
+qblandaltman.data.frame <- function(x, alpha = getOption("qwraps2_alpha", 0.05), generate_data = TRUE) {
 
   if (is.null(attr(x, "qwraps2_generated"))) {
     if (generate_data) {

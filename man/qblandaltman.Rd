@@ -10,8 +10,9 @@ qblandaltman(x, alpha = getOption("qwraps2_alpha", 0.05), generate_data = TRUE)
 qblandaltman_build_data_frame(x, alpha = getOption("qwraps2_alpha", 0.05))
 }
 \arguments{
-\item{x}{a \code{data.frame} with two columns.  If a \code{data.frame}
-with more than two columns is used only the first two columns will be used.}
+\item{x}{a \code{data.frame} with two columns, or an object that can be
+coerced to a data frame.  If a \code{data.frame} with more than two columns
+is used only the first two columns will be used.}
 
 \item{alpha}{(Defaults to 0.05) place (1 - alpha)*100% confidence levels to
 place on the plot.}
