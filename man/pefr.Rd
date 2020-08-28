@@ -13,7 +13,7 @@ a data frame with four columns
 
 [, 3] meter "Wright peak flow meter" or "Mini Write peak flow meter"
 
-[, 4] pefr peak expiratory flow rate
+[, 4] pefr peak expiratory flow rate (liters / min)
 }
 \usage{
 pefr

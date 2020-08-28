@@ -183,6 +183,8 @@ package.  The data has been transcribed from [@bland1986statistical].
 > illustrate the comparison of methods, the second measurements being used in
 > the study of repeatability.
 
+The units of measure for the pefr are liters per minute (L/min).
+
 
 ```{r }
 # copied text from the manuscript

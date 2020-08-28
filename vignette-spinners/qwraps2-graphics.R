@@ -23,9 +23,9 @@ packageVersion("qwraps2")
 # */
 library(ggplot2)
 #'
-#' There are several graphics generated within qwraps2.  The naming convension
+#' There are several graphics generated within qwraps2.  The naming convention
 #' for the "quick" plots was inspired by the ggplot2 function qplot.  The
-#' development, flexability, and robustness of these functions vary.  Some "tips
+#' development, flexibility, and robustness of these functions vary.  Some "tips
 #' and tricks" are provided.
 #'
 #' # qacf : Autocorrelation Plots
@@ -98,7 +98,7 @@ pefr_m1 <-
 
 #'
 #' A standard x-y style plot and a correlation coefficient suggests that the two
-#' meters provide reasonablly similar results.
+#' meters provide reasonably similar results.
 cor(pefr_m1)
 
 qplot(x = pefr_m1[, 1],
@@ -111,11 +111,35 @@ qplot(x = pefr_m1[, 1],
 geom_abline(slope = 1)
 
 #'
+#' However, for many reasons, this the above is misleading.  One simple note:
+#' correlation is not a metric for agreement, i.e., perfect agreement would be
+#' shown if all the data points fell on the line of equality were as perfect
+#' correlation occurs when the data points are co-linear.
+#'
 #' The Bland Altman plot plots the average value on the x-asis and the
-#' difference in the measuremnts on the y-axis:
+#' difference in the measurements on the y-axis:
 qblandaltman(pefr_m1) +
 xlim(0, 800) +
-ylim(-100, 100)
+ylim(-100, 100) +
+xlab("Average of two meters") +
+ylab("Difference in the measurements")
+
+#'
+#' There is no distinct relationship between the differences and the average,
+#' but the difference in the measurements between the two meters was observed to
+#' range between
+{{ paste(range(apply(pefr_m1, 1, diff)), collapse = " and ") }}
+#' liters per minute.  Such a discrepancy between the meters is not observable
+#' from the simple x-y plot.
+#'
+#' Reliability, or repeatability, of measurements can also be investigated with
+#' a Bland Altman plot.
+
+pefr_mini <-
+  cbind(m1 = pefr[pefr$measurement == 1 & pefr$meter == "Mini Wright peak flow meter", "pefr"],
+        m2 = pefr[pefr$measurement == 2 & pefr$meter == "Mini Wright peak flow meter", "pefr"])
+
+qblandaltman(pefr_mini)
 
 #'
 # /* end of qblandaltman }}} */

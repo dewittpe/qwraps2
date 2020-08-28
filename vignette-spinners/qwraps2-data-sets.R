@@ -164,6 +164,8 @@ str(mtcars2)
 #'> illustrate the comparison of methods, the second measurements being used in
 #'> the study of repeatability.
 #'
+#' The units of measure for the pefr are liters per minute (L/min).
+#'
 # copied text from the manuscript
 pefr_table <-
   read.delim(
