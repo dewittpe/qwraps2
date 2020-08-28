@@ -21,6 +21,7 @@ packageVersion("qwraps2")
 # /*
 }
 # */
+library(ggplot2)
 #'
 #' There are several graphics generated within qwraps2.  The naming convension
 #' for the "quick" plots was inspired by the ggplot2 function qplot.  The
@@ -81,7 +82,41 @@ head(acf_plot_data)
 #' # qblandaltman : Bland Altman Plot
 # /* {{{ */
 #'
-#' Introduced in [@altman1983measurement] and [@bland1986statistical],
+#' Introduced in [@altman1983measurement] and [@bland1986statistical], the
+#' qblandaltman method builds ggplot2 style Bland Altman plots.  For examples we
+#' use the provided pefr data set which was transcribed from
+#' [@bland1986statistical].  See
+{{ backtick(vignette("qwraps2-data-sets", package = "qwraps2")) }}
+#' For more details on that data set.
+#'
+#' The following replicates the figures in [@bland1986statistical].
+#'
+#' Using the first measurement only:
+pefr_m1 <- 
+  cbind("Large" = pefr[pefr$measurement == 1 & pefr$meter == "Wright peak flow meter", "pefr"],
+        "Mini"  = pefr[pefr$measurement == 1 & pefr$meter == "Mini Wright peak flow meter", "pefr"])
+
+#'
+#' A standard x-y style plot and a correlation coefficient suggests that the two
+#' meters provide reasonablly similar results.
+cor(pefr_m1)
+
+qplot(x = pefr_m1[, 1],
+      y = pefr_m1[, 2],
+      geom = "point",
+      xlab = "Large Meter",
+      ylab = "Mini Meter",
+      xlim = c(0, 800),
+      ylim = c(0, 800)) +
+geom_abline(slope = 1)
+
+#'
+#' The Bland Altman plot plots the average value on the x-asis and the
+#' difference in the measuremnts on the y-axis:
+qblandaltman(as.data.frame(pefr_m1)) +
+xlim(0, 800) +
+ylim(-100, 100)
+
 #'
 # /* end of qblandaltman }}} */
 
