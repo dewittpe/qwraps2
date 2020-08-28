@@ -5,7 +5,13 @@
 \alias{pefr}
 \title{pefr}
 \format{
-An object of class \code{data.frame} with 68 rows and 3 columns.
+[, 1] subject id number
+
+[, 2] measurement first or second
+
+[, 3] meter "Wright peak flow meter" or "Mini Write peak flow meter"
+
+[, 4] pefr peak expiratory flow rate
 }
 \usage{
 pefr

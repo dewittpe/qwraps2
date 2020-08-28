@@ -24,7 +24,7 @@ TESTS     = $(wildcard $(PKG_ROOT)/tests/testthat/*.R)
 # These are both targets for building and dependencies for the package tar.gz
 # file
 VIGNETTES  = $(PKG_ROOT)/vignettes/summary-statistics.Rmd
-VIGNETTES += $(PKG_ROOT)/vignettes/mtcars2.Rmd
+VIGNETTES += $(PKG_ROOT)/vignettes/qwraps2-data-sets.Rmd
 VIGNETTES += $(PKG_ROOT)/vignettes/qwraps2-graphics.Rmd
 
 ## Data targets
@@ -69,7 +69,7 @@ $(PKG_ROOT)/vignettes/%.Rmd : $(PKG_ROOT)/vignette-spinners/%.R
 #
 $(DATATARGETS) &: .data-export.Rout
 
-.data-export.Rout : vignette-spinners/mtcars2.R
+.data-export.Rout : vignette-spinners/qwraps2-data-sets.R
 	R CMD BATCH --vanilla $< $@
 
 ################################################################################
