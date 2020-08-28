@@ -41,4 +41,8 @@ Bland, J. Martin, and Douglas G Altman. "Statistical methods for assessing
 agreement between two methods of clinical measurement." The lancet 327, no. 8476
 (1986): 307-310.
 }
+\seealso{
+\code{vignette("qwraps2-data-sets", package = "qwraps2")} for
+details on the construction of the data set.
+}
 \keyword{datasets}

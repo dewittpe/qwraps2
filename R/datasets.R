@@ -2,8 +2,8 @@
 #'
 #' An extended version of \code{\link[datasets]{mtcars}} data set.
 #'
-#' @seealso \code{vignette("mtcars2", package = "qwraps2")} for details on the
-#' construction of the data set.
+#' @seealso \code{vignette("qwraps2-data-sets", package = "qwraps2")} for
+#' details on the construction of the data set.
 "mtcars2"
 
 #' pefr
@@ -33,6 +33,9 @@
 #' [, 3] meter "Wright peak flow meter" or "Mini Write peak flow meter"
 #'
 #' [, 4] pefr peak expiratory flow rate
+#'
+#' @seealso \code{vignette("qwraps2-data-sets", package = "qwraps2")} for
+#' details on the construction of the data set.
 #'
 #' @references
 #'
