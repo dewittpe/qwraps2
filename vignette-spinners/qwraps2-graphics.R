@@ -11,6 +11,13 @@
 #'  %\VignetteEncoding{UTF-8}
 #'---
 #'
+#+ label = "setup", include = FALSE
+knitr::opts_chunk$set(collapse = TRUE)
+#'
+#' There are several graphics generated within qwraps2.  The naming convention
+#' for the "quick" plots was inspired by the ggplot2 function qplot.  The
+#' development, flexibility, and robustness of these functions vary.  Some "tips
+#' and tricks" are provided.
 # /*
 if (interactive()) {
   devtools::load_all()
@@ -23,10 +30,6 @@ packageVersion("qwraps2")
 # */
 library(ggplot2)
 #'
-#' There are several graphics generated within qwraps2.  The naming convention
-#' for the "quick" plots was inspired by the ggplot2 function qplot.  The
-#' development, flexibility, and robustness of these functions vary.  Some "tips
-#' and tricks" are provided.
 #'
 #' # qacf: Autocorrelation Plots
 # /* {{{ */
@@ -61,6 +64,7 @@ acf(testdf$x1)
 qacf(testdf$x1)
 qacf(testdf$x1, show_sig = TRUE)
 
+#+ fig.width = 5, fig.height = 5
 # more than one variable
 acf(testdf)
 qacf(testdf)
@@ -153,16 +157,19 @@ leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x, data = surv
 # base R km plot
 survival:::plot.survfit(leukemia.surv, conf.int = TRUE, lty = 2:3, col = 1:2)
 
+#+ fig.width = 5
 # qkmplot
 qkmplot(leukemia.surv, conf_int = TRUE)
 
 # build a data.frame for plotting km curves, this could be helpful for
 # creating bespoke plots
 leukemia_km_data <- qkmplot_bulid_data_frame(leukemia.surv)
-leukemia_km_data
+head(leukemia_km_data, 3)
 
+#+ fig.width = 5
 qkmplot(leukemia_km_data)
 
+#+ fig.width = 5
 # intercept only plot
 intonly_fit <- survival::survfit(survival::Surv(time, status) ~ 1, data = survival::aml)
 survival:::plot.survfit(intonly_fit, conf.int = TRUE)
