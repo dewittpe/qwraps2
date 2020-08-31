@@ -1,4 +1,4 @@
-# qwraps2 0.4.2.9006
+# qwraps2 0.5.0
 
 ## New Features
 
