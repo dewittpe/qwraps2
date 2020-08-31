@@ -69,7 +69,7 @@ qacf(testdf, show_sig = TRUE)
 #'
 #' ## Tips and tricks
 #'
-#' The implimentation of qacf is based on the use of
+#' The implementation of qacf is based on the use of
 {{ backtick(stats::acf) }}
 #' to produce the statistics needed for the plot.  If you want to get at the
 #' data itself to build your own acf plot you can extract the data frame from
@@ -116,7 +116,7 @@ geom_abline(slope = 1)
 #' shown if all the data points fell on the line of equality were as perfect
 #' correlation occurs when the data points are co-linear.
 #'
-#' The Bland Altman plot plots the average value on the x-asis and the
+#' The Bland Altman plot plots the average value on the x-axis and the
 #' difference in the measurements on the y-axis:
 qblandaltman(pefr_m1) +
 xlim(0, 800) +
@@ -169,7 +169,7 @@ survival:::plot.survfit(intonly_fit, conf.int = TRUE)
 qkmplot(intonly_fit, conf_int = TRUE)
 # /* end of qkmplot }}} */
 #'
-#' # qroc: Reciever Operating Curve
+#' # qroc: Receiver Operating Curve
 # /* {{{ */
 data(diamonds, package = "ggplot2")
 

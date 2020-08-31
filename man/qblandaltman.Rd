@@ -47,7 +47,7 @@ pefr_m1 <-
   cbind("Large" = pefr[pefr$measurement == 1 & pefr$meter == "Wright peak flow meter", "pefr"],
         "Mini"  = pefr[pefr$measurement == 1 & pefr$meter == "Mini Wright peak flow meter", "pefr"])
 
-# The Bland Altman plot plots the average value on the x-asis and the
+# The Bland Altman plot plots the average value on the x-axis and the
 # difference in the measurements on the y-axis:
 qblandaltman(pefr_m1) +
   ggplot2::xlim(0, 800) +

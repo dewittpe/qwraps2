@@ -12,7 +12,7 @@
   variable.
 
 * The example data set `mtcars2` is now exported as part of the package.  The
-  construciton of this data set is documented in a new vignette,
+  construction of this data set is documented in a new vignette,
   `vignette("qwraps2-data-sets")`
 
 * A data set `pefr` for peak expiratory flow rate data from Martin and Altman

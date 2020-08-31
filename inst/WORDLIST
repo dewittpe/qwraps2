@@ -3,6 +3,7 @@ api
 arg
 args
 Backtick
+behaviour
 benchmarking
 BioConductor
 BiocStyle
@@ -16,6 +17,7 @@ dewittpe
 disp
 dplyr
 edu
+expiratory
 FN
 FNR
 formulea
@@ -55,10 +57,17 @@ neovim
 NPV
 Nvim
 paren
+pefr
+PEFR
 perc
 PPV
 qable
 Qable
+qacf
+qblandaltman
+qkmplot
+qplot
+qroc
 qsec
 quartile
 Quartile
