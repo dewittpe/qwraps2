@@ -34,38 +34,24 @@
 #' agreement between two methods of clinical measurement." The lancet 327, no. 8476
 #' (1986): 307-310.
 #'
+#' @seealso \code{vignette("qwraps2-graphics", pacakge = "qwraps2")} for more
+#' examples and details.
+#'
 #' @examples
-#' 
-#' # load ggplot2 and the diamonds data set
-#' data(diamonds, package = "ggplot2")
-#' 
-#' # compare a simple regression to random noise
-#' dat <- 
-#'   data.frame(fitted(lm(price ~ poly(carat, 4), data = diamonds)),  # fitted values
-#'              diamonds$price + rnorm(nrow(diamonds), sd = 0.2),     # observed with noise
-#'              pi)                                                   # extra column
-#' qblandaltman(dat)
-#' 
-#' # simple example
-#' dat <- data.frame(eval1 = rpois(100, 3), eval2 = rpois(100, 3.4)) 
-#' qblandaltman(dat)
-#' 
-#' ggplot2::last_plot() + ggplot2::theme_bw()
-#' 
-#' # Two plots in one ggplot object
-#' set.seed(42)
-#' dat1 <- data.frame(eval1 = rnorm(100), eval2 = rt(100, df = 1))
-#' dat2 <- data.frame(eval1 = rpois(50, 3), eval2 = rpois(50, 4))
-#' 
-#' # individual plots
-#' qblandaltman(dat1)
-#' qblandaltman(dat2)
-#' 
-#' # combined plots
-#' dat <- rbind(cbind(set = "rnorm", qblandaltman_build_data_frame(dat1)), 
-#'              cbind(set = "rpois", qblandaltman_build_data_frame(dat2)))
-#' qblandaltman(dat, generate_data = FALSE) + ggplot2::facet_wrap( ~ set)
-#' 
+#'
+#' data(pefr)
+#' pefr_m1 <-
+#'   cbind("Large" = pefr[pefr$measurement == 1 & pefr$meter == "Wright peak flow meter", "pefr"],
+#'         "Mini"  = pefr[pefr$measurement == 1 & pefr$meter == "Mini Wright peak flow meter", "pefr"])
+#'
+#' # The Bland Altman plot plots the average value on the x-asis and the
+#' # difference in the measurements on the y-axis:
+#' qblandaltman(pefr_m1) +
+#'   ggplot2::xlim(0, 800) +
+#'   ggplot2::ylim(-100, 100) +
+#'   ggplot2::xlab("Average of two meters") +
+#'   ggplot2::ylab("Difference in the measurements")
+#'
 #' @export
 #' @rdname qblandaltman
 qblandaltman <- function(x, alpha = getOption("qwraps2_alpha", 0.05), generate_data = TRUE) {

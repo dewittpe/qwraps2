@@ -28,7 +28,7 @@ library(ggplot2)
 #' development, flexibility, and robustness of these functions vary.  Some "tips
 #' and tricks" are provided.
 #'
-#' # qacf : Autocorrelation Plots
+#' # qacf: Autocorrelation Plots
 # /* {{{ */
 #'
 #' Generate an example data set.
@@ -79,7 +79,7 @@ head(acf_plot_data)
 
 # /* end of qacf }}} */
 #'
-#' # qblandaltman : Bland Altman Plot
+#' # qblandaltman: Bland Altman Plot
 # /* {{{ */
 #'
 #' Introduced in [@altman1983measurement] and [@bland1986statistical], the
@@ -143,7 +143,72 @@ qblandaltman(pefr_mini)
 
 #'
 # /* end of qblandaltman }}} */
+#'
+#' # qkmplot: Kaplan Meier Plots
+# /* {{{ */
+# create a survfit object
+require(survival)
+leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x, data = survival::aml)
 
+# base R km plot
+survival:::plot.survfit(leukemia.surv, conf.int = TRUE, lty = 2:3, col = 1:2)
+
+# qkmplot
+qkmplot(leukemia.surv, conf_int = TRUE)
+
+# build a data.frame for plotting km curves, this could be helpful for
+# creating bespoke plots
+leukemia_km_data <- qkmplot_bulid_data_frame(leukemia.surv)
+leukemia_km_data
+
+qkmplot(leukemia_km_data)
+
+# intercept only plot
+intonly_fit <- survival::survfit(survival::Surv(time, status) ~ 1, data = survival::aml)
+survival:::plot.survfit(intonly_fit, conf.int = TRUE)
+qkmplot(intonly_fit, conf_int = TRUE)
+# /* end of qkmplot }}} */
+#'
+#' # qroc: Reciever Operating Curve
+# /* {{{ */
+data(diamonds, package = "ggplot2")
+
+# Create two logistic regression models
+fit1 <- glm(I(price > 2800) ~ cut * color, data = diamonds, family = binomial())
+fit2 <- glm(I(price > 2800) ~ cut + color + clarity, data = diamonds, family = binomial())
+
+# Easiest way to get an ROC plot:
+qroc(fit1)
+qroc(fit2)
+
+# Create two data sets, this will also let you get the AUC out
+data1 <- qroc_build_data_frame(fit1)
+data2 <- qroc_build_data_frame(fit2)
+
+auc(data1)
+auc(data2)
+
+# Plotting the ROC from the data set can be done too
+qroc(data1)
+
+# Add the AUC value to the plot title
+qroc(data2) + ggtitle(paste("Fit 2\nAUC =", round(auc(data2), 2)))
+
+# build a data set for plotting to ROCs on one plot
+plot_data <- rbind(cbind(Model = "fit1", data1),
+                   cbind(Model = "fit2", data2))
+qroc(plot_data) + aes(color = Model)
+
+# with AUC in the legend
+plot_data <- rbind(cbind(Model = paste("Fit1\nauc =", round(auc(data1), 3)), data1),
+                   cbind(Model = paste("Fit2\nauc =", round(auc(data2), 3)), data2))
+qroc(plot_data) +
+  theme_bw() +
+  aes(color = Model, linetype = Model) +
+  theme(legend.position   = "bottom",
+        legend.text.align = 0.5)
+# /* end of qroc }}} */
+#'
 #'
 #' # Session Info
 #+ label = "sessioninfo"

@@ -42,42 +42,15 @@ The area under the curve (AUC) is determined by a trapezoid approximation.
 }
 \examples{
 # load ggplot2 and the diamonds data set
-library(ggplot2)
 data(diamonds, package = "ggplot2")
 
-# Create two logistic regression models
-fit1 <- glm(I(price > 2800) ~ cut * color, data = diamonds, family = binomial())
-fit2 <- glm(I(price > 2800) ~ cut + color + clarity, data = diamonds, family = binomial())
+# Create a logistic regression models
+fit <- glm(I(price > 2800) ~ cut * color, data = diamonds, family = binomial())
 
-# Easiest way to get an ROC plot:
-qroc(fit1)
-qroc(fit2)
+qroc(fit)
 
-# Create two data sets, this will also let you get the AUC out
-data1 <- qroc_build_data_frame(fit1)
-data2 <- qroc_build_data_frame(fit2)
-
-auc(data1)
-auc(data2)
-
-# Plotting the ROC from the data set can be done too
-qroc(data1)
-
-# Add the AUC value to the plot title
-qroc(data2) + ggtitle(paste("Fit 2\nAUC =", round(auc(data2), 2)))
-
-# build a data set for plotting to ROCs on one plot
-plot_data <- rbind(cbind(Model = "fit1", data1),
-                   cbind(Model = "fit2", data2))
-qroc(plot_data) + aes(color = Model)
-
-# with AUC in the legend
-plot_data <- rbind(cbind(Model = paste("Fit1\nauc =", round(auc(data1), 3)), data1),
-                   cbind(Model = paste("Fit2\nauc =", round(auc(data2), 3)), data2))
-qroc(plot_data) +
-  theme_bw() +
-  aes(color = Model, linetype = Model) +
-  theme(legend.position   = "bottom",
-        legend.text.align = 0.5)
-
+}
+\seealso{
+\code{vignette("qwraps2-graphics", package = "qwraps2")} for more
+examples.
 }

@@ -11,6 +11,17 @@
 * `summary_table` has a `by` argument and supports summaries by more than one
   variable.
 
+* The example data set `mtcars2` is now exported as part of the package.  The
+  construciton of this data set is documented in a new vignette,
+  `vignette("qwraps2-data-sets")`
+
+* A data set `pefr` for peak expiratory flow rate data from Martin and Altman
+  (1986) has been added to the package.  Documentation of the data set is found
+  in the `vignette("qwraps2-data-sets")`
+
+* Examples, and extended details, for graphics have been added to new vignette
+  `vignette("qwraps2-graphics")`
+
 ## Bug Fixes
 
 * Scoping issue (#85) in the confusion matrix call
