@@ -1,0 +1,92 @@
+---
+title: "summary table"
+output: rmarkdown::word_document
+---
+
+To get the summary table from the
+`r  qwraps2::CRANpkg(qwraps2) `
+package to render in a word document you need to *not* pass the return from
+`r  qwraps2::backtick(summary_test) `
+to
+`r  paste0(qwraps2::backtick(knitr::kabel), ".") `
+
+The reason is that
+`r  qwraps2::backtick(summary_test) `
+returns a character matrix and a
+`r  qwraps2::backtick(print) `
+method is reasponsible for generating either the markdown or LaTeX table.
+
+
+```{r label = "install_cran", include = FALSE}
+# remotes::install_cran is similar to your check_and_install function.
+remotes::install_cran("kableExtra")
+remotes::install_cran("dplyr")
+remotes::install_cran("qwraps2")
+
+```
+```{r label = "namespaces"}
+library(kableExtra)
+library(qwraps2)
+```
+
+
+By default
+`r  qwraps2::CRANpkg(qwraps2) `
+will format results for LaTeX.  Set the default markup language to markdown
+to change this behavior.
+
+```{r }
+options(qwraps2_markup = "markdown")
+```
+
+**EDIT:** as of version qwraps2 version 0.5.0 the use of the data pronoun
+`.data` is no longer needed nor recommented.
+
+```{r label = "define_summary_test"}
+summary_test  <-
+  list("Cylindres" =
+     list("Huit"   = ~ qwraps2::n_perc0(cyl == 8, show_symbol = TRUE),
+          "Six"    = ~ qwraps2::n_perc0(cyl == 6, show_symbol = TRUE),
+          "Quatre" = ~ qwraps2::n_perc0(cyl == 4, show_symbol = TRUE)),
+   "Vitesses" =
+     list("Cinq"   = ~ qwraps2::n_perc0(gear == 5, show_symbol = TRUE),
+          "Quatre" = ~ qwraps2::n_perc0(gear == 4, show_symbol = TRUE),
+          "Trois"  = ~ qwraps2::n_perc0(gear == 3, show_symbol = TRUE))
+  )
+```
+
+
+Finally, build the table and look at the structure of the object.
+
+
+```{r label = 'tabtest2'}
+tabtest2 <- summary_table(mtcars, summary_test, by = "am")
+str(tabtest2)
+```
+
+
+Note that the object is a
+`r  qwraps2::backtick(qwraps2_summary_table)  `
+is a character matrix with attributes for the row, column, and row group
+names.  Using the default print method in R we see a character matrix.
+
+```{r }
+print.default(tabtest2)
+```
+
+
+Using the print method for
+`r  qwraps2::backtick(qwraps2_summary_table)  `
+objects (done impliclity here) gives the markdown:
+
+```{r results = "markup"}
+tabtest2
+```
+
+
+To get the table to render nicely use the "asis" value for the results chunk
+option:
+
+```{r results = "asis"}
+tabtest2
+```
