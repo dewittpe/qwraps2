@@ -229,7 +229,7 @@ Pushed to CRAN on 20 April 2015.
 
 * `extract_fstat` extracts the F-statistic from `lm`
 * `extract_fpvalue` extracts and formats the omnibus F-test p-value from `lm`
-* P-value formatting for [Obstetrics & Gynecology](http://www.editorialmanager.com/ong/default.aspx)
+* P-value formatting for [Obstetrics & Gynecology](https://www.editorialmanager.com/ong/default.aspx)
 
 ## New vignettes
 

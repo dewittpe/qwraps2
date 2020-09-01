@@ -1,5 +1,6 @@
 # Version 0.5.0
 - Initial submission 31 Aug 2020
+- Resubmission 1 Sept 2020 - changed one http to https in the NEWS.md file.
 
 ## Testing Environments
 
