@@ -1,0 +1,16 @@
+# /* answer for https://stackoverflow.com/q/53506702/1104685 */
+
+It looks like you are viewing the table in RStuido via double clicking on the
+`table1` in the "Environment" tab. The display is as expected. The structure of
+the `qwraps2_summary_table` object is a character matrix. In or outside of RStudio
+you can get the same result shown in the question post via `View(table1)`.
+
+To see the well rendered html you'll need to knit a .Rmd to html. Or, in RStuido
+you can upon a "R Notebook." A screen capture of of a simple example from an R
+Notebook follows:
+
+```{r, results = "asis"}
+library(qwraps2)
+options(qwraps2_markup = "markdown")
+summary_table(mtcars)
+```
