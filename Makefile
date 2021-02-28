@@ -82,7 +82,9 @@ covr : .document.Rout
 	$(RM) vignettes/*.html
 
 check: $(PKG_NAME)_$(PKG_VERSION).tar.gz
-	R --vanilla --quiet -e 'rcmdcheck::rcmdcheck("$<", error_on = "note")'
+	Rscript --vanilla --quiet -e "options(repo = c('$(CRAN)'))" \
+		-e "if (!require(rcmdcheck)) {install.packages('rcmdcheck', repo = c('$(CRAN)'))}" \
+	  -e 'rcmdcheck::rcmdcheck("$<", error_on = "note")'
 
 check-as-cran: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 	R CMD check --as-cran $(PKG_NAME)_$(PKG_VERSION).tar.gz
