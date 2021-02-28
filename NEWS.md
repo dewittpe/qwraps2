@@ -1,3 +1,10 @@
+# qwraps2 0.5.1
+
+## Bug Fixes
+
+* Correct error in output of bootstraped results for confusion matrices (#102)
+
+
 # qwraps2 0.5.0
 
 ## New Features

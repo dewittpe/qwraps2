@@ -211,7 +211,7 @@ confusion_matrix.default <- function(x, y, positive = NULL, boot = FALSE, boot_s
   x <- stats::relevel(x, positive)
   y <- stats::relevel(y, positive)
 
-  tab <- table(x, y, dnn = c("Prediction condition", "True Condition"))
+  tab <- table(x, y, dnn = c("Predicted Condition", "True Condition"))
   rownames(tab)[1] <- paste0("pos. (", rownames(tab)[1], ")")
   rownames(tab)[2] <- paste0("neg. (", rownames(tab)[2], ")")
   colnames(tab)[1] <- paste0("pos. (", colnames(tab)[1], ")")
@@ -248,7 +248,7 @@ confusion_matrix.default <- function(x, y, positive = NULL, boot = FALSE, boot_s
     boot_stats <-
       lapply(rows,
              function(xx) {
-               tab <- table(y[xx], x[xx], dnn = c("Prediction", "Truth"))
+               tab <- table(x[xx], y[xx], dnn = c("Predicted Condition", "True Condition"))
 
                rbind(Accuracy    = accuracy(tab),
                      Sensitivity = sensitivity(tab),
