@@ -2,7 +2,7 @@
 
 ## Bug Fixes
 
-* Correct error in output of bootstraped results for confusion matrices (#102)
+* Correct error in output of bootstrapped results for confusion matrices (#102)
 
 
 # qwraps2 0.5.0
