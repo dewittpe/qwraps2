@@ -1,9 +1,14 @@
+# qwraps2 0.5.2
+
+## Bug Fixes
+
+* Correct error in summary table cbind (#104)
+
 # qwraps2 0.5.1
 
 ## Bug Fixes
 
 * Correct error in output of bootstrapped results for confusion matrices (#102)
-
 
 # qwraps2 0.5.0
 

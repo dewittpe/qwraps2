@@ -264,6 +264,7 @@ summary_table.data.frame <- function(x, summaries = qsummary(x), by = NULL) {
 
 apply_summaries <- function(summaries, x) {
   rtn <- lapply(summaries, lapply, stats::model.frame, x)
+  rtn <- lapply(rtn, lapply, function(xx) if(nrow(xx) == 0) data.frame("NA") else xx)
   rtn <- lapply(rtn, lapply, function(y) {attr(y, "terms") <- NULL; y})
   rtn <- lapply(rtn, lapply, unlist)
   rtn <- lapply(rtn, lapply, function(y) {attr(y, "names") <- NULL; y})
