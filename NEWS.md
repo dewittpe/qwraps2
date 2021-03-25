@@ -1,3 +1,10 @@
+# qwraps2 0.5.2.9000
+
+## New Features
+
+* `mean_se` to provide the mean and standard error of the mean in the same
+  format as the `mean_sd` function.
+
 # qwraps2 0.5.2
 
 ## Bug Fixes
