@@ -5,6 +5,8 @@
 * `mean_se` to provide the mean and standard error of the mean in the same
   format as the `mean_sd` function.
 
+* Add Precision-Recall curve to complement ROC.
+
 # qwraps2 0.5.2
 
 ## Bug Fixes
