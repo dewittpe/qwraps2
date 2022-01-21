@@ -56,7 +56,8 @@ qprc.qwraps2_generated <- function(x, ...) {
 qprc_ggplot <- function(data) {
   ggplot2::ggplot(data) +
   ggplot2::aes_string(x = "Recall", y = "Precision") +
-  ggplot2::geom_line()
+  ggplot2::geom_line() +
+  ggplot2::geom_hline(yintercept = attr(data, "baseline"), linetype = 2)
 }
 
 #' @export
@@ -83,12 +84,15 @@ qprc_build_data_frame <- function(fit, n_threshold = 200, ...) {
   Recall    <- true_positives / (true_positives + false_negatives) # aka sensitivity
   Precision <- true_positives / (true_positives + false_positives) # aka positive predictive power
 
+  Precision[is.na(Precision)] <- stats::na.omit(Precision)[1]
+
   prc_data <- data.frame(Recall, Precision)
 
   # trapezoid rule approximation for the area under the curve
   auc <- sum((prc_data[2:n_threshold, 1] - prc_data[1:(n_threshold-1), 1]) * 1/2 *
              (prc_data[2:n_threshold, 2] + prc_data[1:(n_threshold-1), 2]))
 
+  attr(prc_data, "baseline") <- mean(fit$y)
   attr(prc_data, "auc") <- auc
   class(prc_data)       <- c("qwraps2_generated", class(prc_data))
 
