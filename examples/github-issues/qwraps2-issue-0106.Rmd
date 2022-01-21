@@ -1,0 +1,53 @@
+```{r, setup}
+library(qwraps2)
+options(qwraps2_markup = "markdown")
+```
+
+Read in the data set
+
+```{r}
+trail_df <-
+  read.csv(text = "
+SUBJID,AGE,TRT01P
+S00101010,72,Treatment B
+S00101313,74,Treatment A
+S00101616,65,Treatment B
+S00101717,66,Treatment B
+S00101818,59,Treatment A
+S00102121,88,Treatment A
+S00102222,97,Treatment B
+S00102828,54,Treatment A
+S00103131,63,Treatment B
+S00103232,58,Treatment A
+")
+```
+
+Define the summary object:
+
+```{r}
+trail_df_summaries <-
+  list(
+       "Age (yrs)" =
+         list(
+              "Mean (SD)"= ~ qwraps2::mean_sd(na.omit(AGE, na_rm=TRUE), denote_sd = "paren"),
+              "Median"= ~ qwraps2::median_iqr(na.omit(AGE, na_rm=TRUE)),
+              "Min:"= ~ min((na.omit(AGE, na_rm=TRUE))),
+              "Min:"= ~ min((na.omit(AGE, na_rm=TRUE)))
+              )
+  )
+```
+
+An example of the table grouped by theatment group.
+```{r, results = "asis"}
+summary_table(trail_df, summaries = trail_df_summaries, by = "TRT01P")
+```
+
+Build another table with the grouped columns and the whole data set:
+
+```{r, results = "asis"}
+a <- cbind(summary_table(trail_df, trail_df_summaries, by = "TRT01P"),
+           summary_table(trail_df, trail_df_summaries))
+
+print(a, caption = "Table 1 - full analysis set", cnames = c("Treat A", "Treat B", "Total"))
+```
+
