@@ -22,14 +22,13 @@ URL: https://github.com/dewittpe/qwraps2/
 Language: en-us
 LazyData: true
 Imports:
-    dplyr (>= 1.0.0),
     ggplot2,
     knitr,
     Rcpp (>= 0.12.11),
-    rlang,
     utils,
     xfun
 Suggests:
+    dplyr (>= 1.0.0),
     survival,
     testthat,
     covr,

@@ -7,6 +7,11 @@
 
 * Add Precision-Recall curve to complement ROC.
 
+## Deprecations/Removals
+
+* `summary_table_042` and `tab_summary`, the tidyverse versions of summary table
+  that had been deprecated have been removed from the package. (#96)
+
 # qwraps2 0.5.2
 
 ## Bug Fixes

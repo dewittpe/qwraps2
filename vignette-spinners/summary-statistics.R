@@ -288,11 +288,11 @@ gmean_sd(x)
 {{ backtick(dplyr::group_by) }}
 #' is still supported, and has been improved.
 #'
-#' There are two changes to the API:
-#' 1. Use of the data pronoun
+#' There are two changes to the API for defining summaries:
+#' 1. Use of the rlang data pronoun
 {{ paste0(backtick(.data), ".") }}
-#' is no longer recommend.  In fact, it is now discouraged.  There is a test in
-#' place in version 0.5.0 which will provided a message to this effect.
+#' is no longer recommend / supported. Version 0.5.3 a warning will be given
+#' noting that the use of the pronoun _might_ result in unexpected behavior.
 #' 2. A new function argument
 {{ backtick(by) }}
 #' as been added to the
@@ -338,24 +338,9 @@ our_summary1 <-
 whole <- summary_table(mtcars2, our_summary1)
 whole
 
-#'
-#' If a
-{{ backtick(grouped_df) }}
-#' created by a call to
-{{ backtick(dplyr::group_by) }}
-#' is passed to
-{{ backtick(summary_table) }}
-#' then the resulting table will have one column for each group.
-#+ results = "asis"
 ### By number of Cylinders
-by_cyl <- summary_table(dplyr::group_by(mtcars2, cyl_factor), our_summary1)
+by_cyl <- summary_table(mtcars2, summaries = our_summary1, by = c("cyl_factor"))
 by_cyl
-
-#'
-#' If you are not working in the tidyverse you can explicitly define the
-#' variables in the data.frame to group by, e.g.,
-#+ results = "asis"
-summary_table(mtcars2, summaries = our_summary1, by = c("cyl_factor"))
 
 #'
 #' With the refactor of the
@@ -365,25 +350,6 @@ summary_table(mtcars2, summaries = our_summary1, by = c("cyl_factor"))
 #+
 by_cyl_am <- summary_table(mtcars2, summaries = our_summary1, by = c("cyl_factor", "am"))
 by_cyl_am
-
-#'
-#' A quick check here shows that the multiple grouping via dplyr is the same as
-#' above.
-all.equal(summary_table(dplyr::group_by(mtcars2, cyl_factor, am), summaries = our_summary1),
-          by_cyl_am)
-
-#'
-#' One more note, if you pass a
-{{ backtick(grouped_df) }}
-#' to
-{{ backtick(summary_table) }}
-#' while specifying the
-{{ backtick(by) }}
-#' argument a warning will be thrown and the
-{{ backtick(grouped_df) }}
-#' groupings will take precedence.
-#+ results = "asis"
-summary_table(dplyr::group_by(mtcars2, carb), summaries = our_summary1, by = c("cyl_factor", "am"))
 
 #'
 #' To report a table with both the whole sample summary and conditional columns

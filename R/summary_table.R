@@ -24,7 +24,7 @@
 #' The \code{print} method for the \code{qwraps2_summary_table} objects is just
 #' a simple wrapper for \code{\link{qable}}.
 #'
-#' @param x a \code{data.frame} or \code{grouped_df}.
+#' @param x a \code{data.frame}.
 #' @param summaries a list of lists of formulea for summarizing the data set.
 #' See Details and examples.
 #' @param by a character vector of variable names to generate the summary by,
@@ -68,7 +68,6 @@
 #' options(qwraps2_markup = "markdown")
 #'
 #' # The summary table for the whole mtcars data set
-#' # whole_table <- summary_table_042(mtcars, our_summaries)
 #' whole_table <- summary_table(mtcars, our_summaries)
 #' whole_table
 #'
@@ -225,7 +224,7 @@ summary_table <- function(x, summaries = qsummary(x), by = NULL) {
 #' @export
 summary_table.grouped_df <- function(x, summaries = qsummary(x), by = NULL) {
   if (!is.null(by)) {
-    warning("You've passed a grouped_df to summary_table and specified the by argument.  The by argument will be ignored.")
+    warning("You've passed a grouped_df to summary_table and specified the `by` argument.  The `by` argument will be ignored.")
   }
 
   # this assumes dplyr version 0.8.0 or newer
@@ -238,8 +237,7 @@ summary_table.data.frame <- function(x, summaries = qsummary(x), by = NULL) {
 
   if (!missing(summaries)) {
     if ( any(grepl("\\.data\\$", parse(text = summaries))) ) {
-      warning("Use of the data pronoun is no longer required/encouraged.  The ability to use it has been deprecated.  See the documentation for summary_table, qsummary, and the vignettes for more detail.  The use of the data pronoun will be supported in version 0.5.0 of qwraps2 with this warning.  Eventually an error will be thrown before support is removed from the package completely.")
-      return(summary_table_042(x, summaries = summaries))
+      warning("Use of the data pronoun is no longer required/encouraged.  The ability to use it has been deprecated.  See the documentation for summary_table, qsummary, and the vignettes for more detail.  The use of the data pronoun will be supported in version 0.5.0 of qwraps2 with this warning.")
     }
   }
 

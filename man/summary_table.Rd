@@ -16,7 +16,7 @@ qsummary(x, numeric_summaries, n_perc_args, env = parent.frame())
 \method{rbind}{qwraps2_summary_table}(..., deparse.level = 1)
 }
 \arguments{
-\item{x}{a \code{data.frame} or \code{grouped_df}.}
+\item{x}{a \code{data.frame}.}
 
 \item{summaries}{a list of lists of formulea for summarizing the data set.
 See Details and examples.}
@@ -101,7 +101,6 @@ orig_opt <- options()$qwraps2_markup
 options(qwraps2_markup = "markdown")
 
 # The summary table for the whole mtcars data set
-# whole_table <- summary_table_042(mtcars, our_summaries)
 whole_table <- summary_table(mtcars, our_summaries)
 whole_table
 
