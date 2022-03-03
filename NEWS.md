@@ -5,7 +5,7 @@
 * `mean_se` to provide the mean and standard error of the mean in the same
   format as the `mean_sd` function.
 
-* Add Precision-Recall curve to complement ROC.
+* Add Precision-Recall curve, `qprc`, to complement ROC, `qroc`.
 
 ## Deprecations/Removals
 
