@@ -62,7 +62,7 @@ n_perc <- function(x,
   stopifnot(inherits(show_symbol, "logical"))
   stopifnot(markup %in% c("latex", "markdown"))
   stopifnot(show_denom %in% c("always", "never", "ifNA"))
-  stopifnot(inherits(x, "logical") | all(x %in% c(0, 1)))
+  stopifnot(inherits(x, "logical") | all(stats::na.omit(x) %in% c(0.0, 1.0)))
 
   d <- sum(!is.na(x))
   n <- sum(x, na.rm = na_rm)
@@ -109,7 +109,7 @@ perc_n <- function(x,
   stopifnot(inherits(show_symbol, "logical"))
   stopifnot(markup %in% c("latex", "markdown"))
   stopifnot(show_denom %in% c("always", "never", "ifNA"))
-  stopifnot(inherits(x, "logical") | all(x %in% c(0, 1)))
+  stopifnot(inherits(x, "logical") | all(stats::na.omit(x) %in% c(0, 1)))
 
   d <- sum(!is.na(x))
   n <- sum(x, na.rm = na_rm)
@@ -148,7 +148,7 @@ n_perc0 <- function(x,
   stopifnot(inherits(show_symbol, "logical"))
   stopifnot(markup %in% c("latex", "markdown"))
   stopifnot(show_denom %in% c("always", "never", "ifNA"))
-  stopifnot(inherits(x, "logical") | all(x %in% c(0, 1)))
+  stopifnot(inherits(x, "logical") | all(stats::na.omit(x) %in% c(0, 1)))
 
   n_perc(x, digits, na_rm, show_denom, show_symbol, markup)
 }
