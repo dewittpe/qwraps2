@@ -13,7 +13,6 @@
 #' The function n_perc0 uses a set of default arguments which may be
 #' advantageous for use in building tables.
 #'
-#'
 #' @param x a 0:1 or boolean vector
 #' @param digits digits to the right of the decimal point to return in the
 #' percentage estimate.
@@ -21,6 +20,7 @@
 #' @param show_denom defaults to "ifNA".  Other options are "always" or "never".
 #' @param show_symbol if TRUE (default) the percent symbol is shown, else it is suppressed.
 #' @param markup latex or markdown
+#' @param ... pass through
 #'
 #' @return a character vector of the formatted values
 #'
@@ -48,7 +48,22 @@ n_perc <- function(x,
                    na_rm = FALSE,
                    show_denom = "ifNA",
                    show_symbol = TRUE,
-                   markup = getOption("qwraps2_markup", "latex")) {
+                   markup = getOption("qwraps2_markup", "latex"),
+                   ...
+                   ) {
+
+  cl <- as.list(match.call())
+  if (!("na_rm" %in% names(cl)) & ("na.rm" %in% names(cl))) {
+    na_rm <- cl$na.rm
+    warning(paste(cl[[1]], "uses the argument `na_rm`, not `na.rm`."))
+  }
+
+  stopifnot(inherits(na_rm, "logical"))
+  stopifnot(inherits(show_symbol, "logical"))
+  stopifnot(markup %in% c("latex", "markdown"))
+  stopifnot(show_denom %in% c("always", "never", "ifNA"))
+  stopifnot(inherits(x, "logical") | all(x %in% c(0, 1)))
+
   d <- sum(!is.na(x))
   n <- sum(x, na.rm = na_rm)
   p <- frmt(100 * n/d, digits)
@@ -67,7 +82,6 @@ n_perc <- function(x,
     rtn <- gsub("%", "", rtn)
   }
 
-
   if (markup == "latex") {
     rtn <- gsub("%", "\\\\%", rtn)
   }
@@ -81,7 +95,22 @@ perc_n <- function(x,
                    digits = getOption("qwraps2_frmt_digits", 2),
                    na_rm = FALSE,
                    show_denom = "ifNA",
-                   markup = getOption("qwraps2_markup", "latex")) {
+                   show_symbol = FALSE,
+                   markup = getOption("qwraps2_markup", "latex"),
+                   ...) {
+
+  cl <- as.list(match.call())
+  if (!("na_rm" %in% names(cl)) & ("na.rm" %in% names(cl))) {
+    na_rm <- cl$na.rm
+    warning(paste(cl[[1]], "uses the argument `na_rm`, not `na.rm`."))
+  }
+
+  stopifnot(inherits(na_rm, "logical"))
+  stopifnot(inherits(show_symbol, "logical"))
+  stopifnot(markup %in% c("latex", "markdown"))
+  stopifnot(show_denom %in% c("always", "never", "ifNA"))
+  stopifnot(inherits(x, "logical") | all(x %in% c(0, 1)))
+
   d <- sum(!is.na(x))
   n <- sum(x, na.rm = na_rm)
   p <- frmt(100 * n/d, digits)
@@ -90,7 +119,7 @@ perc_n <- function(x,
     rtn <- paste0(p, "% (n = ", frmt(as.integer(d)), ")")
   } else {
     if (show_denom =="always" | any(is.na(x))) {
-      rtn <- paste0(p, "% (n = ", frmt(as.integer(d)), "non-missing)")
+      rtn <- paste0(p, "% (n = ", frmt(as.integer(d)), " non-missing)")
     } else {
       rtn <- paste0(p, "% (n = ", frmt(as.integer(d)), ")")
     }
@@ -110,7 +139,21 @@ n_perc0 <- function(x,
                    na_rm = FALSE,
                    show_denom = "never",
                    show_symbol = FALSE,
-                   markup = getOption("qwraps2_markup", "latex")) {
+                   markup = getOption("qwraps2_markup", "latex"),
+                   ...) {
+
+  cl <- as.list(match.call())
+  if (!("na_rm" %in% names(cl)) & ("na.rm" %in% names(cl))) {
+    na_rm <- cl$na.rm
+    warning(paste(cl[[1]], "uses the argument `na_rm`, not `na.rm`."))
+  }
+
+  stopifnot(inherits(na_rm, "logical"))
+  stopifnot(inherits(show_symbol, "logical"))
+  stopifnot(markup %in% c("latex", "markdown"))
+  stopifnot(show_denom %in% c("always", "never", "ifNA"))
+  stopifnot(inherits(x, "logical") | all(x %in% c(0, 1)))
+
   n_perc(x, digits, na_rm, show_denom, show_symbol, markup)
 }
 
