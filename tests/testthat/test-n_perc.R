@@ -46,6 +46,18 @@ test_that("with missing data",
             expect_equal(n_perc0(x, na_rm = TRUE), "7 (23)")
             expect_equal(perc_n(x, na_rm = TRUE), "23.33\\% (n = 30 non-missing)")
 
+            expect_equal(n_perc(x, na_rm = TRUE, show_denom = "never"), "7 (23.33\\%)")
+            expect_equal(n_perc0(x, na_rm = TRUE, show_denom = "never"), "7 (23)")
+            expect_equal(perc_n(x, na_rm = TRUE, show_denom = "never"), "23.33\\% (n = 30 non-missing)")
+
+            expect_equal(n_perc(x, na_rm = TRUE, show_denom = "always"), "7/30 (23.33\\%)")
+            expect_equal(n_perc0(x, na_rm = TRUE, show_denom = "always"), "7/30 (23)")
+            expect_equal(perc_n(x, na_rm = TRUE, show_denom = "always"), "23.33\\% (n = 30 non-missing)")
+
+            expect_equal(n_perc(x, na_rm = TRUE, show_denom = "ifNA"), "7/30 (23.33\\%)")
+            expect_equal(n_perc0(x, na_rm = TRUE, show_denom = "ifNA"), "7/30 (23)")
+            expect_equal(perc_n(x, na_rm = TRUE, show_denom = "ifNA"), "23.33\\% (n = 30 non-missing)")
+
           })
 
 test_that("show denom with no missing data",

@@ -12,7 +12,8 @@ n_perc(
   na_rm = FALSE,
   show_denom = "ifNA",
   show_symbol = TRUE,
-  markup = getOption("qwraps2_markup", "latex")
+  markup = getOption("qwraps2_markup", "latex"),
+  ...
 )
 
 perc_n(
@@ -20,7 +21,9 @@ perc_n(
   digits = getOption("qwraps2_frmt_digits", 2),
   na_rm = FALSE,
   show_denom = "ifNA",
-  markup = getOption("qwraps2_markup", "latex")
+  show_symbol = FALSE,
+  markup = getOption("qwraps2_markup", "latex"),
+  ...
 )
 
 n_perc0(
@@ -29,7 +32,8 @@ n_perc0(
   na_rm = FALSE,
   show_denom = "never",
   show_symbol = FALSE,
-  markup = getOption("qwraps2_markup", "latex")
+  markup = getOption("qwraps2_markup", "latex"),
+  ...
 )
 }
 \arguments{
@@ -45,6 +49,8 @@ percentage estimate.}
 \item{show_symbol}{if TRUE (default) the percent symbol is shown, else it is suppressed.}
 
 \item{markup}{latex or markdown}
+
+\item{...}{pass through}
 }
 \value{
 a character vector of the formatted values

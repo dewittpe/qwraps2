@@ -9,7 +9,8 @@ median_iqr(
   digits = getOption("qwraps2_frmt_digits", 2),
   na_rm = FALSE,
   show_n = "ifNA",
-  markup = getOption("qwraps2_markup", "latex")
+  markup = getOption("qwraps2_markup", "latex"),
+  ...
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ median_iqr(
 \item{show_n}{defaults to "ifNA".  Other options are "always" or "never".}
 
 \item{markup}{latex or markdown}
+
+\item{...}{pass through}
 }
 \value{
 a character vector of the formatted values

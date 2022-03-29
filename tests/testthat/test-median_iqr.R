@@ -30,7 +30,7 @@ test_that("non logical na_rm errors",
           {
             x <- c(1, NA, 2:10)
             expect_error(median_iqr(x, na_rm = "Yes"))
-            expect_error(median_iqr(x, na.rm = "Yes"))
+            expect_error(suppressWarnings(median_iqr(x, na.rm = "Yes")))
             expect_warning(try(median_iqr(x, na.rm = "Yes"), silent = TRUE))
           })
 

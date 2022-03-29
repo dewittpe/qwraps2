@@ -115,14 +115,10 @@ perc_n <- function(x,
   n <- sum(x, na.rm = na_rm)
   p <- frmt(100 * n/d, digits)
 
-  if (show_denom == "never") {
-    rtn <- paste0(p, "% (n = ", frmt(as.integer(d)), ")")
+  if (show_denom =="always" | any(is.na(x))) {
+    rtn <- paste0(p, "% (n = ", frmt(as.integer(d)), " non-missing)")
   } else {
-    if (show_denom =="always" | any(is.na(x))) {
-      rtn <- paste0(p, "% (n = ", frmt(as.integer(d)), " non-missing)")
-    } else {
-      rtn <- paste0(p, "% (n = ", frmt(as.integer(d)), ")")
-    }
+    rtn <- paste0(p, "% (n = ", frmt(as.integer(d)), ")")
   }
 
   if (markup == "latex") {
