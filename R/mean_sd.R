@@ -1,12 +1,12 @@
 #' @title Mean and Standard deviation
 #'
-#' @description A function for calculating and formatting means and 
+#' @description A function for calculating and formatting means and
 #' standard deviations.
 #'
 #' @details
 #' Given a numeric vector, \code{mean_sd} will return a character string with
 #' the mean and standard deviation.  Formatting of the output will be extended in
-#' future versions.  
+#' future versions.
 #'
 #' \code{gmean_sd} returns the geometric mean and geometric standard deviation.
 #'
@@ -17,7 +17,8 @@
 #' @param show_n defaults to "ifNA".  Other options are "always" or "never".
 #' @param denote_sd a character string set to either "pm" or "paren" for reporting 'mean
 #' \eqn{\pm} sd' or 'mean (sd)'
-#' @param markup latex or markdown
+#' @param markup character string with value "latex" or "markdown"
+#' @param ... pass through
 #'
 #' @return a character vector of the formatted values
 #'
@@ -29,37 +30,44 @@
 #' mean_sd(x)
 #' mean_sd(x, show_n = "always")
 #' mean_sd(x, show_n = "always", denote_sd = "paren")
-#' 
+#'
 #' x[187] <- NA
 #' mean_sd(x, na_rm = TRUE)
 #'
-#' @export   
-mean_sd <- function(x, 
-                    digits = getOption("qwraps2_frmt_digits", 2), 
-                    na_rm = FALSE, 
-                    show_n = "ifNA", 
-                    denote_sd = "pm", 
-                    markup = getOption("qwraps2_markup", "latex")) { 
+#' @export
+mean_sd <- function(x,
+                    digits = getOption("qwraps2_frmt_digits", 2),
+                    na_rm = FALSE,
+                    show_n = "ifNA",
+                    denote_sd = "pm",
+                    markup = getOption("qwraps2_markup", "latex"),
+                    ...) {
+
+  cl <- as.list(match.call())
+  if (!("na_rm" %in% names(cl)) & ("na.rm" %in% names(cl))) {
+    na_rm <- cl$na.rm
+    warning("qwraps2::mean_sd uses the argument `na_rm`, not `na.rm`.")
+  }
+  stopifnot(inherits(na_rm, "logical"))
+  stopifnot(length(markup) == 1L)
+  stopifnot(markup %in% c("latex", "markdown"))
+  stopifnot(show_n %in% c("ifNA", "always", "never"))
+
   n <- sum(!is.na(x))
   m <- mean(x, na.rm = na_rm)
   s <- stats::sd(x, na.rm = na_rm)
 
-  if (all(!(show_n %in% c("ifNA", "always", "never")))) { 
-    warning("'show_n' should be in c('ifNA', 'always', 'never').  Setting to 'ifNA'.")
-    show_n <- "ifNA"
-  }
-
-  if (show_n == "always" | (show_n == "ifNA" & any(is.na(x)))) { 
+  if (show_n == "always" | (show_n == "ifNA" & any(is.na(x)))) {
     rtn <- paste0(frmt(as.integer(n), digits), "; ", frmt(m, digits), " $\\pm$ ", frmt(s, digits))
-  } else { 
+  } else {
     rtn <- paste0(frmt(m, digits), " $\\pm$ ", frmt(s, digits))
   }
 
-  if (denote_sd == "paren") { 
+  if (denote_sd == "paren") {
     rtn <- gsub("\\$\\\\pm\\$\\s(.*)", "\\(\\1\\)", rtn)
   }
 
-  if (markup == "markdown") { 
+  if (markup == "markdown") {
     rtn <- gsub("\\$\\\\pm\\$", "&plusmn;", rtn)
   }
 
@@ -67,39 +75,44 @@ mean_sd <- function(x,
 }
 
 #' @rdname mean_sd
-#' @export   
-gmean_sd <- function(x, 
-                     digits = getOption("qwraps2_frmt_digits", 2), 
-                     na_rm = FALSE, 
-                     show_n = "ifNA", 
-                     denote_sd = "pm", 
-                     markup = getOption("qwraps2_markup", "latex")) { 
+#' @export
+gmean_sd <- function(x,
+                     digits = getOption("qwraps2_frmt_digits", 2),
+                     na_rm = FALSE,
+                     show_n = "ifNA",
+                     denote_sd = "pm",
+                     markup = getOption("qwraps2_markup", "latex"),
+                     ...) {
+
+  cl <- as.list(match.call())
+  if (!("na_rm" %in% names(cl)) & ("na.rm" %in% names(cl))) {
+    na_rm <- cl$na.rm
+    warning("qwraps2::mean_sd uses the argument `na_rm`, not `na.rm`.")
+  }
+  stopifnot(inherits(na_rm, "logical"))
+  stopifnot(length(markup) == 1L)
+  stopifnot(markup %in% c("latex", "markdown"))
+  stopifnot(show_n %in% c("ifNA", "always", "never"))
+
   n <- sum(!is.na(x))
 
   m <- gmean(x, na_rm)
   s <- gsd(x, na_rm)
 
-  if (all(!(show_n %in% c("ifNA", "always", "never")))) { 
-    warning("'show_n' should be in c('ifNA', 'always', 'never').  Setting to 'ifNA'.")
-    show_n <- "ifNA"
-  }
-
-  if (show_n == "always" | (show_n == "ifNA" & any(is.na(x)))) { 
+  if (show_n == "always" | (show_n == "ifNA" & any(is.na(x)))) {
     rtn <- paste0(frmt(as.integer(n), digits), "; ", frmt(m, digits), " $\\pm$ ", frmt(s, digits))
-  } else { 
+  } else {
     rtn <- paste0(frmt(m, digits), " $\\pm$ ", frmt(s, digits))
   }
 
-  if (denote_sd == "paren") { 
+  if (denote_sd == "paren") {
     rtn <- gsub("\\$\\\\pm\\$\\s(.*)", "\\(\\1\\)", rtn)
   }
 
-  if (markup == "markdown") { 
+  if (markup == "markdown") {
     rtn <- gsub("\\$\\\\pm\\$", "&plusmn;", rtn)
   }
 
   return(rtn)
 }
-
-
 

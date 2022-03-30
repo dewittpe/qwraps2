@@ -6,7 +6,7 @@
 #'    toc: true
 #'    number_sections: true
 #'vignette: >
-#'  %\VignetteIndexEntry{qwraps2-graphics}
+#'  %\VignetteIndexEntry{Graphics in qwraps2}
 #'  %\VignetteEngine{knitr::rmarkdown}
 #'  %\VignetteEncoding{UTF-8}
 #'---

@@ -66,3 +66,6 @@ gsd <- function(x, na_rm = FALSE) {
   }
   exp(sqrt((length(x) - 1) / length(x) * stats::var(log(x))))
 }
+
+
+

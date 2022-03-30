@@ -45,7 +45,6 @@ mean_ci <- function(x,
                     ...
                     ) {
   cl <- as.list(match.call())
-  print(cl)
   if ("transform" %in% names(cl)) {
     stop("the transform option has been deprecated.  Its existence made it too easy to return incorrect values.  Think about the delta method.")
   }

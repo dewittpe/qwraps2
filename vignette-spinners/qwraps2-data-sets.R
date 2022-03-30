@@ -7,7 +7,7 @@
 #'    number_sections: true
 #'bibliography: references.bib
 #'vignette: >
-#'  %\VignetteIndexEntry{qwraps2-data-sets}
+#'  %\VignetteIndexEntry{qwraps2 Data Sets}
 #'  %\VignetteEngine{knitr::rmarkdown}
 #'  %\VignetteEncoding{UTF-8}
 #'---

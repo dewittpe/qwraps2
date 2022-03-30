@@ -78,7 +78,7 @@ $(DATATARGETS) &: .data-export.Rout
 #
 #
 covr : .document.Rout
-	R --vanilla --quiet -e 'covr::package_coverage(type = "test", line_exclusions = list("R/zzz.R"))'
+	R --vanilla --quiet -e 'covr::package_coverage(type = "tests", line_exclusions = list("R/zzz.R"))'
 
 check: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 	Rscript --vanilla --quiet -e "options(repo = c('$(CRAN)'))" \
