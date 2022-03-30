@@ -45,10 +45,17 @@ mean_ci <- function(x,
                     ...
                     ) {
   cl <- as.list(match.call())
-  if ("tansform" %in% names(cl)) {
+  print(cl)
+  if ("transform" %in% names(cl)) {
     stop("the transform option has been deprecated.  Its existence made it too easy to return incorrect values.  Think about the delta method.")
   }
 
+  if (!("na_rm" %in% names(cl)) & ("na.rm" %in% names(cl))) {
+    na_rm <- cl$na.rm
+    warning("qwraps2::mean_ci uses the argument `na_rm`, not `na.rm`.")
+  }
+
+  stopifnot(inherits(na_rm, "logical"))
 
   m <- mean(x, na.rm = na_rm)
   s <- stats::sd(x,   na.rm = na_rm)
