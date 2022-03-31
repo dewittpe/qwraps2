@@ -4,7 +4,14 @@
 \alias{ll}
 \title{List Object Aliases}
 \usage{
-ll(pos = 1, pattern, order_by = "Size", decreasing = TRUE, head = FALSE, n = 5)
+ll(
+  pos = 1,
+  pattern,
+  order_by = "size",
+  decreasing = order_by \%in\% c("size", "rows", "columns"),
+  head = FALSE,
+  n = 5
+)
 }
 \arguments{
 \item{pos}{specifies the environment as a position in the search list}
@@ -13,8 +20,8 @@ ll(pos = 1, pattern, order_by = "Size", decreasing = TRUE, head = FALSE, n = 5)
 \code{pattern} are returned.  \code{\link[utils]{glob2rx}} can be used to
 convert wildcard patterns to regular expressions.}
 
-\item{order_by}{a character, order the results by \dQuote{Size} (default),
-\dQuote{Type}, \dQuote{Rows}, or \dQuote{Columns}.}
+\item{order_by}{a character, order the results by \dQuote{object},
+\dQuote{size} (default), \dQuote{class}, \dQuote{rows}, or \dQuote{columns}.}
 
 \item{decreasing}{logical, defaults to \code{TRUE}, decreasing order? passed
 to \code{\link[base]{order}}.}
@@ -23,6 +30,17 @@ to \code{\link[base]{order}}.}
 objects per \code{order_by} and \code{decreasing}.}
 
 \item{n}{number of rows to return, ignored if \code{head = FALSE}.}
+}
+\value{
+a data.frame with columns
+\itemize{
+ \item{object}{name of the object}
+ \item{class}{class, or mode if class is not pressent, of the object}
+ \item{size}{approximate size, in bytes, of the object in memory}
+ \item{rows}{number of rows for data.frames or matrices, or the number of
+ elements for a list like structure}
+ \item{columns}{nubmer of columns for data.frames or matrices}
+}
 }
 \description{
 Aliases for \code{\link[base]{ls}} providing additional details.
