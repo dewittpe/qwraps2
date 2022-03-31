@@ -15,9 +15,6 @@
 #' \dQuote{size} (default), \dQuote{class}, \dQuote{rows}, or \dQuote{columns}.
 #' @param decreasing logical, defaults to \code{TRUE}, decreasing order? passed
 #' to \code{\link[base]{order}}.
-#' @param head logical, if \code{TRUE} then only return the first \code{n}
-#' objects per \code{order_by} and \code{decreasing}.
-#' @param n number of rows to return, ignored if \code{head = FALSE}.
 #'
 #' @return a data.frame with columns
 #' \itemize{
@@ -49,10 +46,9 @@
 #'
 #' ls(e)
 #' ll(e)
-#' ll(e, head = TRUE)
 #'
 #' @export
-ll <- function (pos = 1, pattern, order_by = "size", decreasing = order_by %in% c("size", "rows", "columns"), head = FALSE, n = 5) {
+ll <- function (pos = 1, pattern, order_by = "size", decreasing = order_by %in% c("size", "rows", "columns")) {
     napply <- function(names, fn) sapply(names, function(x)
                                          fn(get(x, pos = pos)))
     names <- ls(pos = pos, pattern = pattern)
@@ -67,18 +63,15 @@ ll <- function (pos = 1, pattern, order_by = "size", decreasing = order_by %in% 
     vec <- is.na(obj.dim)[, 1] & (obj.type != "function")
     obj.dim[vec, 1] <- napply(names, length)[vec]
     out <- data.frame("object" = names,
-                      "class" = obj.type, 
-                      "size"  = obj.size, 
+                      "class" = obj.type,
+                      "size"  = obj.size,
                       "rows"  = obj.dim[, 1],
                       "columns" = obj.dim[, 2])
 
     out <- out[order(out[[order_by]], decreasing = decreasing), ]
 
-    if (head) {
-      out <- head(out, n)
-    }
-
     rownames(out) <- NULL
+
     out
 }
 

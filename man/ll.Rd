@@ -8,9 +8,7 @@ ll(
   pos = 1,
   pattern,
   order_by = "size",
-  decreasing = order_by \%in\% c("size", "rows", "columns"),
-  head = FALSE,
-  n = 5
+  decreasing = order_by \%in\% c("size", "rows", "columns")
 )
 }
 \arguments{
@@ -25,11 +23,6 @@ convert wildcard patterns to regular expressions.}
 
 \item{decreasing}{logical, defaults to \code{TRUE}, decreasing order? passed
 to \code{\link[base]{order}}.}
-
-\item{head}{logical, if \code{TRUE} then only return the first \code{n}
-objects per \code{order_by} and \code{decreasing}.}
-
-\item{n}{number of rows to return, ignored if \code{head = FALSE}.}
 }
 \value{
 a data.frame with columns
@@ -65,7 +58,6 @@ e$w <- sum(e$z)
 
 ls(e)
 ll(e)
-ll(e, head = TRUE)
 
 }
 \references{
