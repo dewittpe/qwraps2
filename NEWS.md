@@ -7,6 +7,11 @@
 
 * Add Precision-Recall curve, `qprc`, to complement ROC, `qroc`.
 
+## User Visible Changes
+
+* `spin_comments` returns `TRUE` or `FALSE` with the notes on the
+  matching/missmatched comments as an attribute of the return object.
+
 ## Deprecations/Removals
 
 * `summary_table_042` and `tab_summary`, the tidyverse versions of summary table

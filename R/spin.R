@@ -64,8 +64,14 @@ check_comments <- function(c1, c2) {
   }
 
   if (err) {
-     warning(paste('comments must be put in pairs of start and end delimiters.\n', paste(notes, collapse = '\n'), collapse = "\n"),
-          call. = FALSE)
+     warning(
+             paste0('comments must be put in pairs of start and end delimiters.\n',
+                   paste(notes, collapse = '\n')
+              , collapse = "\n")
+             , call. = FALSE)
   }
-  notes
+
+  rtn <- !err
+  attr(rtn, "notes") <- notes
+  rtn
 }
