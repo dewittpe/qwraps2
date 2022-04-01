@@ -1,36 +1,33 @@
-test_that("simple print works",
-          {
-            expect_output(print(qable(mtcars)), "142E\\ \\&\\ 21\\.4")
-            expect_output(print(qable(mtcars, markup = "markdown")), "142E\\ +\\|21\\.4")
-          })
+library(qwraps2)
 
-test_that("markup language check",
-          {
-            expect_error(qable(mtcars, markup = "rts"))
-          })
+output_latex <- capture.output(print(qable(mtcars2)))
+output_markdown <- capture.output(print(qable(mtcars2, markup = "markdown")))
 
-test_that("rtitle",
-          {
-            out <- capture.output(qable(mtcars[1, ], rtitle = "user defined rtitle"))
-            expect_true(grepl("^user\\ defined\\ rtitle", out[4]))
+# simple print test
+stopifnot(any(grepl("142E\\ \\&\\ 21\\.4", output_latex)))
+stopifnot(any(grepl("142E\\ +\\|21\\.4", output_markdown)))
 
-            out <- capture.output(qable(mtcars[1, ], markup = "markdown", rtitle = "user defined rtitle"))
-            expect_true(grepl("^\\|user\\ defined\\ rtitle", out[3]))
-          })
+# error for unexpected markup language
+test <- tryCatch(qable(mtcars2, markup = "rts"), error = function(e) e)
+stopifnot(inherits(test, "error"))
 
-test_that('rgroups',
-          {
-            make <- sub("^(\\w+)\\s?(.*)$", "\\1", rownames(mtcars))
-            make <- c(table(make))
 
-            expect_output(print(qable(mtcars[sort(rownames(mtcars)), ], rgroup = make)),
-                          "\\\\bf\\{Volvo\\}\\ \\&\\ ~")
-            expect_output(print(qable(mtcars[sort(rownames(mtcars)), ], rgroup = make)),
-                          "~~\\ Volvo\\ 142E\\ \\&\\ 21\\.4")
+# rtitle
+out <- capture.output(qable(mtcars[1, ], rtitle = "user defined rtitle"))
+stopifnot(grepl("^user\\ defined\\ rtitle", out[4]))
+out <- capture.output(qable(mtcars[1, ], markup = "markdown", rtitle = "user defined rtitle"))
+stopifnot(grepl("^\\|user\\ defined\\ rtitle", out[3]))
 
-            expect_output(print(qable(mtcars[sort(rownames(mtcars)), ], rgroup = make, markup = "markdown")),
-                          "\\*\\*Volvo\\*\\*")
-            expect_output(print(qable(mtcars[sort(rownames(mtcars)), ], rgroup = make, markup = "markdown")),
-                          "\\&nbsp;\\&nbsp;\\ Volvo")
-          })
+# rgroups
+make <- sub("^(\\w+)\\s?(.*)$", "\\1", rownames(mtcars))
+make <- c(table(make))
+output <- capture.output(print(qable(mtcars[sort(rownames(mtcars)), ], rgroup = make)))
+
+any(grepl("\\\\bf\\{Volvo\\}\\ \\&\\ ~", output))
+any(grepl("~~\\ Volvo\\ 142E\\ \\&\\ 21\\.4", output))
+
+output <- capture.output(print(qable(mtcars[sort(rownames(mtcars)), ], rgroup = make, markup = "markdown")))
+
+stopifnot(any(grepl("\\*\\*\\Volvo\\*\\*", output)))
+stopifnot(any(grepl("\\&nbsp;\\&nbsp;\\ Volvo", output)))
 
