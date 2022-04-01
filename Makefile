@@ -77,8 +77,9 @@ $(DATATARGETS) &: .data-export.Rout
 # working directory.
 #
 #
-covr : .document.Rout
-	R --vanilla --quiet -e 'covr::package_coverage(type = "tests", line_exclusions = list("R/zzz.R"))'
+covr-report.html : $(PKG_NAME)_$(PKG_VERSION).tar.gz
+	R --vanilla --quiet -e 'x <- covr::package_coverage(type = "tests", line_exclusions = list("R/zzz.R"))'\
+		-e 'covr::report(x, file = "covr-report.html")'
 
 check: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 	R CMD check $(PKG_NAME)_$(PKG_VERSION).tar.gz
