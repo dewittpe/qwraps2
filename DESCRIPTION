@@ -30,7 +30,7 @@ Imports:
 Suggests:
     dplyr (>= 1.0.0),
     survival,
-    testthat,
+    testthat (>= 3.0.0),
     covr,
     rbenchmark,
     rmarkdown
@@ -38,3 +38,4 @@ RoxygenNote: 7.1.2
 LinkingTo: Rcpp (>= 0.12.11),
     RcppArmadillo
 VignetteBuilder: knitr
+Config/testthat/edition: 3

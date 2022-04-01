@@ -1,21 +1,33 @@
+set.seed(42)
 test  <- c(rep(1, 53), rep(0, 47))
 truth <- c(rep(1, 20), rep(0, 33), rep(1, 10), rep(0, 37))
 con_mat <- confusion_matrix(test, truth, positive = "1")
+con_mat_boot <- confusion_matrix(test, truth, positive = "1", boot = TRUE)
+
+test_that("S3 versions give same results",
+          {
+            expect_equal( confusion_matrix(test, truth, positive = "1")
+                         , 
+                           confusion_matrix(truth ~ test, positive = "1")
+                         ,
+                         ignore_attr = TRUE
+                         )
+          })
 
 test_that("Table is as expected",
           {
-            expect_equivalent(unclass(con_mat$tab), matrix(c(20, 10, 33, 37), ncol = 1))
+            expect_equal(unclass(con_mat$tab), matrix(c(20, 10, 33, 37), ncol = 2), ignore_attr = TRUE)
           })
 
-# test_that("Boot Strap",
-#           {
-#             set.seed(42)
-#             con_mat_boot <- confusion_matrix(test, truth, positive = "1", boot = TRUE)
-#
-#             expect_equivalent(round(con_mat_boot$stats[, "Boot Est"], 3),
-#                               c(0.573, 0.669, 0.532, 0.382, 0.788))
-#           })
-
+test_that("Boot Strap",
+          {
+            expect_equal(con_mat_boot$stats[, "Boot Est"],
+                              c(Accuracy = 0.57016, Sensitivity = 0.670261267572451, Specificity = 0.527289529267115,
+                                PPV = 0.377233632132097, NPV = 0.789307633664318, FNR = 0.329738732427549,
+                                FPR = 0.472710470732885, FDR = 0.622766367867903, FOR = 0.210692366335682,
+                                F1 = 0.479808238983136, MCC = 0.18118222982454)
+                              )
+          })
 
 test_that("Sensitivity",
           {
