@@ -34,7 +34,7 @@ DATATARGETS += $(PKG_ROOT)/data/pefr.rda
 ################################################################################
 # Recipes
 
-.PHONY: all check install clean covr
+.PHONY: all check install clean
 
 all: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
