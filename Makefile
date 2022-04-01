@@ -16,7 +16,7 @@ CRAN = "https://cran.rstudio.com"
 SRC       = $(wildcard $(PKG_ROOT)/src/*.cpp)
 RFILES    = $(wildcard $(PKG_ROOT)/R/*.R)
 EXAMPLES  = $(wildcard $(PKG_ROOT)/examples/*.R)
-TESTS     = $(wildcard $(PKG_ROOT)/tests/testthat/*.R)
+TESTS     = $(wildcard $(PKG_ROOT)/tests/*.R)
 
 # Targets
 #
@@ -81,9 +81,7 @@ covr : .document.Rout
 	R --vanilla --quiet -e 'covr::package_coverage(type = "tests", line_exclusions = list("R/zzz.R"))'
 
 check: $(PKG_NAME)_$(PKG_VERSION).tar.gz
-	Rscript --vanilla --quiet -e "options(repo = c('$(CRAN)'))" \
-		-e "if (!require(rcmdcheck)) {install.packages('rcmdcheck', repo = c('$(CRAN)'))}" \
-	  -e 'rcmdcheck::rcmdcheck("$<", error_on = "note")'
+	R CMD check $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
 check-as-cran: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 	R CMD check --as-cran $(PKG_NAME)_$(PKG_VERSION).tar.gz
