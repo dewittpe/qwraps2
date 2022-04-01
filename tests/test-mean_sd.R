@@ -1,10 +1,8 @@
-test_that("basic formatting",
-          {
-            expect_equal(mean_sd(mtcars$mpg), "20.09 $\\pm$ 6.03")
-          })
+library(qwraps2)
 
-test_that("error if show_n is not as expected",
-          {
-            expect_error(mean_sd(mtcars$mpg, show_n = TRUE))
-          })
+# basic formatting
+stopifnot(identical(mean_sd(mtcars$mpg), "20.09 $\\pm$ 6.03"))
+
+# error if show_n is not as expected
+stopifnot(inherits(tryCatch(mean_sd(mtcars$mpg, show_n = TRUE), error = function(e) e), "error"))
 
