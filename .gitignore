@@ -2,3 +2,5 @@
 qwraps2.Rcheck/
 inst/doc
 *.Rout
+covr-report.html
+lib/*
