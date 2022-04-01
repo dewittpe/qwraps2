@@ -13,6 +13,18 @@
 #'
 #' @examples
 #'
+#' gmean(mtcars$mpg)
+#' identical(gmean(mtcars$mpg), exp(mean(log(mtcars$mpg))))
+#'
+#' gvar(mtcars$mpg)
+#' identical(gvar(mtcars$mpg),
+#'           exp(var(log(mtcars$mpg)) * (nrow(mtcars) - 1) / nrow(mtcars)))
+#'
+#' gsd(mtcars$mpg)
+#' identical(gsd(mtcars$mpg),
+#'           exp(sqrt( var(log(mtcars$mpg)) * (nrow(mtcars) - 1) / nrow(mtcars))))
+#'
+#' #############################################################################
 #' set.seed(42)
 #' x <- runif(14, min = 4, max = 70)
 #'
@@ -37,10 +49,10 @@
 #' gvar(x, na_rm = TRUE)
 #' gsd(x, na_rm = TRUE)
 #'
-#' @name geometric_mean_var_sd
+#' @name gmean
 NULL
 
-#' @rdname geometric_mean_var_sd
+#' @rdname gmean
 #' @export
 gmean <- function(x, na_rm = FALSE) {
   if (na_rm) {
@@ -49,7 +61,7 @@ gmean <- function(x, na_rm = FALSE) {
   exp(mean(log(x)))
 }
 
-#' @rdname geometric_mean_var_sd
+#' @rdname gmean
 #' @export
 gvar <- function(x, na_rm = FALSE) {
   if (na_rm) {
@@ -58,7 +70,7 @@ gvar <- function(x, na_rm = FALSE) {
   exp((length(x) - 1) / length(x) * stats::var(log(x)))
 }
 
-#' @rdname geometric_mean_var_sd
+#' @rdname gmean
 #' @export
 gsd <- function(x, na_rm = FALSE) {
   if (na_rm) {
@@ -66,6 +78,4 @@ gsd <- function(x, na_rm = FALSE) {
   }
   exp(sqrt((length(x) - 1) / length(x) * stats::var(log(x))))
 }
-
-
 

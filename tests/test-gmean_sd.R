@@ -13,6 +13,6 @@ g_mean <- frmt(g_mean)
 g_sd   <- frmt(g_sd)
 stopifnot(identical(gmean_sd(mtcars$mpg), paste(g_mean, "$\\pm$", g_sd)))
 
-# warning given if show_n is not as expected
-stopifnot(inherits(tryCatch(gmean_sd(mtcars$mpg, show_n = TRUE), warning = function(w) w), "warning"))
+# error given if show_n is not as expected
+stopifnot(inherits(tryCatch(gmean_sd(mtcars$mpg, show_n = TRUE), error = function(e) e), "error"))
 
