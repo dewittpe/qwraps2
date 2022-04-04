@@ -70,6 +70,8 @@ qroc_build_data_frame <- function(fit, n_threshold = 200, ...) {
 #' @export
 qroc_build_data_frame.glm <- function(fit, n_threshold = 200, ...) {
 
+  stopifnot(fit$family$family %in% c("binomial", "quasibinomial"))
+
   # find the predicted values
   pred_vals <- stats::predict(fit, ..., type = "response")
 
