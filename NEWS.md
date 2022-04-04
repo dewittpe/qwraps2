@@ -17,6 +17,11 @@
 * `summary_table_042` and `tab_summary`, the tidyverse versions of summary table
   that had been deprecated have been removed from the package. (#96)
 
+## General Improvements
+
+* Unit testing is done in base R, moved away from testthat.
+* `qroc_build_data_frame` is now an S3 method
+
 # qwraps2 0.5.2
 
 ## Bug Fixes
