@@ -30,7 +30,7 @@ single argument defined by the \code{\%s} symbol.}
 
 \item{n_perc_args}{a list of arguments to pass to
 \code{\link[qwraps2]{n_perc}} to be used with \code{character} or
-\code{factor} variables in \code{.data}.}
+\code{factor} variables within \code{x}.}
 
 \item{env}{environment to assign to the resulting formulae}
 
@@ -72,8 +72,7 @@ a simple wrapper for \code{\link{qable}}.
 }
 \examples{
 # A list-of-lists for the summaries arg.  This object is of the basic form:
-# It is recommended that you use the .data pronoun in the functions, see
-# help(topic = ".data", package = "rlang") for details on this pronoun.
+#
 # list("row group A" =
 #      list("row 1A" = ~ <summary function>,
 #           "row 2A" = ~ <summary function>),
