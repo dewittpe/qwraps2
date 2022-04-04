@@ -17,4 +17,18 @@ stopifnot(identical(qs[["cyl_character"]],
                        "6 cylinders" = ~ qwraps2::n_perc(cyl_character == "6 cylinders", digits = 0, show_symbol = FALSE),
                        "8 cylinders" = ~ qwraps2::n_perc(cyl_character == "8 cylinders", digits = 0, show_symbol = FALSE))))
 
+# expect warnings
+temp <- dplyr::group_by(mtcars, am, vs)
 
+test <- tryCatch(summary_table(temp), warning = function(w) w)
+stopifnot(inherits(test, "warning") &
+          grep("^group_df detected", test$message))
+
+test <- tryCatch(summary_table(temp, by = "am"), warning = function(w) w)
+stopifnot(inherits(test, "warning") &
+          grepl("You've passed", test$message))
+
+# dplyr::group_by equivalent output
+out1 <- capture.output(suppressWarnings(summary_table(temp)))
+out2 <- capture.output(summary_table(mtcars, by = c("am", "vs")))
+stopifnot(out1 == out2)

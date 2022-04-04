@@ -189,8 +189,15 @@ temp$am[c(1, 5, 10)] <- NA
 temp$am <- factor(temp$am, levels = 0:1, labels = c("Automatic", "Manual"))
 temp$vs <- as.logical(temp$vs)
 temp$vs[c(2, 6)] <- NA
-qsummary(dplyr::select(temp, cyl, am, vs))
-summary_table(dplyr::select(temp, cyl, am, vs))
+qsummary(temp[, c("cyl", "am", "vs")])
+summary_table(temp[, c("cyl", "am", "vs")])
+
+################################################################################
+# Group by Multiple Variables
+temp <- mtcars
+temp$trans <- factor(temp$am, 0:1, c("Manual", "Auto"))
+temp$engine <- factor(temp$vs, 0:1, c("V-Shaped", "Straight"))
+summary_table(temp, our_summaries, by = c("trans", "engine"))
 
 ################################################################################
 # binding tables together.  The original design and expected use of

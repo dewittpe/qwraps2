@@ -156,8 +156,15 @@
 #' temp$am <- factor(temp$am, levels = 0:1, labels = c("Automatic", "Manual"))
 #' temp$vs <- as.logical(temp$vs)
 #' temp$vs[c(2, 6)] <- NA
-#' qsummary(dplyr::select(temp, cyl, am, vs))
-#' summary_table(dplyr::select(temp, cyl, am, vs))
+#' qsummary(temp[, c("cyl", "am", "vs")])
+#' summary_table(temp[, c("cyl", "am", "vs")])
+#'
+#' ################################################################################
+#' # Group by Multiple Variables
+#' temp <- mtcars
+#' temp$trans <- factor(temp$am, 0:1, c("Manual", "Auto"))
+#' temp$engine <- factor(temp$vs, 0:1, c("V-Shaped", "Straight"))
+#' summary_table(temp, our_summaries, by = c("trans", "engine"))
 #'
 #' ################################################################################
 #' # binding tables together.  The original design and expected use of
@@ -230,6 +237,7 @@ summary_table.grouped_df <- function(x, summaries = qsummary(x), by = NULL) {
   # this assumes dplyr version 0.8.0 or newer
   lbs <- names(attr(x, "groups"))
   lbs <- lbs[-length(lbs)]
+  warning(paste0("^grouped_df detected. Setting `by` argument to\n  c('", paste(lbs, collapse = "', '"), "')"))
   NextMethod(object = x, by = lbs)
 }
 #' @export
