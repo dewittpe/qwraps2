@@ -28,29 +28,31 @@ search list if requested.
 
 Testing for package versions will is done as \code{packageVersion(x) >=
 version}.  If you need a specific version of a package you should explicitly
-use \code{packageVersion(x) == version} in your script.
+use \code{packageVersion(x) == version} in your script.  In general,
+\code{pkg_check} is a handly tool in interactive sessions.  For a package you
+should have package version documentation in the DESCRIPTION file.
+For a script a base R solution of
+\code{stopifnot(packageVersion("pkg") >= "x.y.z")}
 }
 \examples{
-# verify that the packages qwraps2, ggplot2, and BH are available
-pkg_check(c("qwraps2", "ggplot2", "BH"))
+# verify that the packages qwraps2, and ggplot2 are available (this should be
+# TRUE if you have qwraps2 installed since ggplot2 is imported by qwraps2)
+pkg_check(c("qwraps2", "ggplot2"))
 
 # show that the return is FALSE if a package is not available
-pkg_check(c("qwraps2", "ggplot2", "BH", "NOT a PCKG"))
+pkg_check(c("qwraps2", "ggplot2", "NOT a PCKG"))
 
 # verify the version for just ggplot2
-pkg_check(c("qwraps2", "ggplot2", "BH"),
-          c(NA, "2.2.0", NA))
+pkg_check(c("qwraps2", "ggplot2"), c(NA, "2.2.0"))
 
 # verify the version for qwraps2 (this is expected to fail as we are looking for
 # version 42.3.14 which is far too advanced for the actual package development.
-pkg_check(c("qwraps2", "ggplot2", "BH"),
-          c("42.3.14", "2.2.0", NA))
-
+pkg_check(c("qwraps2", "ggplot2"), c("42.3.14", "2.2.0"))
 
 \dontrun{
   # You can have the function throw an error is any of the checks fail
-  pkg_check(c("qwraps2", "ggplot2", "BH"),
-            c("42.3.14", "2.2.0", NA),
+  pkg_check(c("qwraps2", "ggplot2"),
+            c("42.3.14", "2.2.0"),
             stop = TRUE)
 }
 
