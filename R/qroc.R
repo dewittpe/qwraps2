@@ -64,6 +64,11 @@ qroc_ggplot <- function(data) {
 #' @rdname qroc
 #' @param fit a \code{glm} fit with \code{family = binomial()}.
 qroc_build_data_frame <- function(fit, n_threshold = 200, ...) {
+  UseMethod("qroc_build_data_frame")
+}
+
+#' @export
+qroc_build_data_frame.glm <- function(fit, n_threshold = 200, ...) {
 
   # find the predicted values
   pred_vals <- stats::predict(fit, ..., type = "response")
