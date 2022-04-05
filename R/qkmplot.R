@@ -64,6 +64,12 @@ qkmplot_ggplot <- function(dat, conf_int = FALSE, ...) {
 #' @export
 #' @rdname qkmplot
 qkmplot_bulid_data_frame <- function(x) {
+  UseMethod("qkmplot_bulid_data_frame")
+}
+
+#' @export
+#' @rdname qkmplot
+qkmplot_bulid_data_frame.survfit <- function(x) {
   plot_data <- data.frame(time = x[['time']],
                           n.risk = x[['n.risk']],
                           n.event = x[['n.event']],

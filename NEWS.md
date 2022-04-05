@@ -7,6 +7,11 @@
 
 * Add Precision-Recall curve, `qprc`, to complement ROC, `qroc`.
 
+* Binary Operators:
+
+  * `%s%` for "adding" strings together, e.g.,  `"A" %s% "B" %s% "C"` is
+    equivalent to `paste0("A", "B", "C")`
+
 ## User Visible Changes
 
 * `spin_comments` returns `TRUE` or `FALSE` with the notes on the

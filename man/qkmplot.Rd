@@ -3,11 +3,14 @@
 \name{qkmplot}
 \alias{qkmplot}
 \alias{qkmplot_bulid_data_frame}
+\alias{qkmplot_bulid_data_frame.survfit}
 \title{Kaplan-Meier Plot}
 \usage{
 qkmplot(x, conf_int = FALSE, ...)
 
 qkmplot_bulid_data_frame(x)
+
+\method{qkmplot_bulid_data_frame}{survfit}(x)
 }
 \arguments{
 \item{x}{object}
