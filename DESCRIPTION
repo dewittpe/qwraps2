@@ -1,6 +1,6 @@
 Package: qwraps2
 Title: Quick Wraps 2
-Version: 0.5.2.9000
+Version: 0.5.2.9001
 Authors@R: c(
     person(given = "Peter", family = "DeWitt",  email = "dewittpe@gmail.com",          role = c("aut", "cre"), comment = c(ORCID = "0000-0002-6391-0795")),
     person(given = "Tell",  family = "Bennett", email = "tell.bennett@cuanschutz.edu", role = c("ctb"),        comment = c(ORCID = "0000-0003-1483-4236"))
@@ -33,7 +33,7 @@ Suggests:
     covr,
     rbenchmark,
     rmarkdown
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 LinkingTo: Rcpp (>= 0.12.11),
     RcppArmadillo
 VignetteBuilder: knitr

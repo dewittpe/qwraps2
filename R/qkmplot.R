@@ -22,6 +22,11 @@
 #'
 #' qkmplot(leukemia.surv, conf_int = TRUE)
 #'
+#' qkmplot_bulid_data_frame(leukemia.surv)
+#'
+#' qrmst(leukemia.surv) # NaN for rmst.se in Nonmaintained strata as laste observation is an event
+#' qrmst(leukemia.surv, 44) 
+#'
 #' @export
 #' @rdname qkmplot
 qkmplot <- function(x, conf_int = FALSE, ...) {
@@ -96,5 +101,46 @@ qkmplot_bulid_data_frame.survfit <- function(x) {
   dat <- rbind(plot_data, first_data)
   class(dat) <- c("qwraps2_generated", class(dat))
   dat
+}
+
+#' @param tau upper bound on time for restricted mean survial time estimate
+#' @export
+#' @rdname qkmplot
+qrmst <- function(x, tau = Inf) { 
+  UseMethod("qrmst")
+}
+
+#' @export
+#' @rdname qkmplot
+qrmst.survfit <- function(x, tau = Inf) {
+  d <- qkmplot_bulid_data_frame(x)
+  d <- subset(d, d$time > 0)
+  qrmst.qwraps2_generated(d, tau = tau)
+}
+
+#' @export
+#' @rdname qkmplot
+qrmst.qwraps2_generated <- function(x, tau = Inf) {
+  d <- split(x, x$strata)
+  for (i in seq_along(d)) {
+
+    d[[i]] <- subset(d[[i]], d[[i]]$time <= tau)
+
+    d[[i]]$timeL <-  c(0, d[[i]]$time[-length(d[[i]]$time)])
+    d[[i]]$rsum <- d[[i]]$surv * (d[[i]]$time - d[[i]]$timeL)
+    d[[i]]$rcsum <- rev(cumsum(rev(d[[i]]$rsum)))
+    d[[i]]$rvsum <- (d[[i]]$rcsum^2 * d[[i]]$n.event) / (d[[i]]$n.risk * (d[[i]]$n.risk - d[[i]]$n.event))
+
+    
+    d[[i]] <-
+        data.frame(strata = d[[i]]$strata[1],
+                   tau    = max(d[[i]]$time),
+                   rmst   = sum(d[[i]]$rsum),
+                   rmst.se = sqrt(sum(d[[i]]$rvsum))
+                   )
+  }
+
+  d <- do.call(rbind, d)
+  d
 }
 

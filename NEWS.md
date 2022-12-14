@@ -1,4 +1,4 @@
-# qwraps2 0.5.2.9000
+# qwraps2 0.5.2.9001
 
 ## New Features
 
@@ -6,6 +6,8 @@
   format as the `mean_sd` function.
 
 * Add Precision-Recall curve, `qprc`, to complement ROC, `qroc`.
+
+* Add quick "restricted mean survial time," `qrmst` method.
 
 * Binary Operators:
 
@@ -16,6 +18,8 @@
 
 * `spin_comments` returns `TRUE` or `FALSE` with the notes on the
   matching/missmatched comments as an attribute of the return object.
+
+* Extend the S3 methods provided for `qroc_build_data_frame`
 
 ## Deprecations/Removals
 

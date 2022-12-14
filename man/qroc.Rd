@@ -8,7 +8,7 @@
 \usage{
 qroc(x, ...)
 
-qroc_build_data_frame(fit, n_threshold = 200, ...)
+qroc_build_data_frame(fit, truth = NULL, n_threshold = 200, ...)
 
 auc(data)
 }
@@ -18,7 +18,11 @@ auc(data)
 
 \item{...}{passed to \code{stats::predict}}
 
-\item{fit}{a \code{glm} fit with \code{family = binomial()}.}
+\item{fit}{a \code{glm} fit with \code{family = binomial()}, or predicted
+values}
+
+\item{truth}{ignored if \code{fit} is a \code{glm} object.  A vector of
+observations, 0/1 or FALSE/TRUE values, of equal length to \code{fit}}
 
 \item{n_threshold}{number of thresholds to test against.}
 

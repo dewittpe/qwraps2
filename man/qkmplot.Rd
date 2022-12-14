@@ -4,6 +4,9 @@
 \alias{qkmplot}
 \alias{qkmplot_bulid_data_frame}
 \alias{qkmplot_bulid_data_frame.survfit}
+\alias{qrmst}
+\alias{qrmst.survfit}
+\alias{qrmst.qwraps2_generated}
 \title{Kaplan-Meier Plot}
 \usage{
 qkmplot(x, conf_int = FALSE, ...)
@@ -11,6 +14,12 @@ qkmplot(x, conf_int = FALSE, ...)
 qkmplot_bulid_data_frame(x)
 
 \method{qkmplot_bulid_data_frame}{survfit}(x)
+
+qrmst(x, tau = Inf)
+
+\method{qrmst}{survfit}(x, tau = Inf)
+
+\method{qrmst}{qwraps2_generated}(x, tau = Inf)
 }
 \arguments{
 \item{x}{object}
@@ -18,6 +27,8 @@ qkmplot_bulid_data_frame(x)
 \item{conf_int}{logical if TRUE show the CI}
 
 \item{...}{Other arguments passed to survival::plot.survfit}
+
+\item{tau}{upper bound on time for restricted mean survial time estimate}
 }
 \value{
 a ggplot.
@@ -35,6 +46,11 @@ require(survival)
 leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x, data = survival::aml)
 
 qkmplot(leukemia.surv, conf_int = TRUE)
+
+qkmplot_bulid_data_frame(leukemia.surv)
+
+qrmst(leukemia.surv) # NaN for rmst.se in Nonmaintained strata as laste observation is an event
+qrmst(leukemia.surv, 44) 
 
 }
 \seealso{

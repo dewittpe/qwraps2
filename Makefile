@@ -67,7 +67,7 @@ $(PKG_ROOT)/vignettes/%.Rmd : $(PKG_ROOT)/vignette-spinners/%.R
 ################################################################################
 # Data Sets
 #
-$(DATATARGETS) &: .data-export.Rout
+#$(DATATARGETS) &: .data-export.Rout
 
 .data-export.Rout : vignette-spinners/qwraps2-data-sets.R
 	R CMD BATCH --vanilla $< $@
@@ -91,7 +91,7 @@ install: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 	R CMD INSTALL $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
 uninstall :
-	R --vanilla --quiet -e "try(remove.packages('pedalfast.data'), silent = TRUE)"
+	R --vanilla --quiet -e "try(remove.packages('$(PKG_NAME)'), silent = TRUE)"
 
 clean:
 	$(RM) -f  $(PKG_NAME)_$(PKG_VERSION).tar.gz

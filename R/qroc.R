@@ -61,25 +61,24 @@ qroc_ggplot <- function(data) {
 }
 
 #' @export
+#' @param fit a \code{glm} fit with \code{family = binomial()}, or predicted
+#' values
+#' @param truth ignored if \code{fit} is a \code{glm} object.  A vector of
+#' observations, 0/1 or FALSE/TRUE values, of equal length to \code{fit}
 #' @rdname qroc
-#' @param fit a \code{glm} fit with \code{family = binomial()}.
-qroc_build_data_frame <- function(fit, n_threshold = 200, ...) {
+qroc_build_data_frame <- function(fit, truth = NULL, n_threshold = 200, ...) {
   UseMethod("qroc_build_data_frame")
 }
 
-#' @export
-qroc_build_data_frame.glm <- function(fit, n_threshold = 200, ...) {
+qroc_build_data_frame.default <- function(fit, truth = NULL, n_threshold = 200, ...) {
+  stopifnot(!is.null(truth))
+  stopifnot(length(fit) == length(truth))
 
-  stopifnot(fit$family$family %in% c("binomial", "quasibinomial"))
+  true_pos <- function(threshold){ sum((fit >= threshold) &  (truth)) }
+  true_neg <- function(threshold){ sum((fit <  threshold) & !(truth)) }
 
-  # find the predicted values
-  pred_vals <- stats::predict(fit, ..., type = "response")
-
-  true_pos <- function(threshold){ sum((pred_vals >= threshold) &  (fit$y)) }
-  true_neg <- function(threshold){ sum((pred_vals <  threshold) & !(fit$y)) }
-
-  false_pos <- function(threshold){ sum((pred_vals >= threshold) & !(fit$y)) }
-  false_neg <- function(threshold){ sum((pred_vals <  threshold) &  (fit$y)) }
+  false_pos <- function(threshold){ sum((fit >= threshold) & !(truth)) }
+  false_neg <- function(threshold){ sum((fit <  threshold) &  (truth)) }
 
   x <- matrix(seq(1, 0, length = n_threshold))
 
@@ -102,6 +101,47 @@ qroc_build_data_frame.glm <- function(fit, n_threshold = 200, ...) {
   class(roc_data)       <- c("qwraps2_generated", class(roc_data))
 
   return(roc_data)
+
+
+}
+
+#' @export
+qroc_build_data_frame.glm <- function(fit, truth = NULL, n_threshold = 200, ...) {
+
+  stopifnot(fit$family$family %in% c("binomial", "quasibinomial"))
+
+  # find the predicted values
+  pred_vals <- stats::predict(fit, ..., type = "response")
+
+  qroc_build_data_frame(pred_vals, fit$y)
+
+  #   true_pos <- function(threshold){ sum((pred_vals >= threshold) &  (fit$y)) }
+  #   true_neg <- function(threshold){ sum((pred_vals <  threshold) & !(fit$y)) }
+  # 
+  #   false_pos <- function(threshold){ sum((pred_vals >= threshold) & !(fit$y)) }
+  #   false_neg <- function(threshold){ sum((pred_vals <  threshold) &  (fit$y)) }
+  # 
+  #   x <- matrix(seq(1, 0, length = n_threshold))
+  # 
+  #   true_positives  <- apply(x, 1, true_pos)
+  #   true_negatives  <- apply(x, 1, true_neg)
+  #   false_positives <- apply(x, 1, false_pos)
+  #   false_negatives <- apply(x, 1, false_neg)
+  # 
+  #   sensitivity <- true_positives / (true_positives + false_negatives)
+  #   specificity <- true_negatives / (true_negatives + false_positives)
+  # 
+  #   roc_data <- data.frame(false_positives = 1 - specificity,
+  #                          true_positives  = sensitivity)
+  # 
+  #   # trapezoid rule approximation for the area under the curve
+  #   auc <- sum((roc_data[2:n_threshold, 1] - roc_data[1:(n_threshold-1), 1]) * 1/2 *
+  #              (roc_data[2:n_threshold, 2] + roc_data[1:(n_threshold-1), 2]))
+  # 
+  #   attr(roc_data, "auc") <- auc
+  #   class(roc_data)       <- c("qwraps2_generated", class(roc_data))
+  # 
+  #   return(roc_data)
 }
 
 #' @export
