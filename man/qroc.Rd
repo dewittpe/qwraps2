@@ -53,6 +53,8 @@ fit <- glm(I(price > 2800) ~ cut * color, data = diamonds, family = binomial())
 
 qroc(fit)
 
+qroc_build_data_frame(predict(fit, type = "response")
+
 }
 \seealso{
 \code{vignette("qwraps2-graphics", package = "qwraps2")} for more
