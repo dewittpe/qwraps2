@@ -29,7 +29,15 @@
 #'
 #' qroc(fit)
 #'
-#' qroc_build_data_frame(predict(fit, type = "response")
+#' # two ways to build the data.frame, first using the regreesion object
+#' x1 <- qroc_build_data_frame(fit)
+#'
+#' head(x1)
+#'
+#' # second, using observed and truth 
+#' x2 <- qroc_build_data_frame(predict(fit, type = "response"), truth = diamonds$price > 2800)
+#'
+#' all.equal(x1, x2)
 #'
 #' @export
 #' @rdname qroc
