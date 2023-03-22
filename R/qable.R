@@ -45,11 +45,12 @@
 #' argument of \code{knitr::kable}.
 #' @param ... additional arguments passed to \code{knitr::kable}
 #'
-#' @return a character vector of the formatted numbers
+#' @return a data.frame.
 #'
 #' @examples
 #' data(mtcars)
-#' qable(mtcars)
+#' x <- qable(mtcars)
+#' x
 #' qable(mtcars, markup = "markdown")
 #'
 #' # by make
@@ -93,18 +94,26 @@ qable <- function(x, rtitle, rgroup, rnames = rownames(x), cnames = colnames(x),
 
   if (length(rgroup) > 0) {
     rg_idx <- cumsum(c(1, 1 + rgroup[-length(rgroup)]))
+    xmat[-rg_idx, -1] <- as.matrix(x)
 
     if (markup == "latex") {
+      # rownames(xmat) <- ""
+      # print(rownames(xmat))
+      # rownames(xmat)[rg_idx]  <- paste0("\\bf{", names(rgroup), "}")
+      # rownames(xmat)[-rg_idx] <- paste0("~~", rnames)
       xmat[rg_idx, 1] <- paste0("\\bf{", names(rgroup), "}")
       xmat[-rg_idx, 1] <- paste("~~", rnames)
     } else {
+      # rownames(xmat)[rg_idx]  <- paste0("**", names(rgroup), "**")
+      # rownames(xmat)[-rg_idx] <- paste0("&nbsp;&nbsp;", rnames)
       xmat[rg_idx, 1] <- paste0("**", names(rgroup), "**")
       xmat[-rg_idx, 1] <- paste("&nbsp;&nbsp;", rnames)
     }
-    xmat[-rg_idx, -1] <- as.matrix(x)
   } else {
     xmat[, 1] <- rnames
     xmat[, -1] <- as.matrix(x)
+    # xmat <- as.matrix(x)
+    # rownames(xmat) <- rnames
   }
 
   if (markup == "markdown") {
@@ -116,11 +125,20 @@ qable <- function(x, rtitle, rgroup, rnames = rownames(x), cnames = colnames(x),
   } else {
     cnames <- c(rtitle, cnames)
   }
+  colnames(xmat) <- cnames
+  class(xmat) <- "qwraps2_qable"
+  attr(xmat, "markup") <- markup
+  xmat
+}
 
-  knitr::kable(xmat,
-               format = markup,
-               escape = !(markup == "latex"),
-               row.names =  FALSE,
-               col.names = cnames,
-               ...)
+#' @export
+print.qwraps2_qable <- function(x, ...) {
+  x <-
+    knitr::kable(x,
+                 format = attr(x, "markup"),
+                 escape = !(attr(x, "markup") == "latex"),
+                 row.names = FALSE,
+                 col.names = colnames(x),
+                 ...)
+  print(x)
 }
