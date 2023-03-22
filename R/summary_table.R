@@ -399,7 +399,7 @@ cbind.qwraps2_qable <- function(...) {
       clnms <- c(clnms, colnames(tabs[[i]])[-1])
       tabs[[i]] <- matrix(tabs[[i]][, -1], nrow = nrow(tabs[[1]]))
     } else {
-      clnms <- c(clnms, names(tabs)[i])
+      clnms <- c(clnms, ifelse(is.null(names(tabs)[i]), "", names(tabs)[i]))
       tabs[[i]] <- matrix(tabs[[i]], nrow = nrow(tabs[[1]]))
     }
   }
