@@ -45,7 +45,7 @@
 #' argument of \code{knitr::kable}.
 #' @param ... additional arguments passed to \code{knitr::kable}
 #'
-#' @return a data.frame.
+#' @return a matrix
 #'
 #' @examples
 #' data(mtcars)

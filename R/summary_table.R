@@ -255,14 +255,25 @@ summary_table.data.frame <- function(x, summaries = qsummary(x), by = NULL) {
   }
 
   rtn <- lapply(subsets, apply_summaries, summaries = summaries)
+
   if (length(rtn) > 1L) {
-    cn <- paste0(names(rtn), " (N = ", sapply(rtn, attr, "n"), ")")
-    rtn <- do.call(cbind, rtn)
-    colnames(rtn) <- cn
+    clnms <- paste0(names(rtn), " (N = ", sapply(rtn, attr, "n"), ")")
   } else {
-    rtn <- rtn[[1]]
-    colnames(rtn) <- paste0(deparse(substitute(x), nlines = 1L, backtick = TRUE), " (N = ", frmt(nrow(x)), ")")
+    clnms <- paste0(deparse(substitute(x), nlines = 1L, backtick = TRUE), " (N = ", frmt(nrow(x)), ")")
   }
+
+  for (i in length(rtn)) {
+    colnames(rtn[[i]]) <- clnms[i]
+  }
+
+  # if (length(rtn) > 1L) {
+  #   cn <- paste0(names(rtn), " (N = ", sapply(rtn, attr, "n"), ")")
+  #   rtn <- do.call(cbind, rtn)
+  #   colnames(rtn) <- cn
+  # } else {
+  #   rtn <- rtn[[1]]
+  #   colnames(rtn) <- paste0(deparse(substitute(x), nlines = 1L, backtick = TRUE), " (N = ", frmt(nrow(x)), ")")
+  # }
 
   rtn
 }

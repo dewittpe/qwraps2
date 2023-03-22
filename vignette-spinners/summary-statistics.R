@@ -31,7 +31,6 @@ options(qwraps2_markup = "markdown")
 
 #'
 #' # Introduction
-# /* {{{ */
 #'
 #' It is common for a manuscript to require a data summary table.  The table might
 #' include simple summary statistics for the whole sample and for subgroups.
@@ -78,14 +77,11 @@ library(qwraps2)
 data(mtcars2)
 str(mtcars2)
 
-# /* End of Introduction ------------------------------------------------ }}} */
 #'
 #' # Review of Summary Statistic Functions and Formatting
-# /* {{{ */
 #'
 #'
 #' ## Means and Standard Deviations
-# /* {{{ */
 #'
 {{ backtick(mean_sd) }}
 #' returns the (arithmetic) mean and standard deviation for numeric
@@ -118,10 +114,8 @@ str(mci)
 mci
 print(mci, show_level = TRUE)
 
-# /* End Subsection: Means and Standard Deviations ---------------------- }}} */
 #'
 #' ## Median and Inner Quartile Range
-# /* {{{ */
 #'
 #' Similar to the
 {{ backtick(mean_sd) }}
@@ -130,10 +124,8 @@ print(mci, show_level = TRUE)
 #' returns the median and the inner quartile range (IQR) of a data vector.
 median_iqr(mtcars2$mpg)
 
-# /* End Subsection: Median and Inner Quartile Range -------------------- }}} */
 #'
 #' ## Count and Percentages
-# /* {{{ */
 #'
 #' The
 {{ backtick(n_perc) }}
@@ -159,10 +151,8 @@ n_perc(mtcars2$cyl_factor == levels(mtcars2$cyl_factor)[2])
 # The count and percentage of 4 or 6 cylinders vehicles in the data set is
 n_perc(mtcars2$cyl %in% c(4, 6))
 
-# /* End Subsection: Count and Percentages ------------------------------ }}} */
 #'
 #' ## Geometric Means and Standard Deviations
-# /* {{{ */
 #'
 #' Let $\left\{x_1, x_2, x_3, \ldots, x_n \right\}$ be a sample of size $n$ with
 #' $x_i > 0$ for all $i.$  Then the geometric mean, $\mu_g,$ and geometric standard
@@ -249,12 +239,9 @@ all.equal(gsd(x), sigma_g)
 gmean_sd(x)
 
 #'
-# /* End Subsection: Geometric Means and Standard Deviations ------------ }}} */
 #'
-# /* End Section: Review of Summary Statistics and Functions ------------ }}} */
 #'
 #' # Building a Data Summary Table
-# /* {{{ */
 #'
 #' Objective: build a table reporting summary statistics for some of the variables
 #' in the
@@ -333,10 +320,13 @@ our_summary1 <-
 #'
 #' Building the table is done with a call to
 {{ backtick(summary_table) }}
+#'
 #+ results = "asis"
 ### Overall
 whole <- summary_table(mtcars2, our_summary1)
 whole
+
+#qable(whole[[1]], rgroup = attr(whole[[1]], "rgroup"), rtitle = "r", cnames = )
 
 ### By number of Cylinders
 by_cyl <- summary_table(mtcars2, summaries = our_summary1, by = c("cyl_factor"))
@@ -380,7 +370,6 @@ print(both,
 
 #'
 #' ## Easy building of the summaries
-# /* {{{ */
 #'
 #' The task of building the
 {{ backtick(summaries) }}
@@ -441,13 +430,23 @@ summary_table(mtcars2, new_summary)
 summary_table(mtcars2, new_summary, by = c("cyl_factor"))
 
 #'
-#/*
-# End Subsection: Easy building of the summaries --------------------------- }}}
-#*/
 #'
 #'
 #' ## Adding P-values to a Summary Table
-# /* {{{ */
+#'
+#' Starting with qwraps2 version 0.6, the appility to add p-values to a summary
+#' table has been made considerablly easier.  This is due to a change in how the
+#' function 
+{{ backtick(qable) }}
+#' generated the structured matrix.  Older versions of
+{{ backtick(qable) }}
+#' generated a structred matrix and passed that matrix to 
+{{ backtick(knitr::kable) }}
+#' and retruned the formated character string.  In version 0.6 
+{{ backtick(qable) }}
+#' was changed to return the structred matrix and a seperate print method was
+#' added to make the call to 
+{{ backtick(knitr::kable) %s% "."}}
 #'
 #' There are many different ways to format data summary tables. Adding
 #' p-values to a table is just one thing that can be done in more than one way.
@@ -489,6 +488,10 @@ fpval <- frmtp(fisher.test(table(mtcars2$gear, mtcars2$cyl_factor))$p.value)
 #' Adding the p-value column is done as follows:
 both <- cbind(both, "P-value" = "")
 both[grepl("mean \\(sd\\)", rownames(both)), "P-value"] <- mpvals
+
+both[, 1] 
+
+
 a <- capture.output(print(both))
 a[grepl("Forward Gears", a)] <-
   sub("&nbsp;&nbsp;\\ \\|$", paste(fpval, "|"), a[grepl("Forward Gears", a)])
@@ -523,10 +526,7 @@ setNames(gear_summary,
 summary_table(mtcars2, gear_summary, by = "cyl_factor")
 
 #'
-# /* End Subsection: Adding p-values to a summary table ----------------- }}} */
-#'
 #' ## Using Variable Labels
-# /* {{{ */
 #'
 #' Some data management paradigms will use attributes to keep a label associated
 #' with a variable in a data.frame.  Notable examples are the
@@ -563,10 +563,8 @@ qsummary(new_data_frame)
 summary_table(new_data_frame)
 
 #'
-# /* End Subsection: Using Variable labels ------------------------------ }}} */
 #'
 #'
-# /* End Section: Building a Data Summary Table ------------------------- }}} */
 #'
 #' # Session Info
 #'
