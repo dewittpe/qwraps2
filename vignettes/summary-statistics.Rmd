@@ -343,10 +343,13 @@ our_summary1 <-
 Building the table is done with a call to
 ``r  backtick(summary_table)  ``
 
+
 ```{r results = "asis"}
 ### Overall
 whole <- summary_table(mtcars2, our_summary1)
 whole
+
+#qable(whole[[1]], rgroup = attr(whole[[1]], "rgroup"), rtitle = "r", cnames = )
 
 ### By number of Cylinders
 by_cyl <- summary_table(mtcars2, summaries = our_summary1, by = c("cyl_factor"))
@@ -473,6 +476,20 @@ summary_table(mtcars2, new_summary, by = c("cyl_factor"))
 
 ## Adding P-values to a Summary Table
 
+Starting with qwraps2 version 0.6, the task of adding p-values to a summary
+table has been made considerablly easier.  This is due to a change in how the
+function
+``r  backtick(qable)  ``
+generated the structured matrix.  Older versions of
+``r  backtick(qable)  ``
+generated a structred matrix and passed that matrix to
+``r  backtick(knitr::kable)  ``
+and retruned the formated character string.  In version 0.6
+``r  backtick(qable)  ``
+was changed to return the structred matrix and a seperate print method was
+added to make the call to
+``r  backtick(knitr::kable) %s% "." ``
+
 There are many different ways to format data summary tables. Adding
 p-values to a table is just one thing that can be done in more than one way.
 For example, if a row group reports the counts and percentages for each level
@@ -481,7 +498,7 @@ that the p-value resulting from a chi square test or a Fisher exact test
 would be best placed on the line of the table labeling the row group.
 However, say we reported the minimum, median, mean, and maximum with in a
 row group for one variable.  The p-value from a t-test, or other meaningful
-test, for the difference in mean I would suggest should be reported on the
+test for the difference in mean, I would suggest should be reported on the
 line of the summary table for the mean, not the row group itself.
 
 With so many possibilities I have reserved construction of a p-value column
@@ -520,17 +537,15 @@ Adding the p-value column is done as follows:
 
 ```{r }
 both <- cbind(both, "P-value" = "")
-both[grepl("mean \\(sd\\)", rownames(both)), "P-value"] <- mpvals
-a <- capture.output(print(both))
-a[grepl("Forward Gears", a)] <-
-  sub("&nbsp;&nbsp;\\ \\|$", paste(fpval, "|"), a[grepl("Forward Gears", a)])
+both[grepl("mean \\(sd\\)", both[, 1]), "P-value"] <- mpvals
+both[grepl("Forward Gears", both[, 1]), "P-value"] <- fpval
 ```
 
 
 and the resulting table is:
 
 ```{r results = "asis"}
-cat(a, sep = "\n")
+both
 ```
 
 
@@ -558,7 +573,6 @@ setNames(gear_summary,
 
 summary_table(mtcars2, gear_summary, by = "cyl_factor")
 ```
-
 
 
 ## Using Variable Labels

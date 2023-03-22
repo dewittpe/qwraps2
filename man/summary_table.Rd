@@ -11,7 +11,7 @@ summary_table(x, summaries = qsummary(x), by = NULL)
 
 qsummary(x, numeric_summaries, n_perc_args, env = parent.frame())
 
-\method{cbind}{qwraps2_summary_table}(..., deparse.level = 1)
+\method{cbind}{qwraps2_summary_table}(...)
 
 \method{rbind}{qwraps2_summary_table}(..., deparse.level = 1)
 }

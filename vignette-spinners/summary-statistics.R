@@ -434,18 +434,18 @@ summary_table(mtcars2, new_summary, by = c("cyl_factor"))
 #'
 #' ## Adding P-values to a Summary Table
 #'
-#' Starting with qwraps2 version 0.6, the appility to add p-values to a summary
+#' Starting with qwraps2 version 0.6, the task of adding p-values to a summary
 #' table has been made considerablly easier.  This is due to a change in how the
-#' function 
+#' function
 {{ backtick(qable) }}
 #' generated the structured matrix.  Older versions of
 {{ backtick(qable) }}
-#' generated a structred matrix and passed that matrix to 
+#' generated a structred matrix and passed that matrix to
 {{ backtick(knitr::kable) }}
-#' and retruned the formated character string.  In version 0.6 
+#' and retruned the formated character string.  In version 0.6
 {{ backtick(qable) }}
 #' was changed to return the structred matrix and a seperate print method was
-#' added to make the call to 
+#' added to make the call to
 {{ backtick(knitr::kable) %s% "."}}
 #'
 #' There are many different ways to format data summary tables. Adding
@@ -456,7 +456,7 @@ summary_table(mtcars2, new_summary, by = c("cyl_factor"))
 #' would be best placed on the line of the table labeling the row group.
 #' However, say we reported the minimum, median, mean, and maximum with in a
 #' row group for one variable.  The p-value from a t-test, or other meaningful
-#' test, for the difference in mean I would suggest should be reported on the
+#' test for the difference in mean, I would suggest should be reported on the
 #' line of the summary table for the mean, not the row group itself.
 #'
 #' With so many possibilities I have reserved construction of a p-value column
@@ -487,19 +487,13 @@ fpval <- frmtp(fisher.test(table(mtcars2$gear, mtcars2$cyl_factor))$p.value)
 #'
 #' Adding the p-value column is done as follows:
 both <- cbind(both, "P-value" = "")
-both[grepl("mean \\(sd\\)", rownames(both)), "P-value"] <- mpvals
-
-both[, 1] 
-
-
-a <- capture.output(print(both))
-a[grepl("Forward Gears", a)] <-
-  sub("&nbsp;&nbsp;\\ \\|$", paste(fpval, "|"), a[grepl("Forward Gears", a)])
+both[grepl("mean \\(sd\\)", both[, 1]), "P-value"] <- mpvals
+both[grepl("Forward Gears", both[, 1]), "P-value"] <- fpval
 
 #'
 #' and the resulting table is:
 #+ results = "asis"
-cat(a, sep = "\n")
+both
 
 #'
 #' Another option you might consider is to have the p-value in the row group

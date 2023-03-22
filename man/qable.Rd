@@ -32,7 +32,7 @@ argument of \code{knitr::kable}.}
 \item{...}{additional arguments passed to \code{knitr::kable}}
 }
 \value{
-a character vector of the formatted numbers
+a matrix
 }
 \description{
 Create a simple table via kable with row groups and rownames
@@ -62,7 +62,8 @@ It should be noted that \code{escape = !(markup == "latex")} is passed to
 }
 \examples{
 data(mtcars)
-qable(mtcars)
+x <- qable(mtcars)
+x
 qable(mtcars, markup = "markdown")
 
 # by make

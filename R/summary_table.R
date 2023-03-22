@@ -262,19 +262,22 @@ summary_table.data.frame <- function(x, summaries = qsummary(x), by = NULL) {
     clnms <- paste0(deparse(substitute(x), nlines = 1L, backtick = TRUE), " (N = ", frmt(nrow(x)), ")")
   }
 
-  for (i in length(rtn)) {
+  for (i in 1:length(rtn)) {
     colnames(rtn[[i]]) <- clnms[i]
   }
 
-  # if (length(rtn) > 1L) {
-  #   cn <- paste0(names(rtn), " (N = ", sapply(rtn, attr, "n"), ")")
-  #   rtn <- do.call(cbind, rtn)
-  #   colnames(rtn) <- cn
-  # } else {
-  #   rtn <- rtn[[1]]
-  #   colnames(rtn) <- paste0(deparse(substitute(x), nlines = 1L, backtick = TRUE), " (N = ", frmt(nrow(x)), ")")
-  # }
+  rtn <- lapply(rtn,
+                function(x) {
+                  qable(x
+                        , rgroup = attr(x, "rgroups")
+                        , cnames = colnames(x)
+                        )})
 
+  if (length(rtn) > 1) {
+    rtn <- do.call(cbind, rtn)
+  } else {
+    rtn <- rtn[[1]]
+  }
   rtn
 }
 
@@ -382,27 +385,34 @@ qsummary.data.frame <- function(x,
 #' 0} constructs no labels; the default, \code{deparse.level = 1} or
 #' \code{deparse.level = 2} constructs labels from the argument names.
 #' @seealso \code{cbind}
-cbind.qwraps2_summary_table <- function(..., deparse.level = 1) {
+cbind.qwraps2_summary_table <- function(...) {
+  cbind.qwraps2_qable(...)
+}
+
+#' @export
+cbind.qwraps2_qable <- function(...) {
   tabs <- list(...)
+  clnms <- colnames(tabs[[1]])
 
-  for(i in seq_along(tabs)[-1]) {
-    if (inherits(tabs[[i-1]], "qwraps2_summary_table") & inherits(tabs[[i]], "qwraps2_summary_table")) {
-      if (!identical(attr(tabs[[i-1]], "rgroups"), attr(tabs[[i]], "rgroups") ) ) {
-        stop("Not all row groups are identical.")
-      }
-
-      if (!identical(rownames(tabs[[i-1]]), rownames(tabs[[i]]))) {
-        stop("Not all rownames are identical.")
-      }
+  for (i in 2:length(tabs)) {
+    if (inherits(tabs[[i]], "qwraps2_qable")) {
+      clnms <- c(clnms, colnames(tabs[[i]])[-1])
+      tabs[[i]] <- matrix(tabs[[i]][, -1], nrow = nrow(tabs[[1]]))
+    } else {
+      clnms <- c(clnms, names(tabs)[i])
+      tabs[[i]] <- matrix(tabs[[i]], nrow = nrow(tabs[[1]]))
     }
   }
 
-  out <- do.call(cbind, args = c(lapply(tabs, unclass), list(deparse.level = deparse.level)))
+  print(tabs)
 
-  attr(out, "rgroups") <- attr(tabs[[1]], "rgroups")
-  class(out) <- class(tabs[[1]])
+  rtn <- do.call(cbind, lapply(tabs, unclass))
+  print(rtn)
 
-  out
+  colnames(rtn) <- clnms
+  attr(rtn, "markup") <- attr(tabs[[1]], "markup")
+  class(rtn) <- class(tabs[[1]])
+  rtn
 }
 
 #' @seealso \code{rbind}

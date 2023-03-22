@@ -13,9 +13,9 @@ stopifnot(inherits(test, "error"))
 
 
 # rtitle
-out <- capture.output(qable(mtcars[1, ], rtitle = "user defined rtitle"))
+out <- capture.output(print(qable(mtcars[1, ], rtitle = "user defined rtitle")))
 stopifnot(grepl("^user\\ defined\\ rtitle", out[4]))
-out <- capture.output(qable(mtcars[1, ], markup = "markdown", rtitle = "user defined rtitle"))
+out <- capture.output(print(qable(mtcars[1, ], markup = "markdown", rtitle = "user defined rtitle")))
 stopifnot(grepl("^\\|user\\ defined\\ rtitle", out[3]))
 
 # rgroups
