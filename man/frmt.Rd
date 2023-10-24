@@ -6,7 +6,7 @@
 \alias{frmtci}
 \title{Format Wrappers}
 \usage{
-frmt(x, digits = getOption("qwraps2_frmt_digits", 2))
+frmt(x, digits = getOption("qwraps2_frmt_digits", 2), append = NULL)
 
 frmtp(
   x,
@@ -32,6 +32,11 @@ frmtci(
 
 \item{digits}{number of digits, including trailing zeros, to the right of the
 decimal point.  This option is ignored if \code{is.integer(x) == TRUE)}.}
+
+\item{append}{a character string to append to the formatted number.  This is
+particularly useful for percentages or adding punctionation to the end of the
+formatted number.  This should be a vector of length 1, or equal to the
+lenght of \code{x}.}
 
 \item{style}{a character string indicating a specific journal requirements
 for p-value formatting.}
@@ -75,7 +80,8 @@ Functions for formatting numeric values for consistent display
 in reports.
 }
 \details{
-`frmt` is really just a wrapper for the \code{formatC}.
+`frmt` was originally really just a wrapper for the \code{formatC}.  It has
+extended functionallity now as I have found common uses cases.
 
 `frmtp` formats P-values per journal
 requirements.  As I work on papers aimed at different journals, the
@@ -112,7 +118,7 @@ package.
 }
 \examples{
 
-# Formatting numbers
+### Formatting numbers
 integers <- c(1234L, 9861230L)
 numbers  <- c(1234,  9861230)
 frmt(integers)  # no decimal point
@@ -121,7 +127,17 @@ frmt(numbers)   # decimal point and zeros to the right
 numbers <- c(0.1234, 0.1, 1234.4321, 0.365, 0.375)
 frmt(numbers)
 
-# Formatting p-values
+# reporting a percentage
+frmt(17/19 * 100, digits = 2, append = "\%")   # good for markdown
+frmt(17/19 * 100, digits = 2, append = "\\\\\%") # good for LaTeX
+
+# append one character different
+frmt(c(1, 2, 3)/19 * 100, digits = 2, append = "\%")
+
+# append different characters
+frmt(c(1, 2, 3)/19 * 100, digits = 2, append = c("\%;", "\%!", "\%."))
+
+### Formatting p-values
 ps <- c(0.2, 0.001, 0.00092, 0.047, 0.034781, 0.0000872, 0.787, 0.05, 0.043)
 # LaTeX is the default markup language
 cbind("raw"      = ps,
@@ -129,7 +145,7 @@ cbind("raw"      = ps,
       "3lower"   = frmtp(ps, digits = 3, case = "lower"),
       "PediDent" = frmtp(ps, style = "pediatric_dentistry"))
 
-# Using markdown
+### Using markdown
 cbind("raw"      = ps,
       "default"  = frmtp(ps, markup = "markdown"),
       "3lower"   = frmtp(ps, digits = 3, case = "lower", markup = "markdown"),

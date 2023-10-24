@@ -14,6 +14,8 @@
   * `%s%` for "adding" strings together, e.g.,  `"A" %s% "B" %s% "C"` is
     equivalent to `paste0("A", "B", "C")`
 
+* add `append` argument to `frmt`
+
 ## User Visible Changes
 
 * `qable` has been modified to return a character matrix with the S3 class
