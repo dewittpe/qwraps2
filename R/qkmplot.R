@@ -25,7 +25,7 @@
 #' qkmplot_bulid_data_frame(leukemia.surv)
 #'
 #' qrmst(leukemia.surv) # NaN for rmst.se in Nonmaintained strata as laste observation is an event
-#' qrmst(leukemia.surv, 44) 
+#' qrmst(leukemia.surv, 44)
 #'
 #' @export
 #' @rdname qkmplot
@@ -49,8 +49,8 @@ qkmplot.qwraps2_generated <- function(x, conf_int = FALSE, ...) {
 }
 
 qkmplot_ggplot <- function(dat, conf_int = FALSE, ...) {
-  layers <- list(ggplot2::aes_string(x = "time", y = "surv"),
-                 if (!is.null(dat$strata)) {ggplot2::aes_string(colour = "strata", fill = "strata") } else {NULL},
+  layers <- list(eval(substitute(ggplot2::aes(x = X, y = Y), list(X = as.name("time"), Y = as.name("surv")))),
+                 if (!is.null(dat$strata)) {eval(substitute(ggplot2::aes(colour = X, fill = Y), list(X = as.name("strata"), Y = as.name("strata")))) } else {NULL},
                  ggplot2::geom_step(),
                  ggplot2::ylim(c(0, 1)),
                  ggplot2::ylab("Survivial"),
@@ -58,8 +58,9 @@ qkmplot_ggplot <- function(dat, conf_int = FALSE, ...) {
 
   if (conf_int) {
     layers <- append(layers,
-                     ggplot2::geom_ribbon(ggplot2::aes_string(ymin = "lower", ymax = "upper"), alpha = 0.2,
-                                          stat = "stepribbon")
+                     ggplot2::geom_ribbon(mapping = eval(substitute(ggplot2::aes(ymin = MN, ymax = MX), list(MN = as.name("lower"), MX = as.name("upper"))))
+                                          , alpha = 0.2
+                                          , stat = "stepribbon")
       )
   }
 
@@ -106,7 +107,7 @@ qkmplot_bulid_data_frame.survfit <- function(x) {
 #' @param tau upper bound on time for restricted mean survival time estimate
 #' @export
 #' @rdname qkmplot
-qrmst <- function(x, tau = Inf) { 
+qrmst <- function(x, tau = Inf) {
   UseMethod("qrmst")
 }
 
@@ -131,7 +132,7 @@ qrmst.qwraps2_generated <- function(x, tau = Inf) {
     d[[i]]$rcsum <- rev(cumsum(rev(d[[i]]$rsum)))
     d[[i]]$rvsum <- (d[[i]]$rcsum^2 * d[[i]]$n.event) / (d[[i]]$n.risk * (d[[i]]$n.risk - d[[i]]$n.event))
 
-    
+
     d[[i]] <-
         data.frame(strata = d[[i]]$strata[1],
                    tau    = max(d[[i]]$time),

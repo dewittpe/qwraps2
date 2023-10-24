@@ -50,7 +50,7 @@ qkmplot(leukemia.surv, conf_int = TRUE)
 qkmplot_bulid_data_frame(leukemia.surv)
 
 qrmst(leukemia.surv) # NaN for rmst.se in Nonmaintained strata as laste observation is an event
-qrmst(leukemia.surv, 44) 
+qrmst(leukemia.surv, 44)
 
 }
 \seealso{
