@@ -1,4 +1,4 @@
-# qwraps2 0.5.2.9002
+# qwraps2 0.6.0
 
 ## New Features
 
@@ -36,7 +36,8 @@
 ## General Improvements
 
 * Unit testing is done in base R, moved away from testthat.
-* `qroc_build_data_frame` is now an S3 method
+* `qroc_build_data_frame` is now an S3 method.
+* Updating roxygen dependencies to correctly document the package.
 
 # qwraps2 0.5.2
 
