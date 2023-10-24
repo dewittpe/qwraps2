@@ -435,16 +435,16 @@ summary_table(mtcars2, new_summary, by = c("cyl_factor"))
 #' ## Adding P-values to a Summary Table
 #'
 #' Starting with qwraps2 version 0.6, the task of adding p-values to a summary
-#' table has been made considerablly easier.  This is due to a change in how the
+#' table has been made considerably easier.  This is due to a change in how the
 #' function
 {{ backtick(qable) }}
 #' generated the structured matrix.  Older versions of
 {{ backtick(qable) }}
-#' generated a structred matrix and passed that matrix to
+#' generated a structured matrix and passed that matrix to
 {{ backtick(knitr::kable) }}
-#' and retruned the formated character string.  In version 0.6
+#' and returned the formatted character string.  In version 0.6
 {{ backtick(qable) }}
-#' was changed to return the structred matrix and a seperate print method was
+#' was changed to return the structured matrix and a separate print method was
 #' added to make the call to
 {{ backtick(knitr::kable) %s% "."}}
 #'

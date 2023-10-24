@@ -28,11 +28,11 @@ to \code{\link[base]{order}}.}
 a data.frame with columns
 \itemize{
  \item{object}{name of the object}
- \item{class}{class, or mode if class is not pressent, of the object}
+ \item{class}{class, or mode if class is not present, of the object}
  \item{size}{approximate size, in bytes, of the object in memory}
  \item{rows}{number of rows for data.frames or matrices, or the number of
  elements for a list like structure}
- \item{columns}{nubmer of columns for data.frames or matrices}
+ \item{columns}{number of columns for data.frames or matrices}
 }
 }
 \description{

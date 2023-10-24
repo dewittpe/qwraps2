@@ -8,6 +8,8 @@ benchmarking
 BioConductor
 BiocStyle
 carb
+cbind
+CMD
 cnames
 codecov
 CRANpkg
@@ -56,6 +58,7 @@ mtcars
 neovim
 NPV
 Nvim
+ORCID
 paren
 pefr
 PEFR
@@ -86,6 +89,7 @@ RStudio
 rtitle
 sd
 survfit
+testthat
 tidyverse
 thusly
 TNR

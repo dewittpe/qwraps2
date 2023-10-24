@@ -18,7 +18,7 @@ knitr::opts_chunk$set(collapse = TRUE)
 
 
 
-```{r }
+```{r}
 set.seed(42)
   library(qwraps2)
 # define the markup language we are working in.
@@ -53,7 +53,7 @@ as well.
 
 ## Prerequisites Example Data Set
 
-```{r }
+```{r}
 library(qwraps2)
 ```
 
@@ -70,7 +70,7 @@ For details on the construction of the
 data set please view the vignette:
 ``r  backtick(vignette('mtcars', package = "qwraps2"))  ``
 
-```{r }
+```{r}
 data(mtcars2)
 str(mtcars2)
 ```
@@ -89,7 +89,7 @@ returns the formatted string
 ``r  paste0(mean_sd(mtcars2$mpg), ".")  ``
 There are other options for formatting character string:
 
-```{r }
+```{r}
 mean_sd(mtcars2$mpg)
 mean_sd(mtcars2$mpg, denote_sd = "paren")
 ```
@@ -111,7 +111,7 @@ function.  You an modify the formatting of printed result by adjusting
 the arguments pasted to
 ``r  paste0(backtick(frmtci), ".")  ``
 
-```{r }
+```{r}
 mci <- mean_ci(mtcars2$mpg)
 str(mci)
 mci
@@ -127,7 +127,7 @@ function, the
 ``r  backtick(median_iqr)  ``
 returns the median and the inner quartile range (IQR) of a data vector.
 
-```{r }
+```{r}
 median_iqr(mtcars2$mpg)
 ```
 
@@ -149,7 +149,7 @@ omits the percentage sign from the string.  The latter is good for tables,
 the former for in-line text.
 
 
-```{r }
+```{r}
 n_perc(mtcars2$cyl == 4)
 n_perc0(mtcars2$cyl == 4)
 
@@ -206,7 +206,7 @@ the geometric standard deviation one should adjust the result by multiplying the
 variance by $(n - 1) / n$ or the standard deviation by $\sqrt{(n - 1) / n}.$
 See the example below.
 
-```{r }
+```{r}
 x <- runif(6, min = 4, max = 70)
 
 # geometric mean
@@ -234,7 +234,7 @@ and
 provide the geometric mean, variance, and standard deviation for a numeric
 vector.
 
-```{r }
+```{r}
 gmean(x)
 all.equal(gmean(x), mu_g)
 
@@ -253,7 +253,7 @@ geometric standard deviation in the same way that
 ``r  backtick(mean_sd)  ``
 does for the arithmetic mean and arithmetic standard deviation:
 
-```{r }
+```{r}
 gmean_sd(x)
 ```
 
@@ -317,7 +317,7 @@ summary.  The names are important, as they are used to label row groups and row
 names in the table.
 
 
-```{r }
+```{r}
 our_summary1 <-
   list("Miles Per Gallon" =
        list("min"       = ~ min(mpg),
@@ -362,7 +362,7 @@ With the refactor of the
 method in version 0.5.0 it is easier to group by multiple variables.  For
 example, getting a column for combination of cylinders and transmission type:
 
-```{r }
+```{r}
 by_cyl_am <- summary_table(mtcars2, summaries = our_summary1, by = c("cyl_factor", "am"))
 by_cyl_am
 ```
@@ -427,7 +427,7 @@ default summary for a set of variables from the
 ``r  backtick(mtcars2)  ``
 data set is
 
-```{r }
+```{r}
 qsummary(mtcars2[, c("mpg", "cyl_factor", "wt")])
 ```
 
@@ -446,7 +446,7 @@ percent symbol in the table.
 Note that when defining the list of numeric_summaries that the argument place
 holder is the `%s` character.
 
-```{r }
+```{r}
 new_summary <-
   qsummary(mtcars2[, c("mpg", "cyl_factor", "wt")],
            numeric_summaries = list("Minimum" = "~ min(%s)",
@@ -477,16 +477,16 @@ summary_table(mtcars2, new_summary, by = c("cyl_factor"))
 ## Adding P-values to a Summary Table
 
 Starting with qwraps2 version 0.6, the task of adding p-values to a summary
-table has been made considerablly easier.  This is due to a change in how the
+table has been made considerably easier.  This is due to a change in how the
 function
 ``r  backtick(qable)  ``
 generated the structured matrix.  Older versions of
 ``r  backtick(qable)  ``
-generated a structred matrix and passed that matrix to
+generated a structured matrix and passed that matrix to
 ``r  backtick(knitr::kable)  ``
-and retruned the formated character string.  In version 0.6
+and returned the formatted character string.  In version 0.6
 ``r  backtick(qable)  ``
-was changed to return the structred matrix and a seperate print method was
+was changed to return the structured matrix and a separate print method was
 added to make the call to
 ``r  backtick(knitr::kable) %s% "." ``
 
@@ -511,7 +511,7 @@ object you can with some degree of ease.  Note that
 ``r  backtick(qwraps2_summary_table)  ``
 objects are just character matrices.
 
-```{r }
+```{r}
 str(both)
 ```
 
@@ -519,7 +519,7 @@ str(both)
 Let's added p-values for testing the difference in the mean between the three
 cylinder groups.
 
-```{r }
+```{r}
 # difference in means
 mpvals <-
   sapply(
@@ -535,7 +535,7 @@ fpval <- frmtp(fisher.test(table(mtcars2$gear, mtcars2$cyl_factor))$p.value)
 
 Adding the p-value column is done as follows:
 
-```{r }
+```{r}
 both <- cbind(both, "P-value" = "")
 both[grepl("mean \\(sd\\)", both[, 1]), "P-value"] <- mpvals
 both[grepl("Forward Gears", both[, 1]), "P-value"] <- fpval
@@ -586,7 +586,7 @@ If you associate a label with a variable in the data frame the that label
 will be used when building a summary table.  This feature was suggested
 https://github.com/dewittpe/qwraps2/issues/74 and implemented thusly:
 
-```{r }
+```{r}
 new_data_frame <-
   data.frame(age = c(18, 20, 24, 17, 43),
              edu = c(1, 3, 1, 5, 2),
@@ -607,7 +607,7 @@ the provide labels for the age and rt variables will
 be used.  Since the attribute "label" does not exist for the edu variable,
 edu will be used in the output.
 
-```{r }
+```{r}
 qsummary(new_data_frame)
 ```
 
@@ -625,7 +625,7 @@ summary_table(new_data_frame)
 # Session Info
 
 
-```{r }
+```{r}
 print(sessionInfo(), local = FALSE)
 ```
 

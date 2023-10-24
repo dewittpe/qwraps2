@@ -1,12 +1,3 @@
-#' @keywords internal
-"_PACKAGE"
-
-## usethis namespace: start
-#' @useDynLib qwraps2
-#' @importFrom Rcpp sourceCpp
-## usethis namespace: end
-NULL
-
 #' A collection of wrapper functions aimed at for aiding the authoring of reproducible
 #' reports.
 #'
@@ -70,7 +61,7 @@ NULL
 #' @section Journals with predefined formatting:
 #'
 #' \itemize{
-#'   \item Obstetrics \& Gynecology
+#'   \item Obstetrics & Gynecology
 #'   \itemize{
 #'      \item \url{https://www.editorialmanager.com/ong/default.aspx}
 #'      \item \code{options(qwraps2_journal = "obstetrics_gynecology")}
@@ -98,3 +89,12 @@ NULL
 #'
 #' }
 #'
+#' @keywords internal
+"_PACKAGE"
+
+## usethis namespace: start
+#' @useDynLib qwraps2
+#' @importFrom Rcpp sourceCpp
+## usethis namespace: end
+NULL
+

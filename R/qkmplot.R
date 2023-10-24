@@ -103,7 +103,7 @@ qkmplot_bulid_data_frame.survfit <- function(x) {
   dat
 }
 
-#' @param tau upper bound on time for restricted mean survial time estimate
+#' @param tau upper bound on time for restricted mean survival time estimate
 #' @export
 #' @rdname qkmplot
 qrmst <- function(x, tau = Inf) { 

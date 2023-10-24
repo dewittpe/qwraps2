@@ -28,7 +28,7 @@ qrmst(x, tau = Inf)
 
 \item{...}{Other arguments passed to survival::plot.survfit}
 
-\item{tau}{upper bound on time for restricted mean survial time estimate}
+\item{tau}{upper bound on time for restricted mean survival time estimate}
 }
 \value{
 a ggplot.

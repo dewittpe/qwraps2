@@ -1,25 +1,23 @@
-# Version 0.5.0
-- Initial submission 31 Aug 2020
-- Resubmission 1 Sept 2020 - changed one http to https in the NEWS.md file.
+# Version 0.6.0
+- Initial submission 24 Oct 2023
 
 ## Testing Environments
 
-* Travis CI: Ubuntu 16.04
-  * R 3.6.3
-  * R 4.0.0
-  * R Under development (unstable) (2020-08-30 r79091)
+* Github Actions: 
+  * macOS R-4.3.1
+  * windows R-4.3.1
+  * ubuntu R-4.3.1
+  * ubuntu R-devel
+  * ubuntu R-4.2.3
 
 * win-builder.r-project.org
-  * R 3.6.3
-  * R 4.0.0
-  * R Under development (unstable) (2020-05-11 r78411)
 
 * Local (macOS Catalina 10.15.4)
   * R 4.0.2
 
 ## R CMD Check results
 
-* Travis CI -- all version of R
+* Github actions:
 
     Status OK
 
@@ -33,6 +31,8 @@
 
 ## Reverse dependencies
 
+    None
+
 ### Reverse suggests:
 
 * ensr
@@ -40,5 +40,9 @@
     No issues
 
 * REDCapExporter
+
+    No issues
+
+* pedalfast.data
 
     No issues

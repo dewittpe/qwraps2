@@ -34,9 +34,9 @@ frmtci(
 decimal point.  This option is ignored if \code{is.integer(x) == TRUE)}.}
 
 \item{append}{a character string to append to the formatted number.  This is
-particularly useful for percentages or adding punctionation to the end of the
+particularly useful for percentages or adding punctuation to the end of the
 formatted number.  This should be a vector of length 1, or equal to the
-lenght of \code{x}.}
+length of \code{x}.}
 
 \item{style}{a character string indicating a specific journal requirements
 for p-value formatting.}
@@ -81,7 +81,7 @@ in reports.
 }
 \details{
 `frmt` was originally really just a wrapper for the \code{formatC}.  It has
-extended functionallity now as I have found common uses cases.
+extended functionality now as I have found common uses cases.
 
 `frmtp` formats P-values per journal
 requirements.  As I work on papers aimed at different journals, the

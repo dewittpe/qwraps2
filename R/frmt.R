@@ -5,7 +5,7 @@
 #'
 #' @details
 #' `frmt` was originally really just a wrapper for the \code{formatC}.  It has
-#' extended functionallity now as I have found common uses cases.
+#' extended functionality now as I have found common uses cases.
 #'
 #' `frmtp` formats P-values per journal
 #' requirements.  As I work on papers aimed at different journals, the
@@ -47,9 +47,9 @@
 #' @param digits number of digits, including trailing zeros, to the right of the
 #' decimal point.  This option is ignored if \code{is.integer(x) == TRUE)}.
 #' @param append a character string to append to the formatted number.  This is
-#' particularly useful for percentages or adding punctionation to the end of the
+#' particularly useful for percentages or adding punctuation to the end of the
 #' formatted number.  This should be a vector of length 1, or equal to the
-#' lenght of \code{x}.
+#' length of \code{x}.
 #'
 #' @return a character vector of the formatted numbers
 #'

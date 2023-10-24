@@ -29,7 +29,7 @@ search list if requested.
 Testing for package versions will is done as \code{packageVersion(x) >=
 version}.  If you need a specific version of a package you should explicitly
 use \code{packageVersion(x) == version} in your script.  In general,
-\code{pkg_check} is a handly tool in interactive sessions.  For a package you
+\code{pkg_check} is a handy tool in interactive sessions.  For a package you
 should have package version documentation in the DESCRIPTION file.
 For a script a base R solution of
 \code{stopifnot(packageVersion("pkg") >= "x.y.z")}

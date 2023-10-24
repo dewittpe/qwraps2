@@ -26,11 +26,11 @@
   and added bespoke p-values to the rows in a "table 1."
 
 * `spin_comments` returns `TRUE` or `FALSE` with the notes on the
-  matching/missmatched comments as an attribute of the return object.
+  matching/mismatched comments as an attribute of the return object.
 
 * Extend the S3 methods provided for `qroc_build_data_frame`
 
-## Deprecations/Removals
+## Deprecated / Removed
 
 * `summary_table_042` and `tab_summary`, the tidyverse versions of summary table
   that had been deprecated have been removed from the package. (#96)
