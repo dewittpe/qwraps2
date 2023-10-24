@@ -1,3 +1,12 @@
+#' @keywords internal
+"_PACKAGE"
+
+## usethis namespace: start
+#' @useDynLib qwraps2
+#' @importFrom Rcpp sourceCpp
+## usethis namespace: end
+NULL
+
 #' A collection of wrapper functions aimed at for aiding the authoring of reproducible
 #' reports.
 #'
@@ -89,13 +98,3 @@
 #'
 #' }
 #'
-#' @useDynLib qwraps2
-#' @importFrom Rcpp sourceCpp
-#' @docType package
-#' @name qwraps2
-NULL
-
-# Define globalVariables so R CMD check doesn't freak out
-utils::globalVariables(".")
-
-
