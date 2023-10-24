@@ -23,15 +23,15 @@
 #' x4[1] <- runif(1)
 #'
 #' # white noise
-#' Z.1 <- rnorm(n, 0, 1)
-#' Z.2 <- rnorm(n, 0, 2)
-#' Z.3 <- rnorm(n, 0, 5)
+#' Z_1 <- rnorm(n, 0, 1)
+#' Z_2 <- rnorm(n, 0, 2)
+#' Z_3 <- rnorm(n, 0, 5)
 #'
 #' for(i in 2:n)
 #' {
-#'   x1[i] <- x1[i-1] + Z.1[i] - Z.1[i-1] + x4[i-1] - x2[i-1]
-#'   x2[i] <- x2[i-1] - 2 * Z.2[i] + Z.2[i-1] - x4[i-1]
-#'   x3[i] <- x3[i-1] + x2[i-1] + 0.2 * Z.3[i] + Z.3[i-1]
+#'   x1[i] <- x1[i-1] + Z_1[i] - Z_1[i-1] + x4[i-1] - x2[i-1]
+#'   x2[i] <- x2[i-1] - 2 * Z_2[i] + Z_2[i-1] - x4[i-1]
+#'   x3[i] <- x3[i-1] + x2[i-1] + 0.2 * Z_3[i] + Z_3[i-1]
 #'   x4[i] <- x4[i-1] + runif(1, 0.5, 1.5) * x4[i-1]
 #' }
 #' testdf <- data.frame(x1, x2, x3, x4)
@@ -73,7 +73,7 @@ qacf.data.frame <- function(x, conf_level = 0.95, show_sig = FALSE, ...) {
 
   g <-
     ggplot2::ggplot() +
-    ggplot2::aes_string(x = "lag", y = "value") +
+    eval(substitute(ggplot2::aes(x = X, y = Y), list(X = as.name("lag"), Y = as.name("value")))) +
     ggplot2::geom_bar(stat = "identity", position = "identity") +
     ggplot2::ylab(acf_data$type)
 
@@ -94,14 +94,11 @@ qacf.data.frame <- function(x, conf_level = 0.95, show_sig = FALSE, ...) {
     if (ncol(x) > 1) {
       g <- g +
         ggplot2::geom_hline(yintercept = ciline) +
-        ggplot2::geom_hline(yintercept = -ciline) +
-        ggplot2::aes_string(fill = "significant")
+        ggplot2::geom_hline(yintercept = -ciline)
     } else {
-      g <- g +
-        ggplot2::geom_hline(yintercept = -ciline) +
-        ggplot2::aes_string(fill = "significant")
+      g <- g + ggplot2::geom_hline(yintercept = -ciline)
     }
-
+    g <- g + eval(substitute(ggplot2::aes(fill = S), list(S = as.name("significant"))))
   }
 
   g <- ggplot2::`%+%`(g, acf_df)
