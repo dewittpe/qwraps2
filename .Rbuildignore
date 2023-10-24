@@ -12,6 +12,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^.*makefile$
+^.*Makefile$
 ^.*\.tar\.gz$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
