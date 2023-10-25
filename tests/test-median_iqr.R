@@ -4,7 +4,7 @@ library(qwraps2)
 stopifnot(identical(median_iqr(mtcars$mpg), "19.20 (15.43, 22.80)"))
 
 # warning given if show_n is not as expected
-stopifnot(inherits(tryCatch(median_iqr(mtcars$mpg, show_n = TRUE), warning = function(w) w), "warning"))
+stopifnot(inherits(tryCatch(median_iqr(mtcars$mpg, show_n = TRUE), error = function(e) e), "error"))
 
 # show n with no missing data
 mpg <- mtcars$mpg
