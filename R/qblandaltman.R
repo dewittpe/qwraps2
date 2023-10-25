@@ -73,11 +73,11 @@ qblandaltman.data.frame <- function(x, alpha = getOption("qwraps2_alpha", 0.05),
   }
 
   ggplot2::ggplot(x) +
-  ggplot2::aes_string(x = 'avg', y = 'diff') +
+  eval(substitute(ggplot2::aes(x = X, y = Y), list(X = as.name('avg'), Y = as.name('diff')))) +
   ggplot2::geom_point() +
-  ggplot2::geom_hline(ggplot2::aes_string(yintercept = 'lcl'), lty = 2) +
-  ggplot2::geom_hline(ggplot2::aes_string(yintercept = 'ucl'), lty = 2) +
-  ggplot2::geom_hline(ggplot2::aes_string(yintercept = 'mean_diff'), lty = 3)
+  ggplot2::geom_hline(mapping = eval(substitute(ggplot2::aes(yintercept = Y), list(Y = as.name('lcl')))), lty = 2) +
+  ggplot2::geom_hline(mapping = eval(substitute(ggplot2::aes(yintercept = Y), list(Y = as.name('ucl')))), lty = 2) +
+  ggplot2::geom_hline(mapping = eval(substitute(ggplot2::aes(yintercept = Y), list(Y = as.name('mean_diff')))), lty = 3)
 }
 
 #' @export

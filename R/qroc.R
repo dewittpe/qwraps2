@@ -34,7 +34,7 @@
 #'
 #' head(x1)
 #'
-#' # second, using observed and truth 
+#' # second, using observed and truth
 #' x2 <- qroc_build_data_frame(predict(fit, type = "response"), truth = diamonds$price > 2800)
 #'
 #' all.equal(x1, x2)
@@ -63,7 +63,7 @@ qroc.qwraps2_generated <- function(x, ...) {
 
 qroc_ggplot <- function(data) {
   ggplot2::ggplot(data) +
-  ggplot2::aes_string(x = "false_positives", y = "true_positives") +
+  eval(substitute(ggplot2::aes(x = X, y = Y), list(X = as.name("false_positives"), Y = as.name("true_positives")))) +
   ggplot2::geom_line() +
   ggplot2::geom_segment(ggplot2::aes(x = 0, y = 0, xend = 1, yend = 1), color = "black", linetype = 2) +
   ggplot2::xlab("1 - Specificity") +

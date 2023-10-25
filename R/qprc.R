@@ -55,7 +55,7 @@ qprc.qwraps2_generated <- function(x, ...) {
 
 qprc_ggplot <- function(data) {
   ggplot2::ggplot(data) +
-  ggplot2::aes_string(x = "Recall", y = "Precision") +
+  eval(substitute(ggplot2::aes(x = X, y = Y), list(X = as.name("Recall"), Y = as.name("Precision")))) +
   ggplot2::geom_line() +
   ggplot2::geom_hline(yintercept = attr(data, "baseline"), linetype = 2)
 }

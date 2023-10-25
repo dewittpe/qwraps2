@@ -58,7 +58,7 @@ x1 <- qroc_build_data_frame(fit)
 
 head(x1)
 
-# second, using observed and truth 
+# second, using observed and truth
 x2 <- qroc_build_data_frame(predict(fit, type = "response"), truth = diamonds$price > 2800)
 
 all.equal(x1, x2)
