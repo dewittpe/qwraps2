@@ -40,14 +40,20 @@ mean_se <- function(x,
                     denote_sd = "pm",
                     markup = getOption("qwraps2_markup", "latex"),
                     ...) {
+
+  cl <- as.list(match.call())
+  if (!("na_rm" %in% names(cl)) & ("na.rm" %in% names(cl))) {
+    na_rm <- cl$na.rm
+    warning("qwraps2::mean_sd uses the argument `na_rm`, not `na.rm`.")
+  }
+  stopifnot(inherits(na_rm, "logical"))
+  stopifnot(length(markup) == 1L)
+  stopifnot(markup %in% c("latex", "markdown"))
+  stopifnot(show_n %in% c("ifNA", "always", "never"))
+
   n <- sum(!is.na(x))
   m <- mean(x, na.rm = na_rm)
   s <- stats::sd(x, na.rm = na_rm) / sqrt(n)
-
-  if (all(!(show_n %in% c("ifNA", "always", "never")))) {
-    warning("'show_n' should be in c('ifNA', 'always', 'never').  Setting to 'ifNA'.")
-    show_n <- "ifNA"
-  }
 
   if (show_n == "always" | (show_n == "ifNA" & any(is.na(x)))) {
     rtn <- paste0(frmt(as.integer(n), digits), "; ", frmt(m, digits), " $\\pm$ ", frmt(s, digits))
