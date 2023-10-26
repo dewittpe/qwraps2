@@ -68,7 +68,7 @@
 #' frmt(17/19 * 100, digits = 2, append = "%")   # good for markdown
 #' frmt(17/19 * 100, digits = 2, append = "\\%") # good for LaTeX
 #'
-#' # append one character different
+#' # append one character
 #' frmt(c(1, 2, 3)/19 * 100, digits = 2, append = "%")
 #'
 #' # append different characters
@@ -224,6 +224,8 @@ frmtp_obstetrics_gynecology <- function(x) {
 #' # for a set of three values
 #' temp <- c(a = 1.23, b = .32, CC = 1.78)
 #' frmtci(temp)
+#'
+#' # show level uses getOption("qwraps2_alpha", 0.05)
 #' frmtci(temp, show_level = TRUE)
 #'
 #' # note that the show_level will be ignored in the following
@@ -238,6 +240,12 @@ frmtp_obstetrics_gynecology <- function(x) {
 #'                 dimnames = list(c("A", "B", "C", "D"), c("EST", "LOW", "HIGH")))
 #' temp2
 #' frmtci(temp2)
+#'
+#' # similar for a data.frame
+#' df2 <- as.data.frame(temp2)
+#' frmtci(df2)
+#'
+#' @export
 frmtci <- function(x, est = 1, lcl = 2, ucl = 3, format = "est (lcl, ucl)", show_level = FALSE, ...) {
   UseMethod("frmtci")
 }
@@ -365,10 +373,15 @@ Gitlabpkg <- function(pkg, username) {
 #' Backtick
 #'
 #' Encapsulate a string in backticks. Very helpful for in line code in
-#' knitr::spin scripts.
+#' \code{\link[knitr]{spin}} scripts.
 #'
 #' @param x the thing to be deparsed and encapsulated in backticks
 #' @param dequote remove the first and last double or signal quote form \code{x}
+#'
+#' @examples
+#' backtick("a quoted string")
+#' backtick(no-quote)
+#' backtick(noquote)
 #'
 #' @export
 backtick <- function(x, dequote = FALSE) {

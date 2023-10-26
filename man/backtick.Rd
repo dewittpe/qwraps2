@@ -13,5 +13,11 @@ backtick(x, dequote = FALSE)
 }
 \description{
 Encapsulate a string in backticks. Very helpful for in line code in
-knitr::spin scripts.
+\code{\link[knitr]{spin}} scripts.
+}
+\examples{
+backtick("a quoted string")
+backtick(no-quote)
+backtick(noquote)
+
 }

@@ -131,7 +131,7 @@ frmt(numbers)
 frmt(17/19 * 100, digits = 2, append = "\%")   # good for markdown
 frmt(17/19 * 100, digits = 2, append = "\\\\\%") # good for LaTeX
 
-# append one character different
+# append one character
 frmt(c(1, 2, 3)/19 * 100, digits = 2, append = "\%")
 
 # append different characters
@@ -155,6 +155,8 @@ cbind("raw"      = ps,
 # for a set of three values
 temp <- c(a = 1.23, b = .32, CC = 1.78)
 frmtci(temp)
+
+# show level uses getOption("qwraps2_alpha", 0.05)
 frmtci(temp, show_level = TRUE)
 
 # note that the show_level will be ignored in the following
@@ -169,6 +171,11 @@ temp2 <- matrix(rnorm(12), nrow = 4,
                 dimnames = list(c("A", "B", "C", "D"), c("EST", "LOW", "HIGH")))
 temp2
 frmtci(temp2)
+
+# similar for a data.frame
+df2 <- as.data.frame(temp2)
+frmtci(df2)
+
 }
 \seealso{
 \code{\link{formatC}}
