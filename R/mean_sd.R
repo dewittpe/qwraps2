@@ -53,6 +53,7 @@ mean_sd <- function(x,
   stopifnot(length(markup) == 1L)
   stopifnot(markup %in% c("latex", "markdown"))
   stopifnot(show_n %in% c("ifNA", "always", "never"))
+  stopifnot(denote_sd %in% c("pm", "paren"))
 
   n <- sum(!is.na(x))
   m <- mean(x, na.rm = na_rm)
