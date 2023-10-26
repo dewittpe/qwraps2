@@ -13,7 +13,7 @@ vignette: >
 ---
 
 
-```{r }
+```{r}
 library(qwraps2)
 packageVersion("qwraps2")
 ```
@@ -35,7 +35,7 @@ of mtcars2.
 
 Starting with the original mtcars:
 
-```{r }
+```{r}
 mtcars2 <- mtcars
 str(mtcars2)
 ```
@@ -48,7 +48,7 @@ factor levels is intentionally set to be non-sequential.  This will help to
 illustrate the ordering or results when using a factor or a character vector
 as a grouping variable.
 
-```{r }
+```{r}
 mtcars2$cyl_character <- paste(mtcars2$cyl, "cylinders")
 mtcars2$cyl_factor    <- factor(mtcars2$cyl,
                                 levels = c(6, 4, 8),
@@ -58,7 +58,7 @@ mtcars2$cyl_factor    <- factor(mtcars2$cyl,
 
 Create other factor variables.
 
-```{r }
+```{r}
 mtcars2$gear_factor <-
   factor(mtcars2$gear, levels = c(3, 4, 5), labels = paste(c(3, 4, 5), "forward gears"))
 ```
@@ -70,7 +70,7 @@ column is an integer vector for indicating
 V-shaped or straight.  The constructed column engine is a factor the same
 information as a labeled factor.
 
-```{r }
+```{r}
 mtcars2$engine <-
   factor(mtcars2$vs, levels = c(0, 1), labels = c("V-shaped", "straight"))
 ```
@@ -83,7 +83,7 @@ manual.  We construct a
 `r  backtick(transmission)  `
 column to provide the same information as a factor.
 
-```{r }
+```{r}
 mtcars2$transmission <-
   factor(mtcars2$am, levels = c(0, 1), labels = c("Automatic", "Manual"))
 ```
@@ -93,7 +93,7 @@ The rownames of the mtcars2 data set provide the make and model of the
 automobiles.  Here we will create columns for make and model and then omit
 the rownames.
 
-```{r }
+```{r}
 mtcars2$make  <- sub("^(\\w+)\\s(.+)", "\\1", rownames(mtcars2))
 mtcars2$model <- sub("^(\\w+)\\s(.+)", "\\2", rownames(mtcars2))
 rownames(mtcars2) <- NULL
@@ -107,7 +107,7 @@ through July issues of _Motor Trend_ in 1974, we will create a
 column starting in January 1974 forward with one to three tests per week
 through May 1974.  This assumes the data is in chronological order of the data.
 
-```{r }
+```{r}
 set.seed(42)
 mtcars2$test_date <-
   as.POSIXct("1974-01-03", tz = "GMT") +
@@ -118,7 +118,7 @@ mtcars2$test_date <-
 Lastly we will order the columns of mtcars2 so similar columns are next to
 each other.
 
-```{r }
+```{r}
 mtcars2 <-
   mtcars2[, c("make", "model", "mpg", "disp", "hp", "drat", "wt", "qsec",
               "cyl", "cyl_character", "cyl_factor",
@@ -139,7 +139,7 @@ observations with
 variables.  Some of the variables tell us the same information, but in
 different formats.
 
-```{r }
+```{r}
 str(mtcars2)
 ```
 
@@ -186,7 +186,7 @@ package.  The data has been transcribed from [@bland1986statistical].
 The units of measure for the pefr are liters per minute (L/min).
 
 
-```{r }
+```{r}
 # copied text from the manuscript
 pefr_table <-
   read.delim(
@@ -214,7 +214,7 @@ pefr_table <-
 
 Build the data set
 
-```{r }
+```{r}
 pefr <-
   expand.grid(subject = 1:17,
               measurement = 1:2,
@@ -230,6 +230,57 @@ head(pefr)
 See
 `r  backtick(vignette("qwraps2-graphics", package = "qwraps2"))  `
 for examples using this data set.
+
+
+# Spambase
+
+Spambase [@spambase] is a useful data set for example needed a binary outcome
+and several possible predictors.  The data set and documentation can be found
+in this package in the directory
+
+```{r}
+system.file("spambase", package = "qwraps2")
+```
+
+
+The data set
+`r  backtick(spambase)  `
+was generated thusly:
+
+```{r}
+nms <-
+  scan(system.file("spambase", "spambase.names", package = "qwraps2")
+       , what = character()
+       , skip = 33
+       , sep = "\n"
+       , quiet = TRUE
+  )
+nms <- sapply(strsplit(nms, split = ":"), getElement, 1)
+nms <- c(nms, "spam")
+nms
+
+spambase <- read.csv(
+    file = system.file("spambase", "spambase.data", package = "qwraps2")
+    , header = FALSE
+    , col.names = nms
+)
+```
+
+
+There are
+`r  frmt(nrow(spambase))  `
+rows of data with
+`r  frmt(ncol(spambase) - 1L) `
+predictors for the binary outcome
+`r  backtick(spam)  `
+
+
+```{r}
+n_perc(spambase$spam) # count and percent of spam messages
+```
+
+
+
 
 # References
 

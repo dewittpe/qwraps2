@@ -24,7 +24,6 @@ packageVersion("qwraps2")
 # */
 #'
 #' # mtcars2
-# /* {{{ */
 #'
 #' The base R package datasets provides the mtcars data set.  The information in
 #' mtcars is the fuel consumption and automobile characteristics of
@@ -145,10 +144,8 @@ str(mtcars2)
 #' | [, 18]  | carb          | Number of carburetors                                                              |
 #' | [, 19]  | test_date     | arbitrary date - created to approximate when the vehicle would have been assessed. |
 #'
-# /* end of mtcars2 section }}} */
 #'
 #' # pefr
-# /* {{{ */
 #'
 #' Peak expiratory flow rate (pefr) data is used for examples within the qwraps2
 #' package.  The data has been transcribed from [@bland1986statistical].
@@ -205,7 +202,46 @@ head(pefr)
 #' See
 {{ backtick(vignette("qwraps2-graphics", package = "qwraps2")) }}
 #' for examples using this data set.
-# /* end of pefr section }}} */
+#'
+#'
+#' # Spambase
+#'
+#' Spambase [@spambase] is a useful data set for example needed a binary outcome
+#' and several possible predictors.  The data set and documentation can be found
+#' in this package in the directory
+system.file("spambase", package = "qwraps2")
+#'
+#' The data set
+{{ backtick(spambase) }}
+#' was generated thusly:
+nms <-
+  scan(system.file("spambase", "spambase.names", package = "qwraps2")
+       , what = character()
+       , skip = 33
+       , sep = "\n"
+       , quiet = TRUE
+  )
+nms <- sapply(strsplit(nms, split = ":"), getElement, 1)
+nms <- c(nms, "spam")
+nms
+
+spambase <- read.csv(
+    file = system.file("spambase", "spambase.data", package = "qwraps2")
+    , header = FALSE
+    , col.names = nms
+)
+
+#'
+#' There are
+{{ frmt(nrow(spambase)) }}
+#' rows of data with
+{{ frmt(ncol(spambase) - 1L)}}
+#' predictors for the binary outcome
+{{ backtick(spam) }}
+#'
+n_perc(spambase$spam) # count and percent of spam messages
+#'
+#'
 #'
 #' # References
 #'
@@ -218,6 +254,7 @@ sessionInfo()
 # /* ------------------------ Export the data set ------------------------------
 save(mtcars2, file = "data/mtcars2.rda")
 save(pefr, file = "data/pefr.rda")
+save(spambase, file = "data/spambase.rda")
 # */
 
 # /* ---------------------------- END OF FILE ------------------------------- */
