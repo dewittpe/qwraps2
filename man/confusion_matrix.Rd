@@ -4,68 +4,43 @@
 \alias{confusion_matrix}
 \alias{confusion_matrix.default}
 \alias{confusion_matrix.formula}
-\alias{is.confusion_matrix}
-\alias{print.confusion_matrix}
+\alias{is.qwraps2_confusion_matrix}
+\alias{print.qwraps2_confusion_matrix}
 \title{Confusion Matrices (Contingency Tables)}
 \usage{
-confusion_matrix(x, ...)
+confusion_matrix(..., thresholds = NULL)
 
-\method{confusion_matrix}{default}(
-  x,
-  y,
-  positive = NULL,
-  boot = FALSE,
-  boot_samples = 1000L,
-  alpha = 0.05,
-  ...
-)
+\method{confusion_matrix}{default}(truth, predicted, ..., thresholds = NULL)
 
-\method{confusion_matrix}{formula}(
-  formula,
-  data = parent.frame(),
-  positive = NULL,
-  boot = FALSE,
-  boot_samples = 1000L,
-  alpha = 0.05,
-  ...
-)
+\method{confusion_matrix}{formula}(formula, data = parent.frame(), ..., threshold = NULL)
 
-is.confusion_matrix(x)
+is.qwraps2_confusion_matrix(x)
 
-\method{print}{confusion_matrix}(x, ...)
+\method{print}{qwraps2_confusion_matrix}(x, ...)
 }
 \arguments{
-\item{x}{prediction condition vector, a two level factor variable or a
-variable that can be converted to one.}
+\item{...}{pass through}
 
-\item{...}{not currently used}
+\item{thresholds}{a numeric vector of thresholds to be used to define the
+confusion matrix (one threshold) or matrices (two or more thresholds).  If
+\code{NULL} the unique values of \code{predicted} will be used.}
 
-\item{y}{True Condition vector with the same possible values as x.}
+\item{truth}{a integer vector with the values \code{0} and \code{1}, or a logical vector.
+A value of \code{0} or \code{FALSE} is an indication of condition negative;
+\code{1} or \code{TRUE} is an indication of condition positive.}
 
-\item{positive}{the level of x and y which is the positive outcome.  If
-\code{NULL} the first level of \code{factor(y)} will be used as the positive
-level.}
-
-\item{boot}{boolean, should bootstrapped confidence intervals for the
-sensitivity and specificity be computed?  Defaults to FALSE.}
-
-\item{boot_samples}{number of bootstrapping sample to generate, defaults to
-1000L.  Ignored if \code{boot == FALSE}.}
-
-\item{alpha}{100(1-alpha)% confidence intervals for specificity and
-sensitivity.  Ignored if \code{boot == FALSE}.}
+\item{predicted}{a numeric vector.  See Details.}
 
 \item{formula}{column (known) ~ row (test) for building the confusion matrix}
 
 \item{data}{environment containing the variables listed in the formula}
 }
 \value{
-The sensitivity and specificity functions return numeric values.
-\code{confusion_matrix} returns a list with elements:
+\code{confusion_matrix} returns a data.frame with columns
 \itemize{
-  \item \code{tab} the confusion matrix,
-  \item \code{cells}
-  \item \code{stats} a matrix of summary statistics and confidence intervals.
+  \item
+  \item
+  \item
 }
 }
 \description{
@@ -74,9 +49,7 @@ specificity, confidence intervals (Wilson's method and (optional
 bootstrapping)).
 }
 \details{
-Sensitivity and Specificity:
-For the sensitivity and specificity function we expect the 2-by-2 confusion
-matrix (contingency table) to be of the form:
+The confusion matrix:
 
 \tabular{lccc}{
                     \tab      \tab True \tab Condition \cr
@@ -86,18 +59,18 @@ Predicted Condition \tab -    \tab FN   \tab TN        \cr
 }
 where
 \itemize{
-  \item FN: False Negative, and
-  \item FP: False Positive,
-  \item TN: True Negative,
-  \item TP: True Positive.
+  \item FN: False Negative = truth = 1 & prediction < threshold,
+  \item FP: False Positive = truth = 0 & prediction >= threshold,
+  \item TN: True Negative  = truth = 0 & prediction < threshold, and
+  \item TP: True Positive  = truth = 1 & prediction >= threshold.
 }
 
 The statistics returned in the \code{stats} element are:
 \itemize{
   \item accuracy    = (TP + TN) / (TP + TN + FP + FN)
-  \item sensitivity = TP / (TP + FN)
-  \item specificity = TN / (TN + FP)
-  \item positive predictive value (PPV) = TP / (TP + FP)
+  \item sensitivity, aka true positive rate = TP / (TP + FN)
+  \item specificity, aka true negative rate = TN / (TN + FP)
+  \item positive predictive value (PPV), aka precision = TP / (TP + FP)
   \item negative predictive value (NPV) = TN / (TN + FN)
   \item false negative rate (FNR) = 1 - Sensitivity
   \item false positive rate (FPR) = 1 - Specificity
@@ -124,77 +97,27 @@ be 1.  If TP are 0 and FP + FN > 0, then PPV, sensitivity, and F1 are all
 defined to be 0.
 }
 \examples{
-################################################################################
-## Example 1
-test  <- c(rep(1, 53), rep(0, 47))
-truth <- c(rep(1, 20), rep(0, 33), rep(1, 10), rep(0, 37))
-con_mat <- confusion_matrix(x = test, y = truth, positive = "1")
-str(con_mat)
 
-con_mat
+# Example 1: known truth and prediction status
+df <-
+  data.frame(
+      truth = c(1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0)
+    , pred  = c(1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0)
+  )
 
-con_mat$cells$true_positives  # 20
-con_mat$cells$true_negatives  # 37
-con_mat$cells$false_positives # 33
-con_mat$cells$false_negatives # 10
+confusion_matrix(df$truth, df$pred, thresholds = 1)
 
-con_mat_with_boot <- confusion_matrix(test, truth, positive = "1", boot = TRUE)
-con_mat_with_boot
+# Example 2: Use with a logistic regression model
+mod <- glm(
+  formula = spam ~ word_freq_our + word_freq_over + capital_run_length_total
+, data = spambase
+, family = binomial()
+)
 
-# only one value in one of the vectors
-a <- c(0,0,0,0,0,0,0,0,0,0,0,0,0,0)  # all zeros
-b <- c(1,0,1,0,1,0,0,0,0,0,0,0,0,1)  # some zeros and ones
+pred <- predict(mod, type = "response")
 
-confusion_matrix(a, b)
-confusion_matrix(b, a)
-confusion_matrix(a, b, positive = 1)
-confusion_matrix(b, a, positive = 1)
+confusion_matrix(truth = spambase$spam, predicted = pred)
+confusion_matrix(truth = spambase$spam, predicted = pred, thresholds = 0.5)
 
-
-################################################################################
-## Example 2: based on an example from the wikipedia page:
-# https://en.wikipedia.org/wiki/Confusion_matrix
-
-animals <-
-  data.frame(Predicted = c(rep("Cat",    5 + 2 +  0),
-                           rep("Dog",    3 + 3 +  2),
-                           rep("Rabbit", 0 + 1 + 11)),
-             Actual    = c(rep(c("Cat", "Dog", "Rabbit"), times = c(5, 2,  0)),
-                           rep(c("Cat", "Dog", "Rabbit"), times = c(3, 3,  2)),
-                           rep(c("Cat", "Dog", "Rabbit"), times = c(0, 1, 11))),
-             stringsAsFactors = FALSE)
-
-table(animals)
-
-cats <- apply(animals, 1:2, function(x) ifelse(x == "Cat", "Cat", "Non-Cat"))
-
-# Default calls, note the difference based on what is set as the 'positive'
-# value.
-confusion_matrix(cats[, "Predicted"], cats[, "Actual"], positive = "Cat")
-confusion_matrix(cats[, "Predicted"], cats[, "Actual"], positive = "Non-Cat")
-
-# Using a Formula
-confusion_matrix(formula = I(Actual == "Cat") ~ I(Predicted == "Cat"),
-                 data = animals,
-                 positive = "TRUE")
-
-confusion_matrix(formula = I(Actual == "Cat") ~ I(Predicted == "Cat"),
-                 data = animals,
-                 positive = "TRUE",
-                 boot = TRUE)
-
-################################################################################
-## Example 3
-russell <-
-  data.frame(Pred  = c(rep(0, 2295), rep(0, 118), rep(1, 1529), rep(1, 229)),
-             Truth = c(rep(0, 2295), rep(1, 118), rep(0, 1529), rep(1, 229)))
-
-# The values for Sensitivity, Specificity, PPV, and NPV are dependent on the
-# "positive" level.  By default, the first level of y is used.
-confusion_matrix(x = russell$Pred, y = russell$Truth, positive = "0")
-confusion_matrix(x = russell$Pred, y = russell$Truth, positive = "1")
-
-confusion_matrix(Truth ~ Pred, data = russell, positive = "0")
-confusion_matrix(Truth ~ Pred, data = russell, positive = "1")
 
 }

@@ -30,6 +30,10 @@
 
 * Extend the S3 methods provided for `qroc_build_data_frame`
 
+* **Potentially breaking Change** `confusion_matrix` has been undergone a major
+  refactor.  If nothing else, the return object is now a data.frame with more
+  output than before.  The inputs are hopefully easer for end users as well.
+
 ## Deprecated / Removed
 
 * `summary_table_042` and `tab_summary`, the tidyverse versions of summary table

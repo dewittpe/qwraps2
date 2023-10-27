@@ -44,3 +44,20 @@
 #' (1986): 307-310.
 #'
 "pefr"
+
+#' Spambase
+#'
+#' Classifying Email as Spam or Non-Spam
+#'
+#' @format a data.frame with 4601 rows, 58 columns; 57 features and 0/1 indictor for spam
+#'
+#' Used under CC BY 4.0 license.
+#'
+#' @seealso \code{vignette("qwraps2-data-sets", package = "qwraps2")} for
+#' details on the construction of the data set.
+#'
+#' @references
+#' Hopkins,Mark, Reeber,Erik, Forman,George, and Suermondt,Jaap. (1999). Spambase. UCI Machine Learning Repository. https://doi.org/10.24432/C53G6X.
+#'
+"spambase"
+

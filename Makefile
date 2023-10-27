@@ -30,6 +30,7 @@ VIGNETTES += $(PKG_ROOT)/vignettes/qwraps2-graphics.Rmd
 ## Data targets
 DATATARGETS  = $(PKG_ROOT)/data/mtcars2.rda
 DATATARGETS += $(PKG_ROOT)/data/pefr.rda
+DATATARGETS += $(PKG_ROOT)/data/spambase.rda
 
 ################################################################################
 # Recipes
@@ -67,10 +68,8 @@ $(PKG_ROOT)/vignettes/%.Rmd : $(PKG_ROOT)/vignette-spinners/%.R
 ################################################################################
 # Data Sets
 #
-#$(DATATARGETS) &: .data-export.Rout
-
-.data-export.Rout : vignette-spinners/qwraps2-data-sets.R
-	R CMD BATCH --vanilla $< $@
+$(DATATARGETS) &: vignette-spinners/qwraps2-data-sets.R inst/spambase/spambase.data inst/spambase/spambase.names
+	R CMD BATCH --vanilla $< .data-export.Rout
 
 ################################################################################
 # Other Recipes for checking the package, (un)installing, and cleaning the
