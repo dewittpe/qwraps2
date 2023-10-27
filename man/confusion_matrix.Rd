@@ -4,17 +4,69 @@
 \alias{confusion_matrix}
 \alias{confusion_matrix.default}
 \alias{confusion_matrix.formula}
-\alias{is.qwraps2_confusion_matrix}
+\alias{auc}
+\alias{auc.qwraps2_confusion_matrix}
+\alias{qroc}
+\alias{qroc.qwraps2_confusion_matrix}
+\alias{qroc.data.frame}
+\alias{qroc.qwraps2_auc}
+\alias{qprc}
+\alias{qprc.qwraps2_confusion_matrix}
+\alias{qprc.data.frame}
+\alias{qprc.qwraps2_auc}
 \alias{print.qwraps2_confusion_matrix}
 \title{Confusion Matrices (Contingency Tables)}
 \usage{
-confusion_matrix(..., thresholds = NULL)
+confusion_matrix(
+  ...,
+  thresholds = NULL,
+  confint = FALSE,
+  confint_method = "logit",
+  alpha = getOption("qwraps2_alpha", 0.05),
+  frmtci_args = list(...)
+)
 
-\method{confusion_matrix}{default}(truth, predicted, ..., thresholds = NULL)
+\method{confusion_matrix}{default}(
+  truth,
+  predicted,
+  ...,
+  thresholds = NULL,
+  confint = FALSE,
+  confint_method = "logit",
+  alpha = getOption("qwraps2_alpha", 0.05),
+  frmtci_args = list(...)
+)
 
-\method{confusion_matrix}{formula}(formula, data = parent.frame(), ..., threshold = NULL)
+\method{confusion_matrix}{formula}(
+  formula,
+  data = parent.frame(),
+  ...,
+  thresholds = NULL,
+  confint = FALSE,
+  confint_method = "logit",
+  alpha = getOption("qwraps2_alpha", 0.05),
+  frmtci_args = list()
+)
 
-is.qwraps2_confusion_matrix(x)
+auc(x, ...)
+
+\method{auc}{qwraps2_confusion_matrix}(x, alpha = getOption("qwraps2_alpha", 0.05), frmtci_args = list(), ...)
+
+qroc(x, ...)
+
+\method{qroc}{qwraps2_confusion_matrix}(x, ...)
+
+\method{qroc}{data.frame}(x, ...)
+
+\method{qroc}{qwraps2_auc}(x, ...)
+
+qprc(x, ...)
+
+\method{qprc}{qwraps2_confusion_matrix}(x, prevalence = NULL, ...)
+
+\method{qprc}{data.frame}(x, prevalence = NULL, ...)
+
+\method{qprc}{qwraps2_auc}(x, prevalence = NULL, ...)
 
 \method{print}{qwraps2_confusion_matrix}(x, ...)
 }
@@ -24,6 +76,16 @@ is.qwraps2_confusion_matrix(x)
 \item{thresholds}{a numeric vector of thresholds to be used to define the
 confusion matrix (one threshold) or matrices (two or more thresholds).  If
 \code{NULL} the unique values of \code{predicted} will be used.}
+
+\item{confint}{logical, if \code{TRUE} generate and report confidence
+intervals for sensitivity, specificity, ppv, and npv.}
+
+\item{confint_method}{character string denoting if the logit or binomial
+method for deriving confidence intervals should be used}
+
+\item{alpha}{alpha level for 100 * (1 - alpha) percent confidence intervals}
+
+\item{frmtci_args}{a list of arguments passed to frmtci}
 
 \item{truth}{a integer vector with the values \code{0} and \code{1}, or a logical vector.
 A value of \code{0} or \code{FALSE} is an indication of condition negative;
@@ -106,6 +168,10 @@ df <-
   )
 
 confusion_matrix(df$truth, df$pred, thresholds = 1)
+confusion_matrix(df$truth, df$pred, thresholds = 1, confint = TRUE)
+confusion_matrix(df$truth, df$pred, thresholds = 1, confint = TRUE, frmtci_args = list(show_level = TRUE, digits = 3))
+confusion_matrix(df$truth, df$pred, thresholds = 1, confint = TRUE, alpha = 0.1)
+confusion_matrix(df$truth, df$pred, thresholds = 1, confint = TRUE, alpha = 0.10, frmtci_args = list(show_level = TRUE, digits = 3))
 
 # Example 2: Use with a logistic regression model
 mod <- glm(

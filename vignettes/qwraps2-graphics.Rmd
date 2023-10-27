@@ -22,7 +22,7 @@ for the "quick" plots was inspired by the ggplot2 function qplot.  The
 development, flexibility, and robustness of these functions vary.  Some "tips
 and tricks" are provided.
 
-```{r }
+```{r}
 library(qwraps2)
 packageVersion("qwraps2")
 library(ggplot2)
@@ -34,7 +34,7 @@ library(ggplot2)
 
 Generate an example data set.
 
-```{r }
+```{r}
 set.seed(42)
 n <- 250
 x1 <- x2 <- x3 <- x4 <- vector('numeric', length = n)
@@ -81,7 +81,7 @@ to produce the statistics needed for the plot.  If you want to get at the
 data itself to build your own acf plot you can extract the data frame from
 the qacf return:
 
-```{r }
+```{r}
 acf_plot_data <- qacf(testdf)$data
 head(acf_plot_data)
 ```
@@ -100,7 +100,7 @@ The following replicates the figures in [@bland1986statistical].
 
 Using the first measurement only:
 
-```{r }
+```{r}
 pefr_m1 <-
   cbind("Large" = pefr[pefr$measurement == 1 & pefr$meter == "Wright peak flow meter", "pefr"],
         "Mini"  = pefr[pefr$measurement == 1 & pefr$meter == "Mini Wright peak flow meter", "pefr"])
@@ -110,7 +110,7 @@ pefr_m1 <-
 A standard x-y style plot and a correlation coefficient suggests that the two
 meters provide reasonably similar results.
 
-```{r }
+```{r}
 cor(pefr_m1)
 
 qplot(x = pefr_m1[, 1],
@@ -132,7 +132,7 @@ correlation occurs when the data points are co-linear.
 The Bland Altman plot plots the average value on the x-axis and the
 difference in the measurements on the y-axis:
 
-```{r }
+```{r}
 qblandaltman(pefr_m1) +
 xlim(0, 800) +
 ylim(-100, 100) +
@@ -151,7 +151,7 @@ from the simple x-y plot.
 Reliability, or repeatability, of measurements can also be investigated with
 a Bland Altman plot.
 
-```{r }
+```{r}
 pefr_mini <-
   cbind(m1 = pefr[pefr$measurement == 1 & pefr$meter == "Mini Wright peak flow meter", "pefr"],
         m2 = pefr[pefr$measurement == 2 & pefr$meter == "Mini Wright peak flow meter", "pefr"])
@@ -163,7 +163,7 @@ qblandaltman(pefr_mini)
 
 # qkmplot: Kaplan Meier Plots
 
-```{r }
+```{r}
 # create a survfit object
 require(survival)
 leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x, data = survival::aml)
@@ -194,48 +194,125 @@ qkmplot(intonly_fit, conf_int = TRUE)
 ```
 
 
-# qroc: Receiver Operating Curve
+# qroc and qprc: Receiver Operating Curve and Precision Recall Curve
 
-```{r }
+Starting in
+`r  Rpkg(qwraps2)  `
+version 0.6.0, the methods for building these graphics have been
+fundamentally changed as part of a major refactor of the
+`r  backtick(confusion_matrix)  `
+method which replaces a lot of the code that
+`r  backtick(qroc)  `
+and
+`r  backtick(qprc)  `
+were built on.
+
+Let's start with an example of having two models for predicing if the price
+of a diamond exceeds $2,800.
+
+```{r}
 data(diamonds, package = "ggplot2")
 
 # Create two logistic regression models
 fit1 <- glm(I(price > 2800) ~ cut * color, data = diamonds, family = binomial())
 fit2 <- glm(I(price > 2800) ~ cut + color + clarity, data = diamonds, family = binomial())
-
-# Easiest way to get an ROC plot:
-qroc(fit1)
-qroc(fit2)
-
-# Create two data sets, this will also let you get the AUC out
-data1 <- qroc_build_data_frame(fit1)
-data2 <- qroc_build_data_frame(fit2)
-
-auc(data1)
-auc(data2)
-
-# Plotting the ROC from the data set can be done too
-qroc(data1)
-
-# Add the AUC value to the plot title
-qroc(data2) + ggtitle(paste("Fit 2\nAUC =", round(auc(data2), 2)))
-
-# build a data set for plotting to ROCs on one plot
-plot_data <- rbind(cbind(Model = "fit1", data1),
-                   cbind(Model = "fit2", data2))
-qroc(plot_data) + aes(color = Model)
-
-# with AUC in the legend
-plot_data <- rbind(cbind(Model = paste("Fit1\nauc =", round(auc(data1), 3)), data1),
-                   cbind(Model = paste("Fit2\nauc =", round(auc(data2), 3)), data2))
-qroc(plot_data) +
-  theme_bw() +
-  aes(color = Model, linetype = Model) +
-  theme(legend.position   = "bottom",
-        legend.text.align = 0.5)
 ```
 
 
+To build ROC and/or PRC plots start by building the confusion matrix for each
+
+```{r}
+cm1 <- confusion_matrix(truth = diamonds$price > 2800, predicted = predict(fit1, type = "response"))
+cm2 <- confusion_matrix(truth = diamonds$price > 2800, predicted = predict(fit2, type = "response"))
+```
+
+
+Calling
+`r  backtick(auc)  `
+on the confusion matrices will generate list object with the need plotting
+data and other results.
+
+```{r}
+str(auc(cm1))
+str(auc(cm2))
+```
+
+
+Plotting ROC can be done by calling
+`r  backtick(qroc)  `
+on either the confusion matrix object or the object returned by
+`r  backtick(auc) %s% "." `
+
+```{r}
+qroc(auc(cm1))
+qroc(cm2)
+```
+
+
+The plots generated a ggplot2 plots and can be modified like any other
+ggplot2 plot, for example
+
+```{r}
+# Add the AUC value to the plot title
+qroc(cm2) + ggtitle(label = "Fit 2", subtitle = paste("AUROC =", frmt(auc(cm2)$auroc, digits = 3)))
+```
+
+
+You can also use the results to build up a data set for plotting multiple
+curves together.
+
+```{r}
+plot_data <- rbind(cbind(Model = "fit1", auc(cm1)$roc_data),
+                   cbind(Model = "fit2", auc(cm2)$roc_data))
+qroc(plot_data) + aes(color = Model)
+
+# with AUC in the legend
+plot_data <- rbind(cbind(Model = paste("Fit1\nAUROC =", frmt(auc(cm1)$auroc, 3)), auc(cm1)$roc_data),
+                   cbind(Model = paste("Fit2\nAUROC =", frmt(auc(cm2)$auroc, 3)), auc(cm2)$roc_data))
+qroc(plot_data) +
+  ggplot2::theme_bw() +
+  ggplot2::aes(color = Model, linetype = Model) +
+  ggplot2::theme(legend.position   = "bottom",
+                 legend.text.align = 0.5)
+```
+
+
+Building PRC plots is similar, just use prc insead of roc in all the above
+calls.
+
+```{r}
+qprc(auc(cm1))
+qprc(cm2) + ggtitle(label = "Fit 2", subtitle = paste("AUPRC =", frmt(auc(cm2)$auprc, digits = 3)))
+plot_data <- rbind(cbind(Model = "fit1", auc(cm1)$prc_data),
+                   cbind(Model = "fit2", auc(cm2)$prc_data))
+qprc(plot_data) + aes(color = Model)
+```
+
+
+One caveat for plotting multiple PRC on one plot is that you'll need to
+specify the prevalence value to plot.
+
+```{r}
+plot_data <- rbind(cbind(Model = paste("Fit1\nAUPRC =", frmt(auc(cm1)$auprc, 3)), auc(cm1)$prc_data),
+                   cbind(Model = paste("Fit2\nAUPRC =", frmt(auc(cm2)$auprc, 3)), auc(cm2)$prc_data))
+auc(cm1)$prevalence
+qprc(plot_data, prevalence = auc(cm1)$prevalence) +
+  ggplot2::theme_bw() +
+  ggplot2::aes(color = Model, linetype = Model) +
+  ggplot2::theme(legend.position   = "bottom",
+                 legend.text.align = 0.5)
+```
+
+
+In general, the use of the
+`r  backtick(roc_data)  `
+and
+`r  backtick(prc_data)  `
+elements generated by
+`r  backtick(auc)  `
+can be used to inform as complex or simple a plot as you like.  The plotting
+methods provided are just quick and easy ones to use.  Customization of the
+plots is expected.
 
 # Session Info
 

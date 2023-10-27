@@ -32,7 +32,6 @@ library(ggplot2)
 #'
 #'
 #' # qacf: Autocorrelation Plots
-# /* {{{ */
 #'
 #' Generate an example data set.
 set.seed(42)
@@ -81,10 +80,8 @@ qacf(testdf, show_sig = TRUE)
 acf_plot_data <- qacf(testdf)$data
 head(acf_plot_data)
 
-# /* end of qacf }}} */
 #'
 #' # qblandaltman: Bland Altman Plot
-# /* {{{ */
 #'
 #' Introduced in [@altman1983measurement] and [@bland1986statistical], the
 #' qblandaltman method builds ggplot2 style Bland Altman plots.  For examples we
@@ -146,10 +143,8 @@ pefr_mini <-
 qblandaltman(pefr_mini)
 
 #'
-# /* end of qblandaltman }}} */
 #'
 #' # qkmplot: Kaplan Meier Plots
-# /* {{{ */
 # create a survfit object
 require(survival)
 leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x, data = survival::aml)
@@ -174,48 +169,101 @@ qkmplot(leukemia_km_data)
 intonly_fit <- survival::survfit(survival::Surv(time, status) ~ 1, data = survival::aml)
 survival:::plot.survfit(intonly_fit, conf.int = TRUE)
 qkmplot(intonly_fit, conf_int = TRUE)
-# /* end of qkmplot }}} */
 #'
-#' # qroc: Receiver Operating Curve
-# /* {{{ */
+#' # qroc and qprc: Receiver Operating Curve and Precision Recall Curve
+#'
+#' Starting in
+{{ Rpkg(qwraps2) }}
+#' version 0.6.0, the methods for building these graphics have been
+#' fundamentally changed as part of a major refactor of the
+{{ backtick(confusion_matrix) }}
+#' method which replaces a lot of the code that
+{{ backtick(qroc) }}
+#' and
+{{ backtick(qprc) }}
+#' were built on.
+#'
+#' Let's start with an example of having two models for predicing if the price
+#' of a diamond exceeds $2,800.
 data(diamonds, package = "ggplot2")
 
 # Create two logistic regression models
 fit1 <- glm(I(price > 2800) ~ cut * color, data = diamonds, family = binomial())
 fit2 <- glm(I(price > 2800) ~ cut + color + clarity, data = diamonds, family = binomial())
 
-# Easiest way to get an ROC plot:
-qroc(fit1)
-qroc(fit2)
+#'
+#' To build ROC and/or PRC plots start by building the confusion matrix for each
+cm1 <- confusion_matrix(truth = diamonds$price > 2800, predicted = predict(fit1, type = "response"))
+cm2 <- confusion_matrix(truth = diamonds$price > 2800, predicted = predict(fit2, type = "response"))
 
-# Create two data sets, this will also let you get the AUC out
-data1 <- qroc_build_data_frame(fit1)
-data2 <- qroc_build_data_frame(fit2)
+#'
+#' Calling
+{{ backtick(auc) }}
+#' on the confusion matrices will generate list object with the need plotting
+#' data and other results.
+str(auc(cm1))
+str(auc(cm2))
 
-auc(data1)
-auc(data2)
+#'
+#' Plotting ROC can be done by calling
+{{ backtick(qroc) }}
+#' on either the confusion matrix object or the object returned by
+{{ backtick(auc) %s% "."}}
+qroc(auc(cm1))
+qroc(cm2)
 
-# Plotting the ROC from the data set can be done too
-qroc(data1)
-
+#'
+#' The plots generated a ggplot2 plots and can be modified like any other
+#' ggplot2 plot, for example
 # Add the AUC value to the plot title
-qroc(data2) + ggtitle(paste("Fit 2\nAUC =", round(auc(data2), 2)))
+qroc(cm2) + ggtitle(label = "Fit 2", subtitle = paste("AUROC =", frmt(auc(cm2)$auroc, digits = 3)))
 
-# build a data set for plotting to ROCs on one plot
-plot_data <- rbind(cbind(Model = "fit1", data1),
-                   cbind(Model = "fit2", data2))
+#'
+#' You can also use the results to build up a data set for plotting multiple
+#' curves together.
+plot_data <- rbind(cbind(Model = "fit1", auc(cm1)$roc_data),
+                   cbind(Model = "fit2", auc(cm2)$roc_data))
 qroc(plot_data) + aes(color = Model)
 
 # with AUC in the legend
-plot_data <- rbind(cbind(Model = paste("Fit1\nauc =", round(auc(data1), 3)), data1),
-                   cbind(Model = paste("Fit2\nauc =", round(auc(data2), 3)), data2))
+plot_data <- rbind(cbind(Model = paste("Fit1\nAUROC =", frmt(auc(cm1)$auroc, 3)), auc(cm1)$roc_data),
+                   cbind(Model = paste("Fit2\nAUROC =", frmt(auc(cm2)$auroc, 3)), auc(cm2)$roc_data))
 qroc(plot_data) +
-  theme_bw() +
-  aes(color = Model, linetype = Model) +
-  theme(legend.position   = "bottom",
-        legend.text.align = 0.5)
-# /* end of qroc }}} */
+  ggplot2::theme_bw() +
+  ggplot2::aes(color = Model, linetype = Model) +
+  ggplot2::theme(legend.position   = "bottom",
+                 legend.text.align = 0.5)
+
 #'
+#' Building PRC plots is similar, just use prc insead of roc in all the above
+#' calls.
+qprc(auc(cm1))
+qprc(cm2) + ggtitle(label = "Fit 2", subtitle = paste("AUPRC =", frmt(auc(cm2)$auprc, digits = 3)))
+plot_data <- rbind(cbind(Model = "fit1", auc(cm1)$prc_data),
+                   cbind(Model = "fit2", auc(cm2)$prc_data))
+qprc(plot_data) + aes(color = Model)
+
+#'
+#' One caveat for plotting multiple PRC on one plot is that you'll need to
+#' specify the prevalence value to plot.
+plot_data <- rbind(cbind(Model = paste("Fit1\nAUPRC =", frmt(auc(cm1)$auprc, 3)), auc(cm1)$prc_data),
+                   cbind(Model = paste("Fit2\nAUPRC =", frmt(auc(cm2)$auprc, 3)), auc(cm2)$prc_data))
+auc(cm1)$prevalence
+qprc(plot_data, prevalence = auc(cm1)$prevalence) +
+  ggplot2::theme_bw() +
+  ggplot2::aes(color = Model, linetype = Model) +
+  ggplot2::theme(legend.position   = "bottom",
+                 legend.text.align = 0.5)
+#'
+#' In general, the use of the
+{{ backtick(roc_data) }}
+#' and
+{{ backtick(prc_data) }}
+#' elements generated by
+{{ backtick(auc) }}
+#' can be used to inform as complex or simple a plot as you like.  The plotting
+#' methods provided are just quick and easy ones to use.  Customization of the
+#' plots is expected.
 #'
 #' # Session Info
 #+ label = "sessioninfo"
