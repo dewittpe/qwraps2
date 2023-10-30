@@ -22,6 +22,14 @@
 //' @export
 // [[Rcpp::export]]
 double traprule(arma::vec x, arma::vec y) {
+  if (x.n_elem != y.n_elem) {
+    Rf_error("x and y must have the same length");
+  }
+
+  if (x.n_elem < 2) {
+    Rf_error("x and y must have length >= 2");
+  }
+
   return arma::sum((x.subvec(1, x.n_elem - 1) - x.subvec(0, x.n_elem - 2)) %
                    (y.subvec(1, y.n_elem - 1) + y.subvec(0, y.n_elem - 2))) * 0.5;
 }
