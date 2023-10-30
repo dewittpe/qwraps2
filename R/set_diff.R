@@ -4,16 +4,29 @@
 #' which values are in vector1, and not in vector2, which values are not in
 #' vector1 and in vector2, which values are in both vector1 and vector2.
 #'
-#' Wrapper to call the \code{\link{union}},
+#' These are tools which make several calls to base R set funcitons
 #'
 #' @param x,y vectors (of the same mode)
+#'
+#' @return a qwraps2_set_diff object, a list of set comparisons
+#'
+#' \itemize{
+#'   \item \code{all_values} = \code{\link[base]{union}(x, y)}
+#'   \item \code{x_only}     = \code{\link[base]{setdiff}(x, y)}
+#'   \item \code{y_only}     = \code{\link[base]{setdiff}(y, x)}
+#'   \item \code{both}       = \code{\link[base]{intersect}(x, y)}
+#'   \item \code{equal}      = \code{\link[base]{setequal}(x, y)}
+#' }
 #'
 #' @examples
 #'
 #' # example with two sets which as a union are the upper and lower case vowels.
 #' set_a <- c("A", "a", "E",      "I", "i", "O", "o", "U", "u", "E", "I")
 #' set_b <- c("A", "a", "E", "e",      "i",      "o", "U", "u", "u", "a", "e")
+#'
 #' set_diff(set_a, set_b)
+#' str(set_diff(set_a, set_b))
+#'
 #' set_diff(set_b, set_a)
 #'
 #' # example
@@ -37,12 +50,12 @@ set_diff <- function(x, y) {
          equal      = base::setequal(x, y))
   attr(out, "xname") <- deparse(substitute(x))
   attr(out, "yname") <- deparse(substitute(y))
-  class(out) <- c("qwraps2.set_diff")
+  class(out) <- c("qwraps2_set_diff")
   out
 }
 
 #' @export
-print.qwraps2.set_diff <- function(x, ...) {
+print.qwraps2_set_diff <- function(x, ...) {
   cat("Total number of unique values: ", length(x$all_values), "\n",
       "Number of elements in both ", attr(x, "xname"), " and ", attr(x, "yname"), ": ", length(x$both), "\n",
       "Number of elements only in ", attr(x, "xname"), ": ", length(x$x_only),
