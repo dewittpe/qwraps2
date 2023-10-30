@@ -33,17 +33,21 @@
 * **Potentially breaking Change** `confusion_matrix` has been undergone a major
   refactor.  If nothing else, the return object is now a data.frame with more
   output than before.  The inputs are hopefully easer for end users as well.
+  This change includes the addition of the function `auc` and major refactor of
+  `qroc` and `qprc`.
 
 ## Deprecated / Removed
 
 * `summary_table_042` and `tab_summary`, the tidyverse versions of summary table
   that had been deprecated have been removed from the package. (#96)
 
+* `qroc_build_data_frame` as been deprecated in favore of `auc`
+
 ## General Improvements
 
 * Unit testing is done in base R, moved away from testthat.
-* `qroc_build_data_frame` is now an S3 method.
 * Updating roxygen dependencies to correctly document the package.
+* Extend documentation and testing of `set_diff`
 
 # qwraps2 0.5.2
 
