@@ -4,10 +4,39 @@
 \alias{auc}
 \title{Area Under the Curve}
 \usage{
-auc(x, ...)
+auc(x, alpha = getOption("qwraps2_alpha", 0.05), frmtci_args = list(), ...)
+}
+\arguments{
+\item{x}{an object}
+
+\item{alpha}{alpha level for 100(1-alpha)\% CIs.}
+
+\item{frmtci_args}{a list of arguments pased to \link{frmtci}}
+
+\item{...}{pass through}
+}
+\value{
+a \code{qwraps2_auc} object - a list with several elements:
+
+\itemize{
+  \item roc_data - data.frame, data neeeded to estimate AUROC, and plot a ROC
+  \item auroc - numeric, estimate of the AUROC, made via traprule
+  \item auroc_lcl - numeric, lower 100(1-alpha)\% confidence bound for auroc
+  \item auroc_lcl - numeric, upper 100(1-alpha)\% confidence bound for auroc
+  \item auroc_ci  - character, formated character string with the point estimator and CI
+  \item prc_data - data.frame, data neeeded to estimate AUPRC, and plot a PRC
+  \item auprc - numeric, estimate of the AUPRC, made via traprule
+  \item auprc_lcl - numeric, lower 100(1-alpha)\% confidence bound for auprc
+  \item auprc_lcl - numeric, upper 100(1-alpha)\% confidence bound for auprc
+  \item auprc_ci  - character, formated character string with the point estimator and CI
+  \item prevalence - numeric, proporition of condition positive, i.e., \code{sum(truth) / length(truth)}
+}
 }
 \description{
 Find the area under the Receiver-Operator and the Precision-Recall curve
+}
+\details{
+...
 }
 \examples{
 

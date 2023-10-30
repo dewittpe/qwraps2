@@ -19,7 +19,7 @@
 #' intervals for sensitivity, specificity, ppv, and npv.
 #' @param confint_method character string denoting if the logit or binomial
 #' method for deriving confidence intervals should be used
-#' @param alpha alpha level for 100 * (1 - alpha) percent confidence intervals
+#' @param alpha alpha level for 100 * (1 - alpha)\% confidence intervals
 #' @param frmtci_args a list of arguments passed to frmtci
 #'
 #' @details
@@ -100,11 +100,8 @@
 #' , family = binomial()
 #' )
 #'
-#' pred <- predict(mod, type = "response")
-#'
-#' confusion_matrix(truth = spambase$spam, predicted = pred)
-#' confusion_matrix(truth = spambase$spam, predicted = pred, thresholds = 0.5)
-#'
+#' confusion_matrix(mod)
+#' confusion_matrix(mod, thresholds = 0.5)
 #'
 #' @export
 #' @rdname confusion_matrix
@@ -166,34 +163,34 @@ confusion_matrix.default <- function(truth, predicted, ..., thresholds = NULL, c
       ppv_s <- sqrt(cm_stats[["ppv"]] * (1 - cm_stats[["ppv"]]) / (cm_stats[["TP"]] + cm_stats[["FP"]]))
       npv_s <- sqrt(cm_stats[["npv"]] * (1 - cm_stats[["npv"]]) / (cm_stats[["TN"]] + cm_stats[["FN"]]))
 
-      sensitivity_lcl <- sen_m + qnorm(alpha / 2) * sen_s
-      sensitivity_ucl <- sen_m + qnorm(1 - alpha / 2) * sen_s
-      specificity_lcl <- spc_m + qnorm(alpha / 2) * spc_s
-      specificity_ucl <- spc_m + qnorm(1 - alpha / 2) * spc_s
-      ppv_lcl <- ppv_m + qnorm(alpha / 2) * ppv_s
-      ppv_ucl <- ppv_m + qnorm(1 - alpha / 2) * ppv_s
-      npv_lcl <- npv_m + qnorm(alpha / 2) * npv_s
-      npv_ucl <- npv_m + qnorm(1 - alpha / 2) * npv_s
+      sensitivity_lcl <- sen_m + stats::qnorm(alpha / 2) * sen_s
+      sensitivity_ucl <- sen_m + stats::qnorm(1 - alpha / 2) * sen_s
+      specificity_lcl <- spc_m + stats::qnorm(alpha / 2) * spc_s
+      specificity_ucl <- spc_m + stats::qnorm(1 - alpha / 2) * spc_s
+      ppv_lcl <- ppv_m + stats::qnorm(alpha / 2) * ppv_s
+      ppv_ucl <- ppv_m + stats::qnorm(1 - alpha / 2) * ppv_s
+      npv_lcl <- npv_m + stats::qnorm(alpha / 2) * npv_s
+      npv_ucl <- npv_m + stats::qnorm(1 - alpha / 2) * npv_s
 
     } else if (confint_method == "logit") {
 
-      sen_m <- qlogis(cm_stats[["sensitivity"]])
-      spc_m <- qlogis(cm_stats[["specificity"]])
-      ppv_m <- qlogis(cm_stats[["ppv"]])
-      npv_m <- qlogis(cm_stats[["npv"]])
+      sen_m <- stats::qlogis(cm_stats[["sensitivity"]])
+      spc_m <- stats::qlogis(cm_stats[["specificity"]])
+      ppv_m <- stats::qlogis(cm_stats[["ppv"]])
+      npv_m <- stats::qlogis(cm_stats[["npv"]])
       sen_s <- 1 / sqrt(cm_stats[["sensitivity"]] * (1 - cm_stats[["sensitivity"]]) * (cm_stats[["TP"]] + cm_stats[["FN"]]))
       spc_s <- 1 / sqrt(cm_stats[["specificity"]] * (1 - cm_stats[["specificity"]]) * (cm_stats[["TN"]] + cm_stats[["FP"]]))
       ppv_s <- 1 / sqrt(cm_stats[["ppv"]] * (1 - cm_stats[["ppv"]]) * (cm_stats[["TP"]] + cm_stats[["FP"]]))
       npv_s <- 1 / sqrt(cm_stats[["npv"]] * (1 - cm_stats[["npv"]]) * (cm_stats[["TN"]] + cm_stats[["FN"]]))
 
-      sensitivity_lcl <- plogis(sen_m + qnorm(alpha / 2) * sen_s)
-      sensitivity_ucl <- plogis(sen_m + qnorm(1 - alpha / 2) * sen_s)
-      specificity_lcl <- plogis(spc_m + qnorm(alpha / 2) * spc_s)
-      specificity_ucl <- plogis(spc_m + qnorm(1 - alpha / 2) * spc_s)
-      ppv_lcl <- plogis(ppv_m + qnorm(alpha / 2) * ppv_s)
-      ppv_ucl <- plogis(ppv_m + qnorm(1 - alpha / 2) * ppv_s)
-      npv_lcl <- plogis(npv_m + qnorm(alpha / 2) * npv_s)
-      npv_ucl <- plogis(npv_m + qnorm(1 - alpha / 2) * npv_s)
+      sensitivity_lcl <- stats::plogis(sen_m + stats::qnorm(alpha / 2) * sen_s)
+      sensitivity_ucl <- stats::plogis(sen_m + stats::qnorm(1 - alpha / 2) * sen_s)
+      specificity_lcl <- stats::plogis(spc_m + stats::qnorm(alpha / 2) * spc_s)
+      specificity_ucl <- stats::plogis(spc_m + stats::qnorm(1 - alpha / 2) * spc_s)
+      ppv_lcl <- stats::plogis(ppv_m + stats::qnorm(alpha / 2) * ppv_s)
+      ppv_ucl <- stats::plogis(ppv_m + stats::qnorm(1 - alpha / 2) * ppv_s)
+      npv_lcl <- stats::plogis(npv_m + stats::qnorm(alpha / 2) * npv_s)
+      npv_ucl <- stats::plogis(npv_m + stats::qnorm(1 - alpha / 2) * npv_s)
 
     } else {
       stop("confint_method not in c('logit', 'binomial')")
@@ -223,7 +220,6 @@ confusion_matrix.default <- function(truth, predicted, ..., thresholds = NULL, c
     list(
            cm_stats     = cm_stats[-c(1, nrow(cm_stats)), ]
          , cm_stats_Inf = cm_stats[c(1, nrow(cm_stats)), ]
-         , call         = match.call()
          )
 
   class(rtn) <- c("qwraps2_confusion_matrix")
@@ -244,6 +240,16 @@ confusion_matrix.formula <- function(formula, data = parent.frame(), ..., thresh
   cl[["data"]] <- NULL
 
   do.call(confusion_matrix, cl)
+}
+
+#' @param x a \code{glm} object
+#' @export
+#' @rdname confusion_matrix
+confusion_matrix.glm <- function(x, ..., thresholds = NULL, confint = FALSE, confint_method = "logit", alpha = getOption("qwraps2_alpha", 0.05), frmtci_args = list()) {
+  stopifnot(x[["family"]][["family"]] == "binomial")
+  truth <- x[["y"]]
+  pred  <- stats::predict(x, type = "response")
+  confusion_matrix(truth = truth, predicted = pred, ..., thresholds = thresholds, confint = confint, confint_method = confint_method, alpha = alpha, frmtci_args = frmtci_args)
 }
 
 #' @rdname confusion_matrix

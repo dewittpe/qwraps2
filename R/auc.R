@@ -1,9 +1,29 @@
-#' Area Under the Curve
+#' @title Area Under the Curve
 #'
-#' Find the area under the Receiver-Operator and the Precision-Recall curve
+#' @description Find the area under the Receiver-Operator and the Precision-Recall curve
 #'
-#' @param
-#' @return
+#' @details ...
+#'
+#' @param x an object
+#' @param alpha alpha level for 100(1-alpha)\% CIs.
+#' @param frmtci_args a list of arguments pased to \link{frmtci}
+#' @param ... pass through
+#'
+#' @return a \code{qwraps2_auc} object - a list with several elements:
+#'
+#' \itemize{
+#'   \item roc_data - data.frame, data neeeded to estimate AUROC, and plot a ROC
+#'   \item auroc - numeric, estimate of the AUROC, made via traprule
+#'   \item auroc_lcl - numeric, lower 100(1-alpha)\% confidence bound for auroc
+#'   \item auroc_lcl - numeric, upper 100(1-alpha)\% confidence bound for auroc
+#'   \item auroc_ci  - character, formated character string with the point estimator and CI
+#'   \item prc_data - data.frame, data neeeded to estimate AUPRC, and plot a PRC
+#'   \item auprc - numeric, estimate of the AUPRC, made via traprule
+#'   \item auprc_lcl - numeric, lower 100(1-alpha)\% confidence bound for auprc
+#'   \item auprc_lcl - numeric, upper 100(1-alpha)\% confidence bound for auprc
+#'   \item auprc_ci  - character, formated character string with the point estimator and CI
+#'   \item prevalence - numeric, proporition of condition positive, i.e., \code{sum(truth) / length(truth)}
+#' }
 #'
 #' @examples
 #'
@@ -28,17 +48,15 @@
 #' auc(mod)
 #'
 #' @export
-auc <- function(x, ...) {
+auc <- function(x, alpha = getOption("qwraps2_alpha", 0.05), frmtci_args = list(), ...) {
   UseMethod("auc")
 }
 
 #' @export
-#' @rdname confusion_matrix
 auc.qwraps2_confusion_matrix <- function(x, alpha = getOption("qwraps2_alpha", 0.05), frmtci_args = list(), ...) {
-
   this_cm <- rbind(x[["cm_stats"]], x[["cm_stats_Inf"]])
   this_cm <- this_cm[order(this_cm[["threshold"]]), ]
-  
+
   roc_data <- data.frame(threshold = this_cm[["threshold"]], "FNR"    = 1 - this_cm[["specificity"]], "TPR" = this_cm[["sensitivity"]])
   prc_data <- data.frame(threshold = this_cm[["threshold"]], "Recall" = this_cm[["sensitivity"]], "Precision" = this_cm[["ppv"]])
 
@@ -51,14 +69,14 @@ auc.qwraps2_confusion_matrix <- function(x, alpha = getOption("qwraps2_alpha", 0
   condition_P <- unique(sum(x[["cm_stats"]][c("TP", "FN")]))
   condition_N <- unique(sum(x[["cm_stats"]][c("TN", "FP")]))
 
-  auroc_m <- qlogis(auroc)
-  auprc_m <- qlogis(auprc)
+  auroc_m <- stats::qlogis(auroc)
+  auprc_m <- stats::qlogis(auprc)
   auroc_s <- 1/sqrt(N * auroc * (1 - auroc))
   auprc_s <- 1/sqrt(N * auprc * (1 - auprc))
-  auroc_lcl <- plogis(auroc_m + qnorm(alpha/2) * auroc_s)
-  auprc_lcl <- plogis(auprc_m + qnorm(alpha/2) * auprc_s)
-  auroc_ucl <- plogis(auroc_m + qnorm(1 - alpha/2) * auroc_s)
-  auprc_ucl <- plogis(auprc_m + qnorm(1 - alpha/2) * auprc_s)
+  auroc_lcl <- stats::plogis(auroc_m + stats::qnorm(alpha/2) * auroc_s)
+  auprc_lcl <- stats::plogis(auprc_m + stats::qnorm(alpha/2) * auprc_s)
+  auroc_ucl <- stats::plogis(auroc_m + stats::qnorm(1 - alpha/2) * auroc_s)
+  auprc_ucl <- stats::plogis(auprc_m + stats::qnorm(1 - alpha/2) * auprc_s)
 
   rtn <-
     list(
@@ -81,7 +99,7 @@ auc.qwraps2_confusion_matrix <- function(x, alpha = getOption("qwraps2_alpha", 0
 #' @export
 auc.glm <- function(x, ...) {
   truth <- x[["y"]]
-  pred  <- predict(x, type = "response")
+  pred  <- stats::predict(x, type = "response")
 
   this_cm <- confusion_matrix(truth = truth, predicted = pred, thresholds = c(-Inf, unique(pred), Inf), ...)
   auc(x = this_cm, ...)
