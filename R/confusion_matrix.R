@@ -125,11 +125,12 @@ confusion_matrix.default <- function(truth, predicted, ..., thresholds = NULL, c
   stopifnot(is.numeric(predicted))
 
   if (is.null(thresholds)) {
-    thresholds <- c(-Inf, sort(unique(predicted)), Inf)
+    thresholds <- unique(predicted)
   } else {
     stopifnot(is.numeric(thresholds))
-    thresholds <- sort(unique(thresholds))
+    thresholds <- unique(thresholds)
   }
+  thresholds <- sort(unique(c(-Inf, thresholds, Inf)))
 
   cm_stats <-
     lapply(thresholds,
@@ -218,7 +219,15 @@ confusion_matrix.default <- function(truth, predicted, ..., thresholds = NULL, c
 
   }
 
-  cm_stats
+  rtn <-
+    list(
+           cm_stats     = cm_stats[-c(1, nrow(cm_stats)), ]
+         , cm_stats_Inf = cm_stats[c(1, nrow(cm_stats)), ]
+         , call         = match.call()
+         )
+
+  class(rtn) <- c("qwraps2_confusion_matrix")
+  rtn
 }
 
 #' @param formula column (known) ~ row (test) for building the confusion matrix
@@ -237,121 +246,6 @@ confusion_matrix.formula <- function(formula, data = parent.frame(), ..., thresh
   do.call(confusion_matrix, cl)
 }
 
-#' @export
-#' @rdname confusion_matrix
-auc <- function(x, ...) {
-  UseMethod("auc")
-}
-
-#' @export
-#' @rdname confusion_matrix
-auc.qwraps2_confusion_matrix <- function(x, alpha = getOption("qwraps2_alpha", 0.05), frmtci_args = list(), ...) {
-  roc_data <- data.frame(threshold = x$threshold, "FNR" = 1 - x$specificity, "TPR" = x$sensitivity)
-  prc_data <- data.frame(threshold = x$threshold, "Recall" = x$sensitivity, "Precision" = x$ppv)
-
-  auroc <- traprule(rev(roc_data$FNR), rev(roc_data$TPR))
-  auprc <- traprule(rev(prc_data$Recall), rev(prc_data$Precision))
-
-  N <- unique(sum(x[c("TP", "FP", "TN", "FN")]))
-  condition_P <- unique(sum(x[c("TP", "FN")]))
-  condition_N <- unique(sum(x[c("TN", "FP")]))
-
-  auroc_m <- qlogis(auroc)
-  auprc_m <- qlogis(auprc)
-  auroc_s <- 1/sqrt(N * auroc * (1 - auroc))
-  auprc_s <- 1/sqrt(N * auprc * (1 - auprc))
-  auroc_lcl <- plogis(auroc_m + qnorm(alpha/2) * auroc_s)
-  auprc_lcl <- plogis(auprc_m + qnorm(alpha/2) * auprc_s)
-  auroc_ucl <- plogis(auroc_m + qnorm(1 - alpha/2) * auroc_s)
-  auprc_ucl <- plogis(auprc_m + qnorm(1 - alpha/2) * auprc_s)
-
-  rtn <-
-    list(
-        roc_data = roc_data
-      , auroc = auroc
-      , auroc_lcl = auroc_lcl
-      , auroc_ucl = auroc_ucl
-      , auroc_ci  = do.call(frmtci, c(list(x = c(auroc, auroc_lcl, auroc_ucl), est = 1, lcl = 2, ucl = 3), frmtci_args))
-      , prc_data = prc_data
-      , auprc = auprc
-      , auprc_lcl = auprc_lcl
-      , auprc_ucl = auprc_ucl
-      , auprc_ci  = do.call(frmtci, c(list(x = c(auprc, auprc_lcl, auprc_ucl), est = 1, lcl = 2, ucl = 3), frmtci_args))
-      , prevalence = condition_P / N
-    )
-  class(rtn) <- "qwraps2_auc"
-  rtn
-}
-
-#' @export
-#' @rdname confusion_matrix
-qroc <- function(x, ...) {
-  UseMethod("qroc")
-}
-
-#' @export
-#' @rdname confusion_matrix
-qroc.qwraps2_confusion_matrix <- function(x, ...) {
-  qroc(auc(x))
-}
-
-#' @export
-#' @rdname confusion_matrix
-qroc.data.frame <- function(x, ...) {
-  stopifnot("FNR" %in% names(x))
-  stopifnot("TPR" %in% names(x))
-  ggplot2::ggplot(data = x) +
-    eval(substitute(ggplot2::aes(x = X, y = Y), list(X = as.name("FNR"), Y = as.name("TPR")))) +
-    ggplot2::geom_point() +
-    ggplot2::geom_line() +
-    ggplot2::xlim(0, 1) +
-    ggplot2::ylim(0, 1) +
-    ggplot2::geom_segment(ggplot2::aes(x = 0, y = 0, xend = 1, yend = 1), color = "black", linetype = 2) 
-}
-
-#' @export
-#' @rdname confusion_matrix
-qroc.qwraps2_auc <- function(x, ...) {
-  qroc(x$roc_data)
-}
-
-#' @export
-#' @rdname confusion_matrix
-qprc <- function(x, ...) {
-  UseMethod("qprc")
-}
-
-#' @export
-#' @rdname confusion_matrix
-qprc.qwraps2_confusion_matrix <- function(x, prevalence = NULL, ...) {
-  qprc(auc(x), prevalence = prevalence, ...)
-}
-
-#' @export
-#' @rdname confusion_matrix
-qprc.data.frame <- function(x, prevalence = NULL, ...) {
-  stopifnot("Recall" %in% names(x))
-  stopifnot("Precision" %in% names(x))
-  g <-
-    ggplot2::ggplot(data = x) +
-    eval(substitute(ggplot2::aes(x = X, y = Y), list(X = as.name("Recall"), Y = as.name("Precision")))) +
-    ggplot2::geom_point() +
-    ggplot2::geom_line() +
-    ggplot2::xlim(0, 1) +
-    ggplot2::ylim(0, 1)
-  if (!is.null(prevalence)) {
-    stopifnot(is.numeric(prevalence))
-    g <- g + ggplot2::geom_hline(yintercept = prevalence)
-  }
-  g
-}
-
-#' @export
-#' @rdname confusion_matrix
-qprc.qwraps2_auc <- function(x, prevalence = NULL, ...) {
-  qprc(x = x$prc_data, prevalence = x$prevalence, ...)
-}
-
 #' @rdname confusion_matrix
 #' @export
 print.qwraps2_confusion_matrix <- function(x, ...) {
@@ -359,6 +253,7 @@ print.qwraps2_confusion_matrix <- function(x, ...) {
   invisible(x)
 }
 
+################################################################################
 # non-exported functions
 accuracy <- function(TP, TN, FP, FN, ...) {
   (TP + TN) / (TP + TN + FP + FN)
