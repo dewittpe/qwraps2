@@ -61,8 +61,8 @@ confusion matrix (one threshold) or matrices (two or more thresholds).  If
 \item{confint}{logical, if \code{TRUE} generate and report confidence
 intervals for sensitivity, specificity, ppv, and npv.}
 
-\item{confint_method}{character string denoting if the logit or binomial
-method for deriving confidence intervals should be used}
+\item{confint_method}{character string denoting if the logit (default),
+binomial, or Wilson Score method for deriving confidence intervals}
 
 \item{alpha}{alpha level for 100 * (1 - alpha)\% confidence intervals}
 

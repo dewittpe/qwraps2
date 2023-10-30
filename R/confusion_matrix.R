@@ -17,8 +17,8 @@
 #' @param ... pass through
 #' @param confint logical, if \code{TRUE} generate and report confidence
 #' intervals for sensitivity, specificity, ppv, and npv.
-#' @param confint_method character string denoting if the logit or binomial
-#' method for deriving confidence intervals should be used
+#' @param confint_method character string denoting if the logit (default),
+#' binomial, or Wilson Score method for deriving confidence intervals
 #' @param alpha alpha level for 100 * (1 - alpha)\% confidence intervals
 #' @param frmtci_args a list of arguments passed to frmtci
 #'
@@ -152,49 +152,10 @@ confusion_matrix.default <- function(truth, predicted, ..., thresholds = NULL, c
   class(cm_stats) <- c("qwraps2_confusion_matrix", class(cm_stats))
 
   if (confint) {
-    if (confint_method == "binomial") {
-
-      sen_m <- cm_stats[["sensitivity"]]
-      spc_m <- cm_stats[["specificity"]]
-      ppv_m <- cm_stats[["ppv"]]
-      npv_m <- cm_stats[["npv"]]
-      sen_s <- sqrt(cm_stats[["sensitivity"]] * (1 - cm_stats[["sensitivity"]]) / (cm_stats[["TP"]] + cm_stats[["FN"]]))
-      spc_s <- sqrt(cm_stats[["specificity"]] * (1 - cm_stats[["specificity"]]) / (cm_stats[["TN"]] + cm_stats[["FP"]]))
-      ppv_s <- sqrt(cm_stats[["ppv"]] * (1 - cm_stats[["ppv"]]) / (cm_stats[["TP"]] + cm_stats[["FP"]]))
-      npv_s <- sqrt(cm_stats[["npv"]] * (1 - cm_stats[["npv"]]) / (cm_stats[["TN"]] + cm_stats[["FN"]]))
-
-      sensitivity_lcl <- sen_m + stats::qnorm(alpha / 2) * sen_s
-      sensitivity_ucl <- sen_m + stats::qnorm(1 - alpha / 2) * sen_s
-      specificity_lcl <- spc_m + stats::qnorm(alpha / 2) * spc_s
-      specificity_ucl <- spc_m + stats::qnorm(1 - alpha / 2) * spc_s
-      ppv_lcl <- ppv_m + stats::qnorm(alpha / 2) * ppv_s
-      ppv_ucl <- ppv_m + stats::qnorm(1 - alpha / 2) * ppv_s
-      npv_lcl <- npv_m + stats::qnorm(alpha / 2) * npv_s
-      npv_ucl <- npv_m + stats::qnorm(1 - alpha / 2) * npv_s
-
-    } else if (confint_method == "logit") {
-
-      sen_m <- stats::qlogis(cm_stats[["sensitivity"]])
-      spc_m <- stats::qlogis(cm_stats[["specificity"]])
-      ppv_m <- stats::qlogis(cm_stats[["ppv"]])
-      npv_m <- stats::qlogis(cm_stats[["npv"]])
-      sen_s <- 1 / sqrt(cm_stats[["sensitivity"]] * (1 - cm_stats[["sensitivity"]]) * (cm_stats[["TP"]] + cm_stats[["FN"]]))
-      spc_s <- 1 / sqrt(cm_stats[["specificity"]] * (1 - cm_stats[["specificity"]]) * (cm_stats[["TN"]] + cm_stats[["FP"]]))
-      ppv_s <- 1 / sqrt(cm_stats[["ppv"]] * (1 - cm_stats[["ppv"]]) * (cm_stats[["TP"]] + cm_stats[["FP"]]))
-      npv_s <- 1 / sqrt(cm_stats[["npv"]] * (1 - cm_stats[["npv"]]) * (cm_stats[["TN"]] + cm_stats[["FN"]]))
-
-      sensitivity_lcl <- stats::plogis(sen_m + stats::qnorm(alpha / 2) * sen_s)
-      sensitivity_ucl <- stats::plogis(sen_m + stats::qnorm(1 - alpha / 2) * sen_s)
-      specificity_lcl <- stats::plogis(spc_m + stats::qnorm(alpha / 2) * spc_s)
-      specificity_ucl <- stats::plogis(spc_m + stats::qnorm(1 - alpha / 2) * spc_s)
-      ppv_lcl <- stats::plogis(ppv_m + stats::qnorm(alpha / 2) * ppv_s)
-      ppv_ucl <- stats::plogis(ppv_m + stats::qnorm(1 - alpha / 2) * ppv_s)
-      npv_lcl <- stats::plogis(npv_m + stats::qnorm(alpha / 2) * npv_s)
-      npv_ucl <- stats::plogis(npv_m + stats::qnorm(1 - alpha / 2) * npv_s)
-
-    } else {
-      stop("confint_method not in c('logit', 'binomial')")
-    }
+    sen_ci <- proportion_confint(p = cm_stats[["sensitivity"]], n = cm_stats[["TP"]] + cm_stats[["FN"]], method = confint_method, alpha = alpha)
+    spc_ci <- proportion_confint(p = cm_stats[["specificity"]], n = cm_stats[["TN"]] + cm_stats[["FP"]], method = confint_method, alpha = alpha)
+    ppv_ci <- proportion_confint(p = cm_stats[["ppv"]],         n = cm_stats[["TP"]] + cm_stats[["FP"]], method = confint_method, alpha = alpha)
+    npv_ci <- proportion_confint(p = cm_stats[["npv"]],         n = cm_stats[["TN"]] + cm_stats[["FN"]], method = confint_method, alpha = alpha)
 
     if ("show_level" %in% names(frmtci_args)) {
       if (is.logical(frmtci_args[["show_level"]])) {
@@ -203,14 +164,22 @@ confusion_matrix.default <- function(truth, predicted, ..., thresholds = NULL, c
     }
 
     cm_stats <- cbind(cm_stats[c("threshold", "TP", "TN", "FP", "FN")]
-                      , sensitivity = cm_stats[["sensitivity"]], sensitivity_lcl, sensitivity_ucl
-                      , sensitivity_ci = do.call(frmtci, c(list(x = cbind(cm_stats[["sensitivity"]], sensitivity_lcl, sensitivity_ucl), est = 1, lcl = 2, ucl = 3), frmtci_args))
-                      , specificity = cm_stats[["specificity"]], specificity_lcl, specificity_ucl
-                      , specificity_ci = do.call(frmtci, c(list(x = cbind(cm_stats[["specificity"]], specificity_lcl, specificity_ucl), est = 1, lcl = 2, ucl = 3), frmtci_args))
-                      , ppv = cm_stats[["ppv"]], ppv_lcl, ppv_ucl
-                      , ppv_ci = do.call(frmtci, c(list(x = cbind(cm_stats[["ppv"]], ppv_lcl, ppv_ucl), est = 1, lcl = 2, ucl = 3), frmtci_args))
-                      , npv = cm_stats[["npv"]], npv_lcl, npv_ucl
-                      , npv_ci = do.call(frmtci, c(list(x = cbind(cm_stats[["npv"]], npv_lcl, npv_ucl), est = 1, lcl = 2, ucl = 3), frmtci_args))
+                      , sensitivity = cm_stats[["sensitivity"]]
+                      , sensitivity_lcl = sen_ci[1]
+                      , sensitivity_ucl = sen_ci[2]
+                      , sensitivity_ci = do.call(frmtci, c(list(x = cbind(cm_stats[["sensitivity"]], sen_ci), est = 1, lcl = 2, ucl = 3), frmtci_args))
+                      , specificity = cm_stats[["specificity"]]
+                      , specificity_lcl = spc_ci[1]
+                      , specificity_ucl = spc_ci[2]
+                      , specificity_ci = do.call(frmtci, c(list(x = cbind(cm_stats[["specificity"]], spc_ci), est = 1, lcl = 2, ucl = 3), frmtci_args))
+                      , ppv = cm_stats[["ppv"]]
+                      , ppv_lcl = ppv_ci[1]
+                      , ppv_ucl = ppv_ci[2]
+                      , ppv_ci = do.call(frmtci, c(list(x = cbind(cm_stats[["ppv"]], ppv_ci), est = 1, lcl = 2, ucl = 3), frmtci_args))
+                      , npv = cm_stats[["npv"]]
+                      , npv_lcl = npv_ci[1]
+                      , npv_ucl = npv_ci[2]
+                      , npv_ci = do.call(frmtci, c(list(x = cbind(cm_stats[["npv"]], npv_ci), est = 1, lcl = 2, ucl = 3), frmtci_args))
                       , cm_stats[-which(names(cm_stats) %in% c("threshold", "TP", "TN", "FP", "FN"))]
                       )
 
@@ -344,7 +313,19 @@ MCC <- function(TP, TN, FP, FN, ...) {
   )
 }
 
-wilson_score_interval <- function(p, n, alpha = 0.05) {
+proportion_confint <- function(p, n, method = "logit", alpha = getOption("qwraps2_alpha", 0.05)) {
   z <- stats::qnorm(1 - alpha/2)
-  1 / (1 + 1/n * z^2) * (p + 1 / (2 * n) * z^2 + c(-z, z) * sqrt( 1 / n * p * (1 - p) + 1 / (4 * n^2) * z^2))
+
+  if (method == "logit") {
+    m <- stats::qlogis(p)
+    tau <- 1 / sqrt( n * p * (1 - p) )
+    rtn <- stats::plogis(m + c(-z, z) * tau)
+  } else if (method == "binomial") {
+    rtn <- p + c(-z, z) * sqrt( p * (1 - p) / n)
+  } else if (method == "wilson_score") {
+    rtn <- 1 / (1 + 1/n * z^2) * (p + 1 / (2 * n) * z^2 + c(-z, z) * sqrt( 1 / n * p * (1 - p) + 1 / (4 * n^2) * z^2))
+  } else {
+    stop("method not in c('logit', 'binomial', 'wilson_score')")
+  }
+  rtn
 }
