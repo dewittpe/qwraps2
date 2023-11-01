@@ -43,6 +43,9 @@ Construction of ROC and PRC data and plots.
 \details{
 The area under the curve (AUC) is determined by a trapezoid approximation for
 both the AUROC and AUPRC.
+
+More details and examples for graphics within qwraps2 are in the
+vignette(\dQuote{qwraps2-graphics}, pacakge = {qwraps2})
 }
 \examples{
 #########################################################
@@ -84,8 +87,4 @@ qroc(auc_data) + ggplot2::aes(color = model)
 
 qprc(auc_data, prevalence = cm1$prevalence) + ggplot2::aes(color = model)
 
-}
-\seealso{
-\code{vignette("qwraps2-graphics", package = "qwraps2")} for more
-examples.
 }

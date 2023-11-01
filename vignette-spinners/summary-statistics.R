@@ -6,7 +6,7 @@
 #'    toc: true
 #'    number_sections: true
 #'vignette: >
-#'  %\VignetteIndexEntry{summary-statistics}
+#'  %\VignetteIndexEntry{Formatted Summary Statistics and Data Summary Tables with qwraps2}
 #'  %\VignetteEngine{knitr::rmarkdown}
 #'  %\VignetteEncoding{UTF-8}
 #'---

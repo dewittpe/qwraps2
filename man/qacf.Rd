@@ -27,6 +27,13 @@ a ggplot.
 \description{
 ggplot2 style autocorrelation plot
 }
+\details{
+qacf calls \code{\link[stats]{acf}} to generate a data set which is
+then plotted via ggplot2.
+
+More details and examples for graphics within qwraps2 are in the
+vignette(\dQuote{qwraps2-graphics}, pacakge = {qwraps2})
+}
 \examples{
 # Generate a random data set
 set.seed(42)
@@ -61,6 +68,5 @@ qacf(testdf, show_sig = TRUE)
 
 }
 \seealso{
-\code{vignette("qwraps2-graphics", pacakge = "qwraps2")},
-\code{\link[stats]{acf}}
+\code{\link[stats]{acf}}.
 }

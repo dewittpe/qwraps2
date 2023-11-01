@@ -7,11 +7,11 @@
 #' The area under the curve (AUC) is determined by a trapezoid approximation for
 #' both the AUROC and AUPRC.
 #'
+#' More details and examples for graphics within qwraps2 are in the
+#' vignette(\dQuote{qwraps2-graphics}, pacakge = {qwraps2})
+#'
 #' @param x an object
 #' @param ... pass through
-#'
-#' @seealso \code{vignette("qwraps2-graphics", package = "qwraps2")} for more
-#' examples.
 #'
 #' @return a ggplot.  Minimal aesthetics have been used so that the user may
 #' modify the graphic as desired with ease.

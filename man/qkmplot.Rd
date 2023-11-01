@@ -39,6 +39,9 @@ A ggplot2 version of a Kaplan-Meier Plot
 \details{
 Functions to build, explicitly or implicitly, data.frames and then creating a
 ggplot2 KM plot.
+
+More details and examples for graphics within qwraps2 are in the
+vignette(\dQuote{qwraps2-graphics}, pacakge = {qwraps2})
 }
 \examples{
 # create a survfit object
@@ -52,8 +55,4 @@ qkmplot_bulid_data_frame(leukemia.surv)
 qrmst(leukemia.surv) # NaN for rmst.se in Nonmaintained strata as laste observation is an event
 qrmst(leukemia.surv, 44)
 
-}
-\seealso{
-\code{vignette("qwraps2-graphics", package = "qwraps2")} for
-additional examples.
 }
