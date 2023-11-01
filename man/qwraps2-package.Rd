@@ -104,6 +104,7 @@ different options which are available and what they control.
 Useful links:
 \itemize{
   \item \url{https://github.com/dewittpe/qwraps2/}
+  \item \url{http://www.peteredewitt.com/qwraps2/}
 }
 
 }

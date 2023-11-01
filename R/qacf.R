@@ -4,13 +4,14 @@
 #'
 #' @param x object
 #' @param conf_level confidence level for determining \sQuote{significant}
-#' correlations.
-#' @param show_sig logical, highlight significant correlations.
-#' @param ... Other arguments passed to stats::acf
+#' correlations
+#' @param show_sig logical, highlight significant correlations
+#' @param ... Other arguments passed to \code{\link[stats]{acf}}
 #'
 #' @return a ggplot.
 #'
-#' @seealso \code{vignette("qwraps2-graphics", pacakge = "qwraps2")}
+#' @seealso \code{vignette("qwraps2-graphics", pacakge = "qwraps2")},
+#' \code{\link[stats]{acf}}
 #'
 #' @examples
 #' # Generate a random data set
@@ -46,18 +47,18 @@
 #'
 #' @export
 #' @rdname qacf
-qacf <- function(x, conf_level = 0.95, show_sig = FALSE, ...) {
+qacf <- function(x, conf_level = 1 - getOption("qwraps2_alpha", 0.05), show_sig = FALSE, ...) {
   UseMethod("qacf")
 }
 
 #' @export
-qacf.default <- function(x, conf_level = 0.95, show_sig = FALSE, ...) {
+qacf.default <- function(x, conf_level = 1 - getOption("qwraps2_alpha", 0.05), show_sig = FALSE, ...) {
   do.call(qacf.data.frame, list(x = data.frame(x), conf_level = conf_level, show_sig = show_sig, ...))
 }
 
 #' @export
 #' @method qacf data.frame
-qacf.data.frame <- function(x, conf_level = 0.95, show_sig = FALSE, ...) {
+qacf.data.frame <- function(x, conf_level = 1 - getOption("qwraps2_alpha", 0.05), show_sig = FALSE, ...) {
   acf_data <- stats::acf(x, plot = FALSE, ...)
   ciline <- stats::qnorm((1 - conf_level) / 2) / sqrt(acf_data$n.used)
 

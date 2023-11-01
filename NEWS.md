@@ -48,6 +48,7 @@
 * Unit testing is done in base R, moved away from testthat.
 * Updating roxygen dependencies to correctly document the package.
 * Extend documentation and testing of `set_diff`
+* The default value for `conf_int` in `qacf` has been modified from `0.05` to `1 - getOption("qwraps2_alpha", 0.05)`
 
 # qwraps2 0.5.2
 

@@ -4,17 +4,22 @@
 \alias{qacf}
 \title{Autocorrelation plot}
 \usage{
-qacf(x, conf_level = 0.95, show_sig = FALSE, ...)
+qacf(
+  x,
+  conf_level = 1 - getOption("qwraps2_alpha", 0.05),
+  show_sig = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{object}
 
 \item{conf_level}{confidence level for determining \sQuote{significant}
-correlations.}
+correlations}
 
-\item{show_sig}{logical, highlight significant correlations.}
+\item{show_sig}{logical, highlight significant correlations}
 
-\item{...}{Other arguments passed to stats::acf}
+\item{...}{Other arguments passed to \code{\link[stats]{acf}}}
 }
 \value{
 a ggplot.
@@ -56,5 +61,6 @@ qacf(testdf, show_sig = TRUE)
 
 }
 \seealso{
-\code{vignette("qwraps2-graphics", pacakge = "qwraps2")}
+\code{vignette("qwraps2-graphics", pacakge = "qwraps2")},
+\code{\link[stats]{acf}}
 }
