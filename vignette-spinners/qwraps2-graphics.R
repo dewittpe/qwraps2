@@ -13,11 +13,6 @@
 #'
 #+ label = "setup", include = FALSE
 knitr::opts_chunk$set(collapse = TRUE)
-#'
-#' There are several graphics generated within qwraps2.  The naming convention
-#' for the "quick" plots was inspired by the ggplot2 function qplot.  The
-#' development, flexibility, and robustness of these functions vary.  Some "tips
-#' and tricks" are provided.
 # /*
 if (interactive()) {
   devtools::load_all()
@@ -28,8 +23,17 @@ packageVersion("qwraps2")
 # /*
 }
 # */
-library(ggplot2)
+
 #'
+#' There are several graphics generated within qwraps2.  The naming convention
+#' for the "quick" plots was inspired by the (deprecated)
+{{ CRANpkg(ggplot2) }}
+#' function
+{{ backtick(qplot) %s% "." }}
+#' The development, flexibility, and robustness of these functions vary.  Some
+#' "tips and tricks" are provided.
+#'
+# /* ------------------------------------------------------------------------ */
 #'
 #' # qacf: Autocorrelation Plots
 #'
@@ -81,6 +85,8 @@ acf_plot_data <- qacf(testdf)$data
 head(acf_plot_data)
 
 #'
+# /* ------------------------------------------------------------------------ */
+#'
 #' # qblandaltman: Bland Altman Plot
 #'
 #' Introduced in [@altman1983measurement] and [@bland1986statistical], the
@@ -102,28 +108,32 @@ pefr_m1 <-
 #' meters provide reasonably similar results.
 cor(pefr_m1)
 
-qplot(x = pefr_m1[, 1],
-      y = pefr_m1[, 2],
-      geom = "point",
-      xlab = "Large Meter",
-      ylab = "Mini Meter",
-      xlim = c(0, 800),
-      ylim = c(0, 800)) +
-geom_abline(slope = 1)
+ggplot2::ggplot(data = as.data.frame(pefr_m1)) +
+  ggplot2::aes(x = Large, y = Mini) +
+  ggplot2::geom_point() +
+  ggplot2::xlab("Large Meter") +
+  ggplot2::ylab("Mini Meter") +
+  ggplot2::xlim(0, 800) +
+  ggplot2::ylim(0, 800) +
+  ggplot2::geom_abline(slope = 1)
 
 #'
-#' However, for many reasons, this the above is misleading.  One simple note:
+#' However, for many reasons, the above is misleading.  One simple note:
 #' correlation is not a metric for agreement, i.e., perfect agreement would be
-#' shown if all the data points fell on the line of equality were as perfect
-#' correlation occurs when the data points are co-linear.
+#' shown if all the data points fell on the line of equality whereas perfect
+#' correlation occurs when the data points are simply co-linear.
 #'
 #' The Bland Altman plot plots the average value on the x-axis and the
 #' difference in the measurements on the y-axis:
-qblandaltman(pefr_m1) +
-xlim(0, 800) +
-ylim(-100, 100) +
-xlab("Average of two meters") +
-ylab("Difference in the measurements")
+# default plot
+qblandaltman(pefr_m1)
+
+# modified plot
+ggplot2::last_plot() +
+  ggplot2::xlim(0, 800) +
+  ggplot2::ylim(-100, 100) +
+  ggplot2::xlab("Average of two meters") +
+  ggplot2::ylab("Difference in the measurements")
 
 #'
 #' There is no distinct relationship between the differences and the average,
@@ -144,7 +154,10 @@ qblandaltman(pefr_mini)
 
 #'
 #'
+# /* ------------------------------------------------------------------------ */
+#'
 #' # qkmplot: Kaplan Meier Plots
+#'
 # create a survfit object
 require(survival)
 leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x, data = survival::aml)
@@ -156,19 +169,26 @@ survival:::plot.survfit(leukemia.surv, conf.int = TRUE, lty = 2:3, col = 1:2)
 # qkmplot
 qkmplot(leukemia.surv, conf_int = TRUE)
 
-# build a data.frame for plotting km curves, this could be helpful for
-# creating bespoke plots
+#'
+#' The function
+{{ backtick(qkmplot_bulid_data_frame) }}
+#' can be used to generate a data.frame needed for building a KM plot.  This
+#' could be helpful for creating bespoke plots.
 leukemia_km_data <- qkmplot_bulid_data_frame(leukemia.surv)
 head(leukemia_km_data, 3)
 
 #+ fig.width = 5
 qkmplot(leukemia_km_data)
 
+#'
+#' Intercept only models are easy to plot too.
 #+ fig.width = 5
-# intercept only plot
 intonly_fit <- survival::survfit(survival::Surv(time, status) ~ 1, data = survival::aml)
 survival:::plot.survfit(intonly_fit, conf.int = TRUE)
 qkmplot(intonly_fit, conf_int = TRUE)
+
+#'
+# /* ------------------------------------------------------------------------ */
 #'
 #' # qroc and qprc: Receiver Operating Curve and Precision Recall Curve
 #'
@@ -212,14 +232,14 @@ qroc(cm2)
 #' The plots generated a ggplot2 plots and can be modified like any other
 #' ggplot2 plot, for example
 # Add the AUC value to the plot title
-qroc(cm2) + ggtitle(label = "Fit 2", subtitle = paste("AUROC =", frmt(cm2$auroc, digits = 3)))
+qroc(cm2) + ggplot2::ggtitle(label = "Fit 2", subtitle = paste("AUROC =", frmt(cm2$auroc, digits = 3)))
 
 #'
 #' You can also use the results to build up a data set for plotting multiple
 #' curves together.
 plot_data <- rbind(cbind(Model = "fit1", cm1$cm_stats),
                    cbind(Model = "fit2", cm2$cm_stats))
-qroc(plot_data) + aes(color = Model)
+qroc(plot_data) + ggplot2::aes(color = Model)
 
 # with AUC in the legend
 plot_data <- rbind(cbind(Model = paste("Fit1\nAUROC =", frmt(cm1$auroc, 3)), cm1$cm_stats),
@@ -234,8 +254,8 @@ qroc(plot_data) +
 #' Building PRC plots is similar, just use prc insead of roc in all the above
 #' calls.
 qprc(cm1)
-qprc(cm2) + ggtitle(label = "Fit 2", subtitle = paste("AUPRC =", frmt(cm2$auprc, digits = 3)))
-qprc(plot_data) + aes(color = Model)
+qprc(cm2) + ggplot2::ggtitle(label = "Fit 2", subtitle = paste("AUPRC =", frmt(cm2$auprc, digits = 3)))
+qprc(plot_data) + ggplot2::aes(color = Model)
 
 #'
 #' One caveat for plotting multiple PRC on one plot is that you'll need to
@@ -250,9 +270,10 @@ qprc(plot_data, prevalence = cm1$prevalence) +
                  legend.text.align = 0.5)
 
 #'
+# /* ------------------------------------------------------------------------ */
+#'
 #' # Session Info
 #+ label = "sessioninfo"
 sessionInfo()
 
 # /* ---------------------------- END OF FILE ------------------------------- */
-
