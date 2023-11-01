@@ -77,7 +77,7 @@ $(DATATARGETS) &: vignette-spinners/qwraps2-data-sets.R inst/spambase/spambase.d
 #
 #
 covr-report.html : $(PKG_NAME)_$(PKG_VERSION).tar.gz
-	R --vanilla --quiet -e 'x <- covr::package_coverage(type = "tests", line_exclusions = list("R/zzz.R"))'\
+	R --vanilla --quiet -e 'x <- covr::package_coverage(type = "tests", line_exclusions = list("R/zzz.R", "R/deprecated.R"))'\
 		-e 'covr::report(x, file = "covr-report.html")'
 
 check: $(PKG_NAME)_$(PKG_VERSION).tar.gz

@@ -26,5 +26,5 @@ jobs:
           extra-packages: covr
 
       - name: Test coverage
-        run: covr::codecov(type = "tests",  line_exclusions = list("R/zzz.R"))
+        run: covr::codecov(type = "tests",  line_exclusions = list("R/zzz.R", "R/deprecated.R"))
         shell: Rscript {0}
