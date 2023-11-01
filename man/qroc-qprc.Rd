@@ -10,10 +10,6 @@
 \alias{qprc.default}
 \alias{qprc.qwraps2_confusion_matrix}
 \alias{qprc.glm}
-\alias{qroc_build_data_frame}
-\alias{qroc_build_data_frame.default}
-\alias{qroc_build_data_frame.glm}
-\alias{qprc_build_data_frame}
 \title{Receiver-Operator and Precision-Recall Curves}
 \usage{
 qroc(x, ...)
@@ -31,27 +27,11 @@ qprc(x, ...)
 \method{qprc}{qwraps2_confusion_matrix}(x, ...)
 
 \method{qprc}{glm}(x, ...)
-
-qroc_build_data_frame(fit, truth = NULL, n_threshold = 200, ...)
-
-\method{qroc_build_data_frame}{default}(fit, truth = NULL, n_threshold = 200, ...)
-
-\method{qroc_build_data_frame}{glm}(fit, truth = NULL, n_threshold = 200, ...)
-
-qprc_build_data_frame(fit, n_threshold = 200, ...)
 }
 \arguments{
 \item{x}{an object}
 
-\item{...}{passed to \code{stats::predict}}
-
-\item{fit}{a \code{glm} fit with \code{family = binomial()}, or predicted
-values}
-
-\item{truth}{ignored if \code{fit} is a \code{glm} object.  A vector of
-observations, 0/1 or FALSE/TRUE values, of equal length to \code{fit}}
-
-\item{n_threshold}{number of thresholds to use to estimate aucroc or auprc}
+\item{...}{pass through}
 }
 \value{
 a ggplot.  Minimal aesthetics have been used so that the user may
