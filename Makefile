@@ -92,6 +92,9 @@ install: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 uninstall :
 	R --vanilla --quiet -e "try(remove.packages('$(PKG_NAME)'), silent = TRUE)"
 
+site: $(PKG_NAME)_$(PKG_VERSION).tar.gz
+	R --vanilla --quiet -e "pkgdown::build_site()"
+
 clean:
 	$(RM) -f  $(PKG_NAME)_$(PKG_VERSION).tar.gz
 	$(RM) -rf $(PKG_NAME).Rcheck
