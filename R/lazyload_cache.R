@@ -33,6 +33,9 @@
 #' old_wd <- getwd()
 #' setwd(tmpdr)
 #'
+#' # build and example .Rmd file
+#' # note that the variable x is created in the first chunck and then over
+#' # written in the second chunk
 #' cat("---",
 #'     "title: \"A Report\"",
 #'     "output: html_document",
@@ -41,11 +44,13 @@
 #'     "```{r first-chunk, cache = TRUE}",
 #'     "mpg_by_wt_hp <- lm(mpg ~ wt + hp, data = mtcars)",
 #'     "x_is_pi <- pi",
+#'     "x <- pi",
 #'     "```",
 #'     "",
 #'     "```{r second-chunk, cache = TRUE}",
 #'     "mpg_by_wt_hp_am <- lm(mpg ~ wt + hp + am, data = mtcars)",
 #'     "x_is_e <- exp(1)",
+#'     "x <- exp(1)",
 #'     "```",
 #'     sep = "\n",
 #'     file = paste0(tmpdr, "/report.Rmd"))
@@ -61,23 +66,46 @@
 #' # view the cache
 #' list.files(path = tmpdr, recursive = TRUE)
 #'
-#' # create another environment, and load only the second chunk
-#' lenv <- new.env()
-#' ls(envir = lenv)
+#' # create three more environment, and load only the first chunk into the
+#' # first, and the second chunck into the second, and then load all of the
+#' # cache into the third
+#' env1 <- new.env()
+#' env2 <- new.env()
+#' env3 <- new.env()
+#'
+#' lazyload_cache_labels(labels = "first-chunk",
+#'                       path = paste0(tmpdr, "/cache"),
+#'                       envir = env1)
 #'
 #' lazyload_cache_labels(labels = "second-chunk",
 #'                       path = paste0(tmpdr, "/cache"),
-#'                       envir = lenv)
-#' lenv$x_is_e
-#' lenv$mpg_by_wt_hp_am
+#'                       envir = env2)
 #'
-#' # load all the chuncks
-#' menv <- new.env()
-#' lazyload_cache_dir(path = paste0(tmpdr, "/cache"), envir = menv)
+#' lazyload_cache_dir(path = paste0(tmpdr, "/cache"), envir = env3)
 #'
-#' ls(envir = menv)
-#' menv$x_is_pi
-#' menv$x_is_e
+#' # Look at the conents of each of these environments
+#' ls(envir = kenv)
+#' ls(envir = env1)
+#' ls(envir = env2)
+#' ls(envir = env3)
+#'
+#' # The regression models are only fitted once an should be the same in all the
+#' # environments where they exist, as should the variables x_is_e and x_is_pi
+#' all.equal(kenv$mpg_by_wt_hp, env1$mpg_by_wt_hp)
+#' all.equal(env1$mpg_by_wt_hp, env3$mpg_by_wt_hp)
+#'
+#' all.equal(kenv$mpg_by_wt_hp_am, env2$mpg_by_wt_hp_am)
+#' all.equal(env2$mpg_by_wt_hp_am, env3$mpg_by_wt_hp_am)
+#'
+#' # The value of x, however, should be different in the differnet
+#' # environments.  For kenv, env2, and env3 the value should be exp(1) as that
+#' # was the last assignment value.  In env1 the value should be pi as that is
+#' # the only relevent assignment.
+#'
+#' all.equal(kenv$x, exp(1))
+#' all.equal(env1$x, pi)
+#' all.equal(env2$x, exp(1))
+#' all.equal(env3$x, exp(1))
 #'
 #' # cleanup
 #' setwd(old_wd)
