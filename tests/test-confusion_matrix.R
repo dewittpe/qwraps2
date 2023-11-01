@@ -32,31 +32,39 @@ con_mat <- confusion_matrix(truth = truth, predicted = test, thresholds = NULL)
 
 # check names
 stopifnot(
-  names(con_mat) == c("cm_stats", "cm_stats_Inf")
+  names(con_mat) == c("cm_stats", "auroc", "auroc_ci", "auprc", "auprc_ci", "confint_method", "alpha", "prevalence")
 )
 
 # check names of cm_stats
 stopifnot(
-  names(con_mat$cm_stats) == c("threshold", "TP", "TN", "FP", "FN", "sensitivity", "specificity", "ppv", "npv", "mcc", "f1")
+  names(con_mat$cm_stats) == c("threshold", "TP", "TN", "FP", "FN"
+                               , "sensitivity", "sensitivity_lcl", "sensitivity_ucl"
+                               , "specificity", "specificity_lcl", "specificity_ucl"
+                               , "ppv", "ppv_lcl", "ppv_ucl"
+                               , "npv", "npv_lcl", "npv_ucl"
+                               , "accuracy", "accuracy_lcl", "accuracy_ucl"
+                               , "youden"
+                               , "mcc"
+                               , "f1")
 )
 
 # Counts are as expected
-stopifnot(con_mat[["cm_stats"]][["TP"]] == c(30, 20),
-          con_mat[["cm_stats"]][["TN"]] == c(0, 37),
-          con_mat[["cm_stats"]][["FP"]] == c(70, 33),
-          con_mat[["cm_stats"]][["FN"]] == c(0, 10))
+stopifnot(con_mat[["cm_stats"]][["TP"]] == c(30, 30, 20, 0),
+          con_mat[["cm_stats"]][["TN"]] == c(0, 0, 37, 70),
+          con_mat[["cm_stats"]][["FP"]] == c(70, 70, 33, 0),
+          con_mat[["cm_stats"]][["FN"]] == c(0, 0, 10, 30))
 
 con_mat <- confusion_matrix(truth = truth, predicted = test, thresholds = 1)
-stopifnot(con_mat[["cm_stats"]][["TP"]] == 20,
-          con_mat[["cm_stats"]][["TN"]] == 37,
-          con_mat[["cm_stats"]][["FP"]] == 33,
-          con_mat[["cm_stats"]][["FN"]] == 10)
+stopifnot(con_mat[["cm_stats"]][is.finite(con_mat$cm_stats$threshold), ][["TP"]] == 20,
+          con_mat[["cm_stats"]][is.finite(con_mat$cm_stats$threshold), ][["TN"]] == 37,
+          con_mat[["cm_stats"]][is.finite(con_mat$cm_stats$threshold), ][["FP"]] == 33,
+          con_mat[["cm_stats"]][is.finite(con_mat$cm_stats$threshold), ][["FN"]] == 10)
 
 # Check Statistics
-stopifnot(con_mat[["cm_stats"]][["sensitivity"]] == 20 / 30)
-stopifnot(con_mat[["cm_stats"]][["specificity"]] == 37 / 70)
-stopifnot(con_mat[["cm_stats"]][["ppv"]] == 20 / 53)
-stopifnot(con_mat[["cm_stats"]][["npv"]] == 37 / 47)
+stopifnot(con_mat[["cm_stats"]][is.finite(con_mat$cm_stats$threshold), ][["sensitivity"]] == 20 / 30)
+stopifnot(con_mat[["cm_stats"]][is.finite(con_mat$cm_stats$threshold), ][["specificity"]] == 37 / 70)
+stopifnot(con_mat[["cm_stats"]][is.finite(con_mat$cm_stats$threshold), ][["ppv"]] == 20 / 53)
+stopifnot(con_mat[["cm_stats"]][is.finite(con_mat$cm_stats$threshold), ][["npv"]] == 37 / 47)
 
 # errors if non-binomial fit is passed
 fit <- glm(mpg > 20 ~ wt, data = mtcars)

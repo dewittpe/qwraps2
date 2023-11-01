@@ -54,7 +54,7 @@
 #'
 #' qroc(auc_data) + ggplot2::aes(color = model)
 #'
-#' qprc(auc_data, prevalence = auc1$prevalence) + ggplot2::aes(color = model)
+#' qprc(auc_data, prevalence = cm1$prevalence) + ggplot2::aes(color = model)
 #'
 #' @name
 #' qroc-qprc

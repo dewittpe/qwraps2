@@ -88,11 +88,7 @@ mod <- glm(
 )
 
 qroc(mod)
-qroc(confusion_matrix(mod))
-
 qprc(mod)
-qprc(confusion_matrix(mod))
-qprc(mod) + ggplot2::ylim(0, 1)
 
 #########################################################
 # plot more than one ROC
@@ -106,7 +102,7 @@ auc_data <- rbind(cbind(cm1$cm_stats, model = "Model 1"),
 
 qroc(auc_data) + ggplot2::aes(color = model)
 
-qprc(auc_data, prevalence = auc1$prevalence) + ggplot2::aes(color = model)
+qprc(auc_data, prevalence = cm1$prevalence) + ggplot2::aes(color = model)
 
 }
 \seealso{
