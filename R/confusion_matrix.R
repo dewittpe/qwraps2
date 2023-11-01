@@ -15,12 +15,9 @@
 #' confusion matrix (one threshold) or matrices (two or more thresholds).  If
 #' \code{NULL} the unique values of \code{predicted} will be used.
 #' @param ... pass through
-#' @param confint logical, if \code{TRUE} generate and report confidence
-#' intervals for sensitivity, specificity, ppv, and npv.
 #' @param confint_method character string denoting if the logit (default),
 #' binomial, or Wilson Score method for deriving confidence intervals
 #' @param alpha alpha level for 100 * (1 - alpha)\% confidence intervals
-#' @param frmtci_args a list of arguments passed to frmtci
 #'
 #' @details
 #' The confusion matrix:
@@ -88,10 +85,6 @@
 #'   )
 #'
 #' confusion_matrix(df$truth, df$pred, thresholds = 1)
-#' confusion_matrix(df$truth, df$pred, thresholds = 1, confint = TRUE)
-#' confusion_matrix(df$truth, df$pred, thresholds = 1, confint = TRUE, frmtci_args = list(show_level = TRUE, digits = 3))
-#' confusion_matrix(df$truth, df$pred, thresholds = 1, confint = TRUE, alpha = 0.1)
-#' confusion_matrix(df$truth, df$pred, thresholds = 1, confint = TRUE, alpha = 0.10, frmtci_args = list(show_level = TRUE, digits = 3))
 #'
 #' # Example 2: Use with a logistic regression model
 #' mod <- glm(
@@ -105,13 +98,13 @@
 #'
 #' @export
 #' @rdname confusion_matrix
-confusion_matrix <- function(..., thresholds = NULL, confint = FALSE, confint_method = "logit", alpha = getOption("qwraps2_alpha", 0.05), frmtci_args = list(...)) {
+confusion_matrix <- function(..., thresholds = NULL, confint_method = "logit", alpha = getOption("qwraps2_alpha", 0.05)) {
   UseMethod("confusion_matrix")
 }
 
 #' @export
 #' @rdname confusion_matrix
-confusion_matrix.default <- function(truth, predicted, ..., thresholds = NULL, confint = FALSE, confint_method = "logit", alpha = getOption("qwraps2_alpha", 0.05), frmtci_args = list(...)) {
+confusion_matrix.default <- function(truth, predicted, ..., thresholds = NULL, confint_method = "logit", alpha = getOption("qwraps2_alpha", 0.05)) {
 
   truth <- as.integer(truth)
 
@@ -129,66 +122,75 @@ confusion_matrix.default <- function(truth, predicted, ..., thresholds = NULL, c
   }
   thresholds <- sort(unique(c(-Inf, thresholds, Inf)))
 
-  cm_stats <-
+  cm_cells <-
     lapply(thresholds,
            function(threshold) {
              cells <-
-               list(  TP        = sum(truth == 1 & predicted >= threshold)
+               list(  threshold = threshold
+                    , TP        = sum(truth == 1 & predicted >= threshold)
                     , TN        = sum(truth == 0 & predicted <  threshold)
                     , FP        = sum(truth == 0 & predicted >= threshold)
                     , FN        = sum(truth == 1 & predicted <  threshold))
-             list(threshold = threshold
-                  , cells
-                  , sensitivity = do.call(sensitivity, cells)
-                  , specificity = do.call(specificity, cells)
-                  , ppv         = do.call(PPV, cells)
-                  , npv         = do.call(NPV, cells)
-                  , mcc         = do.call(MCC, cells)
-                  , f1          = do.call(F1, cells)
-                  )
            })
-  cm_stats <- lapply(cm_stats, as.data.frame)
+  sen <- sapply(cm_cells, do.call, what = sensitivity)
+  spc <- sapply(cm_cells, do.call, what = specificity)
+  ppv <- sapply(cm_cells, do.call, what = PPV)
+  npv <- sapply(cm_cells, do.call, what = NPV)
+  acc <- sapply(cm_cells, do.call, what = accuracy)
+
+  auroc <- -traprule(x = 1 - spc, y = sen)
+  auprc <- -traprule(x = sen, y = ppv)
+
+  # marginal sums
+  N <- unique(sapply(cm_cells, function(x) x[["TP"]] + x[["FP"]] + x[["TN"]] + x[["FN"]]))
+  stopifnot(length(N) == 1L)
+  condition_P <- unique(sapply(cm_cells, function(x) x[["TP"]] + x[["FN"]]))
+  stopifnot(length(condition_P) == 1L)
+  condition_N <- unique(sapply(cm_cells, function(x) x[["TN"]] + x[["FP"]]))
+  stopifnot(length(condition_N) == 1L)
+  predicted_P <- sapply(cm_cells, function(x) x[["TP"]] + x[["FP"]])
+  predicted_N <- sapply(cm_cells, function(x) x[["FN"]] + x[["TN"]])
+
+  # confidence intervals
+  sen_ci <- do.call(rbind, Map(proportion_confint, p = sen, n = condition_P, method = confint_method, alpha = alpha))
+  spc_ci <- do.call(rbind, Map(proportion_confint, p = spc, n = condition_N, method = confint_method, alpha = alpha))
+  ppv_ci <- do.call(rbind, Map(proportion_confint, p = ppv, n = predicted_P, method = confint_method, alpha = alpha))
+  npv_ci <- do.call(rbind, Map(proportion_confint, p = npv, n = predicted_N, method = confint_method, alpha = alpha))
+  acc_ci <- do.call(rbind, Map(proportion_confint, p = acc, n = N,           method = confint_method, alpha = alpha))
+
+  cm_stats <- lapply(cm_cells, as.data.frame)
   cm_stats <- do.call(rbind, cm_stats)
-  class(cm_stats) <- c("qwraps2_confusion_matrix", class(cm_stats))
-
-  if (confint) {
-    sen_ci <- proportion_confint(p = cm_stats[["sensitivity"]], n = cm_stats[["TP"]] + cm_stats[["FN"]], method = confint_method, alpha = alpha)
-    spc_ci <- proportion_confint(p = cm_stats[["specificity"]], n = cm_stats[["TN"]] + cm_stats[["FP"]], method = confint_method, alpha = alpha)
-    ppv_ci <- proportion_confint(p = cm_stats[["ppv"]],         n = cm_stats[["TP"]] + cm_stats[["FP"]], method = confint_method, alpha = alpha)
-    npv_ci <- proportion_confint(p = cm_stats[["npv"]],         n = cm_stats[["TN"]] + cm_stats[["FN"]], method = confint_method, alpha = alpha)
-
-    if ("show_level" %in% names(frmtci_args)) {
-      if (is.logical(frmtci_args[["show_level"]])) {
-        frmtci_args[["show_level"]] <- paste0(100 * (1 - alpha), "% CI: ")
-      }
-    }
-
-    cm_stats <- cbind(cm_stats[c("threshold", "TP", "TN", "FP", "FN")]
-                      , sensitivity = cm_stats[["sensitivity"]]
-                      , sensitivity_lcl = sen_ci[1]
-                      , sensitivity_ucl = sen_ci[2]
-                      , sensitivity_ci = do.call(frmtci, c(list(x = cbind(cm_stats[["sensitivity"]], sen_ci), est = 1, lcl = 2, ucl = 3), frmtci_args))
-                      , specificity = cm_stats[["specificity"]]
-                      , specificity_lcl = spc_ci[1]
-                      , specificity_ucl = spc_ci[2]
-                      , specificity_ci = do.call(frmtci, c(list(x = cbind(cm_stats[["specificity"]], spc_ci), est = 1, lcl = 2, ucl = 3), frmtci_args))
-                      , ppv = cm_stats[["ppv"]]
-                      , ppv_lcl = ppv_ci[1]
-                      , ppv_ucl = ppv_ci[2]
-                      , ppv_ci = do.call(frmtci, c(list(x = cbind(cm_stats[["ppv"]], ppv_ci), est = 1, lcl = 2, ucl = 3), frmtci_args))
-                      , npv = cm_stats[["npv"]]
-                      , npv_lcl = npv_ci[1]
-                      , npv_ucl = npv_ci[2]
-                      , npv_ci = do.call(frmtci, c(list(x = cbind(cm_stats[["npv"]], npv_ci), est = 1, lcl = 2, ucl = 3), frmtci_args))
-                      , cm_stats[-which(names(cm_stats) %in% c("threshold", "TP", "TN", "FP", "FN"))]
-                      )
-
-  }
+  cm_stats <- cbind(cm_stats
+         , sensitivity     = sen
+         , sensitivity_lcl = sen_ci[, 1]
+         , sensitivity_ucl = sen_ci[, 2]
+         , specificity     = spc
+         , specificity_lcl = spc_ci[, 1]
+         , specificity_ucl = spc_ci[, 2]
+         , ppv             = ppv
+         , ppv_lcl         = ppv_ci[, 1]
+         , ppv_ucl         = ppv_ci[, 2]
+         , npv             = npv
+         , npv_lcl         = npv_ci[, 1]
+         , npv_ucl         = npv_ci[, 2]
+         , accuracy        = acc
+         , accuracy_lcl    = acc_ci[, 1]
+         , accuracy_ucl    = acc_ci[, 2]
+         , youden          = sapply(cm_cells, do.call, what = youden)
+         , mcc            = sapply(cm_cells, do.call, what = MCC)
+         , f1             = sapply(cm_cells, do.call, what = F1)
+         )
 
   rtn <-
     list(
-           cm_stats     = cm_stats[-c(1, nrow(cm_stats)), ]
-         , cm_stats_Inf = cm_stats[c(1, nrow(cm_stats)), ]
+           cm_stats       = cm_stats
+         , auroc          = auroc
+         , auroc_ci       = proportion_confint(p = auroc, n = N, method = confint_method, alpha = alpha)
+         , auprc          = auprc
+         , auprc_ci       = proportion_confint(p = auprc, n = N, method = confint_method, alpha = alpha)
+         , confint_method = confint_method
+         , alpha          = alpha
+         , prevalence     = condition_P / (condition_P + condition_N)
          )
 
   class(rtn) <- c("qwraps2_confusion_matrix")
@@ -199,7 +201,7 @@ confusion_matrix.default <- function(truth, predicted, ..., thresholds = NULL, c
 #' @param data environment containing the variables listed in the formula
 #' @export
 #' @rdname confusion_matrix
-confusion_matrix.formula <- function(formula, data = parent.frame(), ..., thresholds = NULL, confint = FALSE, confint_method = "logit", alpha = getOption("qwraps2_alpha", 0.05), frmtci_args = list()) {
+confusion_matrix.formula <- function(formula, data = parent.frame(), ..., thresholds = NULL, confint_method = "logit", alpha = getOption("qwraps2_alpha", 0.05)) {
   cl <- as.list(match.call())[-1]
 
   mf <- stats::model.frame(formula, data)
@@ -214,11 +216,11 @@ confusion_matrix.formula <- function(formula, data = parent.frame(), ..., thresh
 #' @param x a \code{glm} object
 #' @export
 #' @rdname confusion_matrix
-confusion_matrix.glm <- function(x, ..., thresholds = NULL, confint = FALSE, confint_method = "logit", alpha = getOption("qwraps2_alpha", 0.05), frmtci_args = list()) {
+confusion_matrix.glm <- function(x, ..., thresholds = NULL, confint_method = "logit", alpha = getOption("qwraps2_alpha", 0.05)) {
   stopifnot(x[["family"]][["family"]] == "binomial")
   truth <- x[["y"]]
   pred  <- stats::predict(x, type = "response")
-  confusion_matrix(truth = truth, predicted = pred, ..., thresholds = thresholds, confint = confint, confint_method = confint_method, alpha = alpha, frmtci_args = frmtci_args)
+  confusion_matrix(truth = truth, predicted = pred, ..., thresholds = thresholds, confint_method = confint_method, alpha = alpha)
 }
 
 #' @rdname confusion_matrix
@@ -304,13 +306,26 @@ youden <- function(TP, TN, FP, FN, ...) {
 
 # Matthews Correlation Coefficient
 MCC <- function(TP, TN, FP, FN, ...) {
-  #((TP * TN) - (FP * FN)) / sqrt((TP + FP) * (TP+FN) * (TN+FP) * (TN+FN))
+  # ((TP * TN) - (FP * FN)) / sqrt((TP + FP) * (TP+FN) * (TN+FP) * (TN+FN))
 
-  # because there can be very large numbers work with logs
-  numerator <- exp(log(TP) + log(TN)) - exp(log(FP) + log(FN))
-  exp(
-    log(numerator) - 0.5 * ( log(TP+FP) + log(TP+FN) + log(TN+FP) + log(TN+FN) )
-  )
+  # because there can be very large numbers work with logs when needed
+  # denominator <- 0.5 * ( log(TP+FP) + log(TP+FN) + log(TN+FP) + log(TN+FN) )
+
+  if ( ((TP + FP) == 0) | ((TP + FN) == 0) | ((TN + FP) == 0) | ((TN + FN) == 0)) {
+    rtn <- NA_real_
+  } else {
+    denominator <- exp(0.5 * ( log(TP+FP) + log(TP+FN) + log(TN+FP) + log(TN+FN) ))
+
+    if (TP == 0 | TN == 0 | FP == 0 | FN == 0 ) {
+      numerator <- (TP * TN) - (FP * FN)
+    } else {
+      numerator <- exp(log(TP) + log(TN)) - exp(log(FP) + log(FN))
+    }
+
+    rtn <- numerator / denominator
+  }
+
+  rtn
 }
 
 proportion_confint <- function(p, n, method = "logit", alpha = getOption("qwraps2_alpha", 0.05)) {

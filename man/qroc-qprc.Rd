@@ -4,12 +4,10 @@
 \alias{qroc-qprc}
 \alias{qroc}
 \alias{qroc.default}
-\alias{qroc.qwraps2_auc}
 \alias{qroc.qwraps2_confusion_matrix}
 \alias{qroc.glm}
 \alias{qprc}
 \alias{qprc.default}
-\alias{qprc.qwraps2_auc}
 \alias{qprc.qwraps2_confusion_matrix}
 \alias{qprc.glm}
 \alias{qroc_build_data_frame}
@@ -22,8 +20,6 @@ qroc(x, ...)
 
 \method{qroc}{default}(x, ...)
 
-\method{qroc}{qwraps2_auc}(x, ...)
-
 \method{qroc}{qwraps2_confusion_matrix}(x, ...)
 
 \method{qroc}{glm}(x, ...)
@@ -31,8 +27,6 @@ qroc(x, ...)
 qprc(x, ...)
 
 \method{qprc}{default}(x, ...)
-
-\method{qprc}{qwraps2_auc}(x, ...)
 
 \method{qprc}{qwraps2_confusion_matrix}(x, ...)
 
@@ -47,10 +41,7 @@ qroc_build_data_frame(fit, truth = NULL, n_threshold = 200, ...)
 qprc_build_data_frame(fit, n_threshold = 200, ...)
 }
 \arguments{
-\item{x}{a \code{glm} fit, \code{qwraps2_confusion_matrix},
-\code{qwraps2_auc}, or \code{data.frame}.  In the case of a generic data
-frame, there is an expectation of two columns \dQuote{FNR} and \dQuote{TPR} for
-\code{qroc}; \dQuote{Recall} and \dQuote{Precision} for \code{qprc}.}
+\item{x}{an object}
 
 \item{...}{passed to \code{stats::predict}}
 
@@ -84,20 +75,11 @@ df <-
   )
 
 cm <- confusion_matrix(df$truth, df$pred)
-auc <- auc(cm)
-auc$auroc
-auc$auprc
-
-# You can get the same ROC/PRC plot from either the confusion_matrix or the
-# auc object
 qroc(cm)
-qroc(auc)
 qprc(cm)
-qprc(auc)
 
 #########################################################
 # Getting a ROC or PRC plot from a glm object:
-# you could call confusion_matrix, auc, or just go directly to qroc/qprc
 
 mod <- glm(
   formula = spam ~ word_freq_our + word_freq_over + capital_run_length_total
@@ -106,33 +88,25 @@ mod <- glm(
 )
 
 qroc(mod)
+qroc(confusion_matrix(mod))
 
 qprc(mod)
+qprc(confusion_matrix(mod))
 qprc(mod) + ggplot2::ylim(0, 1)
 
 #########################################################
 # plot more than one ROC
 mod2 <- update(mod, formula = . ~ word_freq_our)
 
-auc1 <- auc(mod)
-auc2 <- auc(mod2)
+cm1 <- confusion_matrix(mod)
+cm2 <- confusion_matrix(mod2)
 
-auroc_data <- rbind(cbind(auc1$roc_data, model = "Model 1"),
-                    cbind(auc2$roc_data, model = "Model 2"))
+auc_data <- rbind(cbind(cm1$cm_stats, model = "Model 1"),
+                  cbind(cm2$cm_stats, model = "Model 2"))
 
-qroc(auroc_data) + ggplot2::aes(color = model)
+qroc(auc_data) + ggplot2::aes(color = model)
 
-auc1$auroc
-auc2$auroc
-
-auprc_data <- rbind(cbind(auc1$prc_data, model = "Model 1"),
-                    cbind(auc2$prc_data, model = "Model 2"))
-
-qprc(auprc_data, prevalence = auc1$prevalence) + ggplot2::aes(color = model)
-
-auc1$auprc
-auc2$auprc
-
+qprc(auc_data, prevalence = auc1$prevalence) + ggplot2::aes(color = model)
 
 }
 \seealso{

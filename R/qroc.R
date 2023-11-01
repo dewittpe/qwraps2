@@ -7,10 +7,7 @@
 #' The area under the curve (AUC) is determined by a trapezoid approximation for
 #' both the AUROC and AUPRC.
 #'
-#' @param x a \code{glm} fit, \code{qwraps2_confusion_matrix},
-#' \code{qwraps2_auc}, or \code{data.frame}.  In the case of a generic data
-#' frame, there is an expectation of two columns \dQuote{FNR} and \dQuote{TPR} for
-#' \code{qroc}; \dQuote{Recall} and \dQuote{Precision} for \code{qprc}.
+#' @param x an object
 #' @param ... passed to \code{stats::predict}
 #'
 #' @seealso \code{vignette("qwraps2-graphics", package = "qwraps2")} for more
@@ -30,20 +27,11 @@
 #'   )
 #'
 #' cm <- confusion_matrix(df$truth, df$pred)
-#' auc <- auc(cm)
-#' auc$auroc
-#' auc$auprc
-#'
-#' # You can get the same ROC/PRC plot from either the confusion_matrix or the
-#' # auc object
 #' qroc(cm)
-#' qroc(auc)
 #' qprc(cm)
-#' qprc(auc)
 #'
 #' #########################################################
 #' # Getting a ROC or PRC plot from a glm object:
-#' # you could call confusion_matrix, auc, or just go directly to qroc/qprc
 #'
 #' mod <- glm(
 #'   formula = spam ~ word_freq_our + word_freq_over + capital_run_length_total
@@ -52,33 +40,21 @@
 #' )
 #'
 #' qroc(mod)
-#'
 #' qprc(mod)
-#' qprc(mod) + ggplot2::ylim(0, 1)
 #'
 #' #########################################################
 #' # plot more than one ROC
 #' mod2 <- update(mod, formula = . ~ word_freq_our)
 #'
-#' auc1 <- auc(mod)
-#' auc2 <- auc(mod2)
+#' cm1 <- confusion_matrix(mod)
+#' cm2 <- confusion_matrix(mod2)
 #'
-#' auroc_data <- rbind(cbind(auc1$roc_data, model = "Model 1"),
-#'                     cbind(auc2$roc_data, model = "Model 2"))
+#' auc_data <- rbind(cbind(cm1$cm_stats, model = "Model 1"),
+#'                   cbind(cm2$cm_stats, model = "Model 2"))
 #'
-#' qroc(auroc_data) + ggplot2::aes(color = model)
+#' qroc(auc_data) + ggplot2::aes(color = model)
 #'
-#' auc1$auroc
-#' auc2$auroc
-#'
-#' auprc_data <- rbind(cbind(auc1$prc_data, model = "Model 1"),
-#'                     cbind(auc2$prc_data, model = "Model 2"))
-#'
-#' qprc(auprc_data, prevalence = auc1$prevalence) + ggplot2::aes(color = model)
-#'
-#' auc1$auprc
-#' auc2$auprc
-#'
+#' qprc(auc_data, prevalence = auc1$prevalence) + ggplot2::aes(color = model)
 #'
 #' @name
 #' qroc-qprc
@@ -98,29 +74,23 @@ qroc.default <- function(x, ...) {
 
 #' @export
 #' @rdname qroc-qprc
-qroc.qwraps2_auc <- function(x, ...) {
-  qroc_ggplot(x[["roc_data"]], ...)
-}
-
-#' @export
-#' @rdname qroc-qprc
 qroc.qwraps2_confusion_matrix <- function(x, ...) {
-  auc_data <- auc(x, ...)
-  qroc_ggplot(auc_data[["roc_data"]], ...)
+  qroc_ggplot(x[["cm_stats"]], ...)
 }
 
 #' @export
 #' @rdname qroc-qprc
 qroc.glm <- function(x, ...) {
-  auc_data <- auc(x, ...)
-  qroc_ggplot(auc_data[["roc_data"]])
+  qroc(confusion_matrix(x, ...))
 }
 
 qroc_ggplot <- function(data) {
-  stopifnot("FNR" %in% names(data))
-  stopifnot("TPR" %in% names(data))
+  stopifnot("specificity" %in% names(data))
+  stopifnot("sensitivity" %in% names(data))
+  data[["FPR"]] <- 1 - data[["specificity"]]
+  data[["TPR"]] <- data[["sensitivity"]]
   ggplot2::ggplot(data) +
-  eval(substitute(ggplot2::aes(x = X, y = Y), list(X = as.name("FNR"), Y = as.name("TPR")))) +
+  eval(substitute(ggplot2::aes(x = X, y = Y), list(X = as.name("FPR"), Y = as.name("TPR")))) +
   ggplot2::geom_point() +
   ggplot2::geom_line() +
   ggplot2::xlim(0, 1) +
@@ -142,30 +112,22 @@ qprc.default <- function(x, ...) {
 
 #' @export
 #' @rdname qroc-qprc
-qprc.qwraps2_auc <- function(x, ...) {
-  qprc_ggplot(x[["prc_data"]], ...)
-}
-
-#' @export
-#' @rdname qroc-qprc
 qprc.qwraps2_confusion_matrix <- function(x, ...) {
-  auc_data <- auc(x, ...)
-  qprc_ggplot(auc_data[["prc_data"]], ...)
+  qprc_ggplot(x[["cm_stats"]], prevalence = x$prevalence, ...)
 }
 
 #' @export
 #' @rdname qroc-qprc
 qprc.glm <- function(x, ...) {
-  auc_data <- auc(x, ...)
-  qprc_ggplot(auc_data[["prc_data"]])
+  qprc(confusion_matrix(x, ...))
 }
 
 qprc_ggplot <- function(data, prevalence = NULL) {
-  stopifnot("Recall" %in% names(data))
-  stopifnot("Precision" %in% names(data))
+  stopifnot("sensitivity" %in% names(data)) # recall
+  stopifnot("ppv" %in% names(data)) # Precision
   g <-
     ggplot2::ggplot(data = data) +
-    eval(substitute(ggplot2::aes(x = X, y = Y), list(X = as.name("Recall"), Y = as.name("Precision")))) +
+    eval(substitute(ggplot2::aes(x = X, y = Y), list(X = as.name("sensitivity"), Y = as.name("ppv")))) +
     ggplot2::geom_point() +
     ggplot2::geom_line() +
     ggplot2::xlim(0, 1) +

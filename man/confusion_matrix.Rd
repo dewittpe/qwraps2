@@ -11,10 +11,8 @@
 confusion_matrix(
   ...,
   thresholds = NULL,
-  confint = FALSE,
   confint_method = "logit",
-  alpha = getOption("qwraps2_alpha", 0.05),
-  frmtci_args = list(...)
+  alpha = getOption("qwraps2_alpha", 0.05)
 )
 
 \method{confusion_matrix}{default}(
@@ -22,10 +20,8 @@ confusion_matrix(
   predicted,
   ...,
   thresholds = NULL,
-  confint = FALSE,
   confint_method = "logit",
-  alpha = getOption("qwraps2_alpha", 0.05),
-  frmtci_args = list(...)
+  alpha = getOption("qwraps2_alpha", 0.05)
 )
 
 \method{confusion_matrix}{formula}(
@@ -33,20 +29,16 @@ confusion_matrix(
   data = parent.frame(),
   ...,
   thresholds = NULL,
-  confint = FALSE,
   confint_method = "logit",
-  alpha = getOption("qwraps2_alpha", 0.05),
-  frmtci_args = list()
+  alpha = getOption("qwraps2_alpha", 0.05)
 )
 
 \method{confusion_matrix}{glm}(
   x,
   ...,
   thresholds = NULL,
-  confint = FALSE,
   confint_method = "logit",
-  alpha = getOption("qwraps2_alpha", 0.05),
-  frmtci_args = list()
+  alpha = getOption("qwraps2_alpha", 0.05)
 )
 
 \method{print}{qwraps2_confusion_matrix}(x, ...)
@@ -58,15 +50,10 @@ confusion_matrix(
 confusion matrix (one threshold) or matrices (two or more thresholds).  If
 \code{NULL} the unique values of \code{predicted} will be used.}
 
-\item{confint}{logical, if \code{TRUE} generate and report confidence
-intervals for sensitivity, specificity, ppv, and npv.}
-
 \item{confint_method}{character string denoting if the logit (default),
 binomial, or Wilson Score method for deriving confidence intervals}
 
 \item{alpha}{alpha level for 100 * (1 - alpha)\% confidence intervals}
-
-\item{frmtci_args}{a list of arguments passed to frmtci}
 
 \item{truth}{a integer vector with the values \code{0} and \code{1}, or a logical vector.
 A value of \code{0} or \code{FALSE} is an indication of condition negative;
@@ -151,10 +138,6 @@ df <-
   )
 
 confusion_matrix(df$truth, df$pred, thresholds = 1)
-confusion_matrix(df$truth, df$pred, thresholds = 1, confint = TRUE)
-confusion_matrix(df$truth, df$pred, thresholds = 1, confint = TRUE, frmtci_args = list(show_level = TRUE, digits = 3))
-confusion_matrix(df$truth, df$pred, thresholds = 1, confint = TRUE, alpha = 0.1)
-confusion_matrix(df$truth, df$pred, thresholds = 1, confint = TRUE, alpha = 0.10, frmtci_args = list(show_level = TRUE, digits = 3))
 
 # Example 2: Use with a logistic regression model
 mod <- glm(

@@ -1,5 +1,24 @@
 library(qwraps2)
+################################################################################
+df <-
+  data.frame(
+      truth = c(1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0)
+    , pred  = c(1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0)
+  )
 
+TP <- with(df, sum(truth == 1 & pred == 1))
+TN <- with(df, sum(truth == 0 & pred == 0))
+FP <- with(df, sum(truth == 0 & pred == 1))
+FN <- with(df, sum(truth == 1 & pred == 0))
+
+cmat <- confusion_matrix(df$truth, df$pred, thresholds = 1)$cm_stats
+stopifnot(nrow(cmat) == 3L)
+stopifnot(cmat[is.finite(cmat$threshold), "TP"] == TP)
+stopifnot(cmat[is.finite(cmat$threshold), "TN"] == TN)
+stopifnot(cmat[is.finite(cmat$threshold), "FP"] == FP)
+stopifnot(cmat[is.finite(cmat$threshold), "FN"] == FN)
+
+################################################################################
 set.seed(42)
 test  <- c(rep(1, 53), rep(0, 47))
 truth <- c(rep(1, 20), rep(0, 33), rep(1, 10), rep(0, 37))
