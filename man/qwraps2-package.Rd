@@ -57,7 +57,7 @@ different options which are available and what they control.
   than default.  Check the github wiki, or this file,  for current lists of
   implemented journal style methods.
 
-  \item \code{getOptions("qwraps2_markup", latex)} value set to 'latex' or
+  \item \code{getOptions("qwraps2_markup", "latex")} value set to 'latex' or
   to 'markdown'.  Output is formatted to meet requirements of either markup
   language.
 
