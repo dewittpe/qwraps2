@@ -18,3 +18,7 @@
 ^CRAN-RELEASE$
 ^covr-report\.html$
 ^lib/*
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$

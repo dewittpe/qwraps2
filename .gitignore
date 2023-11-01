@@ -4,3 +4,4 @@ inst/doc
 *.Rout
 covr-report.html
 lib/*
+docs
