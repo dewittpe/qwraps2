@@ -19,6 +19,7 @@ Depends:
 License: GPL-2
 Encoding: UTF-8
 URL: https://github.com/dewittpe/qwraps2/, http://www.peteredewitt.com/qwraps2/
+BugReports: https://github.com/dewittpe/qwraps2/issues
 Language: en-us
 LazyData: true
 Imports:
