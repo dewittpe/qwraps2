@@ -105,6 +105,7 @@ Useful links:
 \itemize{
   \item \url{https://github.com/dewittpe/qwraps2/}
   \item \url{http://www.peteredewitt.com/qwraps2/}
+  \item Report bugs at \url{https://github.com/dewittpe/qwraps2/issues}
 }
 
 }

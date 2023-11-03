@@ -13,15 +13,10 @@
 #'---
 #'
 # /*
-if (interactive()) {
-  devtools::load_all()
-} else {
+devtools::load_all()
 # */
 library(qwraps2)
 packageVersion("qwraps2")
-# /*
-}
-# */
 #'
 #' # mtcars2
 #'
@@ -223,7 +218,16 @@ nms <-
   )
 nms <- sapply(strsplit(nms, split = ":"), getElement, 1)
 nms <- c(nms, "spam")
-nms
+
+# clean up char_freq names
+nms <-
+  nms |>
+  sub(";", "semicolon",         x = _, fixed = TRUE) |>
+  sub("(", "parenthesis",       x = _, fixed = TRUE) |>
+  sub("[", "square_bracket",    x = _, fixed = TRUE) |>
+  sub("!", "exclamation_point", x = _, fixed = TRUE) |>
+  sub("$", "dollar_sign",       x = _, fixed = TRUE) |>
+  sub("#", "pound",             x = _, fixed = TRUE)
 
 spambase <- read.csv(
     file = system.file("spambase", "spambase.data", package = "qwraps2")
