@@ -14,15 +14,10 @@
 #+ label = "setup", include = FALSE
 knitr::opts_chunk$set(collapse = TRUE)
 # /*
-if (interactive()) {
-  devtools::load_all()
-} else {
+devtools::load_all()
 # */
 library(qwraps2)
 packageVersion("qwraps2")
-# /*
-}
-# */
 
 #'
 #' There are several graphics generated within qwraps2.  The naming convention

@@ -6,7 +6,7 @@
 \alias{qkmplot_bulid_data_frame.survfit}
 \alias{qrmst}
 \alias{qrmst.survfit}
-\alias{qrmst.qwraps2_generated}
+\alias{qrmst.qkmplot_data}
 \title{Kaplan-Meier Plot}
 \usage{
 qkmplot(x, conf_int = FALSE, ...)
@@ -19,7 +19,7 @@ qrmst(x, tau = Inf)
 
 \method{qrmst}{survfit}(x, tau = Inf)
 
-\method{qrmst}{qwraps2_generated}(x, tau = Inf)
+\method{qrmst}{qkmplot_data}(x, tau = Inf)
 }
 \arguments{
 \item{x}{object}
@@ -44,15 +44,29 @@ More details and examples for graphics within qwraps2 are in the
 vignette(\dQuote{qwraps2-graphics}, pacakge = {qwraps2})
 }
 \examples{
-# create a survfit object
 require(survival)
+
 leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x, data = survival::aml)
 
 qkmplot(leukemia.surv, conf_int = TRUE)
 
 qkmplot_bulid_data_frame(leukemia.surv)
 
-qrmst(leukemia.surv) # NaN for rmst.se in Nonmaintained strata as laste observation is an event
+qrmst(leukemia.surv) # NaN for rmst.se in Nonmaintained strata as last observation is an event
 qrmst(leukemia.surv, 44)
+
+# pbc examples
+pbc_fit <-
+  survival::survfit(
+      formula = survival::Surv(time, status > 0) ~ trt
+    , data = pbc
+    , subset = !is.na(trt)
+  )
+
+qkmplot(pbc_fit)
+qkmplot(pbc_fit, conf_int = TRUE)
+
+qrmst(pbc_fit)
+qrmst(pbc_fit)
 
 }

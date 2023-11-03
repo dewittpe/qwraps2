@@ -16,16 +16,30 @@
 #' @return a ggplot.
 #'
 #' @examples
-#' # create a survfit object
 #' require(survival)
+#'
 #' leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x, data = survival::aml)
 #'
 #' qkmplot(leukemia.surv, conf_int = TRUE)
 #'
 #' qkmplot_bulid_data_frame(leukemia.surv)
 #'
-#' qrmst(leukemia.surv) # NaN for rmst.se in Nonmaintained strata as laste observation is an event
+#' qrmst(leukemia.surv) # NaN for rmst.se in Nonmaintained strata as last observation is an event
 #' qrmst(leukemia.surv, 44)
+#'
+#' # pbc examples
+#' pbc_fit <-
+#'   survival::survfit(
+#'       formula = survival::Surv(time, status > 0) ~ trt
+#'     , data = pbc
+#'     , subset = !is.na(trt)
+#'   )
+#'
+#' qkmplot(pbc_fit)
+#' qkmplot(pbc_fit, conf_int = TRUE)
+#'
+#' qrmst(pbc_fit)
+#' qrmst(pbc_fit)
 #'
 #' @export
 #' @rdname qkmplot
@@ -44,7 +58,7 @@ qkmplot.survfit <- function(x, conf_int = FALSE, ...) {
 }
 
 #' @export
-qkmplot.qwraps2_generated <- function(x, conf_int = FALSE, ...) {
+qkmplot.qkmplot_data <- function(x, conf_int = FALSE, ...) {
   qkmplot_ggplot(x, conf_int = conf_int, ...)
 }
 
@@ -76,32 +90,49 @@ qkmplot_bulid_data_frame <- function(x) {
 #' @export
 #' @rdname qkmplot
 qkmplot_bulid_data_frame.survfit <- function(x) {
+
   plot_data <- data.frame(time = x[['time']],
                           n.risk = x[['n.risk']],
                           n.event = x[['n.event']],
                           n.censor = x[['n.censor']],
                           surv = x[['surv']],
-                          # strata = rep(attr(x[['strata']], "names"), times = x[['strata']]),
                           upper = x[['upper']],
                           lower = x[['lower']],
                           stringsAsFactors = FALSE)
+
   if (!is.null(x$strata)) {
     plot_data$strata <- rep(attr(x[['strata']], "names"), times = x[['strata']])
-    first_data <- plot_data[!duplicated(plot_data$strata), ]
+    for( s in attr(x[['strata']], "names")) {
+      if (min(plot_data$time[plot_data$strata == s]) > 0) {
+        plot_data <- rbind(data.frame(time = 0,
+                                      n.risk = max(plot_data$n.risk[plot_data$strata == s]),
+                                      n.event = 0,
+                                      n.censor = 0,
+                                      surv = 1,
+                                      upper = 1,
+                                      lower = 1,
+                                      strata = s)
+                           , plot_data)
+      }
+    }
+    plot_data <- plot_data[order(plot_data$strata, plot_data$time),]
   } else {
-    first_data <- plot_data[1, ]
+    if (min(plot_data$time > 0)) {
+        plot_data <- rbind(data.frame(time = 0,
+                                      n.risk = max(plot_data$n.risk),
+                                      n.event = 0,
+                                      n.censor = 0,
+                                      surv = 1,
+                                      upper = 1,
+                                      lower = 1
+                                      )
+                           , plot_data)
+    }
+    plot_data <- plot_data[order(plot_data$time),]
   }
-  first_data$time <- 0
-  first_data$surv <- 1
-  first_data$n.risk <- NA
-  first_data$n.event <- NA
-  first_data$n.censor <- 0
-  first_data$lower <- 1
-  first_data$upper <- 1
 
-  dat <- rbind(plot_data, first_data)
-  class(dat) <- c("qwraps2_generated", class(dat))
-  dat
+  class(plot_data) <- c("qkmplot_data", class(plot_data))
+  plot_data
 }
 
 #' @param tau upper bound on time for restricted mean survival time estimate
@@ -115,33 +146,45 @@ qrmst <- function(x, tau = Inf) {
 #' @rdname qkmplot
 qrmst.survfit <- function(x, tau = Inf) {
   d <- qkmplot_bulid_data_frame(x)
-  d <- subset(d, d$time > 0)
-  qrmst.qwraps2_generated(d, tau = tau)
+  # d <- subset(d, d$time > 0)
+  qrmst.qkmplot_data(d, tau = tau)
 }
 
 #' @export
 #' @rdname qkmplot
-qrmst.qwraps2_generated <- function(x, tau = Inf) {
+qrmst.qkmplot_data <- function(x, tau = Inf) {
+
   d <- split(x, x$strata)
+
+  if (is.infinite(tau)) {
+    tau <- min(sapply(d, function(x) {max(x$time)}))
+  }
+
   for (i in seq_along(d)) {
 
     d[[i]] <- subset(d[[i]], d[[i]]$time <= tau)
 
-    d[[i]]$timeL <-  c(0, d[[i]]$time[-length(d[[i]]$time)])
-    d[[i]]$rsum <- d[[i]]$surv * (d[[i]]$time - d[[i]]$timeL)
+    if(!isTRUE(all.equal(max(d[[i]][["time"]]), tau))) {
+      taildf <- utils::tail(d[[i]], n = 1)
+      taildf$time <- tau
+      d[[i]] <- rbind(d[[i]], taildf)
+    }
+
+    d[[i]]$timeL <- c(0, d[[i]]$time[-length(d[[i]]$time)])
+    d[[i]]$rsum  <- d[[i]]$surv * (d[[i]]$time - d[[i]]$timeL)
     d[[i]]$rcsum <- rev(cumsum(rev(d[[i]]$rsum)))
     d[[i]]$rvsum <- (d[[i]]$rcsum^2 * d[[i]]$n.event) / (d[[i]]$n.risk * (d[[i]]$n.risk - d[[i]]$n.event))
 
-
     d[[i]] <-
-        data.frame(strata = d[[i]]$strata[1],
-                   tau    = max(d[[i]]$time),
-                   rmst   = sum(d[[i]]$rsum),
-                   rmst.se = sqrt(sum(d[[i]]$rvsum))
-                   )
+        data.frame(
+          strata  = d[[i]]$strata[1]
+        , rmst    = sum(d[[i]]$rsum)
+        , rmtl    = tau - sum(d[[i]]$rsum)
+        , rmst.se = sqrt(sum(d[[i]]$rvsum))
+        , tau     = max(d[[i]]$time)
+        )
   }
 
   d <- do.call(rbind, d)
   d
 }
-
