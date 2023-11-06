@@ -14,3 +14,11 @@ stopifnot(isTRUE(all.equal(e$kenv$x, exp(1))))
 stopifnot(isTRUE(all.equal(e$env1$x, pi)))
 stopifnot(isTRUE(all.equal(e$env2$x, exp(1))))
 stopifnot(isTRUE(all.equal(e$env3$x, exp(1))))
+
+################################################################################
+##                              Extended testing                              ##
+
+
+################################################################################
+#                                 End of File                                  #
+################################################################################

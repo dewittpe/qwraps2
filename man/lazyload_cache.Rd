@@ -10,7 +10,6 @@ lazyload_cache_dir(
   envir = parent.frame(),
   ask = FALSE,
   verbose = TRUE,
-  full.names = TRUE,
   ...
 )
 
@@ -20,7 +19,6 @@ lazyload_cache_labels(
   envir = parent.frame(),
   verbose = TRUE,
   filter,
-  full.names = TRUE,
   ...
 )
 }
@@ -33,9 +31,6 @@ lazyload_cache_labels(
 \code{path}}
 
 \item{verbose}{if TRUE display the chunk labels being loaded}
-
-\item{full.names}{use the full name, i.e., include the path, for the chunk
-label? This argument is passed to \code{\link[base]{list.files}}.}
 
 \item{...}{additional arguments passed to \code{\link[base]{list.files}}.}
 
@@ -66,10 +61,11 @@ Use \code{lazyload_cache_labels} to load and explicit set of cached chunks.
 # this example is based on \url{https://stackoverflow.com/a/41439691/1104685}
 
 # create a temp directory for a and place a .Rmd file within
-tmpdr <- paste0(tempdir(), "/llcache_eg")
-dir.create(tmpdr)
-old_wd <- getwd()
-setwd(tmpdr)
+tmpdir <- normalizePath(paste0(tempdir(), "/llcache_eg"), mustWork = FALSE)
+tmprmd <- tempfile(pattern = "report", tmpdir = tmpdir, fileext = "Rmd")
+dir.create(tmpdir)
+oldwd <- getwd()
+setwd(tmpdir)
 
 # build and example .Rmd file
 # note that the variable x is created in the first chunck and then over
@@ -91,18 +87,18 @@ cat("---",
     "x <- exp(1)",
     "```",
     sep = "\n",
-    file = paste0(tmpdr, "/report.Rmd"))
+    file = tmprmd)
 
 # knit the file.  evaluate the chuncks in a new environment so we can compare
 # the objects after loading the cache.
 kenv <- new.env()
-knitr::knit(input = paste0(tmpdr, "/report.Rmd"), envir = kenv)
+knitr::knit(input = tmprmd, envir = kenv)
 
 # The objects defined in the .Rmd file are now in kenv
 ls(envir = kenv)
 
 # view the cache
-list.files(path = tmpdr, recursive = TRUE)
+list.files(path = tmpdir, recursive = TRUE)
 
 # create three more environment, and load only the first chunk into the
 # first, and the second chunck into the second, and then load all of the
@@ -112,14 +108,14 @@ env2 <- new.env()
 env3 <- new.env()
 
 lazyload_cache_labels(labels = "first-chunk",
-                      path = paste0(tmpdr, "/cache"),
+                      path = paste0(tmpdir, "/cache"),
                       envir = env1)
 
 lazyload_cache_labels(labels = "second-chunk",
-                      path = paste0(tmpdr, "/cache"),
+                      path = paste0(tmpdir, "/cache"),
                       envir = env2)
 
-lazyload_cache_dir(path = paste0(tmpdr, "/cache"), envir = env3)
+lazyload_cache_dir(path = paste0(tmpdir, "/cache"), envir = env3)
 
 # Look at the conents of each of these environments
 ls(envir = kenv)
@@ -146,7 +142,7 @@ all.equal(env2$x, exp(1))
 all.equal(env3$x, exp(1))
 
 # cleanup
-setwd(old_wd)
-unlink(tmpdr, recursive = TRUE)
+setwd(oldwd)
+unlink(tmpdir, recursive = TRUE)
 
 }
