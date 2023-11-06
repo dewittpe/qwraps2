@@ -59,8 +59,9 @@
 #'
 #' # access to absolute_example_file will generate a warning about
 #' # absolute_paths by default
-#' file_check(absolute_example_file)
-#' file_check(absolute_example_file, absolute_paths = "silent")
+#' test2 <- file_check(absolute_example_file)
+#' test2 <- file_check(absolute_example_file, absolute_paths = "silent")
+#' test2
 #'
 #' # Case Match
 #' test_case_match <- file_check(c(relative_example_file1, tolower(relative_example_file1)))
