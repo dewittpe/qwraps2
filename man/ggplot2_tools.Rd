@@ -4,13 +4,19 @@
 \alias{ggplot2_extract_legend}
 \title{ggplot2 tools}
 \usage{
-ggplot2_extract_legend(x)
+ggplot2_extract_legend(x, ...)
 }
 \arguments{
-\item{x}{a ggplot}
+\item{x}{a ggplot object}
+
+\item{...}{not currently used}
 }
 \value{
-a list with each element a ggplot
+a list with each elements
+\describe{
+  \item{legend}{}
+  \item{plot}{the x}
+}
 }
 \description{
 A few handy tools for working with ggplot2.
@@ -22,9 +28,9 @@ omitted.
 }
 \examples{
 # a simple plot
-my_plot <- 
-  ggplot2::ggplot(mtcars) + 
-  ggplot2::aes(x = wt, y = mpg, color = wt, shape = factor(cyl)) + 
+my_plot <-
+  ggplot2::ggplot(mtcars) +
+  ggplot2::aes(x = wt, y = mpg, color = wt, shape = factor(cyl)) +
   ggplot2::geom_point()
 
 my_plot
