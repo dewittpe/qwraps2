@@ -399,45 +399,25 @@ package in the directory</p>
 <span>  <span class="op">)</span></span>
 <span><span class="va">nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">nms</span>, split <span class="op">=</span> <span class="st">":"</span><span class="op">)</span>, <span class="va">getElement</span>, <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">nms</span>, <span class="st">"spam"</span><span class="op">)</span></span>
-<span><span class="va">nms</span></span></code></pre></div>
-<pre><code><span><span class="co">##  [1] "word_freq_make"             "word_freq_address"         </span></span>
-<span><span class="co">##  [3] "word_freq_all"              "word_freq_3d"              </span></span>
-<span><span class="co">##  [5] "word_freq_our"              "word_freq_over"            </span></span>
-<span><span class="co">##  [7] "word_freq_remove"           "word_freq_internet"        </span></span>
-<span><span class="co">##  [9] "word_freq_order"            "word_freq_mail"            </span></span>
-<span><span class="co">## [11] "word_freq_receive"          "word_freq_will"            </span></span>
-<span><span class="co">## [13] "word_freq_people"           "word_freq_report"          </span></span>
-<span><span class="co">## [15] "word_freq_addresses"        "word_freq_free"            </span></span>
-<span><span class="co">## [17] "word_freq_business"         "word_freq_email"           </span></span>
-<span><span class="co">## [19] "word_freq_you"              "word_freq_credit"          </span></span>
-<span><span class="co">## [21] "word_freq_your"             "word_freq_font"            </span></span>
-<span><span class="co">## [23] "word_freq_000"              "word_freq_money"           </span></span>
-<span><span class="co">## [25] "word_freq_hp"               "word_freq_hpl"             </span></span>
-<span><span class="co">## [27] "word_freq_george"           "word_freq_650"             </span></span>
-<span><span class="co">## [29] "word_freq_lab"              "word_freq_labs"            </span></span>
-<span><span class="co">## [31] "word_freq_telnet"           "word_freq_857"             </span></span>
-<span><span class="co">## [33] "word_freq_data"             "word_freq_415"             </span></span>
-<span><span class="co">## [35] "word_freq_85"               "word_freq_technology"      </span></span>
-<span><span class="co">## [37] "word_freq_1999"             "word_freq_parts"           </span></span>
-<span><span class="co">## [39] "word_freq_pm"               "word_freq_direct"          </span></span>
-<span><span class="co">## [41] "word_freq_cs"               "word_freq_meeting"         </span></span>
-<span><span class="co">## [43] "word_freq_original"         "word_freq_project"         </span></span>
-<span><span class="co">## [45] "word_freq_re"               "word_freq_edu"             </span></span>
-<span><span class="co">## [47] "word_freq_table"            "word_freq_conference"      </span></span>
-<span><span class="co">## [49] "char_freq_;"                "char_freq_("               </span></span>
-<span><span class="co">## [51] "char_freq_["                "char_freq_!"               </span></span>
-<span><span class="co">## [53] "char_freq_$"                "char_freq_#"               </span></span>
-<span><span class="co">## [55] "capital_run_length_average" "capital_run_length_longest"</span></span>
-<span><span class="co">## [57] "capital_run_length_total"   "spam"</span></span></code></pre>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">spambase</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span></span>
+<span></span>
+<span><span class="co"># clean up char_freq names</span></span>
+<span><span class="va">nms</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">nms</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub</a></span><span class="op">(</span><span class="st">";"</span>, <span class="st">"semicolon"</span>,         x <span class="op">=</span> <span class="va">_</span>, fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub</a></span><span class="op">(</span><span class="st">"("</span>, <span class="st">"parenthesis"</span>,       x <span class="op">=</span> <span class="va">_</span>, fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub</a></span><span class="op">(</span><span class="st">"["</span>, <span class="st">"square_bracket"</span>,    x <span class="op">=</span> <span class="va">_</span>, fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub</a></span><span class="op">(</span><span class="st">"!"</span>, <span class="st">"exclamation_point"</span>, x <span class="op">=</span> <span class="va">_</span>, fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub</a></span><span class="op">(</span><span class="st">"$"</span>, <span class="st">"dollar_sign"</span>,       x <span class="op">=</span> <span class="va">_</span>, fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub</a></span><span class="op">(</span><span class="st">"#"</span>, <span class="st">"pound"</span>,             x <span class="op">=</span> <span class="va">_</span>, fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">spambase</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span></span>
 <span>    file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"spambase"</span>, <span class="st">"spambase.data"</span>, package <span class="op">=</span> <span class="st">"qwraps2"</span><span class="op">)</span></span>
 <span>    , header <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>    , col.names <span class="op">=</span> <span class="va">nms</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>There are 4,601 rows of data with 57 predictors for the binary
 outcome <code>spam</code></p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/n_perc.html">n_perc</a></span><span class="op">(</span><span class="va">spambase</span><span class="op">$</span><span class="va">spam</span><span class="op">)</span> <span class="co"># count and percent of spam messages</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "1,813 (39.40\\%)"</span></span></code></pre>
 </div>
@@ -464,7 +444,7 @@ Hopkins, Reeber, Mark, and Jaap Suermondt. 1999.
 <div class="section level2">
 <h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## R version 4.3.2 (2023-10-31)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
@@ -491,9 +471,9 @@ Hopkins, Reeber, Mark, and Jaap Suermondt. 1999.
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
 <span><span class="co">##  [1] vctrs_0.6.4       cli_3.6.1         knitr_1.45        rlang_1.1.1      </span></span>
-<span><span class="co">##  [5] xfun_0.40         stringi_1.7.12    purrr_1.0.2       textshaping_0.3.7</span></span>
+<span><span class="co">##  [5] xfun_0.41         stringi_1.7.12    purrr_1.0.2       textshaping_0.3.7</span></span>
 <span><span class="co">##  [9] jsonlite_1.8.7    glue_1.6.2        rprojroot_2.0.3   htmltools_0.5.6.1</span></span>
-<span><span class="co">## [13] ragg_1.2.6        sass_0.4.7        rmarkdown_2.25    evaluate_0.22    </span></span>
+<span><span class="co">## [13] ragg_1.2.6        sass_0.4.7        rmarkdown_2.25    evaluate_0.23    </span></span>
 <span><span class="co">## [17] jquerylib_0.1.4   fastmap_1.1.1     yaml_2.3.7        lifecycle_1.0.3  </span></span>
 <span><span class="co">## [21] memoise_2.0.1     stringr_1.5.0     compiler_4.3.2    fs_1.6.3         </span></span>
 <span><span class="co">## [25] Rcpp_1.0.11       systemfonts_1.0.5 digest_0.6.33     R6_2.5.1         </span></span>

@@ -65,7 +65,12 @@ contents are as expected (via md5sum).</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">file_check</span><span class="op">(</span><span class="va">paths</span>, md5sums <span class="op">=</span> <span class="cn">NULL</span>, stop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">file_check</span><span class="op">(</span></span>
+<span>  <span class="va">paths</span>,</span>
+<span>  md5sums <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  absolute_paths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"warn"</span>, <span class="st">"stop"</span>, <span class="st">"silent"</span><span class="op">)</span>,</span>
+<span>  stop <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -79,9 +84,14 @@ contents are as expected (via md5sum).</p>
 If <code>NULL</code> then only a <code>file.exists</code> check will be done.</p></dd>
 
 
+<dt>absolute_paths</dt>
+<dd><p>a character string to set the behavior of warning
+(default), stopping, or silent if/when absolute file paths are used.</p></dd>
+
+
 <dt>stop</dt>
-<dd><p>if <code>TRUE</code> then an error is thrown if any of the checks fail.
-If <code>FALSE</code> (default) a logical is returned.</p></dd>
+<dd><p>if <code>TRUE</code> then an error is thrown if any of the checks fail,
+else returns a logical. If <code>FALSE</code> (default) a logical is returned.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -96,76 +106,134 @@ If <code>FALSE</code> (default) a logical is returned.</p></dd>
     <p>The test for the file access is done to verify the file can be read by the
 current user.</p>
 <p>The return of the function is <code>TRUE</code> if all the files in <code>paths</code>
-are accessible and all of requested md5sum checks pass.  <code>FALSE</code> is any
-file is not accessible or any md5sum check fails.  By default, if the return
-is <code>TRUE</code> then only <code>TRUE</code> will be printed to the console.  If the
-return is <code>FALSE</code> then the <code>attr(, "checks")</code> is printed by default
-as well.</p>
+are accessible, are case matched (optional), and all of requested md5sum
+checks pass.  Windows and macOS are generally case-insensitive systems, but
+many Linux systems are case-sensitive.  As such
+<code><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></code> and <code><a href="https://rdrr.io/r/base/file.access.html" class="external-link">file.access</a></code> may
+return different values depending the OS that is active.  <code>file_check</code>
+looks for a case match as part of its checks to hopefully prevent issues
+accross operating systems.</p>
+<p>By default, if the return is <code>TRUE</code> then only <code>TRUE</code> will
+be printed to the console.  If the return is <code>FALSE</code> then the
+<code>attr(, "checks")</code> is printed by default as well.</p>
 <p>Good practice would be to use relative paths, a warning will be given if any
-of the <code>paths</code> are determined to be absolute paths.</p>
+of the <code>paths</code> are determined to be absolute paths.  That said, there
+are cases when an absolute path is needed, e.g., a common data file on a
+server with multiple users accessing the file(s).  Set <code>absolute_paths =
+c("silent")</code> to silence the warnings.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># create two example files in the working directory:</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"example file."</span>, file <span class="op">=</span> <span class="st">"QWRAPS2_EXAMPLE_1.txt"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Another example file."</span>, file <span class="op">=</span> <span class="st">"QWRAPS2_EXAMPLE_2.txt"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># create example files</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Check that you have access to these files:  (Should return TRUE)</span></span></span>
-<span class="r-in"><span><span class="va">test1</span> <span class="op">&lt;-</span> <span class="fu">file_check</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"QWRAPS2_EXAMPLE_1.txt"</span>, <span class="st">"QWRAPS2_EXAMPLE_2.txt"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">relative_example_file1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"QWRAPS2_EXAMPLE_1"</span>, fileext <span class="op">=</span> <span class="st">".txt"</span>, tmpdir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">relative_example_file2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"QWRAPS2_EXAMPLE_2"</span>, fileext <span class="op">=</span> <span class="st">".txt"</span>, tmpdir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">absolute_example_file</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"example file."</span>, file <span class="op">=</span> <span class="va">relative_example_file1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Another example file."</span>, file <span class="op">=</span> <span class="va">relative_example_file2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Another example file."</span>, file <span class="op">=</span> <span class="va">absolute_example_file</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Check that you have access to the files in the working directory.</span></span></span>
+<span class="r-in"><span><span class="va">test1</span> <span class="op">&lt;-</span> <span class="fu">file_check</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">relative_example_file1</span>, <span class="va">relative_example_file2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">test1</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># By default, when the checks return TRUE the details of the checks are not</span></span></span>
 <span class="r-in"><span><span class="co"># printed.  You can view the details of the checks as follows:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">test1</span>, <span class="st">"checks"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                        path absolute_path accessible</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1.txt QWRAPS2_EXAMPLE_1.txt         FALSE       TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2.txt QWRAPS2_EXAMPLE_2.txt         FALSE       TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                         current_md5sum expected_md5sum md5check</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1.txt 7a3409e17f9de067740e64448a86e708            &lt;NA&gt;       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2.txt 798e52b92e0ae0e60f3f3db1273235d0            &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                path</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1188e76f48efd.txt QWRAPS2_EXAMPLE_1188e76f48efd.txt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2188e26f2f4fd.txt QWRAPS2_EXAMPLE_2188e26f2f4fd.txt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                   absolute_path accessible case_match</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1188e76f48efd.txt         FALSE       TRUE       TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2188e26f2f4fd.txt         FALSE       TRUE       TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                     current_md5sum</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1188e76f48efd.txt 7a3409e17f9de067740e64448a86e708</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2188e26f2f4fd.txt 798e52b92e0ae0e60f3f3db1273235d0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                   expected_md5sum md5check</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1188e76f48efd.txt            &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2188e26f2f4fd.txt            &lt;NA&gt;       NA</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># access to absolute_example_file will generate a warning about</span></span></span>
+<span class="r-in"><span><span class="co"># absolute_paths by default</span></span></span>
+<span class="r-in"><span><span class="va">test2</span> <span class="op">&lt;-</span> <span class="fu">file_check</span><span class="op">(</span><span class="va">absolute_example_file</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Absolute path used. It would be preferable if you used a relative path.</span>
+<span class="r-in"><span><span class="va">test2</span> <span class="op">&lt;-</span> <span class="fu">file_check</span><span class="op">(</span><span class="va">absolute_example_file</span>, absolute_paths <span class="op">=</span> <span class="st">"silent"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">test2</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Case Match</span></span></span>
+<span class="r-in"><span><span class="va">test_case_match</span> <span class="op">&lt;-</span> <span class="fu">file_check</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">relative_example_file1</span>, <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">tolower</a></span><span class="op">(</span><span class="va">relative_example_file1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">test_case_match</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"checks")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                path</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1188e76f48efd.txt QWRAPS2_EXAMPLE_1188e76f48efd.txt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> qwraps2_example_1188e76f48efd.txt qwraps2_example_1188e76f48efd.txt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                   absolute_path accessible case_match</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1188e76f48efd.txt         FALSE       TRUE       TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> qwraps2_example_1188e76f48efd.txt         FALSE      FALSE      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                     current_md5sum</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1188e76f48efd.txt 7a3409e17f9de067740e64448a86e708</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> qwraps2_example_1188e76f48efd.txt                             &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                   expected_md5sum md5check</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1188e76f48efd.txt            &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> qwraps2_example_1188e76f48efd.txt            &lt;NA&gt;       NA</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># If one or more files is not accessable then return is FALSE and the meta data</span></span></span>
 <span class="r-in"><span><span class="co"># is printed by default.</span></span></span>
-<span class="r-in"><span><span class="va">test2</span> <span class="op">&lt;-</span> <span class="fu">file_check</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UNLIKELYFILENAME"</span>, <span class="st">"QWRAPS2_EXAMPLE_1.txt"</span>, <span class="st">"QWRAPS2_EXAMPLE_2.txt"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">test2</span></span></span>
+<span class="r-in"><span><span class="va">test_non_existent_file</span> <span class="op">&lt;-</span> <span class="fu">file_check</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UNLIKELYFILENAME"</span>, <span class="va">relative_example_file1</span>, <span class="va">relative_example_file2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">test_non_existent_file</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"checks")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                        path absolute_path accessible</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> UNLIKELYFILENAME           UNLIKELYFILENAME         FALSE      FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1.txt QWRAPS2_EXAMPLE_1.txt         FALSE       TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2.txt QWRAPS2_EXAMPLE_2.txt         FALSE       TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                         current_md5sum expected_md5sum md5check</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> UNLIKELYFILENAME                                  &lt;NA&gt;            &lt;NA&gt;       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1.txt 7a3409e17f9de067740e64448a86e708            &lt;NA&gt;       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2.txt 798e52b92e0ae0e60f3f3db1273235d0            &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                path</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> UNLIKELYFILENAME                                   UNLIKELYFILENAME</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1188e76f48efd.txt QWRAPS2_EXAMPLE_1188e76f48efd.txt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2188e26f2f4fd.txt QWRAPS2_EXAMPLE_2188e26f2f4fd.txt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                   absolute_path accessible case_match</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> UNLIKELYFILENAME                          FALSE      FALSE      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1188e76f48efd.txt         FALSE       TRUE       TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2188e26f2f4fd.txt         FALSE       TRUE       TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                     current_md5sum</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> UNLIKELYFILENAME                                              &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1188e76f48efd.txt 7a3409e17f9de067740e64448a86e708</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2188e26f2f4fd.txt 798e52b92e0ae0e60f3f3db1273235d0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                   expected_md5sum md5check</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> UNLIKELYFILENAME                             &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1188e76f48efd.txt            &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2188e26f2f4fd.txt            &lt;NA&gt;       NA</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Or have an error thrown:</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="fu">file_check</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UNLIKELYFILENAME"</span>, <span class="st">"QWRAPS2_EXAMPLE_1.txt"</span>, <span class="st">"QWRAPS2_EXAMPLE_2.txt"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>           stop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">file_check</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UNLIKELYFILENAME"</span>, <span class="va">relative_example_file1</span>, <span class="va">relative_example_file2</span><span class="op">)</span>, stop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Verify the md5sums as well as file access:</span></span></span>
-<span class="r-in"><span><span class="fu">file_check</span><span class="op">(</span><span class="st">"QWRAPS2_EXAMPLE_1.txt"</span>, <span class="st">"7a3409e17f9de067740e64448a86e708"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">md5_check1</span> <span class="op">&lt;-</span> <span class="fu">file_check</span><span class="op">(</span><span class="va">relative_example_file1</span>, <span class="st">"7a3409e17f9de067740e64448a86e708"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">md5_check1</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># If you only need to verify a subset of md5sums then use an NA in the md5sums</span></span></span>
 <span class="r-in"><span><span class="co"># argument:</span></span></span>
-<span class="r-in"><span><span class="fu">file_check</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"QWRAPS2_EXAMPLE_1.txt"</span>, <span class="st">"QWRAPS2_EXAMPLE_2.txt"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>           <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"7a3409e17f9de067740e64448a86e708"</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">md5_check2</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu">file_check</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">relative_example_file1</span>, <span class="va">relative_example_file2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>             <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"7a3409e17f9de067740e64448a86e708"</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">md5_check2</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Verify all the md5sums</span></span></span>
-<span class="r-in"><span><span class="fu">file_check</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"QWRAPS2_EXAMPLE_1.txt"</span>, <span class="st">"QWRAPS2_EXAMPLE_2.txt"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>           <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"7a3409e17f9de067740e64448a86e708"</span>, <span class="st">"798e52b92e0ae0e60f3f3db1273235d0"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">md5_check3</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu">file_check</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">relative_example_file1</span>, <span class="va">relative_example_file2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>             <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"7a3409e17f9de067740e64448a86e708"</span>, <span class="st">"798e52b92e0ae0e60f3f3db1273235d0"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">md5_check3</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># clean up working directory</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="st">"QWRAPS2_EXAMPLE_1.txt"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="st">"QWRAPS2_EXAMPLE_2.txt"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">relative_example_file1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">relative_example_file2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">absolute_example_file</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

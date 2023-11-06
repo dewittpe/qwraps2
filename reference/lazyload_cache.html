@@ -64,7 +64,6 @@
 <span>  envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  ask <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  full.names <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -74,7 +73,6 @@
 <span>  envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">filter</span>,</span>
-<span>  full.names <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -96,11 +94,6 @@
 
 <dt>verbose</dt>
 <dd><p>if TRUE display the chunk labels being loaded</p></dd>
-
-
-<dt>full.names</dt>
-<dd><p>use the full name, i.e., include the path, for the chunk
-label? This argument is passed to <code><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></code>.</p></dd>
 
 
 <dt>...</dt>
@@ -136,10 +129,11 @@ quickly (lazy)load the chunks into an active R session.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># this example is based on \url{https://stackoverflow.com/a/41439691/1104685}</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># create a temp directory for a and place a .Rmd file within</span></span></span>
-<span class="r-in"><span><span class="va">tmpdr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"/llcache_eg"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">tmpdr</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">old_wd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd</a></span><span class="op">(</span><span class="va">tmpdr</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tmpdir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/normalizePath.html" class="external-link">normalizePath</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"/llcache_eg"</span><span class="op">)</span>, mustWork <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tmprmd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"report"</span>, tmpdir <span class="op">=</span> <span class="va">tmpdir</span>, fileext <span class="op">=</span> <span class="st">"Rmd"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">tmpdir</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">oldwd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd</a></span><span class="op">(</span><span class="va">tmpdir</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># build and example .Rmd file</span></span></span>
 <span class="r-in"><span><span class="co"># note that the variable x is created in the first chunck and then over</span></span></span>
@@ -161,21 +155,21 @@ quickly (lazy)load the chunks into an active R session.</p>
 <span class="r-in"><span>    <span class="st">"x &lt;- exp(1)"</span>,</span></span>
 <span class="r-in"><span>    <span class="st">"```"</span>,</span></span>
 <span class="r-in"><span>    sep <span class="op">=</span> <span class="st">"\n"</span>,</span></span>
-<span class="r-in"><span>    file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">tmpdr</span>, <span class="st">"/report.Rmd"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    file <span class="op">=</span> <span class="va">tmprmd</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># knit the file.  evaluate the chuncks in a new environment so we can compare</span></span></span>
 <span class="r-in"><span><span class="co"># the objects after loading the cache.</span></span></span>
 <span class="r-in"><span><span class="va">kenv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html" class="external-link">new.env</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knit</a></span><span class="op">(</span>input <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">tmpdr</span>, <span class="st">"/report.Rmd"</span><span class="op">)</span>, envir <span class="op">=</span> <span class="va">kenv</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knit</a></span><span class="op">(</span>input <span class="op">=</span> <span class="va">tmprmd</span>, envir <span class="op">=</span> <span class="va">kenv</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> processing file: /tmp/RtmpAwPUJ6/llcache_eg/report.Rmd</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> processing file: /tmp/RtmpSZ28yh/llcache_eg/report188e5b6374e9Rmd</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1/4               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2/4 [first-chunk] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3/4               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4/4 [second-chunk]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> output file: report.md</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "report.md"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> output file: report188e5b6374e9Rmd.txt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "report188e5b6374e9Rmd.txt"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># The objects defined in the .Rmd file are now in kenv</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/ls.html" class="external-link">ls</a></span><span class="op">(</span>envir <span class="op">=</span> <span class="va">kenv</span><span class="op">)</span></span></span>
@@ -183,7 +177,7 @@ quickly (lazy)load the chunks into an active R session.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [5] "x_is_pi"        </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># view the cache</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span>path <span class="op">=</span> <span class="va">tmpdr</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span>path <span class="op">=</span> <span class="va">tmpdir</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "cache/__packages"                                         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2] "cache/first-chunk_4e3140196fb03528521fad11269d001c.RData" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3] "cache/first-chunk_4e3140196fb03528521fad11269d001c.rdb"   </span>
@@ -191,8 +185,8 @@ quickly (lazy)load the chunks into an active R session.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [5] "cache/second-chunk_8e4f33e2310468ad8f108c019d707830.RData"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [6] "cache/second-chunk_8e4f33e2310468ad8f108c019d707830.rdb"  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [7] "cache/second-chunk_8e4f33e2310468ad8f108c019d707830.rdx"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [8] "report.Rmd"                                               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [9] "report.md"                                                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8] "report188e5b6374e9Rmd"                                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [9] "report188e5b6374e9Rmd.txt"                                </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># create three more environment, and load only the first chunk into the</span></span></span>
 <span class="r-in"><span><span class="co"># first, and the second chunck into the second, and then load all of the</span></span></span>
@@ -202,18 +196,18 @@ quickly (lazy)load the chunks into an active R session.</p>
 <span class="r-in"><span><span class="va">env3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html" class="external-link">new.env</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">lazyload_cache_labels</span><span class="op">(</span>labels <span class="op">=</span> <span class="st">"first-chunk"</span>,</span></span>
-<span class="r-in"><span>                      path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">tmpdr</span>, <span class="st">"/cache"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                      path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">tmpdir</span>, <span class="st">"/cache"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                      envir <span class="op">=</span> <span class="va">env1</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Lazyloading /tmp/RtmpAwPUJ6/llcache_eg/cache/first-chunk_4e3140196fb03528521fad11269d001c</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Lazyloading /tmp/RtmpSZ28yh/llcache_eg/cache/first-chunk_4e3140196fb03528521fad11269d001c</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">lazyload_cache_labels</span><span class="op">(</span>labels <span class="op">=</span> <span class="st">"second-chunk"</span>,</span></span>
-<span class="r-in"><span>                      path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">tmpdr</span>, <span class="st">"/cache"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                      path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">tmpdir</span>, <span class="st">"/cache"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                      envir <span class="op">=</span> <span class="va">env2</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Lazyloading /tmp/RtmpAwPUJ6/llcache_eg/cache/second-chunk_8e4f33e2310468ad8f108c019d707830</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Lazyloading /tmp/RtmpSZ28yh/llcache_eg/cache/second-chunk_8e4f33e2310468ad8f108c019d707830</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">lazyload_cache_dir</span><span class="op">(</span>path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">tmpdr</span>, <span class="st">"/cache"</span><span class="op">)</span>, envir <span class="op">=</span> <span class="va">env3</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Lazyloading: /tmp/RtmpAwPUJ6/llcache_eg/cache/first-chunk</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Lazyloading: /tmp/RtmpAwPUJ6/llcache_eg/cache/second-chunk</span>
+<span class="r-in"><span><span class="fu">lazyload_cache_dir</span><span class="op">(</span>path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">tmpdir</span>, <span class="st">"/cache"</span><span class="op">)</span>, envir <span class="op">=</span> <span class="va">env3</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Lazyloading: /tmp/RtmpSZ28yh/llcache_eg/cache/first-chunk</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Lazyloading: /tmp/RtmpSZ28yh/llcache_eg/cache/second-chunk</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Look at the conents of each of these environments</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/ls.html" class="external-link">ls</a></span><span class="op">(</span>envir <span class="op">=</span> <span class="va">kenv</span><span class="op">)</span></span></span>
@@ -254,8 +248,8 @@ quickly (lazy)load the chunks into an active R session.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># cleanup</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd</a></span><span class="op">(</span><span class="va">old_wd</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">tmpdr</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd</a></span><span class="op">(</span><span class="va">oldwd</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">tmpdir</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
