@@ -11,6 +11,7 @@ qable(
   rnames = rownames(x),
   cnames = colnames(x),
   markup = getOption("qwraps2_markup", "latex"),
+  kable_args = list(),
   ...
 )
 }
@@ -26,13 +27,18 @@ number of rows within the group.  \code{sum(rowgroup) == nrow(x)}.}
 
 \item{cnames}{column names}
 
-\item{markup}{the markup language to use, passed to the \code{format}
-argument of \code{knitr::kable}.}
+\item{markup}{the markup language to use expected to be either "markdown" or
+"latex"}
 
-\item{...}{additional arguments passed to \code{knitr::kable}}
+\item{kable_args}{a list of named arguments to send to
+\code{\link[knitr]{kable}}.  See Details.}
+
+\item{...}{pass through}
 }
 \value{
-a matrix
+\code{qable} returns a \code{qwraps2_qable} object that is just a character matrix with
+some additional attributes and the print method returns, invisibly, the
+object passed to print.
 }
 \description{
 Create a simple table via kable with row groups and rownames
@@ -57,8 +63,21 @@ objects.  Check the vignettes for examples on building data summary tables.
  rnames[5] \tab x[5, 1]   \tab x[5, 1]   \cr
 }
 
-It should be noted that \code{escape = !(markup == "latex")} is passed to
-\code{\link[knitr]{kable}}.
+Passing arguments to \code{link[knitr]{kable}} is done via the list
+\code{kable_args}.  This is an improvement in 0.6.0 to address arguments with
+different use between qable and kable but the same name, notably
+\code{format}.  Within the print method for \code{qwraps2_qable} objects,
+some default arguments for knitr::kable are created.
+
+Defaults if the named element of \code{kable_args} is missing:
+\code{kable_args$format} will be "latex" if \code{markup = "latex"} and will
+be \code{"pipe"} if \code{markup = "markdown"}.
+
+\code{kable_args$escape = !(markup = "latex")}
+
+\code{kable_args$row.names} defaults to \code{FALSE}
+
+\code{kable_args$col.names} defaults to \code{colnames(x)}
 }
 \examples{
 data(mtcars)
@@ -74,7 +93,7 @@ make <- c(table(make))
 qable(mtcars[sort(rownames(mtcars)), ], rgroup = make)
 
 # A LaTeX table with no vertical bars between columns
-qable(mtcars[sort(rownames(mtcars)), ], rgroup = make, vline = "")
+qable(mtcars[sort(rownames(mtcars)), ], rgroup = make, kable_args = list(vline = ""))
 
 # a markdown table
 qable(mtcars[sort(rownames(mtcars)), ], rgroup = make, markup = "markdown")
@@ -96,10 +115,9 @@ qable(mtcars[sort(rownames(mtcars)), ],
 \seealso{
 \code{\link[knitr]{kable}}
 
-\code{summary_table}, for an example of build a data summary table, i.e., a
-\dQuote{Table 1}.
+\code{\link{summary_table}}, for an example of build a data summary table.
 
-For more detail on arguments you can pass to \code{...} look at the
+For more detail on arguments you can pass via \code{kable_args} look at the
 non-exported functions form the knitr package \code{knitr:::kable_latex},
 \code{knitr:::kable_markdown}, or others.
 }

@@ -22,16 +22,28 @@
 #'  rnames[5] \tab x[5, 1]   \tab x[5, 1]   \cr
 #' }
 #'
-#' It should be noted that \code{escape = !(markup == "latex")} is passed to
-#' \code{\link[knitr]{kable}}.
+#' Passing arguments to \code{link[knitr]{kable}} is done via the list
+#' \code{kable_args}.  This is an improvement in 0.6.0 to address arguments with
+#' different use between qable and kable but the same name, notably
+#' \code{format}.  Within the print method for \code{qwraps2_qable} objects,
+#' some default arguments for knitr::kable are created.
+#'
+#' Defaults if the named element of \code{kable_args} is missing:
+#' \code{kable_args$format} will be "latex" if \code{markup = "latex"} and will
+#' be \code{"pipe"} if \code{markup = "markdown"}.
+#'
+#' \code{kable_args$escape = !(markup = "latex")}
+#'
+#' \code{kable_args$row.names} defaults to \code{FALSE}
+#'
+#' \code{kable_args$col.names} defaults to \code{colnames(x)}
 #'
 #' @seealso
 #' \code{\link[knitr]{kable}}
 #'
-#' \code{summary_table}, for an example of build a data summary table, i.e., a
-#' \dQuote{Table 1}.
+#' \code{\link{summary_table}}, for an example of build a data summary table.
 #'
-#' For more detail on arguments you can pass to \code{...} look at the
+#' For more detail on arguments you can pass via \code{kable_args} look at the
 #' non-exported functions form the knitr package \code{knitr:::kable_latex},
 #' \code{knitr:::kable_markdown}, or others.
 #'
@@ -41,11 +53,15 @@
 #' number of rows within the group.  \code{sum(rowgroup) == nrow(x)}.
 #' @param rnames a character vector of the row names
 #' @param cnames column names
-#' @param markup the markup language to use, passed to the \code{format}
-#' argument of \code{knitr::kable}.
-#' @param ... additional arguments passed to \code{knitr::kable}
+#' @param markup the markup language to use expected to be either "markdown" or
+#' "latex"
+#' @param kable_args a list of named arguments to send to
+#' \code{\link[knitr]{kable}}.  See Details.
+#' @param ... pass through
 #'
-#' @return a matrix
+#' @return \code{qable} returns a \code{qwraps2_qable} object that is just a character matrix with
+#' some additional attributes and the print method returns, invisibly, the
+#' object passed to print.
 #'
 #' @examples
 #' data(mtcars)
@@ -61,7 +77,7 @@
 #' qable(mtcars[sort(rownames(mtcars)), ], rgroup = make)
 #'
 #' # A LaTeX table with no vertical bars between columns
-#' qable(mtcars[sort(rownames(mtcars)), ], rgroup = make, vline = "")
+#' qable(mtcars[sort(rownames(mtcars)), ], rgroup = make, kable_args = list(vline = ""))
 #'
 #' # a markdown table
 #' qable(mtcars[sort(rownames(mtcars)), ], rgroup = make, markup = "markdown")
@@ -81,7 +97,17 @@
 #'
 #' @export
 #' @rdname qable
-qable <- function(x, rtitle, rgroup, rnames = rownames(x), cnames = colnames(x), markup = getOption("qwraps2_markup", "latex"), ...) {
+qable <- function(x, rtitle, rgroup, rnames = rownames(x), cnames = colnames(x), markup = getOption("qwraps2_markup", "latex"), kable_args = list(), ...) {
+  UseMethod("qable")
+}
+
+#' @export
+qable.data.frame <- function(x, rtitle, rgroup, rnames = rownames(x), cnames = colnames(x), markup = getOption("qwraps2_markup", "latex"), kable_args = list(), ...) {
+  qable(as.matrix(x), rtitle = rtitle, rgroup = rgroup, rnames = rnames, cnames = cnames, markup = markup, kable_args = kable_args, ...)
+}
+
+#' @export
+qable.matrix <- function(x, rtitle, rgroup, rnames = rownames(x), cnames = colnames(x), markup = getOption("qwraps2_markup", "latex"), kable_args = list(), ...) {
 
   if (!(markup %in% c("latex", "markdown"))) {
     stop("markup is either 'latex' or 'markdown'")
@@ -91,29 +117,20 @@ qable <- function(x, rtitle, rgroup, rnames = rownames(x), cnames = colnames(x),
 
   xmat <- matrix("~", nrow = nrow(x) + length(rgroup), ncol = 1 + ncol(x))
 
-
   if (length(rgroup) > 0) {
     rg_idx <- cumsum(c(1, 1 + rgroup[-length(rgroup)]))
     xmat[-rg_idx, -1] <- as.matrix(x)
 
     if (markup == "latex") {
-      # rownames(xmat) <- ""
-      # print(rownames(xmat))
-      # rownames(xmat)[rg_idx]  <- paste0("\\bf{", names(rgroup), "}")
-      # rownames(xmat)[-rg_idx] <- paste0("~~", rnames)
       xmat[rg_idx, 1] <- paste0("\\bf{", names(rgroup), "}")
       xmat[-rg_idx, 1] <- paste("~~", rnames)
     } else {
-      # rownames(xmat)[rg_idx]  <- paste0("**", names(rgroup), "**")
-      # rownames(xmat)[-rg_idx] <- paste0("&nbsp;&nbsp;", rnames)
       xmat[rg_idx, 1] <- paste0("**", names(rgroup), "**")
       xmat[-rg_idx, 1] <- paste("&nbsp;&nbsp;", rnames)
     }
   } else {
     xmat[, 1] <- rnames
     xmat[, -1] <- as.matrix(x)
-    # xmat <- as.matrix(x)
-    # rownames(xmat) <- rnames
   }
 
   if (markup == "markdown") {
@@ -128,17 +145,35 @@ qable <- function(x, rtitle, rgroup, rnames = rownames(x), cnames = colnames(x),
   colnames(xmat) <- cnames
   class(xmat) <- "qwraps2_qable"
   attr(xmat, "markup") <- markup
+  attr(xmat, "kable_args") <- kable_args
   xmat
 }
 
 #' @export
 print.qwraps2_qable <- function(x, ...) {
-  x <-
-    knitr::kable(x,
-                 format = attr(x, "markup"),
-                 escape = !(attr(x, "markup") == "latex"),
-                 row.names = FALSE,
-                 col.names = colnames(x),
-                 ...)
-  print(x)
+  kargs <- attr(x, "kable_args")
+
+  if (!("format" %in% names(kargs))) {
+    if (attr(x, "markup") == "markdown") {
+      kargs$format <- "pipe"
+    } else {
+      kargs$format <- "latex"
+    }
+  }
+
+  if (!("escape" %in% names(kargs))) {
+    kargs$escape <- !(attr(x, "markup") == "latex")
+  }
+
+  if (!("row.names" %in% names(kargs))) {
+    kargs$row.names <- FALSE
+  }
+
+  if (!("col.names" %in% names(kargs))) {
+    kargs$col.names <- colnames(x)
+  }
+
+  k <- do.call(what = knitr::kable, args = c(list(x = x), kargs, ...))
+  print(k)
+  invisible(x)
 }
