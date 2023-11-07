@@ -439,154 +439,8 @@ and row names in the table.</p>
 <span><span class="co">#qable(whole[[1]], rgroup = attr(whole[[1]], "rgroup"), rtitle = "r", cnames = )</span></span>
 <span></span>
 <span><span class="co">### By number of Cylinders</span></span>
-<span><span class="va">by_cyl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summary_table.html">summary_table</a></span><span class="op">(</span><span class="va">mtcars2</span>, summaries <span class="op">=</span> <span class="va">our_summary1</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl_factor"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>$<code>6 cylinders</code></p>
-<table class="table">
-<thead><tr class="header">
-<th align="left"></th>
-<th align="left">6 cylinders (N = 7)</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left"><strong>Miles Per Gallon</strong></td>
-<td align="left">  </td>
-</tr>
-<tr class="even">
-<td align="left">   min</td>
-<td align="left">17.8</td>
-</tr>
-<tr class="odd">
-<td align="left">   max</td>
-<td align="left">21.4</td>
-</tr>
-<tr class="even">
-<td align="left">   mean (sd)</td>
-<td align="left">19.74 ± 1.45</td>
-</tr>
-<tr class="odd">
-<td align="left"><strong>Displacement</strong></td>
-<td align="left">  </td>
-</tr>
-<tr class="even">
-<td align="left">   min</td>
-<td align="left">145</td>
-</tr>
-<tr class="odd">
-<td align="left">   median</td>
-<td align="left">167.6</td>
-</tr>
-<tr class="even">
-<td align="left">   max</td>
-<td align="left">258</td>
-</tr>
-<tr class="odd">
-<td align="left">   mean (sd)</td>
-<td align="left">183.31 ± 41.56</td>
-</tr>
-<tr class="even">
-<td align="left"><strong>Weight (1000 lbs)</strong></td>
-<td align="left">  </td>
-</tr>
-<tr class="odd">
-<td align="left">   min</td>
-<td align="left">2.62</td>
-</tr>
-<tr class="even">
-<td align="left">   max</td>
-<td align="left">3.46</td>
-</tr>
-<tr class="odd">
-<td align="left">   mean (sd)</td>
-<td align="left">3.12 ± 0.36</td>
-</tr>
-<tr class="even">
-<td align="left"><strong>Forward Gears</strong></td>
-<td align="left">  </td>
-</tr>
-<tr class="odd">
-<td align="left">   Three</td>
-<td align="left">2 (29)</td>
-</tr>
-<tr class="even">
-<td align="left">   Four</td>
-<td align="left">4 (57)</td>
-</tr>
-<tr class="odd">
-<td align="left">   Five</td>
-<td align="left">1 (14)</td>
-</tr>
-</tbody>
-</table>
-<p>$<code>4 cylinders</code> [,1]<br>
-[1,] “  ”<br>
-[2,] “21.4”<br>
-[3,] “33.9”<br>
-[4,] “26.66 ± 4.51”<br>
-[5,] “  ”<br>
-[6,] “71.1”<br>
-[7,] “108”<br>
-[8,] “146.7”<br>
-[9,] “105.14 ± 26.87” [10,] “  ”<br>
-[11,] “1.513”<br>
-[12,] “3.19”<br>
-[13,] “2.29 ± 0.57”<br>
-[14,] “  ”<br>
-[15,] “1 (9)”<br>
-[16,] “8 (73)”<br>
-[17,] “2 (18)”</p>
-<p>$<code>8 cylinders</code> [,1]<br>
-[1,] “  ”<br>
-[2,] “10.4”<br>
-[3,] “19.2”<br>
-[4,] “15.10 ± 2.56”<br>
-[5,] “  ”<br>
-[6,] “275.8”<br>
-[7,] “350.5”<br>
-[8,] “472”<br>
-[9,] “353.10 ± 67.77” [10,] “  ”<br>
-[11,] “3.17”<br>
-[12,] “5.424”<br>
-[13,] “4.00 ± 0.76”<br>
-[14,] “  ”<br>
-[15,] “12 (86)”<br>
-[16,] “0 (0)”<br>
-[17,] “2 (14)”</p>
-<pre><code>                           6 cylinders (N = 7)                            </code></pre>
-<p>[1,] “<strong>Miles Per Gallon</strong>” “  ” “  ”<br>
-[2,] “   min” “17.8” “21.4”<br>
-[3,] “   max” “21.4” “33.9”<br>
-[4,] “   mean (sd)” “19.74 ± 1.45” “26.66 ± 4.51”<br>
-[5,] “<strong>Displacement</strong>” “  ” “  ”<br>
-[6,] “   min” “145” “71.1”<br>
-[7,] “   median” “167.6” “108”<br>
-[8,] “   max” “258” “146.7”<br>
-[9,] “   mean (sd)” “183.31 ± 41.56” “105.14 ± 26.87” [10,]
-“<strong>Weight (1000 lbs)</strong>” “  ” “  ”<br>
-[11,] “   min” “2.62” “1.513”<br>
-[12,] “   max” “3.46” “3.19”<br>
-[13,] “   mean (sd)” “3.12 ± 0.36” “2.29 ± 0.57”<br>
-[14,] “<strong>Forward Gears</strong>” “  ” “  ”<br>
-[15,] “   Three” “2 (29)” “1 (9)”<br>
-[16,] “   Four” “4 (57)” “8 (73)”<br>
-[17,] “   Five” “1 (14)” “2 (18)”</p>
-<p>[1,] “  ”<br>
-[2,] “10.4”<br>
-[3,] “19.2”<br>
-[4,] “15.10 ± 2.56”<br>
-[5,] “  ”<br>
-[6,] “275.8”<br>
-[7,] “350.5”<br>
-[8,] “472”<br>
-[9,] “353.10 ± 67.77” [10,] “  ”<br>
-[11,] “3.17”<br>
-[12,] “5.424”<br>
-[13,] “4.00 ± 0.76”<br>
-[14,] “  ”<br>
-[15,] “12 (86)”<br>
-[16,] “0 (0)”<br>
-[17,] “2 (14)”</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">by_cyl</span></span></code></pre></div>
+<span><span class="va">by_cyl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summary_table.html">summary_table</a></span><span class="op">(</span><span class="va">mtcars2</span>, summaries <span class="op">=</span> <span class="va">our_summary1</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl_factor"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">by_cyl</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="25%">
@@ -597,8 +451,8 @@ and row names in the table.</p>
 <thead><tr class="header">
 <th align="left"></th>
 <th align="left">6 cylinders (N = 7)</th>
-<th align="left">4 cylinders (N = 11)</th>
-<th align="left">8 cylinders (N = 14)</th>
+<th align="left">4 cylinders</th>
+<th align="left">8 cylinders</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -708,356 +562,47 @@ and row names in the table.</p>
 <p>With the refactor of the <code>summary_table</code> method in version
 0.5.0 it is easier to group by multiple variables. For example, getting
 a column for combination of cylinders and transmission type:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">by_cyl_am</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summary_table.html">summary_table</a></span><span class="op">(</span><span class="va">mtcars2</span>, summaries <span class="op">=</span> <span class="va">our_summary1</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl_factor"</span>, <span class="st">"am"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## $`6 cylinders.0`</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## |                       |6 cylinders.0 (N = 4) |</span></span>
-<span><span class="co">## |:----------------------|:---------------------|</span></span>
-<span><span class="co">## |**Miles Per Gallon**   |&amp;nbsp;&amp;nbsp;          |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; min       |17.8                  |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; max       |21.4                  |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; mean (sd) |19.12 &amp;plusmn; 1.63   |</span></span>
-<span><span class="co">## |**Displacement**       |&amp;nbsp;&amp;nbsp;          |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; min       |167.6                 |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; median    |196.3                 |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; max       |258                   |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; mean (sd) |204.55 &amp;plusmn; 44.74 |</span></span>
-<span><span class="co">## |**Weight (1000 lbs)**  |&amp;nbsp;&amp;nbsp;          |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; min       |3.215                 |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; max       |3.46                  |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; mean (sd) |3.39 &amp;plusmn; 0.12    |</span></span>
-<span><span class="co">## |**Forward Gears**      |&amp;nbsp;&amp;nbsp;          |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; Three     |2 (50)                |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; Four      |2 (50)                |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; Five      |0 (0)                 |</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $`4 cylinders.0`</span></span>
-<span><span class="co">##       [,1]                   </span></span>
-<span><span class="co">##  [1,] "&amp;nbsp;&amp;nbsp;"         </span></span>
-<span><span class="co">##  [2,] "21.5"                 </span></span>
-<span><span class="co">##  [3,] "24.4"                 </span></span>
-<span><span class="co">##  [4,] "22.90 &amp;plusmn; 1.45"  </span></span>
-<span><span class="co">##  [5,] "&amp;nbsp;&amp;nbsp;"         </span></span>
-<span><span class="co">##  [6,] "120.1"                </span></span>
-<span><span class="co">##  [7,] "140.8"                </span></span>
-<span><span class="co">##  [8,] "146.7"                </span></span>
-<span><span class="co">##  [9,] "135.87 &amp;plusmn; 13.97"</span></span>
-<span><span class="co">## [10,] "&amp;nbsp;&amp;nbsp;"         </span></span>
-<span><span class="co">## [11,] "2.465"                </span></span>
-<span><span class="co">## [12,] "3.19"                 </span></span>
-<span><span class="co">## [13,] "2.94 &amp;plusmn; 0.41"   </span></span>
-<span><span class="co">## [14,] "&amp;nbsp;&amp;nbsp;"         </span></span>
-<span><span class="co">## [15,] "1 (33)"               </span></span>
-<span><span class="co">## [16,] "2 (67)"               </span></span>
-<span><span class="co">## [17,] "0 (0)"                </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $`8 cylinders.0`</span></span>
-<span><span class="co">##       [,1]                   </span></span>
-<span><span class="co">##  [1,] "&amp;nbsp;&amp;nbsp;"         </span></span>
-<span><span class="co">##  [2,] "10.4"                 </span></span>
-<span><span class="co">##  [3,] "19.2"                 </span></span>
-<span><span class="co">##  [4,] "15.05 &amp;plusmn; 2.77"  </span></span>
-<span><span class="co">##  [5,] "&amp;nbsp;&amp;nbsp;"         </span></span>
-<span><span class="co">##  [6,] "275.8"                </span></span>
-<span><span class="co">##  [7,] "355"                  </span></span>
-<span><span class="co">##  [8,] "472"                  </span></span>
-<span><span class="co">##  [9,] "357.62 &amp;plusmn; 71.82"</span></span>
-<span><span class="co">## [10,] "&amp;nbsp;&amp;nbsp;"         </span></span>
-<span><span class="co">## [11,] "3.435"                </span></span>
-<span><span class="co">## [12,] "5.424"                </span></span>
-<span><span class="co">## [13,] "4.10 &amp;plusmn; 0.77"   </span></span>
-<span><span class="co">## [14,] "&amp;nbsp;&amp;nbsp;"         </span></span>
-<span><span class="co">## [15,] "12 (100)"             </span></span>
-<span><span class="co">## [16,] "0 (0)"                </span></span>
-<span><span class="co">## [17,] "0 (0)"                </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $`6 cylinders.1`</span></span>
-<span><span class="co">##       [,1]                  </span></span>
-<span><span class="co">##  [1,] "&amp;nbsp;&amp;nbsp;"        </span></span>
-<span><span class="co">##  [2,] "19.7"                </span></span>
-<span><span class="co">##  [3,] "21"                  </span></span>
-<span><span class="co">##  [4,] "20.57 &amp;plusmn; 0.75" </span></span>
-<span><span class="co">##  [5,] "&amp;nbsp;&amp;nbsp;"        </span></span>
-<span><span class="co">##  [6,] "145"                 </span></span>
-<span><span class="co">##  [7,] "160"                 </span></span>
-<span><span class="co">##  [8,] "160"                 </span></span>
-<span><span class="co">##  [9,] "155.00 &amp;plusmn; 8.66"</span></span>
-<span><span class="co">## [10,] "&amp;nbsp;&amp;nbsp;"        </span></span>
-<span><span class="co">## [11,] "2.62"                </span></span>
-<span><span class="co">## [12,] "2.875"               </span></span>
-<span><span class="co">## [13,] "2.75 &amp;plusmn; 0.13"  </span></span>
-<span><span class="co">## [14,] "&amp;nbsp;&amp;nbsp;"        </span></span>
-<span><span class="co">## [15,] "0 (0)"               </span></span>
-<span><span class="co">## [16,] "2 (67)"              </span></span>
-<span><span class="co">## [17,] "1 (33)"              </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $`4 cylinders.1`</span></span>
-<span><span class="co">##       [,1]                  </span></span>
-<span><span class="co">##  [1,] "&amp;nbsp;&amp;nbsp;"        </span></span>
-<span><span class="co">##  [2,] "21.4"                </span></span>
-<span><span class="co">##  [3,] "33.9"                </span></span>
-<span><span class="co">##  [4,] "28.07 &amp;plusmn; 4.48" </span></span>
-<span><span class="co">##  [5,] "&amp;nbsp;&amp;nbsp;"        </span></span>
-<span><span class="co">##  [6,] "71.1"                </span></span>
-<span><span class="co">##  [7,] "87.05"               </span></span>
-<span><span class="co">##  [8,] "121"                 </span></span>
-<span><span class="co">##  [9,] "93.61 &amp;plusmn; 20.48"</span></span>
-<span><span class="co">## [10,] "&amp;nbsp;&amp;nbsp;"        </span></span>
-<span><span class="co">## [11,] "1.513"               </span></span>
-<span><span class="co">## [12,] "2.78"                </span></span>
-<span><span class="co">## [13,] "2.04 &amp;plusmn; 0.41"  </span></span>
-<span><span class="co">## [14,] "&amp;nbsp;&amp;nbsp;"        </span></span>
-<span><span class="co">## [15,] "0 (0)"               </span></span>
-<span><span class="co">## [16,] "6 (75)"              </span></span>
-<span><span class="co">## [17,] "2 (25)"              </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $`8 cylinders.1`</span></span>
-<span><span class="co">##       [,1]                   </span></span>
-<span><span class="co">##  [1,] "&amp;nbsp;&amp;nbsp;"         </span></span>
-<span><span class="co">##  [2,] "15"                   </span></span>
-<span><span class="co">##  [3,] "15.8"                 </span></span>
-<span><span class="co">##  [4,] "15.40 &amp;plusmn; 0.57"  </span></span>
-<span><span class="co">##  [5,] "&amp;nbsp;&amp;nbsp;"         </span></span>
-<span><span class="co">##  [6,] "301"                  </span></span>
-<span><span class="co">##  [7,] "326"                  </span></span>
-<span><span class="co">##  [8,] "351"                  </span></span>
-<span><span class="co">##  [9,] "326.00 &amp;plusmn; 35.36"</span></span>
-<span><span class="co">## [10,] "&amp;nbsp;&amp;nbsp;"         </span></span>
-<span><span class="co">## [11,] "3.17"                 </span></span>
-<span><span class="co">## [12,] "3.57"                 </span></span>
-<span><span class="co">## [13,] "3.37 &amp;plusmn; 0.28"   </span></span>
-<span><span class="co">## [14,] "&amp;nbsp;&amp;nbsp;"         </span></span>
-<span><span class="co">## [15,] "0 (0)"                </span></span>
-<span><span class="co">## [16,] "0 (0)"                </span></span>
-<span><span class="co">## [17,] "2 (100)"              </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">##                                6 cylinders.0 (N = 4)                          </span></span>
-<span><span class="co">##  [1,] "**Miles Per Gallon**"   "&amp;nbsp;&amp;nbsp;"          "&amp;nbsp;&amp;nbsp;"         </span></span>
-<span><span class="co">##  [2,] "&amp;nbsp;&amp;nbsp; min"       "17.8"                  "21.5"                 </span></span>
-<span><span class="co">##  [3,] "&amp;nbsp;&amp;nbsp; max"       "21.4"                  "24.4"                 </span></span>
-<span><span class="co">##  [4,] "&amp;nbsp;&amp;nbsp; mean (sd)" "19.12 &amp;plusmn; 1.63"   "22.90 &amp;plusmn; 1.45"  </span></span>
-<span><span class="co">##  [5,] "**Displacement**"       "&amp;nbsp;&amp;nbsp;"          "&amp;nbsp;&amp;nbsp;"         </span></span>
-<span><span class="co">##  [6,] "&amp;nbsp;&amp;nbsp; min"       "167.6"                 "120.1"                </span></span>
-<span><span class="co">##  [7,] "&amp;nbsp;&amp;nbsp; median"    "196.3"                 "140.8"                </span></span>
-<span><span class="co">##  [8,] "&amp;nbsp;&amp;nbsp; max"       "258"                   "146.7"                </span></span>
-<span><span class="co">##  [9,] "&amp;nbsp;&amp;nbsp; mean (sd)" "204.55 &amp;plusmn; 44.74" "135.87 &amp;plusmn; 13.97"</span></span>
-<span><span class="co">## [10,] "**Weight (1000 lbs)**"  "&amp;nbsp;&amp;nbsp;"          "&amp;nbsp;&amp;nbsp;"         </span></span>
-<span><span class="co">## [11,] "&amp;nbsp;&amp;nbsp; min"       "3.215"                 "2.465"                </span></span>
-<span><span class="co">## [12,] "&amp;nbsp;&amp;nbsp; max"       "3.46"                  "3.19"                 </span></span>
-<span><span class="co">## [13,] "&amp;nbsp;&amp;nbsp; mean (sd)" "3.39 &amp;plusmn; 0.12"    "2.94 &amp;plusmn; 0.41"   </span></span>
-<span><span class="co">## [14,] "**Forward Gears**"      "&amp;nbsp;&amp;nbsp;"          "&amp;nbsp;&amp;nbsp;"         </span></span>
-<span><span class="co">## [15,] "&amp;nbsp;&amp;nbsp; Three"     "2 (50)"                "1 (33)"               </span></span>
-<span><span class="co">## [16,] "&amp;nbsp;&amp;nbsp; Four"      "2 (50)"                "2 (67)"               </span></span>
-<span><span class="co">## [17,] "&amp;nbsp;&amp;nbsp; Five"      "0 (0)"                 "0 (0)"                </span></span>
-<span><span class="co">##                                                                            </span></span>
-<span><span class="co">##  [1,] "&amp;nbsp;&amp;nbsp;"          "&amp;nbsp;&amp;nbsp;"         "&amp;nbsp;&amp;nbsp;"        </span></span>
-<span><span class="co">##  [2,] "10.4"                  "19.7"                 "21.4"                </span></span>
-<span><span class="co">##  [3,] "19.2"                  "21"                   "33.9"                </span></span>
-<span><span class="co">##  [4,] "15.05 &amp;plusmn; 2.77"   "20.57 &amp;plusmn; 0.75"  "28.07 &amp;plusmn; 4.48" </span></span>
-<span><span class="co">##  [5,] "&amp;nbsp;&amp;nbsp;"          "&amp;nbsp;&amp;nbsp;"         "&amp;nbsp;&amp;nbsp;"        </span></span>
-<span><span class="co">##  [6,] "275.8"                 "145"                  "71.1"                </span></span>
-<span><span class="co">##  [7,] "355"                   "160"                  "87.05"               </span></span>
-<span><span class="co">##  [8,] "472"                   "160"                  "121"                 </span></span>
-<span><span class="co">##  [9,] "357.62 &amp;plusmn; 71.82" "155.00 &amp;plusmn; 8.66" "93.61 &amp;plusmn; 20.48"</span></span>
-<span><span class="co">## [10,] "&amp;nbsp;&amp;nbsp;"          "&amp;nbsp;&amp;nbsp;"         "&amp;nbsp;&amp;nbsp;"        </span></span>
-<span><span class="co">## [11,] "3.435"                 "2.62"                 "1.513"               </span></span>
-<span><span class="co">## [12,] "5.424"                 "2.875"                "2.78"                </span></span>
-<span><span class="co">## [13,] "4.10 &amp;plusmn; 0.77"    "2.75 &amp;plusmn; 0.13"   "2.04 &amp;plusmn; 0.41"  </span></span>
-<span><span class="co">## [14,] "&amp;nbsp;&amp;nbsp;"          "&amp;nbsp;&amp;nbsp;"         "&amp;nbsp;&amp;nbsp;"        </span></span>
-<span><span class="co">## [15,] "12 (100)"              "0 (0)"                "0 (0)"               </span></span>
-<span><span class="co">## [16,] "0 (0)"                 "2 (67)"               "6 (75)"              </span></span>
-<span><span class="co">## [17,] "0 (0)"                 "1 (33)"               "2 (25)"              </span></span>
-<span><span class="co">##                              </span></span>
-<span><span class="co">##  [1,] "&amp;nbsp;&amp;nbsp;"         </span></span>
-<span><span class="co">##  [2,] "15"                   </span></span>
-<span><span class="co">##  [3,] "15.8"                 </span></span>
-<span><span class="co">##  [4,] "15.40 &amp;plusmn; 0.57"  </span></span>
-<span><span class="co">##  [5,] "&amp;nbsp;&amp;nbsp;"         </span></span>
-<span><span class="co">##  [6,] "301"                  </span></span>
-<span><span class="co">##  [7,] "326"                  </span></span>
-<span><span class="co">##  [8,] "351"                  </span></span>
-<span><span class="co">##  [9,] "326.00 &amp;plusmn; 35.36"</span></span>
-<span><span class="co">## [10,] "&amp;nbsp;&amp;nbsp;"         </span></span>
-<span><span class="co">## [11,] "3.17"                 </span></span>
-<span><span class="co">## [12,] "3.57"                 </span></span>
-<span><span class="co">## [13,] "3.37 &amp;plusmn; 0.28"   </span></span>
-<span><span class="co">## [14,] "&amp;nbsp;&amp;nbsp;"         </span></span>
-<span><span class="co">## [15,] "0 (0)"                </span></span>
-<span><span class="co">## [16,] "0 (0)"                </span></span>
-<span><span class="co">## [17,] "2 (100)"</span></span>
 <span><span class="va">by_cyl_am</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## |                       |6 cylinders.0 (N = 4) |4 cylinders.0 (N = 3) |8 cylinders.0 (N = 12) |6 cylinders.1 (N = 3) |4 cylinders.1 (N = 8) |8 cylinders.1 (N = 2) |</span></span>
-<span><span class="co">## |:----------------------|:---------------------|:---------------------|:----------------------|:---------------------|:---------------------|:---------------------|</span></span>
-<span><span class="co">## |**Miles Per Gallon**   |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;           |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; min       |17.8                  |21.5                  |10.4                   |19.7                  |21.4                  |15                    |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; max       |21.4                  |24.4                  |19.2                   |21                    |33.9                  |15.8                  |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; mean (sd) |19.12 &amp;plusmn; 1.63   |22.90 &amp;plusmn; 1.45   |15.05 &amp;plusmn; 2.77    |20.57 &amp;plusmn; 0.75   |28.07 &amp;plusmn; 4.48   |15.40 &amp;plusmn; 0.57   |</span></span>
-<span><span class="co">## |**Displacement**       |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;           |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; min       |167.6                 |120.1                 |275.8                  |145                   |71.1                  |301                   |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; median    |196.3                 |140.8                 |355                    |160                   |87.05                 |326                   |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; max       |258                   |146.7                 |472                    |160                   |121                   |351                   |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; mean (sd) |204.55 &amp;plusmn; 44.74 |135.87 &amp;plusmn; 13.97 |357.62 &amp;plusmn; 71.82  |155.00 &amp;plusmn; 8.66  |93.61 &amp;plusmn; 20.48  |326.00 &amp;plusmn; 35.36 |</span></span>
-<span><span class="co">## |**Weight (1000 lbs)**  |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;           |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; min       |3.215                 |2.465                 |3.435                  |2.62                  |1.513                 |3.17                  |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; max       |3.46                  |3.19                  |5.424                  |2.875                 |2.78                  |3.57                  |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; mean (sd) |3.39 &amp;plusmn; 0.12    |2.94 &amp;plusmn; 0.41    |4.10 &amp;plusmn; 0.77     |2.75 &amp;plusmn; 0.13    |2.04 &amp;plusmn; 0.41    |3.37 &amp;plusmn; 0.28    |</span></span>
-<span><span class="co">## |**Forward Gears**      |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;           |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; Three     |2 (50)                |1 (33)                |12 (100)               |0 (0)                 |0 (0)                 |0 (0)                 |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; Four      |2 (50)                |2 (67)                |0 (0)                  |2 (67)                |6 (75)                |0 (0)                 |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; Five      |0 (0)                 |0 (0)                 |0 (0)                  |1 (33)                |2 (25)                |2 (100)               |</span></span></code></pre></div>
+<span><span class="co">## |                       |6 cylinders.0 (N = 4) |4 cylinders.0         |8 cylinders.0         |6 cylinders.1        |4 cylinders.1        |8 cylinders.1         |</span></span>
+<span><span class="co">## |:----------------------|:---------------------|:---------------------|:---------------------|:--------------------|:--------------------|:---------------------|</span></span>
+<span><span class="co">## |**Miles Per Gallon**   |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;         |&amp;nbsp;&amp;nbsp;         |&amp;nbsp;&amp;nbsp;          |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; min       |17.8                  |21.5                  |10.4                  |19.7                 |21.4                 |15                    |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; max       |21.4                  |24.4                  |19.2                  |21                   |33.9                 |15.8                  |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; mean (sd) |19.12 &amp;plusmn; 1.63   |22.90 &amp;plusmn; 1.45   |15.05 &amp;plusmn; 2.77   |20.57 &amp;plusmn; 0.75  |28.07 &amp;plusmn; 4.48  |15.40 &amp;plusmn; 0.57   |</span></span>
+<span><span class="co">## |**Displacement**       |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;         |&amp;nbsp;&amp;nbsp;         |&amp;nbsp;&amp;nbsp;          |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; min       |167.6                 |120.1                 |275.8                 |145                  |71.1                 |301                   |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; median    |196.3                 |140.8                 |355                   |160                  |87.05                |326                   |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; max       |258                   |146.7                 |472                   |160                  |121                  |351                   |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; mean (sd) |204.55 &amp;plusmn; 44.74 |135.87 &amp;plusmn; 13.97 |357.62 &amp;plusmn; 71.82 |155.00 &amp;plusmn; 8.66 |93.61 &amp;plusmn; 20.48 |326.00 &amp;plusmn; 35.36 |</span></span>
+<span><span class="co">## |**Weight (1000 lbs)**  |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;         |&amp;nbsp;&amp;nbsp;         |&amp;nbsp;&amp;nbsp;          |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; min       |3.215                 |2.465                 |3.435                 |2.62                 |1.513                |3.17                  |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; max       |3.46                  |3.19                  |5.424                 |2.875                |2.78                 |3.57                  |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; mean (sd) |3.39 &amp;plusmn; 0.12    |2.94 &amp;plusmn; 0.41    |4.10 &amp;plusmn; 0.77    |2.75 &amp;plusmn; 0.13   |2.04 &amp;plusmn; 0.41   |3.37 &amp;plusmn; 0.28    |</span></span>
+<span><span class="co">## |**Forward Gears**      |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;         |&amp;nbsp;&amp;nbsp;         |&amp;nbsp;&amp;nbsp;          |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; Three     |2 (50)                |1 (33)                |12 (100)              |0 (0)                |0 (0)                |0 (0)                 |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; Four      |2 (50)                |2 (67)                |0 (0)                 |2 (67)               |6 (75)               |0 (0)                 |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; Five      |0 (0)                 |0 (0)                 |0 (0)                 |1 (33)               |2 (25)               |2 (100)               |</span></span></code></pre></div>
 <p>To report a table with both the whole sample summary and conditional
 columns together:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">both</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">whole</span>, <span class="va">by_cyl</span><span class="op">)</span></span></code></pre></div>
-<p>[[1]]</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">both</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">whole</span>, <span class="va">by_cyl</span><span class="op">)</span></span>
+<span><span class="va">both</span></span></code></pre></div>
 <table class="table">
-<thead><tr class="header">
-<th align="left"></th>
-<th align="left">mtcars2 (N = 32)</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left"><strong>Miles Per Gallon</strong></td>
-<td align="left">  </td>
-</tr>
-<tr class="even">
-<td align="left">   min</td>
-<td align="left">10.4</td>
-</tr>
-<tr class="odd">
-<td align="left">   max</td>
-<td align="left">33.9</td>
-</tr>
-<tr class="even">
-<td align="left">   mean (sd)</td>
-<td align="left">20.09 ± 6.03</td>
-</tr>
-<tr class="odd">
-<td align="left"><strong>Displacement</strong></td>
-<td align="left">  </td>
-</tr>
-<tr class="even">
-<td align="left">   min</td>
-<td align="left">71.1</td>
-</tr>
-<tr class="odd">
-<td align="left">   median</td>
-<td align="left">196.3</td>
-</tr>
-<tr class="even">
-<td align="left">   max</td>
-<td align="left">472</td>
-</tr>
-<tr class="odd">
-<td align="left">   mean (sd)</td>
-<td align="left">230.72 ± 123.94</td>
-</tr>
-<tr class="even">
-<td align="left"><strong>Weight (1000 lbs)</strong></td>
-<td align="left">  </td>
-</tr>
-<tr class="odd">
-<td align="left">   min</td>
-<td align="left">1.513</td>
-</tr>
-<tr class="even">
-<td align="left">   max</td>
-<td align="left">5.424</td>
-</tr>
-<tr class="odd">
-<td align="left">   mean (sd)</td>
-<td align="left">3.22 ± 0.98</td>
-</tr>
-<tr class="even">
-<td align="left"><strong>Forward Gears</strong></td>
-<td align="left">  </td>
-</tr>
-<tr class="odd">
-<td align="left">   Three</td>
-<td align="left">15 (47)</td>
-</tr>
-<tr class="even">
-<td align="left">   Four</td>
-<td align="left">12 (38)</td>
-</tr>
-<tr class="odd">
-<td align="left">   Five</td>
-<td align="left">5 (16)</td>
-</tr>
-</tbody>
-</table>
-<p>[[2]] [,1] [,2] [,3]<br>
-[1,] “  ” “  ” “  ”<br>
-[2,] “17.8” “21.4” “10.4”<br>
-[3,] “21.4” “33.9” “19.2”<br>
-[4,] “19.74 ± 1.45” “26.66 ± 4.51” “15.10 ± 2.56”<br>
-[5,] “  ” “  ” “  ”<br>
-[6,] “145” “71.1” “275.8”<br>
-[7,] “167.6” “108” “350.5”<br>
-[8,] “258” “146.7” “472”<br>
-[9,] “183.31 ± 41.56” “105.14 ± 26.87” “353.10 ± 67.77” [10,] “  ” “  ”
-“  ”<br>
-[11,] “2.62” “1.513” “3.17”<br>
-[12,] “3.46” “3.19” “5.424”<br>
-[13,] “3.12 ± 0.36” “2.29 ± 0.57” “4.00 ± 0.76”<br>
-[14,] “  ” “  ” “  ”<br>
-[15,] “2 (29)” “1 (9)” “12 (86)”<br>
-[16,] “4 (57)” “8 (73)” “0 (0)”<br>
-[17,] “1 (14)” “2 (18)” “2 (14)”</p>
-<pre><code><span>                           <span class="fu"><a href="../reference/mtcars2.html">mtcars2</a></span> <span class="op">(</span>N <span class="op">=</span> <span class="fl">32</span><span class="op">)</span>                                </span></code></pre>
-<p>[1,] “<strong>Miles Per Gallon</strong>” “  ” “  ”<br>
-[2,] “   min” “10.4” “17.8”<br>
-[3,] “   max” “33.9” “21.4”<br>
-[4,] “   mean (sd)” “20.09 ± 6.03” “19.74 ± 1.45”<br>
-[5,] “<strong>Displacement</strong>” “  ” “  ”<br>
-[6,] “   min” “71.1” “145”<br>
-[7,] “   median” “196.3” “167.6”<br>
-[8,] “   max” “472” “258”<br>
-[9,] “   mean (sd)” “230.72 ± 123.94” “183.31 ± 41.56” [10,]
-“<strong>Weight (1000 lbs)</strong>” “  ” “  ”<br>
-[11,] “   min” “1.513” “2.62”<br>
-[12,] “   max” “5.424” “3.46”<br>
-[13,] “   mean (sd)” “3.22 ± 0.98” “3.12 ± 0.36”<br>
-[14,] “<strong>Forward Gears</strong>” “  ” “  ”<br>
-[15,] “   Three” “15 (47)” “2 (29)”<br>
-[16,] “   Four” “12 (38)” “4 (57)”<br>
-[17,] “   Five” “5 (16)” “1 (14)”</p>
-<p>[1,] “  ” “  ”<br>
-[2,] “21.4” “10.4”<br>
-[3,] “33.9” “19.2”<br>
-[4,] “26.66 ± 4.51” “15.10 ± 2.56”<br>
-[5,] “  ” “  ”<br>
-[6,] “71.1” “275.8”<br>
-[7,] “108” “350.5”<br>
-[8,] “146.7” “472”<br>
-[9,] “105.14 ± 26.87” “353.10 ± 67.77” [10,] “  ” “  ”<br>
-[11,] “1.513” “3.17”<br>
-[12,] “3.19” “5.424”<br>
-[13,] “2.29 ± 0.57” “4.00 ± 0.76”<br>
-[14,] “  ” “  ”<br>
-[15,] “1 (9)” “12 (86)”<br>
-[16,] “8 (73)” “0 (0)”<br>
-[17,] “2 (18)” “2 (14)”</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">both</span></span></code></pre></div>
-<table style="width:100%;" class="table">
 <colgroup>
-<col width="20%">
-<col width="20%">
-<col width="19%">
-<col width="19%">
-<col width="19%">
+<col width="25%">
+<col width="25%">
+<col width="24%">
+<col width="24%">
 </colgroup>
 <thead><tr class="header">
 <th align="left"></th>
 <th align="left">mtcars2 (N = 32)</th>
-<th align="left">6 cylinders (N = 7)</th>
-<th align="left">4 cylinders (N = 11)</th>
-<th align="left">8 cylinders (N = 14)</th>
+<th align="left">4 cylinders</th>
+<th align="left">8 cylinders</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -1065,26 +610,22 @@ columns together:</p>
 <td align="left">  </td>
 <td align="left">  </td>
 <td align="left">  </td>
-<td align="left">  </td>
 </tr>
 <tr class="even">
 <td align="left">   min</td>
 <td align="left">10.4</td>
-<td align="left">17.8</td>
 <td align="left">21.4</td>
 <td align="left">10.4</td>
 </tr>
 <tr class="odd">
 <td align="left">   max</td>
 <td align="left">33.9</td>
-<td align="left">21.4</td>
 <td align="left">33.9</td>
 <td align="left">19.2</td>
 </tr>
 <tr class="even">
 <td align="left">   mean (sd)</td>
 <td align="left">20.09 ± 6.03</td>
-<td align="left">19.74 ± 1.45</td>
 <td align="left">26.66 ± 4.51</td>
 <td align="left">15.10 ± 2.56</td>
 </tr>
@@ -1093,33 +634,28 @@ columns together:</p>
 <td align="left">  </td>
 <td align="left">  </td>
 <td align="left">  </td>
-<td align="left">  </td>
 </tr>
 <tr class="even">
 <td align="left">   min</td>
 <td align="left">71.1</td>
-<td align="left">145</td>
 <td align="left">71.1</td>
 <td align="left">275.8</td>
 </tr>
 <tr class="odd">
 <td align="left">   median</td>
 <td align="left">196.3</td>
-<td align="left">167.6</td>
 <td align="left">108</td>
 <td align="left">350.5</td>
 </tr>
 <tr class="even">
 <td align="left">   max</td>
 <td align="left">472</td>
-<td align="left">258</td>
 <td align="left">146.7</td>
 <td align="left">472</td>
 </tr>
 <tr class="odd">
 <td align="left">   mean (sd)</td>
 <td align="left">230.72 ± 123.94</td>
-<td align="left">183.31 ± 41.56</td>
 <td align="left">105.14 ± 26.87</td>
 <td align="left">353.10 ± 67.77</td>
 </tr>
@@ -1128,26 +664,22 @@ columns together:</p>
 <td align="left">  </td>
 <td align="left">  </td>
 <td align="left">  </td>
-<td align="left">  </td>
 </tr>
 <tr class="odd">
 <td align="left">   min</td>
 <td align="left">1.513</td>
-<td align="left">2.62</td>
 <td align="left">1.513</td>
 <td align="left">3.17</td>
 </tr>
 <tr class="even">
 <td align="left">   max</td>
 <td align="left">5.424</td>
-<td align="left">3.46</td>
 <td align="left">3.19</td>
 <td align="left">5.424</td>
 </tr>
 <tr class="odd">
 <td align="left">   mean (sd)</td>
 <td align="left">3.22 ± 0.98</td>
-<td align="left">3.12 ± 0.36</td>
 <td align="left">2.29 ± 0.57</td>
 <td align="left">4.00 ± 0.76</td>
 </tr>
@@ -1156,26 +688,22 @@ columns together:</p>
 <td align="left">  </td>
 <td align="left">  </td>
 <td align="left">  </td>
-<td align="left">  </td>
 </tr>
 <tr class="odd">
 <td align="left">   Three</td>
 <td align="left">15 (47)</td>
-<td align="left">2 (29)</td>
 <td align="left">1 (9)</td>
 <td align="left">12 (86)</td>
 </tr>
 <tr class="even">
 <td align="left">   Four</td>
 <td align="left">12 (38)</td>
-<td align="left">4 (57)</td>
 <td align="left">8 (73)</td>
 <td align="left">0 (0)</td>
 </tr>
 <tr class="odd">
 <td align="left">   Five</td>
 <td align="left">5 (16)</td>
-<td align="left">1 (14)</td>
 <td align="left">2 (18)</td>
 <td align="left">2 (14)</td>
 </tr>
@@ -1187,24 +715,22 @@ for <code>qwraps2_summary_table</code> objects. Any argument that you
 want to send to <code>qable</code> can be sent there when explicitly
 using the <code>print</code> method for
 <code>qwraps2_summary_table</code> objects.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">both</span>,</span>
 <span>      rtitle <span class="op">=</span> <span class="st">"Summary Statistics"</span>,</span>
 <span>      cnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Col 0"</span>, <span class="st">"Col 1"</span>, <span class="st">"Col 2"</span>, <span class="st">"Col 3"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<table style="width:100%;" class="table">
+<table class="table">
 <colgroup>
-<col width="20%">
-<col width="20%">
-<col width="19%">
-<col width="19%">
-<col width="19%">
+<col width="25%">
+<col width="25%">
+<col width="24%">
+<col width="24%">
 </colgroup>
 <thead><tr class="header">
-<th align="left"></th>
+<th align="left">Summary Statistics</th>
 <th align="left">mtcars2 (N = 32)</th>
-<th align="left">6 cylinders (N = 7)</th>
-<th align="left">4 cylinders (N = 11)</th>
-<th align="left">8 cylinders (N = 14)</th>
+<th align="left">4 cylinders</th>
+<th align="left">8 cylinders</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -1212,26 +738,22 @@ using the <code>print</code> method for
 <td align="left">  </td>
 <td align="left">  </td>
 <td align="left">  </td>
-<td align="left">  </td>
 </tr>
 <tr class="even">
 <td align="left">   min</td>
 <td align="left">10.4</td>
-<td align="left">17.8</td>
 <td align="left">21.4</td>
 <td align="left">10.4</td>
 </tr>
 <tr class="odd">
 <td align="left">   max</td>
 <td align="left">33.9</td>
-<td align="left">21.4</td>
 <td align="left">33.9</td>
 <td align="left">19.2</td>
 </tr>
 <tr class="even">
 <td align="left">   mean (sd)</td>
 <td align="left">20.09 ± 6.03</td>
-<td align="left">19.74 ± 1.45</td>
 <td align="left">26.66 ± 4.51</td>
 <td align="left">15.10 ± 2.56</td>
 </tr>
@@ -1240,33 +762,28 @@ using the <code>print</code> method for
 <td align="left">  </td>
 <td align="left">  </td>
 <td align="left">  </td>
-<td align="left">  </td>
 </tr>
 <tr class="even">
 <td align="left">   min</td>
 <td align="left">71.1</td>
-<td align="left">145</td>
 <td align="left">71.1</td>
 <td align="left">275.8</td>
 </tr>
 <tr class="odd">
 <td align="left">   median</td>
 <td align="left">196.3</td>
-<td align="left">167.6</td>
 <td align="left">108</td>
 <td align="left">350.5</td>
 </tr>
 <tr class="even">
 <td align="left">   max</td>
 <td align="left">472</td>
-<td align="left">258</td>
 <td align="left">146.7</td>
 <td align="left">472</td>
 </tr>
 <tr class="odd">
 <td align="left">   mean (sd)</td>
 <td align="left">230.72 ± 123.94</td>
-<td align="left">183.31 ± 41.56</td>
 <td align="left">105.14 ± 26.87</td>
 <td align="left">353.10 ± 67.77</td>
 </tr>
@@ -1275,26 +792,22 @@ using the <code>print</code> method for
 <td align="left">  </td>
 <td align="left">  </td>
 <td align="left">  </td>
-<td align="left">  </td>
 </tr>
 <tr class="odd">
 <td align="left">   min</td>
 <td align="left">1.513</td>
-<td align="left">2.62</td>
 <td align="left">1.513</td>
 <td align="left">3.17</td>
 </tr>
 <tr class="even">
 <td align="left">   max</td>
 <td align="left">5.424</td>
-<td align="left">3.46</td>
 <td align="left">3.19</td>
 <td align="left">5.424</td>
 </tr>
 <tr class="odd">
 <td align="left">   mean (sd)</td>
 <td align="left">3.22 ± 0.98</td>
-<td align="left">3.12 ± 0.36</td>
 <td align="left">2.29 ± 0.57</td>
 <td align="left">4.00 ± 0.76</td>
 </tr>
@@ -1303,26 +816,22 @@ using the <code>print</code> method for
 <td align="left">  </td>
 <td align="left">  </td>
 <td align="left">  </td>
-<td align="left">  </td>
 </tr>
 <tr class="odd">
 <td align="left">   Three</td>
 <td align="left">15 (47)</td>
-<td align="left">2 (29)</td>
 <td align="left">1 (9)</td>
 <td align="left">12 (86)</td>
 </tr>
 <tr class="even">
 <td align="left">   Four</td>
 <td align="left">12 (38)</td>
-<td align="left">4 (57)</td>
 <td align="left">8 (73)</td>
 <td align="left">0 (0)</td>
 </tr>
 <tr class="odd">
 <td align="left">   Five</td>
 <td align="left">5 (16)</td>
-<td align="left">1 (14)</td>
 <td align="left">2 (18)</td>
 <td align="left">2 (14)</td>
 </tr>
@@ -1341,7 +850,7 @@ variables.</p>
 summary metrics defined by
 <code>qsummary`.` The purpose of</code>qsummary<code>is to provide the same summary for all numeric variables within a data.frame and a single style of summary for categorical variables within the data.frame.  For example, the default summary for a set of variables from the</code>mtcars2``
 data set is</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/summary_table.html">qsummary</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"cyl_factor"</span>, <span class="st">"wt"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">## $mpg</span></span>
 <span><span class="co">## $mpg$minimum</span></span>
@@ -1381,7 +890,7 @@ data set is</p>
 <span><span class="co">## $wt$maximum</span></span>
 <span><span class="co">## ~qwraps2::frmt(max(wt))</span></span></code></pre></div>
 <p>That default summary is used for a table as follows:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/summary_table.html">summary_table</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"cyl_factor"</span>, <span class="st">"wt"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
@@ -1457,7 +966,7 @@ the denominator for each category and for the percentage, to one digit
 with the percent symbol in the table. Note that when defining the list
 of numeric_summaries that the argument place holder is the
 <code>%s</code> character.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">new_summary</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/summary_table.html">qsummary</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"cyl_factor"</span>, <span class="st">"wt"</span><span class="op">)</span><span class="op">]</span>,</span>
 <span>           numeric_summaries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Minimum"</span> <span class="op">=</span> <span class="st">"~ min(%s)"</span>,</span>
@@ -1483,7 +992,7 @@ of numeric_summaries that the argument place holder is the
 <span><span class="co">##   ..$ Maximum:Class 'formula'  language ~max(wt)</span></span>
 <span><span class="co">##   .. .. ..- attr(*, ".Environment")=&lt;environment: R_GlobalEnv&gt;</span></span></code></pre></div>
 <p>The resulting table is:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/summary_table.html">summary_table</a></span><span class="op">(</span><span class="va">mtcars2</span>, <span class="va">new_summary</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -1534,109 +1043,20 @@ of numeric_summaries that the argument place holder is the
 </tbody>
 </table>
 <p>The summary can easily be used with a <code>by</code> argument</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/summary_table.html">summary_table</a></span><span class="op">(</span><span class="va">mtcars2</span>, <span class="va">new_summary</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl_factor"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>$<code>6 cylinders</code></p>
-<table class="table">
-<thead><tr class="header">
-<th align="left"></th>
-<th align="left">6 cylinders (N = 7)</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left"><strong>mpg</strong></td>
-<td align="left">  </td>
-</tr>
-<tr class="even">
-<td align="left">   Minimum</td>
-<td align="left">17.8</td>
-</tr>
-<tr class="odd">
-<td align="left">   Maximum</td>
-<td align="left">21.4</td>
-</tr>
-<tr class="even">
-<td align="left"><strong>cyl_factor</strong></td>
-<td align="left">  </td>
-</tr>
-<tr class="odd">
-<td align="left">   6 cylinders</td>
-<td align="left">7/7 (100.0%)</td>
-</tr>
-<tr class="even">
-<td align="left">   4 cylinders</td>
-<td align="left">0/7 (0.0%)</td>
-</tr>
-<tr class="odd">
-<td align="left">   8 cylinders</td>
-<td align="left">0/7 (0.0%)</td>
-</tr>
-<tr class="even">
-<td align="left"><strong>wt</strong></td>
-<td align="left">  </td>
-</tr>
-<tr class="odd">
-<td align="left">   Minimum</td>
-<td align="left">2.62</td>
-</tr>
-<tr class="even">
-<td align="left">   Maximum</td>
-<td align="left">3.46</td>
-</tr>
-</tbody>
-</table>
-<p>$<code>4 cylinders</code> [,1]<br>
-[1,] “  ”<br>
-[2,] “21.4”<br>
-[3,] “33.9”<br>
-[4,] “  ”<br>
-[5,] “0/11 (0.0%)”<br>
-[6,] “11/11 (100.0%)” [7,] “0/11 (0.0%)”<br>
-[8,] “  ”<br>
-[9,] “1.513”<br>
-[10,] “3.19”</p>
-<p>$<code>8 cylinders</code> [,1]<br>
-[1,] “  ”<br>
-[2,] “10.4”<br>
-[3,] “19.2”<br>
-[4,] “  ”<br>
-[5,] “0/14 (0.0%)”<br>
-[6,] “0/14 (0.0%)”<br>
-[7,] “14/14 (100.0%)” [8,] “  ”<br>
-[9,] “3.17”<br>
-[10,] “5.424”</p>
-<pre><code>                             6 cylinders (N = 7)                 </code></pre>
-<p>[1,] “<strong>mpg</strong>” “  ” “  ”<br>
-[2,] “   Minimum” “17.8” “21.4”<br>
-[3,] “   Maximum” “21.4” “33.9”<br>
-[4,] “<strong>cyl_factor</strong>” “  ” “  ”<br>
-[5,] “   6 cylinders” “7/7 (100.0%)” “0/11 (0.0%)”<br>
-[6,] “   4 cylinders” “0/7 (0.0%)” “11/11 (100.0%)” [7,] “   8
-cylinders” “0/7 (0.0%)” “0/11 (0.0%)”<br>
-[8,] “<strong>wt</strong>” “  ” “  ”<br>
-[9,] “   Minimum” “2.62” “1.513”<br>
-[10,] “   Maximum” “3.46” “3.19”</p>
-<p>[1,] “  ”<br>
-[2,] “10.4”<br>
-[3,] “19.2”<br>
-[4,] “  ”<br>
-[5,] “0/14 (0.0%)”<br>
-[6,] “0/14 (0.0%)”<br>
-[7,] “14/14 (100.0%)” [8,] “  ”<br>
-[9,] “3.17”<br>
-[10,] “5.424”</p>
 <table class="table">
 <colgroup>
-<col width="28%">
-<col width="22%">
-<col width="24%">
-<col width="24%">
+<col width="33%">
+<col width="26%">
+<col width="20%">
+<col width="20%">
 </colgroup>
 <thead><tr class="header">
 <th align="left"></th>
 <th align="left">6 cylinders (N = 7)</th>
-<th align="left">4 cylinders (N = 11)</th>
-<th align="left">8 cylinders (N = 14)</th>
+<th align="left">4 cylinders</th>
+<th align="left">8 cylinders</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -1731,16 +1151,19 @@ the p-values are edited into row group labels, for example.</p>
 <code>qwraps2_summary_table</code> object you can with some degree of
 ease. Note that <code>qwraps2_summary_table</code> objects are just
 character matrices.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">both</span><span class="op">)</span></span>
-<span><span class="co">##  'qwraps2_qable' chr [1:17, 1:5] "**Miles Per Gallon**" "&amp;nbsp;&amp;nbsp; min" ...</span></span>
+<span><span class="co">##  'qwraps2_summary_table' chr [1:13, 1:3] "10.4" "33.9" ...</span></span>
 <span><span class="co">##  - attr(*, "dimnames")=List of 2</span></span>
-<span><span class="co">##   ..$ : NULL</span></span>
-<span><span class="co">##   ..$ : chr [1:5] "" "mtcars2 (N = 32)" "6 cylinders (N = 7)" "4 cylinders (N = 11)" ...</span></span>
-<span><span class="co">##  - attr(*, "markup")= chr "markdown"</span></span></code></pre></div>
+<span><span class="co">##   ..$ : chr [1:13] "min" "max" "mean (sd)" "min" ...</span></span>
+<span><span class="co">##   ..$ : chr [1:3] "mtcars2 (N = 32)" "4 cylinders" "8 cylinders"</span></span>
+<span><span class="co">##  - attr(*, "qable_args")= list()</span></span>
+<span><span class="co">##  - attr(*, "kable_args")= list()</span></span>
+<span><span class="co">##  - attr(*, "rgroups")= Named int [1:4] 3 4 3 3</span></span>
+<span><span class="co">##   ..- attr(*, "names")= chr [1:4] "Miles Per Gallon" "Displacement" "Weight (1000 lbs)" "Forward Gears"</span></span></code></pre></div>
 <p>Let’s added p-values for testing the difference in the mean between
 the three cylinder groups.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># difference in means</span></span>
 <span><span class="va">mpvals</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span></span>
@@ -1752,107 +1175,26 @@ the three cylinder groups.</p>
 <span><span class="co"># Fisher test</span></span>
 <span><span class="va">fpval</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/frmt.html">frmtp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/fisher.test.html" class="external-link">fisher.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">gear</span>, <span class="va">mtcars2</span><span class="op">$</span><span class="va">cyl_factor</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">p.value</span><span class="op">)</span></span></code></pre></div>
 <p>Adding the p-value column is done as follows:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">both</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">both</span>, <span class="st">"P-value"</span> <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span>
-<span><span class="co">## [[1]]</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## |                       |mtcars2 (N = 32)       |6 cylinders (N = 7)   |4 cylinders (N = 11)  |8 cylinders (N = 14)  |</span></span>
-<span><span class="co">## |:----------------------|:----------------------|:---------------------|:---------------------|:---------------------|</span></span>
-<span><span class="co">## |**Miles Per Gallon**   |&amp;nbsp;&amp;nbsp;           |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; min       |10.4                   |17.8                  |21.4                  |10.4                  |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; max       |33.9                   |21.4                  |33.9                  |19.2                  |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; mean (sd) |20.09 &amp;plusmn; 6.03    |19.74 &amp;plusmn; 1.45   |26.66 &amp;plusmn; 4.51   |15.10 &amp;plusmn; 2.56   |</span></span>
-<span><span class="co">## |**Displacement**       |&amp;nbsp;&amp;nbsp;           |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; min       |71.1                   |145                   |71.1                  |275.8                 |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; median    |196.3                  |167.6                 |108                   |350.5                 |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; max       |472                    |258                   |146.7                 |472                   |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; mean (sd) |230.72 &amp;plusmn; 123.94 |183.31 &amp;plusmn; 41.56 |105.14 &amp;plusmn; 26.87 |353.10 &amp;plusmn; 67.77 |</span></span>
-<span><span class="co">## |**Weight (1000 lbs)**  |&amp;nbsp;&amp;nbsp;           |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; min       |1.513                  |2.62                  |1.513                 |3.17                  |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; max       |5.424                  |3.46                  |3.19                  |5.424                 |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; mean (sd) |3.22 &amp;plusmn; 0.98     |3.12 &amp;plusmn; 0.36    |2.29 &amp;plusmn; 0.57    |4.00 &amp;plusmn; 0.76    |</span></span>
-<span><span class="co">## |**Forward Gears**      |&amp;nbsp;&amp;nbsp;           |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; Three     |15 (47)                |2 (29)                |1 (9)                 |12 (86)               |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; Four      |12 (38)                |4 (57)                |8 (73)                |0 (0)                 |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; Five      |5 (16)                 |1 (14)                |2 (18)                |2 (14)                |</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $`P-value`</span></span>
-<span><span class="co">##       [,1]</span></span>
-<span><span class="co">##  [1,] ""  </span></span>
-<span><span class="co">##  [2,] ""  </span></span>
-<span><span class="co">##  [3,] ""  </span></span>
-<span><span class="co">##  [4,] ""  </span></span>
-<span><span class="co">##  [5,] ""  </span></span>
-<span><span class="co">##  [6,] ""  </span></span>
-<span><span class="co">##  [7,] ""  </span></span>
-<span><span class="co">##  [8,] ""  </span></span>
-<span><span class="co">##  [9,] ""  </span></span>
-<span><span class="co">## [10,] ""  </span></span>
-<span><span class="co">## [11,] ""  </span></span>
-<span><span class="co">## [12,] ""  </span></span>
-<span><span class="co">## [13,] ""  </span></span>
-<span><span class="co">## [14,] ""  </span></span>
-<span><span class="co">## [15,] ""  </span></span>
-<span><span class="co">## [16,] ""  </span></span>
-<span><span class="co">## [17,] ""  </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">##                                mtcars2 (N = 32)         6 cylinders (N = 7)    </span></span>
-<span><span class="co">##  [1,] "**Miles Per Gallon**"   "&amp;nbsp;&amp;nbsp;"           "&amp;nbsp;&amp;nbsp;"         </span></span>
-<span><span class="co">##  [2,] "&amp;nbsp;&amp;nbsp; min"       "10.4"                   "17.8"                 </span></span>
-<span><span class="co">##  [3,] "&amp;nbsp;&amp;nbsp; max"       "33.9"                   "21.4"                 </span></span>
-<span><span class="co">##  [4,] "&amp;nbsp;&amp;nbsp; mean (sd)" "20.09 &amp;plusmn; 6.03"    "19.74 &amp;plusmn; 1.45"  </span></span>
-<span><span class="co">##  [5,] "**Displacement**"       "&amp;nbsp;&amp;nbsp;"           "&amp;nbsp;&amp;nbsp;"         </span></span>
-<span><span class="co">##  [6,] "&amp;nbsp;&amp;nbsp; min"       "71.1"                   "145"                  </span></span>
-<span><span class="co">##  [7,] "&amp;nbsp;&amp;nbsp; median"    "196.3"                  "167.6"                </span></span>
-<span><span class="co">##  [8,] "&amp;nbsp;&amp;nbsp; max"       "472"                    "258"                  </span></span>
-<span><span class="co">##  [9,] "&amp;nbsp;&amp;nbsp; mean (sd)" "230.72 &amp;plusmn; 123.94" "183.31 &amp;plusmn; 41.56"</span></span>
-<span><span class="co">## [10,] "**Weight (1000 lbs)**"  "&amp;nbsp;&amp;nbsp;"           "&amp;nbsp;&amp;nbsp;"         </span></span>
-<span><span class="co">## [11,] "&amp;nbsp;&amp;nbsp; min"       "1.513"                  "2.62"                 </span></span>
-<span><span class="co">## [12,] "&amp;nbsp;&amp;nbsp; max"       "5.424"                  "3.46"                 </span></span>
-<span><span class="co">## [13,] "&amp;nbsp;&amp;nbsp; mean (sd)" "3.22 &amp;plusmn; 0.98"     "3.12 &amp;plusmn; 0.36"   </span></span>
-<span><span class="co">## [14,] "**Forward Gears**"      "&amp;nbsp;&amp;nbsp;"           "&amp;nbsp;&amp;nbsp;"         </span></span>
-<span><span class="co">## [15,] "&amp;nbsp;&amp;nbsp; Three"     "15 (47)"                "2 (29)"               </span></span>
-<span><span class="co">## [16,] "&amp;nbsp;&amp;nbsp; Four"      "12 (38)"                "4 (57)"               </span></span>
-<span><span class="co">## [17,] "&amp;nbsp;&amp;nbsp; Five"      "5 (16)"                 "1 (14)"               </span></span>
-<span><span class="co">##       4 cylinders (N = 11)    8 cylinders (N = 14)      </span></span>
-<span><span class="co">##  [1,] "&amp;nbsp;&amp;nbsp;"          "&amp;nbsp;&amp;nbsp;"          ""</span></span>
-<span><span class="co">##  [2,] "21.4"                  "10.4"                  ""</span></span>
-<span><span class="co">##  [3,] "33.9"                  "19.2"                  ""</span></span>
-<span><span class="co">##  [4,] "26.66 &amp;plusmn; 4.51"   "15.10 &amp;plusmn; 2.56"   ""</span></span>
-<span><span class="co">##  [5,] "&amp;nbsp;&amp;nbsp;"          "&amp;nbsp;&amp;nbsp;"          ""</span></span>
-<span><span class="co">##  [6,] "71.1"                  "275.8"                 ""</span></span>
-<span><span class="co">##  [7,] "108"                   "350.5"                 ""</span></span>
-<span><span class="co">##  [8,] "146.7"                 "472"                   ""</span></span>
-<span><span class="co">##  [9,] "105.14 &amp;plusmn; 26.87" "353.10 &amp;plusmn; 67.77" ""</span></span>
-<span><span class="co">## [10,] "&amp;nbsp;&amp;nbsp;"          "&amp;nbsp;&amp;nbsp;"          ""</span></span>
-<span><span class="co">## [11,] "1.513"                 "3.17"                  ""</span></span>
-<span><span class="co">## [12,] "3.19"                  "5.424"                 ""</span></span>
-<span><span class="co">## [13,] "2.29 &amp;plusmn; 0.57"    "4.00 &amp;plusmn; 0.76"    ""</span></span>
-<span><span class="co">## [14,] "&amp;nbsp;&amp;nbsp;"          "&amp;nbsp;&amp;nbsp;"          ""</span></span>
-<span><span class="co">## [15,] "1 (9)"                 "12 (86)"               ""</span></span>
-<span><span class="co">## [16,] "8 (73)"                "0 (0)"                 ""</span></span>
-<span><span class="co">## [17,] "2 (18)"                "2 (14)"                ""</span></span>
 <span><span class="va">both</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"mean \\(sd\\)"</span>, <span class="va">both</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span>, <span class="st">"P-value"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">mpvals</span></span>
 <span><span class="va">both</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"Forward Gears"</span>, <span class="va">both</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span>, <span class="st">"P-value"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">fpval</span></span></code></pre></div>
 <p>and the resulting table is:</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">both</span></span></code></pre></div>
-<table style="width:100%;" class="table">
+<table class="table">
 <colgroup>
-<col width="18%">
-<col width="18%">
-<col width="17%">
-<col width="17%">
-<col width="17%">
-<col width="10%">
+<col width="22%">
+<col width="22%">
+<col width="21%">
+<col width="21%">
+<col width="12%">
 </colgroup>
 <thead><tr class="header">
 <th align="left"></th>
 <th align="left">mtcars2 (N = 32)</th>
-<th align="left">6 cylinders (N = 7)</th>
-<th align="left">4 cylinders (N = 11)</th>
-<th align="left">8 cylinders (N = 14)</th>
+<th align="left">4 cylinders</th>
+<th align="left">8 cylinders</th>
 <th align="left">P-value</th>
 </tr></thead>
 <tbody>
@@ -1862,12 +1204,10 @@ the three cylinder groups.</p>
 <td align="left">  </td>
 <td align="left">  </td>
 <td align="left">  </td>
-<td align="left"></td>
 </tr>
 <tr class="even">
 <td align="left">   min</td>
 <td align="left">10.4</td>
-<td align="left">17.8</td>
 <td align="left">21.4</td>
 <td align="left">10.4</td>
 <td align="left"></td>
@@ -1875,7 +1215,6 @@ the three cylinder groups.</p>
 <tr class="odd">
 <td align="left">   max</td>
 <td align="left">33.9</td>
-<td align="left">21.4</td>
 <td align="left">33.9</td>
 <td align="left">19.2</td>
 <td align="left"></td>
@@ -1883,11 +1222,9 @@ the three cylinder groups.</p>
 <tr class="even">
 <td align="left">   mean (sd)</td>
 <td align="left">20.09 ± 6.03</td>
-<td align="left">19.74 ± 1.45</td>
 <td align="left">26.66 ± 4.51</td>
 <td align="left">15.10 ± 2.56</td>
-<td align="left">
-<em>P</em> &lt; 0.0001</td>
+<td align="left"></td>
 </tr>
 <tr class="odd">
 <td align="left"><strong>Displacement</strong></td>
@@ -1895,12 +1232,10 @@ the three cylinder groups.</p>
 <td align="left">  </td>
 <td align="left">  </td>
 <td align="left">  </td>
-<td align="left"></td>
 </tr>
 <tr class="even">
 <td align="left">   min</td>
 <td align="left">71.1</td>
-<td align="left">145</td>
 <td align="left">71.1</td>
 <td align="left">275.8</td>
 <td align="left"></td>
@@ -1908,7 +1243,6 @@ the three cylinder groups.</p>
 <tr class="odd">
 <td align="left">   median</td>
 <td align="left">196.3</td>
-<td align="left">167.6</td>
 <td align="left">108</td>
 <td align="left">350.5</td>
 <td align="left"></td>
@@ -1916,7 +1250,6 @@ the three cylinder groups.</p>
 <tr class="even">
 <td align="left">   max</td>
 <td align="left">472</td>
-<td align="left">258</td>
 <td align="left">146.7</td>
 <td align="left">472</td>
 <td align="left"></td>
@@ -1924,11 +1257,9 @@ the three cylinder groups.</p>
 <tr class="odd">
 <td align="left">   mean (sd)</td>
 <td align="left">230.72 ± 123.94</td>
-<td align="left">183.31 ± 41.56</td>
 <td align="left">105.14 ± 26.87</td>
 <td align="left">353.10 ± 67.77</td>
-<td align="left">
-<em>P</em> &lt; 0.0001</td>
+<td align="left"></td>
 </tr>
 <tr class="even">
 <td align="left"><strong>Weight (1000 lbs)</strong></td>
@@ -1936,12 +1267,10 @@ the three cylinder groups.</p>
 <td align="left">  </td>
 <td align="left">  </td>
 <td align="left">  </td>
-<td align="left"></td>
 </tr>
 <tr class="odd">
 <td align="left">   min</td>
 <td align="left">1.513</td>
-<td align="left">2.62</td>
 <td align="left">1.513</td>
 <td align="left">3.17</td>
 <td align="left"></td>
@@ -1949,7 +1278,6 @@ the three cylinder groups.</p>
 <tr class="even">
 <td align="left">   max</td>
 <td align="left">5.424</td>
-<td align="left">3.46</td>
 <td align="left">3.19</td>
 <td align="left">5.424</td>
 <td align="left"></td>
@@ -1957,11 +1285,9 @@ the three cylinder groups.</p>
 <tr class="odd">
 <td align="left">   mean (sd)</td>
 <td align="left">3.22 ± 0.98</td>
-<td align="left">3.12 ± 0.36</td>
 <td align="left">2.29 ± 0.57</td>
 <td align="left">4.00 ± 0.76</td>
-<td align="left">
-<em>P</em> &lt; 0.0001</td>
+<td align="left"></td>
 </tr>
 <tr class="even">
 <td align="left"><strong>Forward Gears</strong></td>
@@ -1969,13 +1295,10 @@ the three cylinder groups.</p>
 <td align="left">  </td>
 <td align="left">  </td>
 <td align="left">  </td>
-<td align="left">
-<em>P</em> &lt; 0.0001</td>
 </tr>
 <tr class="odd">
 <td align="left">   Three</td>
 <td align="left">15 (47)</td>
-<td align="left">2 (29)</td>
 <td align="left">1 (9)</td>
 <td align="left">12 (86)</td>
 <td align="left"></td>
@@ -1983,7 +1306,6 @@ the three cylinder groups.</p>
 <tr class="even">
 <td align="left">   Four</td>
 <td align="left">12 (38)</td>
-<td align="left">4 (57)</td>
 <td align="left">8 (73)</td>
 <td align="left">0 (0)</td>
 <td align="left"></td>
@@ -1991,7 +1313,6 @@ the three cylinder groups.</p>
 <tr class="odd">
 <td align="left">   Five</td>
 <td align="left">5 (16)</td>
-<td align="left">1 (14)</td>
 <td align="left">2 (18)</td>
 <td align="left">2 (14)</td>
 <td align="left"></td>
@@ -2001,7 +1322,7 @@ the three cylinder groups.</p>
 <p>Another option you might consider is to have the p-value in the row
 group name. Consider the following construction. The p-values are added
 to the names of the row groups when building the summary table.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gear_summary</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Forward Gears"</span> <span class="op">=</span></span>
 <span>       <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Three"</span> <span class="op">=</span> <span class="op">~</span> <span class="fu">qwraps2</span><span class="fu">::</span><span class="fu"><a href="../reference/n_perc.html">n_perc0</a></span><span class="op">(</span><span class="va">gear</span> <span class="op">==</span> <span class="fl">3</span><span class="op">)</span>,</span>
@@ -2020,81 +1341,18 @@ to the names of the row groups when building the summary table.</p>
 <span>         <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/summary_table.html">summary_table</a></span><span class="op">(</span><span class="va">mtcars2</span>, <span class="va">gear_summary</span>, by <span class="op">=</span> <span class="st">"cyl_factor"</span><span class="op">)</span></span></code></pre></div>
-<p>$<code>6 cylinders</code></p>
-<table class="table">
-<thead><tr class="header">
-<th align="left"></th>
-<th align="left">6 cylinders (N = 7)</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left"><strong>Forward Gears: <em>P</em> &lt;
-0.0001</strong></td>
-<td align="left">  </td>
-</tr>
-<tr class="even">
-<td align="left">   Three</td>
-<td align="left">2 (29)</td>
-</tr>
-<tr class="odd">
-<td align="left">   Four</td>
-<td align="left">4 (57)</td>
-</tr>
-<tr class="even">
-<td align="left">   Five</td>
-<td align="left">1 (14)</td>
-</tr>
-<tr class="odd">
-<td align="left"><strong>Transmission: <em>P</em> = 0.0091</strong></td>
-<td align="left">  </td>
-</tr>
-<tr class="even">
-<td align="left">   Automatic</td>
-<td align="left">4 (57)</td>
-</tr>
-<tr class="odd">
-<td align="left">   Manual</td>
-<td align="left">3 (43)</td>
-</tr>
-</tbody>
-</table>
-<p>$<code>4 cylinders</code> [,1]<br>
-[1,] “  ” [2,] “1 (9)”<br>
-[3,] “8 (73)”<br>
-[4,] “2 (18)”<br>
-[5,] “  ” [6,] “3 (27)”<br>
-[7,] “8 (73)”</p>
-<p>$<code>8 cylinders</code> [,1]<br>
-[1,] “  ” [2,] “12 (86)”<br>
-[3,] “0 (0)”<br>
-[4,] “2 (14)”<br>
-[5,] “  ” [6,] “12 (86)”<br>
-[7,] “2 (14)”</p>
-<pre><code>                                    6 cylinders (N = 7)               </code></pre>
-<p>[1,] “<strong>Forward Gears: <em>P</em> &lt; 0.0001</strong>” “  ”
-“  ” [2,] “   Three” “2 (29)” “1 (9)”<br>
-[3,] “   Four” “4 (57)” “8 (73)”<br>
-[4,] “   Five” “1 (14)” “2 (18)”<br>
-[5,] “<strong>Transmission: <em>P</em> = 0.0091</strong>” “  ” “  ” [6,]
-“   Automatic” “4 (57)” “3 (27)”<br>
-[7,] “   Manual” “3 (43)” “8 (73)”</p>
-<p>[1,] “  ” [2,] “12 (86)”<br>
-[3,] “0 (0)”<br>
-[4,] “2 (14)”<br>
-[5,] “  ” [6,] “12 (86)”<br>
-[7,] “2 (14)”</p>
 <table class="table">
 <colgroup>
-<col width="34%">
-<col width="21%">
-<col width="22%">
-<col width="22%">
+<col width="41%">
+<col width="25%">
+<col width="16%">
+<col width="16%">
 </colgroup>
 <thead><tr class="header">
 <th align="left"></th>
 <th align="left">6 cylinders (N = 7)</th>
-<th align="left">4 cylinders (N = 11)</th>
-<th align="left">8 cylinders (N = 14)</th>
+<th align="left">4 cylinders</th>
+<th align="left">8 cylinders</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -2154,7 +1412,7 @@ you associate a label with a variable in the data frame the that label
 will be used when building a summary table. This feature was suggested
 <a href="https://github.com/dewittpe/qwraps2/issues/74" class="external-link uri">https://github.com/dewittpe/qwraps2/issues/74</a> and
 implemented thusly:</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">new_data_frame</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">18</span>, <span class="fl">20</span>, <span class="fl">24</span>, <span class="fl">17</span>, <span class="fl">43</span><span class="op">)</span>,</span>
 <span>             edu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">2</span><span class="op">)</span>,</span>
@@ -2169,7 +1427,7 @@ implemented thusly:</p>
 <p>When calling <code>qsummary</code> the provide labels for the age and
 rt variables will be used. Since the attribute “label” does not exist
 for the edu variable, edu will be used in the output.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/summary_table.html">qsummary</a></span><span class="op">(</span><span class="va">new_data_frame</span><span class="op">)</span></span>
 <span><span class="co">## $`Age in years`</span></span>
 <span><span class="co">## $`Age in years`$minimum</span></span>
@@ -2213,7 +1471,7 @@ for the edu variable, edu will be used in the output.</p>
 <span><span class="co">## ~qwraps2::frmt(max(rt))</span></span></code></pre></div>
 <p>This behavior is also seen with the <code>summary_table</code>
 call</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/summary_table.html">summary_table</a></span><span class="op">(</span><span class="va">new_data_frame</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -2288,7 +1546,7 @@ call</p>
 <div class="section level2">
 <h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>, local <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">## R version 4.3.2 (2023-10-31)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu (64-bit)</span></span>

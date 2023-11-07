@@ -55,6 +55,21 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.6.0" id="qwraps2-060">qwraps2 0.6.0<a class="anchor" aria-label="anchor" href="#qwraps2-060"></a></h2>
 <div class="section level3">
+<h3 id="general-improvements-0-6-0">General Improvements<a class="anchor" aria-label="anchor" href="#general-improvements-0-6-0"></a></h3>
+<ul><li>Unit testing is done in base R, moved away from testthat.</li>
+<li>Updating roxygen dependencies to correctly document the package.</li>
+<li>Extend documentation and testing of <code>set_diff</code>
+</li>
+<li>The default value for <code>conf_int</code> in <code>qacf</code> has been modified from <code>0.05</code> to <code>1 - getOption("qwraps2_alpha", 0.05)</code>
+</li>
+<li>
+<code>ggplot2_extract_legend</code> is now and S3 method</li>
+<li>
+<code>qable</code> is now and S3 method and has gained a new argument <code>kable_args</code> to make it clear what values are used by <code>qable</code> and which are passed to <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable</a></code> (<a href="https://github.com/dewittpe/qwraps2/issues/84" class="external-link">#84</a>)</li>
+<li>
+<code>summary_table</code> has gained two arguments, <code>qable_args</code> and <code>kable_args</code> to help with passing through arguments and being able to use the feaures of knitr::kable (<a href="https://github.com/dewittpe/qwraps2/issues/84" class="external-link">#84</a>)</li>
+</ul></div>
+<div class="section level3">
 <h3 id="new-features-0-6-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-6-0"></a></h3>
 <ul><li><p><code>mean_se</code> to provide the mean and standard error of the mean in the same format as the <code>mean_sd</code> function.</p></li>
 <li><p>Add Precision-Recall curve, <code>qprc</code>, to complement ROC, <code>qroc</code>.</p></li>
@@ -78,17 +93,6 @@
 <h3 id="deprecated--removed-0-6-0">Deprecated / Removed<a class="anchor" aria-label="anchor" href="#deprecated--removed-0-6-0"></a></h3>
 <ul><li><p><code>summary_table_042</code> and <code>tab_summary</code>, the tidyverse versions of summary table that had been deprecated have been removed from the package. (<a href="https://github.com/dewittpe/qwraps2/issues/96" class="external-link">#96</a>)</p></li>
 <li><p><code>qroc_build_data_frame</code> as been deprecated in favore of <code>auc</code></p></li>
-</ul></div>
-<div class="section level3">
-<h3 id="general-improvements-0-6-0">General Improvements<a class="anchor" aria-label="anchor" href="#general-improvements-0-6-0"></a></h3>
-<ul><li>Unit testing is done in base R, moved away from testthat.</li>
-<li>Updating roxygen dependencies to correctly document the package.</li>
-<li>Extend documentation and testing of <code>set_diff</code>
-</li>
-<li>The default value for <code>conf_int</code> in <code>qacf</code> has been modified from <code>0.05</code> to <code>1 - getOption("qwraps2_alpha", 0.05)</code>
-</li>
-<li>
-<code>ggplot2_extract_legend</code> is now and S3 method</li>
 </ul></div>
 </div>
     <div class="section level2">
