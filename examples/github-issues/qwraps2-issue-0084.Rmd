@@ -1,0 +1,47 @@
+---
+title: "Summary table in R Markdown"
+output: bookdown::word_document2
+---
+
+```{r setup, include=FALSE}
+library(qwraps2)
+options(qwraps2_markup = "markdown")
+```
+
+```{r label = "summ_tab_build", include = FALSE}
+tdf <- data.frame(
+  age = runif(n = 30, min = 20, max = 40),
+  sex = sample(c("M", "F"), size = 30, replace = TRUE),
+  bmi = runif(n = 30, min = 15, max = 45),
+  disease = sample(1:2, size = 30, replace = TRUE)
+)
+
+summary_str <- list(
+  "Sex, n (%)" = list(
+    "Male" = ~ n_perc0(sex == "M", digits = 1),
+    "Female" = ~ n_perc0(sex == "F", digits = 1)
+  ),
+  "Age, mean &plusmn; SD" = list(
+    "Age (yr)" = ~ mean_sd(age, digits = 0)
+  ),
+  "BMI, mean &plusmn; SD" = list(
+    "BMI (kg m^-2^)" = ~ mean_sd(bmi, digits = 1)
+  )
+)
+```
+
+A summary of the the data by disease group is in Table \@ref(tab:stab) and is
+generated via `qwraps2::summary_table`.
+More text goes here ...  Table \@ref(tab:stab2) uses `knitr::kable` directly.
+
+```{r label = "stab", echo = FALSE, results = "asis"}
+summary_table(x = tdf, summaries = summary_str, by = "disease", kable_args = list(caption = "Personal summary"))
+```
+
+More text goes here.
+
+```{r label = 'stab2', echo = FALSE, results = "asis"}
+knitr::kable(tdf, caption = "simple table")
+```
+
+More text goes here.
