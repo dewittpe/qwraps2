@@ -1,6 +1,6 @@
 #' Deprecated Functions
 #'
-#' Archive of deprectated functions. Some of these might be removed from the
+#' Archive of deprecated functions. Some of these might be removed from the
 #' package in later releases.
 #'
 #' @name deprecated
@@ -15,7 +15,7 @@ NULL
 #' values
 #' @param truth ignored if \code{fit} is a \code{glm} object.  A vector of
 #' observations, 0/1 or FALSE/TRUE values, of equal length to \code{fit}
-#' @param n_threshold number of thresholds to use to estimate aucroc or auprc
+#' @param n_threshold number of thresholds to use to estimate auroc or auprc
 #' @param ... passed to \code{\link[stats]{predict}}
 #'
 #' @export

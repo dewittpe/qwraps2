@@ -198,7 +198,7 @@ qkmplot(intonly_fit, conf_int = TRUE)
 {{ backtick(qprc) }}
 #' were built on.
 #'
-#' Let's start with an example of having two models for predicing if the price
+#' Let's start with an example of having two models for predicting if the price
 #' of a diamond exceeds $2,800.
 data(diamonds, package = "ggplot2")
 
@@ -246,7 +246,7 @@ qroc(plot_data) +
                  legend.text.align = 0.5)
 
 #'
-#' Building PRC plots is similar, just use prc insead of roc in all the above
+#' Building PRC plots is similar, just use prc instead of roc in all the above
 #' calls.
 qprc(cm1)
 qprc(cm2) + ggplot2::ggtitle(label = "Fit 2", subtitle = paste("AUPRC =", frmt(cm2$auprc, digits = 3)))

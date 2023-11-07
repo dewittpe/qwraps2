@@ -7,7 +7,7 @@
 #' ggplot2 KM plot.
 #'
 #' More details and examples for graphics within qwraps2 are in the
-#' vignette(\dQuote{qwraps2-graphics}, pacakge = {qwraps2})
+#' vignette(\dQuote{qwraps2-graphics}, package = {qwraps2})
 #'
 #' @param x object
 #' @param conf_int logical if TRUE show the CI

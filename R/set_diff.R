@@ -1,10 +1,8 @@
 #' Set Differences
 #'
-#' function for testing for unique values between two vectors, specifically,
+#' Function for testing for unique values between two vectors, specifically,
 #' which values are in vector1, and not in vector2, which values are not in
 #' vector1 and in vector2, which values are in both vector1 and vector2.
-#'
-#' These are tools which make several calls to base R set funcitons
 #'
 #' @param x,y vectors (of the same mode)
 #'

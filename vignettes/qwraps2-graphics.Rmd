@@ -221,7 +221,7 @@ and
 `r  backtick(qprc)  `
 were built on.
 
-Let's start with an example of having two models for predicing if the price
+Let's start with an example of having two models for predicting if the price
 of a diamond exceeds $2,800.
 
 ```{r}
@@ -287,7 +287,7 @@ qroc(plot_data) +
 ```
 
 
-Building PRC plots is similar, just use prc insead of roc in all the above
+Building PRC plots is similar, just use prc instead of roc in all the above
 calls.
 
 ```{r}

@@ -8,7 +8,7 @@
 #' both the AUROC and AUPRC.
 #'
 #' More details and examples for graphics within qwraps2 are in the
-#' vignette(\dQuote{qwraps2-graphics}, pacakge = {qwraps2})
+#' vignette(\dQuote{qwraps2-graphics}, package = {qwraps2})
 #'
 #' @param x an object
 #' @param ... pass through

@@ -43,7 +43,7 @@ many Linux systems are case-sensitive.  As such
 \code{\link[base]{file.exists}} and \code{\link[base]{file.access}} may
 return different values depending the OS that is active.  \code{file_check}
 looks for a case match as part of its checks to hopefully prevent issues
-accross operating systems.
+across operating systems.
 
 By default, if the return is \code{TRUE} then only \code{TRUE} will
 be printed to the console.  If the return is \code{FALSE} then the

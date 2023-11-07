@@ -49,7 +49,8 @@
 #'
 #' Classifying Email as Spam or Non-Spam
 #'
-#' @format a data.frame with 4601 rows, 58 columns; 57 features and 0/1 indictor for spam
+#' @format a data.frame with 4601 rows, 58 columns; 57 features and 0/1
+#' indicator for spam
 #'
 #' Used under CC BY 4.0 license.
 #'

@@ -11,7 +11,7 @@
   make it clear what values are used by `qable` and which are passed to
   `knitr::kable` (#84)
 * `summary_table` has gained two arguments, `qable_args` and `kable_args` to
-  help with passing through arguments and being able to use the feaures of
+  help with passing through arguments and being able to use the features of
   knitr::kable (#84)
 
 ## New Features
@@ -46,7 +46,7 @@
 
 * **Potentially breaking Change** `confusion_matrix` has been undergone a major
   refactor.  If nothing else, the return object is now a data.frame with more
-  output than before.  The inputs are hopefully easer for end users as well.
+  output than before.  The inputs are hopefully easier for end users as well.
   This change includes the addition of the function `auc` and major refactor of
   `qroc` and `qprc`.
 
@@ -55,7 +55,7 @@
 * `summary_table_042` and `tab_summary`, the tidyverse versions of summary table
   that had been deprecated have been removed from the package. (#96)
 
-* `qroc_build_data_frame` as been deprecated in favore of `auc`
+* `qroc_build_data_frame` as been deprecated in favor of `auc`
 
 
 # qwraps2 0.5.2
