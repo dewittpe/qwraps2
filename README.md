@@ -25,7 +25,6 @@ Some of the tools provided by `qwraps2` are:
     values, confidence intervals, and p-values in reports.
   * `qable` is a wrapper around `knitr::kable` with my preferred defaults.
   * `summary_table` is used to generate data summary tables in markdown or LaTeX
-    with the look of well formatted tables from the xtables or Hmisc::latex.
   * `mean_ci`, `mean_sd`, `median_iqr`, `n_perc` make it easy to report formatted
     summary statistics.
 
@@ -35,6 +34,7 @@ Some of the tools provided by `qwraps2` are:
   * `qacf`: Autocorrelation plots
   * `qblandaltman`: Bland Altman plots
   * `qkmplot`: Kaplan-Meier plots
+  * `qprc`: Precision Recall Curves
   * `qroc`: Receiver Operator Curves
   * `ggplot2_extract_legend`: extract the legend from a ggplot.
 
