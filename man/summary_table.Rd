@@ -7,7 +7,14 @@
 \alias{rbind.qwraps2_summary_table}
 \title{Data Summary Tables}
 \usage{
-summary_table(x, summaries = qsummary(x), by = NULL)
+summary_table(
+  x,
+  summaries = qsummary(x),
+  by = NULL,
+  qable_args = list(),
+  kable_args = list(),
+  ...
+)
 
 qsummary(x, numeric_summaries, n_perc_args, env = parent.frame())
 
@@ -24,6 +31,15 @@ See Details and examples.}
 \item{by}{a character vector of variable names to generate the summary by,
 that is one column for each unique values of the variables specified.}
 
+\item{qable_args}{additional values passed to \code{\link{qable}}}
+
+\item{kable_args}{additional args passed to \code{\link[knitr]{kable}} via
+\code{\link{qable}}.  If \code{qable_args} includes a named element
+\code{kable_args} then the value in \code{qable_args} will be used
+preferentially.}
+
+\item{...}{\code{qwraps2_summary_table} objects to bind together}
+
 \item{numeric_summaries}{a list of functions to use for summarizing numeric
 variables.  The functions need to be provided as character strings with the
 single argument defined by the \code{\%s} symbol.}
@@ -33,8 +49,6 @@ single argument defined by the \code{\%s} symbol.}
 \code{factor} variables within \code{x}.}
 
 \item{env}{environment to assign to the resulting formulae}
-
-\item{...}{\code{qwraps2_summary_table} objects to bind together}
 
 \item{deparse.level}{integer controlling the construction of labels in the
 case of non-matrix-like arguments (for the default method): \code{deparse.level =

@@ -10,6 +10,9 @@
 * `qable` is now and S3 method and has gained a new argument `kable_args` to
   make it clear what values are used by `qable` and which are passed to
   `knitr::kable` (#84)
+* `summary_table` has gained two arguments, `qable_args` and `kable_args` to
+  help with passing through arguments and being able to use the feaures of
+  knitr::kable (#84)
 
 ## New Features
 

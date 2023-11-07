@@ -29,6 +29,12 @@
 #' See Details and examples.
 #' @param by a character vector of variable names to generate the summary by,
 #' that is one column for each unique values of the variables specified.
+#' @param qable_args additional values passed to \code{\link{qable}}
+#' @param kable_args additional args passed to \code{\link[knitr]{kable}} via
+#' \code{\link{qable}}.  If \code{qable_args} includes a named element
+#' \code{kable_args} then the value in \code{qable_args} will be used
+#' preferentially.
+#' @param ... pass through
 #'
 #' @seealso \code{\link{qsummary}} for generating the summaries,
 #' \code{\link{qable}} for marking up \code{qwraps2_data_summary} objects.
@@ -223,12 +229,12 @@
 #'
 #' @export
 #' @rdname summary_table
-summary_table <- function(x, summaries = qsummary(x), by = NULL) {
+summary_table <- function(x, summaries = qsummary(x), by = NULL, qable_args = list(), kable_args = list(), ...) {
   UseMethod("summary_table")
 }
 
 #' @export
-summary_table.grouped_df <- function(x, summaries = qsummary(x), by = NULL) {
+summary_table.grouped_df <- function(x, summaries = qsummary(x), by = NULL, qable_args = list(), kable_args = list(), ...) {
   if (!is.null(by)) {
     warning("You've passed a grouped_df to summary_table and specified the `by` argument.  The `by` argument will be ignored.")
   }
@@ -236,11 +242,11 @@ summary_table.grouped_df <- function(x, summaries = qsummary(x), by = NULL) {
   # this assumes dplyr version 0.8.0 or newer
   lbs <- names(attr(x, "groups"))
   lbs <- lbs[-length(lbs)]
-  warning(paste0("^grouped_df detected. Setting `by` argument to\n  c('", paste(lbs, collapse = "', '"), "')"))
-  NextMethod(object = x, by = lbs)
+  warning(paste0("grouped_df detected. Setting `by` argument to\n  c('", paste(lbs, collapse = "', '"), "')"))
+  NextMethod(object = x, by = lbs, qable_args = qable_args, kable_args = kable_args, ...)
 }
 #' @export
-summary_table.data.frame <- function(x, summaries = qsummary(x), by = NULL) {
+summary_table.data.frame <- function(x, summaries = qsummary(x), by = NULL, qable_args = list(), kable_args = list(), ...) {
 
   if (!missing(summaries)) {
     if ( any(grepl("\\.data\\$", parse(text = summaries))) ) {
@@ -254,7 +260,7 @@ summary_table.data.frame <- function(x, summaries = qsummary(x), by = NULL) {
     subsets <- list(x)
   }
 
-  rtn <- lapply(subsets, apply_summaries, summaries = summaries)
+  rtn <- lapply(subsets, apply_summaries, summaries = summaries, qable_args = qable_args, kable_args = kable_args)
 
   if (length(rtn) > 1L) {
     clnms <- paste0(names(rtn), " (N = ", sapply(rtn, attr, "n"), ")")
@@ -266,22 +272,25 @@ summary_table.data.frame <- function(x, summaries = qsummary(x), by = NULL) {
     colnames(rtn[[i]]) <- clnms[i]
   }
 
-  rtn <- lapply(rtn,
-                function(x) {
-                  qable(x
-                        , rgroup = attr(x, "rgroups")
-                        , cnames = colnames(x)
-                        )})
+  # rtn <- lapply(rtn,
+  #               function(x) {
+  #                 qable(x
+  #                       , rgroup = attr(x, "rgroups")
+  #                       , cnames = colnames(x)
+  #                       )})
 
   if (length(rtn) > 1) {
-    rtn <- do.call(cbind, rtn)
+    rtn <- do.call(cbind.qwraps2_summary_table, rtn)
   } else {
     rtn <- rtn[[1]]
   }
+
+  class(rtn) <- c("qwraps2_summary_table", "qwraps2_qable", class(rtn))
   rtn
+
 }
 
-apply_summaries <- function(summaries, x) {
+apply_summaries <- function(summaries, x, qable_args, kable_args) {
   rtn <- lapply(summaries, lapply, stats::model.frame, x)
   rtn <- lapply(rtn, lapply, function(xx) if(nrow(xx) == 0) data.frame("NA") else xx)
   rtn <- lapply(rtn, lapply, function(y) {attr(y, "terms") <- NULL; y})
@@ -295,6 +304,8 @@ apply_summaries <- function(summaries, x) {
   rtn <- do.call(rbind, rtn)
   attr(rtn, "rgroups") <- rgroups
   attr(rtn, "n") <- nrow(x)
+  attr(rtn, "qable_args") <- qable_args
+  attr(rtn, "kable_args") <- kable_args
   class(rtn) <- c("qwraps2_summary_table", class(rtn))
   rtn
 }
@@ -404,13 +415,13 @@ cbind.qwraps2_qable <- function(...) {
     }
   }
 
-  print(tabs)
-
   rtn <- do.call(cbind, lapply(tabs, unclass))
-  print(rtn)
 
   colnames(rtn) <- clnms
   attr(rtn, "markup") <- attr(tabs[[1]], "markup")
+  attr(rtn, "qable_args") <- attr(tabs[[1]], "qable_args")
+  attr(rtn, "kable_args") <- attr(tabs[[1]], "kable_args")
+  attr(rtn, "rgroups") <- attr(tabs[[1]], "rgroups")
   class(rtn) <- class(tabs[[1]])
   rtn
 }
@@ -432,12 +443,32 @@ rbind.qwraps2_summary_table <- function(..., deparse.level = 1) {
   out <- do.call(rbind, args = c(lapply(tabs, unclass), list(deparse.level = deparse.level)))
 
   attr(out, "rgroups") <- do.call(c, lapply(tabs, attr, "rgroups"))
+  attr(out, "markup") <- attr(tabs[[1]], "markup")
+  attr(out, "qable_args") <- attr(tabs[[1]], "qable_args")
+  attr(out, "kable_args") <- attr(tabs[[1]], "kable_args")
   class(out) <- class(tabs[[1]])
 
   out
 }
 
 #' @export
-print.qwraps2_summary_table <- function(x, rgroup = attr(x, "rgroups"), rnames = rownames(x), cnames = colnames(x), ...) {
-  print(qable(x, rgroup = rgroup, rnames = rnames, cnames = cnames, ...))
+print.qwraps2_summary_table <- function(x, ...) {
+  qargs <- attr(x, "qable_args")
+  kargs <- attr(x, "kable_args")
+  if (!("rgroup" %in% names(qargs))) {
+    qargs$rgroup <- attr(x, "rgroups")
+  }
+  if (!("rnames" %in% names(qargs))) {
+    qargs$rnames <- rownames(x)
+  }
+  if (!("cnames" %in% names(qargs))) {
+    qargs$cnames <- colnames(x)
+  }
+  if (!("kable_args" %in% names(qargs))) {
+    qargs$kable_args <- attr(x, "kable_args")
+  }
+
+  print(do.call(what = qable, args = c(list(x = x), qargs, ...)))
+
+  invisible(x)
 }
