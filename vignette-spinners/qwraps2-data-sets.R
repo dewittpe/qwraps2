@@ -1,6 +1,6 @@
 #'---
 #'title: "qwraps2 Data Sets"
-#'author: "Peter DeWitt"
+#'author: "Peter E. DeWitt"
 #'output:
 #'  rmarkdown::html_vignette:
 #'    toc: true
@@ -71,7 +71,6 @@ mtcars2$engine <-
 #' column to provide the same information as a factor.
 mtcars2$transmission <-
   factor(mtcars2$am, levels = c(0, 1), labels = c("Automatic", "Manual"))
-
 
 #'
 #' The rownames of the mtcars2 data set provide the make and model of the
@@ -196,15 +195,18 @@ head(pefr)
 #'
 #' See
 {{ backtick(vignette("qwraps2-graphics", package = "qwraps2")) }}
-#' for examples using this data set.
+#' for examples using this data set, specifically in the construction and use of
+#' Bland-Altman plots via
+{{ backtick(qblandaltman) %s% "."}}
 #'
 #'
 #' # Spambase
 #'
 #' Spambase [@spambase] is a useful data set for example needed a binary outcome
 #' and several possible predictors.  The data set and documentation can be found
-#' in this package in the directory
+#' in this package in the directory on your machine at:
 system.file("spambase", package = "qwraps2")
+
 #'
 #' The data set
 {{ backtick(spambase) }}
@@ -262,4 +264,3 @@ save(spambase, file = "data/spambase.rda")
 # */
 
 # /* ---------------------------- END OF FILE ------------------------------- */
-

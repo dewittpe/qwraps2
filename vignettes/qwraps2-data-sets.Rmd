@@ -1,6 +1,6 @@
 ---
 title: "qwraps2 Data Sets"
-author: "Peter DeWitt"
+author: "Peter E. DeWitt"
 output:
  rmarkdown::html_vignette:
    toc: true
@@ -229,14 +229,16 @@ head(pefr)
 
 See
 `r  backtick(vignette("qwraps2-graphics", package = "qwraps2"))  `
-for examples using this data set.
+for examples using this data set, specifically in the construction and use of
+Bland-Altman plots via
+`r  backtick(qblandaltman) %s% "." `
 
 
 # Spambase
 
 Spambase [@spambase] is a useful data set for example needed a binary outcome
 and several possible predictors.  The data set and documentation can be found
-in this package in the directory
+in this package in the directory on your machine at:
 
 ```{r}
 system.file("spambase", package = "qwraps2")

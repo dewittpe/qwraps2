@@ -1,6 +1,6 @@
 ---
 title: "Graphics in qwraps2"
-author: "Peter DeWitt"
+author: "Peter E. DeWitt"
 output:
  rmarkdown::html_vignette:
    toc: true
@@ -221,97 +221,149 @@ and
 `r  backtick(qprc)  `
 were built on.
 
-Let's start with an example of having two models for predicting if the price
-of a diamond exceeds $2,800.
+For this work we will consider a couple models for categorizing email and
+spam or not based on the Spambase [@spambase] data.  More details on this
+data set can be found in the
+`r  backtick(vignette('qwraps2-data-sets', package = "qwraps2"))  `
+
+Start by defining a training and validation splits of the spambase data
 
 ```{r}
-data(diamonds, package = "ggplot2")
+set.seed(42)
+tidx <- runif(nrow(spambase)) <= 0.80
+xidx <- which(names(spambase) != "spam")
+yidx <- which(names(spambase) == "spam")
+training_set   <- spambase[tidx, ]
+validating_set <- spambase[!tidx, ]
+```
 
-# Create two logistic regression models
-fit1 <- glm(I(price > 2800) ~ cut * color, data = diamonds, family = binomial())
-fit2 <- glm(I(price > 2800) ~ cut + color + clarity, data = diamonds, family = binomial())
+
+
+
+
+Train a few models:
+
+```{r}
+logistic_model <-
+  glm(
+    spam ~ .
+  , data = training_set
+  , family = binomial()
+  )
+
+ridge_model <-
+  glmnet::cv.glmnet(
+    y = training_set[, yidx]
+  , x = as.matrix(training_set[, xidx])
+  , family = binomial()
+  , alpha = 0
+  )
+
+lasso_model <-
+  glmnet::cv.glmnet(
+    y = training_set[, yidx]
+  , x = as.matrix(training_set[, xidx])
+  , family = binomial()
+  , alpha = 1
+  )
+```
+
+
+Generate the predicted values on the validaiton set:
+
+```{r}
+validating_set$logistic_model_prediction <-
+  predict(
+    logistic_model
+  , newdata = validating_set
+  , type = "response"
+  )
+
+validating_set$ridge_model_prediction <-
+  as.numeric(
+    predict(
+      ridge_model
+    , newx = as.matrix(validating_set[, xidx])
+    , type = "response"
+    , s = "lambda.1se"
+    )
+  )
+
+validating_set$lasso_model_prediction <-
+  as.numeric(
+    predict(
+      lasso_model
+    , newx = as.matrix(validating_set[, xidx])
+    , type = "response"
+    , s = "lambda.1se"
+    )
+  )
 ```
 
 
 To build ROC and/or PRC plots start by building the confusion matrix for each
-
-```{r}
-cm1 <- confusion_matrix(truth = diamonds$price > 2800, predicted = predict(fit1, type = "response"))
-cm2 <- confusion_matrix(truth = diamonds$price > 2800, predicted = predict(fit2, type = "response"))
-```
-
-
-Calling
+model.  The qwraps2 function
 `r  backtick(confusion_matrix)  `
-will generate list object with the need plotting data and other results.
+makes this easy.
 
 ```{r}
-str(cm1)
-str(cm2)
+cm1 <- confusion_matrix(spam ~ logistic_model_prediction, data = validating_set)
+cm2 <- confusion_matrix(spam ~ ridge_model_prediction, data = validating_set)
+cm3 <- confusion_matrix(spam ~ lasso_model_prediction, data = validating_set)
 ```
 
 
-Plotting ROC can be done by calling
-`r  backtick(qroc)  `
+The ROC and PRC plots are ggplot objects and can be modified as you would any
+other ggplot object.
 
 ```{r}
-qroc(cm2)
+qroc(cm1) + ggplot2::ggtitle("Logisitic Model")
+qroc(cm2) + ggplot2::ggtitle("Ridge Regression Model")
+qroc(cm3) + ggplot2::ggtitle("LASSO Regression Model")
 ```
 
 
-The plots generated a ggplot2 plots and can be modified like any other
-ggplot2 plot, for example
+Graphing all three curves in one image with AUROC in the legend:
 
 ```{r}
-# Add the AUC value to the plot title
-qroc(cm2) + ggplot2::ggtitle(label = "Fit 2", subtitle = paste("AUROC =", frmt(cm2$auroc, digits = 3)))
+roc_plot_data <-
+  rbind(
+      cbind(Model = paste("Logisitic; AUROC =", frmt(cm1$auroc, 3)), cm1$cm_stats)
+    , cbind(Model = paste("Ridge; AUROC =",     frmt(cm2$auroc, 3)), cm2$cm_stats)
+    , cbind(Model = paste("LASSO; AUROC =",     frmt(cm3$auroc, 3)), cm3$cm_stats)
+    )
+
+qroc(roc_plot_data) +
+  ggplot2::aes(color = Model) +
+  ggplot2::theme(legend.position = "bottom")
 ```
 
 
-You can also use the results to build up a data set for plotting multiple
-curves together.
+Similar for PRC:
 
 ```{r}
-plot_data <- rbind(cbind(Model = "fit1", cm1$cm_stats),
-                   cbind(Model = "fit2", cm2$cm_stats))
-qroc(plot_data) + ggplot2::aes(color = Model)
+qprc(cm1) + ggplot2::ggtitle("Logisitic Model")
+qprc(cm2) + ggplot2::ggtitle("Ridge Regression Model")
+qprc(cm3) + ggplot2::ggtitle("LASSO Regression Model")
 
-# with AUC in the legend
-plot_data <- rbind(cbind(Model = paste("Fit1\nAUROC =", frmt(cm1$auroc, 3)), cm1$cm_stats),
-                   cbind(Model = paste("Fit2\nAUROC =", frmt(cm2$auroc, 3)), cm2$cm_stats))
-qroc(plot_data) +
-  ggplot2::theme_bw() +
-  ggplot2::aes(color = Model, linetype = Model) +
-  ggplot2::theme(legend.position   = "bottom",
-                 legend.text.align = 0.5)
+prc_plot_data <-
+  rbind(
+      cbind(Model = paste("Logisitic; AUPRC =", frmt(cm1$auprc, 3)), cm1$cm_stats)
+    , cbind(Model = paste("Ridge; AUPRC =",     frmt(cm2$auprc, 3)), cm2$cm_stats)
+    , cbind(Model = paste("LASSO; AUPRC =",     frmt(cm3$auprc, 3)), cm3$cm_stats)
+    )
+
+qprc(prc_plot_data) +
+  ggplot2::aes(color = Model) +
+  ggplot2::geom_hline(yintercept = cm1$prevalence) +
+  ggplot2::theme(legend.position = "bottom")
 ```
 
 
-Building PRC plots is similar, just use prc instead of roc in all the above
-calls.
 
-```{r}
-qprc(cm1)
-qprc(cm2) + ggplot2::ggtitle(label = "Fit 2", subtitle = paste("AUPRC =", frmt(cm2$auprc, digits = 3)))
-qprc(plot_data) + ggplot2::aes(color = Model)
-```
+# References
 
-
-One caveat for plotting multiple PRC on one plot is that you'll need to
-specify the prevalence value to plot.
-
-```{r}
-plot_data <- rbind(cbind(Model = paste("Fit1\nAUPRC =", frmt(cm1$auprc, 3)), cm1$cm_stats),
-                   cbind(Model = paste("Fit2\nAUPRC =", frmt(cm2$auprc, 3)), cm2$cm_stats))
-
-qprc(plot_data, prevalence = cm1$prevalence) +
-  ggplot2::theme_bw() +
-  ggplot2::aes(color = Model, linetype = Model) +
-  ggplot2::theme(legend.position   = "bottom",
-                 legend.text.align = 0.5)
-```
-
-
+<div id="refs"></div>
 
 # Session Info
 

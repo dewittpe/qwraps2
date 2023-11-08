@@ -1,6 +1,6 @@
 #'---
 #'title: "Formatted Summary Statistics and Data Summary Tables with qwraps2"
-#'author: "Peter DeWitt"
+#'author: "Peter E. DeWitt"
 #'output:
 #'  rmarkdown::html_vignette:
 #'    toc: true
