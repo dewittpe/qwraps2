@@ -20,7 +20,7 @@ knitr::opts_chunk$set(collapse = TRUE)
 
 ```{r}
 set.seed(42)
-  library(qwraps2)
+library(qwraps2)
 # define the markup language we are working in.
 # options(qwraps2_markup = "latex") is also supported.
 options(qwraps2_markup = "markdown")

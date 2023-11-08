@@ -245,6 +245,7 @@ summary_table.grouped_df <- function(x, summaries = qsummary(x), by = NULL, qabl
   warning(paste0("grouped_df detected. Setting `by` argument to\n  c('", paste(lbs, collapse = "', '"), "')"))
   NextMethod(object = x, by = lbs, qable_args = qable_args, kable_args = kable_args, ...)
 }
+
 #' @export
 summary_table.data.frame <- function(x, summaries = qsummary(x), by = NULL, qable_args = list(), kable_args = list(), ...) {
 
@@ -272,15 +273,10 @@ summary_table.data.frame <- function(x, summaries = qsummary(x), by = NULL, qabl
     colnames(rtn[[i]]) <- clnms[i]
   }
 
-  # rtn <- lapply(rtn,
-  #               function(x) {
-  #                 qable(x
-  #                       , rgroup = attr(x, "rgroups")
-  #                       , cnames = colnames(x)
-  #                       )})
+  rtn <- lapply(rtn, qable)
 
   if (length(rtn) > 1) {
-    rtn <- do.call(cbind.qwraps2_summary_table, rtn)
+    rtn <- do.call(cbind.qwraps2_qable, rtn)
   } else {
     rtn <- rtn[[1]]
   }
@@ -306,7 +302,7 @@ apply_summaries <- function(summaries, x, qable_args, kable_args) {
   attr(rtn, "n") <- nrow(x)
   attr(rtn, "qable_args") <- qable_args
   attr(rtn, "kable_args") <- kable_args
-  class(rtn) <- c("qwraps2_summary_table", class(rtn))
+  class(rtn) <- c("qwraps2_summary_table", "qwraps2_qable", class(rtn))
   rtn
 }
 
@@ -388,87 +384,10 @@ qsummary.data.frame <- function(x,
   rtn
 }
 
-#' @rdname summary_table
-#' @export
-#' @param ... \code{qwraps2_summary_table} objects to bind together
-#' @param deparse.level integer controlling the construction of labels in the
-#' case of non-matrix-like arguments (for the default method): \code{deparse.level =
-#' 0} constructs no labels; the default, \code{deparse.level = 1} or
-#' \code{deparse.level = 2} constructs labels from the argument names.
-#' @seealso \code{cbind}
-cbind.qwraps2_summary_table <- function(...) {
-  cbind.qwraps2_qable(...)
-}
-
-#' @export
-cbind.qwraps2_qable <- function(...) {
-  tabs <- list(...)
-  clnms <- colnames(tabs[[1]])
-
-  for (i in 2:length(tabs)) {
-    if (inherits(tabs[[i]], "qwraps2_qable")) {
-      clnms <- c(clnms, colnames(tabs[[i]])[-1])
-      tabs[[i]] <- matrix(tabs[[i]][, -1], nrow = nrow(tabs[[1]]))
-    } else {
-      clnms <- c(clnms, ifelse(is.null(names(tabs)[i]), "", names(tabs)[i]))
-      tabs[[i]] <- matrix(tabs[[i]], nrow = nrow(tabs[[1]]))
-    }
-  }
-
-  rtn <- do.call(cbind, lapply(tabs, unclass))
-
-  colnames(rtn) <- clnms
-  attr(rtn, "markup") <- attr(tabs[[1]], "markup")
-  attr(rtn, "qable_args") <- attr(tabs[[1]], "qable_args")
-  attr(rtn, "kable_args") <- attr(tabs[[1]], "kable_args")
-  attr(rtn, "rgroups") <- attr(tabs[[1]], "rgroups")
-  class(rtn) <- class(tabs[[1]])
-  rtn
-}
-
-#' @seealso \code{rbind}
-#' @rdname summary_table
-#' @export
-rbind.qwraps2_summary_table <- function(..., deparse.level = 1) {
-  tabs <- list(...)
-
-  for(i in seq_along(tabs)[-1]) {
-    if (inherits(tabs[[i-1]], "qwraps2_summary_table") & inherits(tabs[[i]], "qwraps2_summary_table")) {
-      if (!identical(colnames(tabs[[i-1]]), colnames(tabs[[i]]))) {
-        stop("Not all colnames are identical.")
-      }
-    }
-  }
-
-  out <- do.call(rbind, args = c(lapply(tabs, unclass), list(deparse.level = deparse.level)))
-
-  attr(out, "rgroups") <- do.call(c, lapply(tabs, attr, "rgroups"))
-  attr(out, "markup") <- attr(tabs[[1]], "markup")
-  attr(out, "qable_args") <- attr(tabs[[1]], "qable_args")
-  attr(out, "kable_args") <- attr(tabs[[1]], "kable_args")
-  class(out) <- class(tabs[[1]])
-
-  out
-}
-
 #' @export
 print.qwraps2_summary_table <- function(x, ...) {
-  qargs <- attr(x, "qable_args")
-  kargs <- attr(x, "kable_args")
-  if (!("rgroup" %in% names(qargs))) {
-    qargs$rgroup <- attr(x, "rgroups")
-  }
-  if (!("rnames" %in% names(qargs))) {
-    qargs$rnames <- rownames(x)
-  }
-  if (!("cnames" %in% names(qargs))) {
-    qargs$cnames <- colnames(x)
-  }
-  if (!("kable_args" %in% names(qargs))) {
-    qargs$kable_args <- attr(x, "kable_args")
-  }
 
-  print(do.call(what = qable, args = c(list(x = x), qargs, ...)))
+  NextMethod(x, ...)
 
   invisible(x)
 }

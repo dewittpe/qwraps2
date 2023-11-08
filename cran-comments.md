@@ -1,19 +1,19 @@
 # Version 0.6.0
-- Initial submission 24 Oct 2023
+- Initial submission 8 Nov 2023
 
 ## Testing Environments
 
 * Github Actions: 
-  * macOS R-4.3.1
-  * windows R-4.3.1
-  * ubuntu R-4.3.1
+  * macOS R-4.3.2
+  * windows R-4.3.2
+  * ubuntu R-4.3.2
   * ubuntu R-devel
   * ubuntu R-4.2.3
 
 * win-builder.r-project.org
 
-* Local (macOS Catalina 10.15.4)
-  * R 4.0.2
+* Local (macOS Monterey 12.6)
+  * R 4.3.2
 
 ## R CMD Check results
 
@@ -21,9 +21,9 @@
 
     Status OK
 
-* win-builder.r-project.org -- all version of R
+* win-builder.r-project.org
 
-    Status OK
+  * R Under development (unstable) (2023-11-07 r85491 ucrt)  Status OK
 
 * Local
 

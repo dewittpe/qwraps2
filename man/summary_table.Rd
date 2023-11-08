@@ -3,8 +3,6 @@
 \name{summary_table}
 \alias{summary_table}
 \alias{qsummary}
-\alias{cbind.qwraps2_summary_table}
-\alias{rbind.qwraps2_summary_table}
 \title{Data Summary Tables}
 \usage{
 summary_table(
@@ -17,10 +15,6 @@ summary_table(
 )
 
 qsummary(x, numeric_summaries, n_perc_args, env = parent.frame())
-
-\method{cbind}{qwraps2_summary_table}(...)
-
-\method{rbind}{qwraps2_summary_table}(..., deparse.level = 1)
 }
 \arguments{
 \item{x}{a \code{data.frame}.}
@@ -38,7 +32,7 @@ that is one column for each unique values of the variables specified.}
 \code{kable_args} then the value in \code{qable_args} will be used
 preferentially.}
 
-\item{...}{\code{qwraps2_summary_table} objects to bind together}
+\item{...}{pass through}
 
 \item{numeric_summaries}{a list of functions to use for summarizing numeric
 variables.  The functions need to be provided as character strings with the
@@ -49,11 +43,6 @@ single argument defined by the \code{\%s} symbol.}
 \code{factor} variables within \code{x}.}
 
 \item{env}{environment to assign to the resulting formulae}
-
-\item{deparse.level}{integer controlling the construction of labels in the
-case of non-matrix-like arguments (for the default method): \code{deparse.level =
-0} constructs no labels; the default, \code{deparse.level = 1} or
-\code{deparse.level = 2} constructs labels from the argument names.}
 }
 \value{
 a \code{qwraps2_summary_table} object.
@@ -274,8 +263,4 @@ options(qwraps2_markup = orig_opt)
 \code{\link{qable}} for marking up \code{qwraps2_data_summary} objects.
 The \code{vignette("summary-statistics", package = "qwraps2")} for detailed
 use of these functions and caveats.
-
-\code{cbind}
-
-\code{rbind}
 }

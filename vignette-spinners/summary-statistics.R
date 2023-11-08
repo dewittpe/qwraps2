@@ -21,7 +21,7 @@ if (interactive()) {
   devtools::load_all()
 } else {
 # */
-  library(qwraps2)
+library(qwraps2)
 # /*
 }
 # */

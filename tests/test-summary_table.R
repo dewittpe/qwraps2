@@ -21,14 +21,30 @@ stopifnot(identical(qs[["cyl_character"]],
 temp <- dplyr::group_by(mtcars, am, vs)
 
 test <- tryCatch(summary_table(temp), warning = function(w) w)
-stopifnot(inherits(test, "warning") &
-          grep("^group_df detected", test$message))
+stopifnot(identical(inherits(test, "warning"), TRUE) &
+          identical(grepl("grouped_df detected", test$message), TRUE))
 
 test <- tryCatch(summary_table(temp, by = "am"), warning = function(w) w)
-stopifnot(inherits(test, "warning") &
-          grepl("You've passed", test$message))
+stopifnot(identical(inherits(test, "warning"), TRUE) &
+          identical(grepl("You've passed", test$message), TRUE))
 
 # dplyr::group_by equivalent output
 out1 <- capture.output(suppressWarnings(summary_table(temp)))
 out2 <- capture.output(summary_table(mtcars, by = c("am", "vs")))
-stopifnot(out1 == out2)
+stopifnot(identical(out1, out2))
+
+
+################################################################################
+# check the number of columns is as expected for summary tables
+stab <- summary_table(mtcars, by = c("am", "vs"))
+stopifnot(identical(ncol(stab), 5L))
+
+stab_am <- summary_table(mtcars, by = "am")
+stab_vs <- summary_table(mtcars, by = "vs")
+stab_cbind <- cbind(stab_am, stab_vs)
+stopifnot(identical(ncol(stab_am) + ncol(stab_vs) - 1L, ncol(stab_cbind)))
+
+
+################################################################################
+##                                End of File                                 ##
+################################################################################
