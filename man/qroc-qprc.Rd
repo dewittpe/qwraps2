@@ -45,7 +45,7 @@ The area under the curve (AUC) is determined by a trapezoid approximation for
 both the AUROC and AUPRC.
 
 More details and examples for graphics within qwraps2 are in the
-vignette(\dQuote{qwraps2-graphics}, package = {qwraps2})
+vignette(\dQuote{qwraps2-graphics}, package = \dQuote{qwraps2})
 }
 \examples{
 #########################################################
@@ -74,17 +74,9 @@ qroc(mod)
 qprc(mod)
 
 #########################################################
-# plot more than one ROC
-mod2 <- update(mod, formula = . ~ word_freq_our)
-
-cm1 <- confusion_matrix(mod)
-cm2 <- confusion_matrix(mod2)
-
-auc_data <- rbind(cbind(cm1$cm_stats, model = "Model 1"),
-                  cbind(cm2$cm_stats, model = "Model 2"))
-
-qroc(auc_data) + ggplot2::aes(color = model)
-
-qprc(auc_data, prevalence = cm1$prevalence) + ggplot2::aes(color = model)
+# View the vignette for more examples
+\dontrun{
+vignette("qwraps2-graphics")
+}
 
 }
