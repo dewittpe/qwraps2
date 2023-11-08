@@ -14,7 +14,7 @@
 #' multiple Bland Altman plots together into one ggplot object.  See Examples.
 #'
 #' More details and examples for graphics within qwraps2 are in the
-#' vignette(\dQuote{qwraps2-graphics}, package = {qwraps2})
+#' vignette(\dQuote{qwraps2-graphics}, package = \dQuote{qwraps2})
 #'
 #' @param x a \code{data.frame} with two columns, or an object that can be
 #' coerced to a data frame.  If a \code{data.frame} with more than two columns

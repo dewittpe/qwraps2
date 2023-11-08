@@ -32,7 +32,7 @@ qacf calls \code{\link[stats]{acf}} to generate a data set which is
 then plotted via ggplot2.
 
 More details and examples for graphics within qwraps2 are in the
-vignette(\dQuote{qwraps2-graphics}, package = {qwraps2})
+vignette(\dQuote{qwraps2-graphics}, package = \dQuote{qwraps2})
 }
 \examples{
 # Generate a random data set
