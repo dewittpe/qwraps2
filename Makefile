@@ -23,7 +23,7 @@ TESTS     = $(wildcard $(PKG_ROOT)/tests/*.R)
 ## Vignettes
 # These are both targets for building and dependencies for the package tar.gz
 # file
-VIGNETTES  = $(PKG_ROOT)/vignettes/summary-statistics.Rmd
+VIGNETTES  = $(PKG_ROOT)/vignettes/qwraps2-formatted-summary-statistics.Rmd
 VIGNETTES += $(PKG_ROOT)/vignettes/qwraps2-data-sets.Rmd
 VIGNETTES += $(PKG_ROOT)/vignettes/qwraps2-graphics.Rmd
 
