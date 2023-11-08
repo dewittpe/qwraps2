@@ -16,7 +16,7 @@ Description: A collection of (wrapper) functions the creator found useful
     fundamentally different from 'qwraps'.
 Depends:
     R (>= 3.5.0)
-License: GPL-2
+License: GPL (>= 3) | file LICENSE
 Encoding: UTF-8
 URL: https://github.com/dewittpe/qwraps2/, http://www.peteredewitt.com/qwraps2/
 BugReports: https://github.com/dewittpe/qwraps2/issues
@@ -32,6 +32,7 @@ Suggests:
     dplyr (>= 1.0.0),
     survival,
     covr,
+    glmnet,
     rbenchmark,
     rmarkdown
 RoxygenNote: 7.2.3
