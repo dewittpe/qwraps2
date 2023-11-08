@@ -86,7 +86,7 @@ DeWitt</h4>
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dewittpe/qwraps2/" class="external-link">qwraps2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dewittpe/qwraps2/" class="external-link">qwraps2</a></span><span class="op">)</span></span>
 <span><span class="co"># define the markup language we are working in.</span></span>
 <span><span class="co"># options(qwraps2_markup = "latex") is also supported.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>qwraps2_markup <span class="op">=</span> <span class="st">"markdown"</span><span class="op">)</span></span></code></pre></div>
@@ -451,8 +451,8 @@ and row names in the table.</p>
 <thead><tr class="header">
 <th align="left"></th>
 <th align="left">6 cylinders (N = 7)</th>
-<th align="left">4 cylinders</th>
-<th align="left">8 cylinders</th>
+<th align="left">4 cylinders (N = 11)</th>
+<th align="left">8 cylinders (N = 14)</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -567,42 +567,44 @@ a column for combination of cylinders and transmission type:</p>
 <span><span class="va">by_cyl_am</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## |                       |6 cylinders.0 (N = 4) |4 cylinders.0         |8 cylinders.0         |6 cylinders.1        |4 cylinders.1        |8 cylinders.1         |</span></span>
-<span><span class="co">## |:----------------------|:---------------------|:---------------------|:---------------------|:--------------------|:--------------------|:---------------------|</span></span>
-<span><span class="co">## |**Miles Per Gallon**   |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;         |&amp;nbsp;&amp;nbsp;         |&amp;nbsp;&amp;nbsp;          |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; min       |17.8                  |21.5                  |10.4                  |19.7                 |21.4                 |15                    |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; max       |21.4                  |24.4                  |19.2                  |21                   |33.9                 |15.8                  |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; mean (sd) |19.12 &amp;plusmn; 1.63   |22.90 &amp;plusmn; 1.45   |15.05 &amp;plusmn; 2.77   |20.57 &amp;plusmn; 0.75  |28.07 &amp;plusmn; 4.48  |15.40 &amp;plusmn; 0.57   |</span></span>
-<span><span class="co">## |**Displacement**       |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;         |&amp;nbsp;&amp;nbsp;         |&amp;nbsp;&amp;nbsp;          |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; min       |167.6                 |120.1                 |275.8                 |145                  |71.1                 |301                   |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; median    |196.3                 |140.8                 |355                   |160                  |87.05                |326                   |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; max       |258                   |146.7                 |472                   |160                  |121                  |351                   |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; mean (sd) |204.55 &amp;plusmn; 44.74 |135.87 &amp;plusmn; 13.97 |357.62 &amp;plusmn; 71.82 |155.00 &amp;plusmn; 8.66 |93.61 &amp;plusmn; 20.48 |326.00 &amp;plusmn; 35.36 |</span></span>
-<span><span class="co">## |**Weight (1000 lbs)**  |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;         |&amp;nbsp;&amp;nbsp;         |&amp;nbsp;&amp;nbsp;          |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; min       |3.215                 |2.465                 |3.435                 |2.62                 |1.513                |3.17                  |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; max       |3.46                  |3.19                  |5.424                 |2.875                |2.78                 |3.57                  |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; mean (sd) |3.39 &amp;plusmn; 0.12    |2.94 &amp;plusmn; 0.41    |4.10 &amp;plusmn; 0.77    |2.75 &amp;plusmn; 0.13   |2.04 &amp;plusmn; 0.41   |3.37 &amp;plusmn; 0.28    |</span></span>
-<span><span class="co">## |**Forward Gears**      |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;         |&amp;nbsp;&amp;nbsp;         |&amp;nbsp;&amp;nbsp;          |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; Three     |2 (50)                |1 (33)                |12 (100)              |0 (0)                |0 (0)                |0 (0)                 |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; Four      |2 (50)                |2 (67)                |0 (0)                 |2 (67)               |6 (75)               |0 (0)                 |</span></span>
-<span><span class="co">## |&amp;nbsp;&amp;nbsp; Five      |0 (0)                 |0 (0)                 |0 (0)                 |1 (33)               |2 (25)               |2 (100)               |</span></span></code></pre></div>
+<span><span class="co">## |                       |6 cylinders.0 (N = 4) |4 cylinders.0 (N = 3) |8 cylinders.0 (N = 12) |6 cylinders.1 (N = 3) |4 cylinders.1 (N = 8) |8 cylinders.1 (N = 2) |</span></span>
+<span><span class="co">## |:----------------------|:---------------------|:---------------------|:----------------------|:---------------------|:---------------------|:---------------------|</span></span>
+<span><span class="co">## |**Miles Per Gallon**   |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;           |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; min       |17.8                  |21.5                  |10.4                   |19.7                  |21.4                  |15                    |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; max       |21.4                  |24.4                  |19.2                   |21                    |33.9                  |15.8                  |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; mean (sd) |19.12 &amp;plusmn; 1.63   |22.90 &amp;plusmn; 1.45   |15.05 &amp;plusmn; 2.77    |20.57 &amp;plusmn; 0.75   |28.07 &amp;plusmn; 4.48   |15.40 &amp;plusmn; 0.57   |</span></span>
+<span><span class="co">## |**Displacement**       |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;           |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; min       |167.6                 |120.1                 |275.8                  |145                   |71.1                  |301                   |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; median    |196.3                 |140.8                 |355                    |160                   |87.05                 |326                   |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; max       |258                   |146.7                 |472                    |160                   |121                   |351                   |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; mean (sd) |204.55 &amp;plusmn; 44.74 |135.87 &amp;plusmn; 13.97 |357.62 &amp;plusmn; 71.82  |155.00 &amp;plusmn; 8.66  |93.61 &amp;plusmn; 20.48  |326.00 &amp;plusmn; 35.36 |</span></span>
+<span><span class="co">## |**Weight (1000 lbs)**  |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;           |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; min       |3.215                 |2.465                 |3.435                  |2.62                  |1.513                 |3.17                  |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; max       |3.46                  |3.19                  |5.424                  |2.875                 |2.78                  |3.57                  |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; mean (sd) |3.39 &amp;plusmn; 0.12    |2.94 &amp;plusmn; 0.41    |4.10 &amp;plusmn; 0.77     |2.75 &amp;plusmn; 0.13    |2.04 &amp;plusmn; 0.41    |3.37 &amp;plusmn; 0.28    |</span></span>
+<span><span class="co">## |**Forward Gears**      |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;           |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; Three     |2 (50)                |1 (33)                |12 (100)               |0 (0)                 |0 (0)                 |0 (0)                 |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; Four      |2 (50)                |2 (67)                |0 (0)                  |2 (67)                |6 (75)                |0 (0)                 |</span></span>
+<span><span class="co">## |&amp;nbsp;&amp;nbsp; Five      |0 (0)                 |0 (0)                 |0 (0)                  |1 (33)                |2 (25)                |2 (100)               |</span></span></code></pre></div>
 <p>To report a table with both the whole sample summary and conditional
 columns together:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">both</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">whole</span>, <span class="va">by_cyl</span><span class="op">)</span></span>
 <span><span class="va">both</span></span></code></pre></div>
-<table class="table">
+<table style="width:100%;" class="table">
 <colgroup>
-<col width="25%">
-<col width="25%">
-<col width="24%">
-<col width="24%">
+<col width="20%">
+<col width="20%">
+<col width="19%">
+<col width="19%">
+<col width="19%">
 </colgroup>
 <thead><tr class="header">
 <th align="left"></th>
 <th align="left">mtcars2 (N = 32)</th>
-<th align="left">4 cylinders</th>
-<th align="left">8 cylinders</th>
+<th align="left">6 cylinders (N = 7)</th>
+<th align="left">4 cylinders (N = 11)</th>
+<th align="left">8 cylinders (N = 14)</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -610,22 +612,26 @@ columns together:</p>
 <td align="left">  </td>
 <td align="left">  </td>
 <td align="left">  </td>
+<td align="left">  </td>
 </tr>
 <tr class="even">
 <td align="left">   min</td>
 <td align="left">10.4</td>
+<td align="left">17.8</td>
 <td align="left">21.4</td>
 <td align="left">10.4</td>
 </tr>
 <tr class="odd">
 <td align="left">   max</td>
 <td align="left">33.9</td>
+<td align="left">21.4</td>
 <td align="left">33.9</td>
 <td align="left">19.2</td>
 </tr>
 <tr class="even">
 <td align="left">   mean (sd)</td>
 <td align="left">20.09 ± 6.03</td>
+<td align="left">19.74 ± 1.45</td>
 <td align="left">26.66 ± 4.51</td>
 <td align="left">15.10 ± 2.56</td>
 </tr>
@@ -634,28 +640,33 @@ columns together:</p>
 <td align="left">  </td>
 <td align="left">  </td>
 <td align="left">  </td>
+<td align="left">  </td>
 </tr>
 <tr class="even">
 <td align="left">   min</td>
 <td align="left">71.1</td>
+<td align="left">145</td>
 <td align="left">71.1</td>
 <td align="left">275.8</td>
 </tr>
 <tr class="odd">
 <td align="left">   median</td>
 <td align="left">196.3</td>
+<td align="left">167.6</td>
 <td align="left">108</td>
 <td align="left">350.5</td>
 </tr>
 <tr class="even">
 <td align="left">   max</td>
 <td align="left">472</td>
+<td align="left">258</td>
 <td align="left">146.7</td>
 <td align="left">472</td>
 </tr>
 <tr class="odd">
 <td align="left">   mean (sd)</td>
 <td align="left">230.72 ± 123.94</td>
+<td align="left">183.31 ± 41.56</td>
 <td align="left">105.14 ± 26.87</td>
 <td align="left">353.10 ± 67.77</td>
 </tr>
@@ -664,22 +675,26 @@ columns together:</p>
 <td align="left">  </td>
 <td align="left">  </td>
 <td align="left">  </td>
+<td align="left">  </td>
 </tr>
 <tr class="odd">
 <td align="left">   min</td>
 <td align="left">1.513</td>
+<td align="left">2.62</td>
 <td align="left">1.513</td>
 <td align="left">3.17</td>
 </tr>
 <tr class="even">
 <td align="left">   max</td>
 <td align="left">5.424</td>
+<td align="left">3.46</td>
 <td align="left">3.19</td>
 <td align="left">5.424</td>
 </tr>
 <tr class="odd">
 <td align="left">   mean (sd)</td>
 <td align="left">3.22 ± 0.98</td>
+<td align="left">3.12 ± 0.36</td>
 <td align="left">2.29 ± 0.57</td>
 <td align="left">4.00 ± 0.76</td>
 </tr>
@@ -688,22 +703,26 @@ columns together:</p>
 <td align="left">  </td>
 <td align="left">  </td>
 <td align="left">  </td>
+<td align="left">  </td>
 </tr>
 <tr class="odd">
 <td align="left">   Three</td>
 <td align="left">15 (47)</td>
+<td align="left">2 (29)</td>
 <td align="left">1 (9)</td>
 <td align="left">12 (86)</td>
 </tr>
 <tr class="even">
 <td align="left">   Four</td>
 <td align="left">12 (38)</td>
+<td align="left">4 (57)</td>
 <td align="left">8 (73)</td>
 <td align="left">0 (0)</td>
 </tr>
 <tr class="odd">
 <td align="left">   Five</td>
 <td align="left">5 (16)</td>
+<td align="left">1 (14)</td>
 <td align="left">2 (18)</td>
 <td align="left">2 (14)</td>
 </tr>
@@ -719,18 +738,20 @@ using the <code>print</code> method for
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">both</span>,</span>
 <span>      rtitle <span class="op">=</span> <span class="st">"Summary Statistics"</span>,</span>
 <span>      cnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Col 0"</span>, <span class="st">"Col 1"</span>, <span class="st">"Col 2"</span>, <span class="st">"Col 3"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<table class="table">
+<table style="width:100%;" class="table">
 <colgroup>
-<col width="25%">
-<col width="25%">
-<col width="24%">
-<col width="24%">
+<col width="20%">
+<col width="20%">
+<col width="19%">
+<col width="19%">
+<col width="19%">
 </colgroup>
 <thead><tr class="header">
-<th align="left">Summary Statistics</th>
+<th align="left"></th>
 <th align="left">mtcars2 (N = 32)</th>
-<th align="left">4 cylinders</th>
-<th align="left">8 cylinders</th>
+<th align="left">6 cylinders (N = 7)</th>
+<th align="left">4 cylinders (N = 11)</th>
+<th align="left">8 cylinders (N = 14)</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -738,22 +759,26 @@ using the <code>print</code> method for
 <td align="left">  </td>
 <td align="left">  </td>
 <td align="left">  </td>
+<td align="left">  </td>
 </tr>
 <tr class="even">
 <td align="left">   min</td>
 <td align="left">10.4</td>
+<td align="left">17.8</td>
 <td align="left">21.4</td>
 <td align="left">10.4</td>
 </tr>
 <tr class="odd">
 <td align="left">   max</td>
 <td align="left">33.9</td>
+<td align="left">21.4</td>
 <td align="left">33.9</td>
 <td align="left">19.2</td>
 </tr>
 <tr class="even">
 <td align="left">   mean (sd)</td>
 <td align="left">20.09 ± 6.03</td>
+<td align="left">19.74 ± 1.45</td>
 <td align="left">26.66 ± 4.51</td>
 <td align="left">15.10 ± 2.56</td>
 </tr>
@@ -762,28 +787,33 @@ using the <code>print</code> method for
 <td align="left">  </td>
 <td align="left">  </td>
 <td align="left">  </td>
+<td align="left">  </td>
 </tr>
 <tr class="even">
 <td align="left">   min</td>
 <td align="left">71.1</td>
+<td align="left">145</td>
 <td align="left">71.1</td>
 <td align="left">275.8</td>
 </tr>
 <tr class="odd">
 <td align="left">   median</td>
 <td align="left">196.3</td>
+<td align="left">167.6</td>
 <td align="left">108</td>
 <td align="left">350.5</td>
 </tr>
 <tr class="even">
 <td align="left">   max</td>
 <td align="left">472</td>
+<td align="left">258</td>
 <td align="left">146.7</td>
 <td align="left">472</td>
 </tr>
 <tr class="odd">
 <td align="left">   mean (sd)</td>
 <td align="left">230.72 ± 123.94</td>
+<td align="left">183.31 ± 41.56</td>
 <td align="left">105.14 ± 26.87</td>
 <td align="left">353.10 ± 67.77</td>
 </tr>
@@ -792,22 +822,26 @@ using the <code>print</code> method for
 <td align="left">  </td>
 <td align="left">  </td>
 <td align="left">  </td>
+<td align="left">  </td>
 </tr>
 <tr class="odd">
 <td align="left">   min</td>
 <td align="left">1.513</td>
+<td align="left">2.62</td>
 <td align="left">1.513</td>
 <td align="left">3.17</td>
 </tr>
 <tr class="even">
 <td align="left">   max</td>
 <td align="left">5.424</td>
+<td align="left">3.46</td>
 <td align="left">3.19</td>
 <td align="left">5.424</td>
 </tr>
 <tr class="odd">
 <td align="left">   mean (sd)</td>
 <td align="left">3.22 ± 0.98</td>
+<td align="left">3.12 ± 0.36</td>
 <td align="left">2.29 ± 0.57</td>
 <td align="left">4.00 ± 0.76</td>
 </tr>
@@ -816,22 +850,26 @@ using the <code>print</code> method for
 <td align="left">  </td>
 <td align="left">  </td>
 <td align="left">  </td>
+<td align="left">  </td>
 </tr>
 <tr class="odd">
 <td align="left">   Three</td>
 <td align="left">15 (47)</td>
+<td align="left">2 (29)</td>
 <td align="left">1 (9)</td>
 <td align="left">12 (86)</td>
 </tr>
 <tr class="even">
 <td align="left">   Four</td>
 <td align="left">12 (38)</td>
+<td align="left">4 (57)</td>
 <td align="left">8 (73)</td>
 <td align="left">0 (0)</td>
 </tr>
 <tr class="odd">
 <td align="left">   Five</td>
 <td align="left">5 (16)</td>
+<td align="left">1 (14)</td>
 <td align="left">2 (18)</td>
 <td align="left">2 (14)</td>
 </tr>
@@ -1047,16 +1085,16 @@ of numeric_summaries that the argument place holder is the
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/summary_table.html">summary_table</a></span><span class="op">(</span><span class="va">mtcars2</span>, <span class="va">new_summary</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl_factor"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="33%">
-<col width="26%">
-<col width="20%">
-<col width="20%">
+<col width="28%">
+<col width="22%">
+<col width="24%">
+<col width="24%">
 </colgroup>
 <thead><tr class="header">
 <th align="left"></th>
 <th align="left">6 cylinders (N = 7)</th>
-<th align="left">4 cylinders</th>
-<th align="left">8 cylinders</th>
+<th align="left">4 cylinders (N = 11)</th>
+<th align="left">8 cylinders (N = 14)</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -1153,14 +1191,12 @@ ease. Note that <code>qwraps2_summary_table</code> objects are just
 character matrices.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">both</span><span class="op">)</span></span>
-<span><span class="co">##  'qwraps2_summary_table' chr [1:13, 1:3] "10.4" "33.9" ...</span></span>
+<span><span class="co">##  'qwraps2_summary_table' chr [1:17, 1:5] "**Miles Per Gallon**" ...</span></span>
 <span><span class="co">##  - attr(*, "dimnames")=List of 2</span></span>
-<span><span class="co">##   ..$ : chr [1:13] "min" "max" "mean (sd)" "min" ...</span></span>
-<span><span class="co">##   ..$ : chr [1:3] "mtcars2 (N = 32)" "4 cylinders" "8 cylinders"</span></span>
-<span><span class="co">##  - attr(*, "qable_args")= list()</span></span>
-<span><span class="co">##  - attr(*, "kable_args")= list()</span></span>
-<span><span class="co">##  - attr(*, "rgroups")= Named int [1:4] 3 4 3 3</span></span>
-<span><span class="co">##   ..- attr(*, "names")= chr [1:4] "Miles Per Gallon" "Displacement" "Weight (1000 lbs)" "Forward Gears"</span></span></code></pre></div>
+<span><span class="co">##   ..$ : NULL</span></span>
+<span><span class="co">##   ..$ : chr [1:5] "" "mtcars2 (N = 32)" "6 cylinders (N = 7)" "4 cylinders (N = 11)" ...</span></span>
+<span><span class="co">##  - attr(*, "markup")= chr "markdown"</span></span>
+<span><span class="co">##  - attr(*, "kable_args")= list()</span></span></code></pre></div>
 <p>Let’s added p-values for testing the difference in the mean between
 the three cylinder groups.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
@@ -1182,19 +1218,21 @@ the three cylinder groups.</p>
 <p>and the resulting table is:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">both</span></span></code></pre></div>
-<table class="table">
+<table style="width:100%;" class="table">
 <colgroup>
-<col width="22%">
-<col width="22%">
-<col width="21%">
-<col width="21%">
-<col width="12%">
+<col width="18%">
+<col width="18%">
+<col width="17%">
+<col width="17%">
+<col width="17%">
+<col width="10%">
 </colgroup>
 <thead><tr class="header">
 <th align="left"></th>
 <th align="left">mtcars2 (N = 32)</th>
-<th align="left">4 cylinders</th>
-<th align="left">8 cylinders</th>
+<th align="left">6 cylinders (N = 7)</th>
+<th align="left">4 cylinders (N = 11)</th>
+<th align="left">8 cylinders (N = 14)</th>
 <th align="left">P-value</th>
 </tr></thead>
 <tbody>
@@ -1204,10 +1242,12 @@ the three cylinder groups.</p>
 <td align="left">  </td>
 <td align="left">  </td>
 <td align="left">  </td>
+<td align="left"></td>
 </tr>
 <tr class="even">
 <td align="left">   min</td>
 <td align="left">10.4</td>
+<td align="left">17.8</td>
 <td align="left">21.4</td>
 <td align="left">10.4</td>
 <td align="left"></td>
@@ -1215,6 +1255,7 @@ the three cylinder groups.</p>
 <tr class="odd">
 <td align="left">   max</td>
 <td align="left">33.9</td>
+<td align="left">21.4</td>
 <td align="left">33.9</td>
 <td align="left">19.2</td>
 <td align="left"></td>
@@ -1222,9 +1263,11 @@ the three cylinder groups.</p>
 <tr class="even">
 <td align="left">   mean (sd)</td>
 <td align="left">20.09 ± 6.03</td>
+<td align="left">19.74 ± 1.45</td>
 <td align="left">26.66 ± 4.51</td>
 <td align="left">15.10 ± 2.56</td>
-<td align="left"></td>
+<td align="left">
+<em>P</em> &lt; 0.0001</td>
 </tr>
 <tr class="odd">
 <td align="left"><strong>Displacement</strong></td>
@@ -1232,10 +1275,12 @@ the three cylinder groups.</p>
 <td align="left">  </td>
 <td align="left">  </td>
 <td align="left">  </td>
+<td align="left"></td>
 </tr>
 <tr class="even">
 <td align="left">   min</td>
 <td align="left">71.1</td>
+<td align="left">145</td>
 <td align="left">71.1</td>
 <td align="left">275.8</td>
 <td align="left"></td>
@@ -1243,6 +1288,7 @@ the three cylinder groups.</p>
 <tr class="odd">
 <td align="left">   median</td>
 <td align="left">196.3</td>
+<td align="left">167.6</td>
 <td align="left">108</td>
 <td align="left">350.5</td>
 <td align="left"></td>
@@ -1250,6 +1296,7 @@ the three cylinder groups.</p>
 <tr class="even">
 <td align="left">   max</td>
 <td align="left">472</td>
+<td align="left">258</td>
 <td align="left">146.7</td>
 <td align="left">472</td>
 <td align="left"></td>
@@ -1257,9 +1304,11 @@ the three cylinder groups.</p>
 <tr class="odd">
 <td align="left">   mean (sd)</td>
 <td align="left">230.72 ± 123.94</td>
+<td align="left">183.31 ± 41.56</td>
 <td align="left">105.14 ± 26.87</td>
 <td align="left">353.10 ± 67.77</td>
-<td align="left"></td>
+<td align="left">
+<em>P</em> &lt; 0.0001</td>
 </tr>
 <tr class="even">
 <td align="left"><strong>Weight (1000 lbs)</strong></td>
@@ -1267,10 +1316,12 @@ the three cylinder groups.</p>
 <td align="left">  </td>
 <td align="left">  </td>
 <td align="left">  </td>
+<td align="left"></td>
 </tr>
 <tr class="odd">
 <td align="left">   min</td>
 <td align="left">1.513</td>
+<td align="left">2.62</td>
 <td align="left">1.513</td>
 <td align="left">3.17</td>
 <td align="left"></td>
@@ -1278,6 +1329,7 @@ the three cylinder groups.</p>
 <tr class="even">
 <td align="left">   max</td>
 <td align="left">5.424</td>
+<td align="left">3.46</td>
 <td align="left">3.19</td>
 <td align="left">5.424</td>
 <td align="left"></td>
@@ -1285,9 +1337,11 @@ the three cylinder groups.</p>
 <tr class="odd">
 <td align="left">   mean (sd)</td>
 <td align="left">3.22 ± 0.98</td>
+<td align="left">3.12 ± 0.36</td>
 <td align="left">2.29 ± 0.57</td>
 <td align="left">4.00 ± 0.76</td>
-<td align="left"></td>
+<td align="left">
+<em>P</em> &lt; 0.0001</td>
 </tr>
 <tr class="even">
 <td align="left"><strong>Forward Gears</strong></td>
@@ -1295,10 +1349,13 @@ the three cylinder groups.</p>
 <td align="left">  </td>
 <td align="left">  </td>
 <td align="left">  </td>
+<td align="left">
+<em>P</em> &lt; 0.0001</td>
 </tr>
 <tr class="odd">
 <td align="left">   Three</td>
 <td align="left">15 (47)</td>
+<td align="left">2 (29)</td>
 <td align="left">1 (9)</td>
 <td align="left">12 (86)</td>
 <td align="left"></td>
@@ -1306,6 +1363,7 @@ the three cylinder groups.</p>
 <tr class="even">
 <td align="left">   Four</td>
 <td align="left">12 (38)</td>
+<td align="left">4 (57)</td>
 <td align="left">8 (73)</td>
 <td align="left">0 (0)</td>
 <td align="left"></td>
@@ -1313,6 +1371,7 @@ the three cylinder groups.</p>
 <tr class="odd">
 <td align="left">   Five</td>
 <td align="left">5 (16)</td>
+<td align="left">1 (14)</td>
 <td align="left">2 (18)</td>
 <td align="left">2 (14)</td>
 <td align="left"></td>
@@ -1343,16 +1402,16 @@ to the names of the row groups when building the summary table.</p>
 <span><span class="fu"><a href="../reference/summary_table.html">summary_table</a></span><span class="op">(</span><span class="va">mtcars2</span>, <span class="va">gear_summary</span>, by <span class="op">=</span> <span class="st">"cyl_factor"</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="41%">
-<col width="25%">
-<col width="16%">
-<col width="16%">
+<col width="34%">
+<col width="21%">
+<col width="22%">
+<col width="22%">
 </colgroup>
 <thead><tr class="header">
 <th align="left"></th>
 <th align="left">6 cylinders (N = 7)</th>
-<th align="left">4 cylinders</th>
-<th align="left">8 cylinders</th>
+<th align="left">4 cylinders (N = 11)</th>
+<th align="left">8 cylinders (N = 14)</th>
 </tr></thead>
 <tbody>
 <tr class="odd">

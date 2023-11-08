@@ -68,13 +68,7 @@
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">qsummary</span><span class="op">(</span><span class="va">x</span>, <span class="va">numeric_summaries</span>, <span class="va">n_perc_args</span>, env <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for qwraps2_summary_table</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for qwraps2_summary_table</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">...</span>, deparse.level <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">qsummary</span><span class="op">(</span><span class="va">x</span>, <span class="va">numeric_summaries</span>, <span class="va">n_perc_args</span>, env <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -105,7 +99,7 @@ preferentially.</p></dd>
 
 
 <dt>...</dt>
-<dd><p><code>qwraps2_summary_table</code> objects to bind together</p></dd>
+<dd><p>pass through</p></dd>
 
 
 <dt>numeric_summaries</dt>
@@ -122,13 +116,6 @@ single argument defined by the <code>%s</code> symbol.</p></dd>
 
 <dt>env</dt>
 <dd><p>environment to assign to the resulting formulae</p></dd>
-
-
-<dt>deparse.level</dt>
-<dd><p>integer controlling the construction of labels in the
-case of non-matrix-like arguments (for the default method): <code>deparse.level =
-0</code> constructs no labels; the default, <code>deparse.level = 1</code> or
-<code>deparse.level = 2</code> constructs labels from the argument names.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -162,9 +149,7 @@ a simple wrapper for <code><a href="qable.html">qable</a></code>.</p>
     <div class="dont-index"><p><code>qsummary</code> for generating the summaries,
 <code><a href="qable.html">qable</a></code> for marking up <code>qwraps2_data_summary</code> objects.
 The <code><a href="../articles/summary-statistics.html">vignette("summary-statistics", package = "qwraps2")</a></code> for detailed
-use of these functions and caveats.</p>
-<p><code>cbind</code></p>
-<p><code>rbind</code></p></div>
+use of these functions and caveats.</p></div>
     </div>
 
     <div class="section level2">
@@ -223,7 +208,7 @@ use of these functions and caveats.</p>
 <span class="r-in"><span><span class="va">grouped_by_table</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |                              |0 (N = 19)          |1                   |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |                              |0 (N = 19)          |1 (N = 13)          |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |:-----------------------------|:-------------------|:-------------------|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |**Miles Per Gallon**          |&amp;nbsp;&amp;nbsp;        |&amp;nbsp;&amp;nbsp;        |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; min              |10.4                |15                  |</span>
@@ -243,7 +228,7 @@ use of these functions and caveats.</p>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   c('am')</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |                              |0 (N = 19)          |1                   |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |                              |0 (N = 19)          |1 (N = 13)          |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |:-----------------------------|:-------------------|:-------------------|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |**Miles Per Gallon**          |&amp;nbsp;&amp;nbsp;        |&amp;nbsp;&amp;nbsp;        |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; min              |10.4                |15                  |</span>
@@ -262,50 +247,39 @@ use of these functions and caveats.</p>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">whole_table</span>, <span class="va">grouped_by_table</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |                              |mtcars (N = 32)     |1                   |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |:-----------------------------|:-------------------|:-------------------|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |**Miles Per Gallon**          |&amp;nbsp;&amp;nbsp;        |&amp;nbsp;&amp;nbsp;        |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; min              |10.4                |15                  |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; mean             |20.090625           |24.3923076923077    |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; mean &amp;plusmn; sd |20.09 &amp;plusmn; 6.03 |24.39 &amp;plusmn; 6.17 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; max              |33.9                |33.9                |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |**Weight**                    |&amp;nbsp;&amp;nbsp;        |&amp;nbsp;&amp;nbsp;        |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; median           |3.325               |2.32                |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |**Cylinders**                 |&amp;nbsp;&amp;nbsp;        |&amp;nbsp;&amp;nbsp;        |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; 4 cyl: n (%)     |11 (34)             |8 (62)              |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; 6 cyl: n (%)     |7 (22)              |3 (23)              |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; 8 cyl: n (%)     |14 (44)             |2 (15)              |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |                              |mtcars (N = 32)     |0 (N = 19)          |1 (N = 13)          |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:-----------------------------|:-------------------|:-------------------|:-------------------|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |**Miles Per Gallon**          |&amp;nbsp;&amp;nbsp;        |&amp;nbsp;&amp;nbsp;        |&amp;nbsp;&amp;nbsp;        |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; min              |10.4                |10.4                |15                  |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; mean             |20.090625           |17.1473684210526    |24.3923076923077    |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; mean &amp;plusmn; sd |20.09 &amp;plusmn; 6.03 |17.15 &amp;plusmn; 3.83 |24.39 &amp;plusmn; 6.17 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; max              |33.9                |24.4                |33.9                |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |**Weight**                    |&amp;nbsp;&amp;nbsp;        |&amp;nbsp;&amp;nbsp;        |&amp;nbsp;&amp;nbsp;        |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; median           |3.325               |3.52                |2.32                |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |**Cylinders**                 |&amp;nbsp;&amp;nbsp;        |&amp;nbsp;&amp;nbsp;        |&amp;nbsp;&amp;nbsp;        |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; 4 cyl: n (%)     |11 (34)             |3 (16)              |8 (62)              |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; 6 cyl: n (%)     |7 (22)              |4 (21)              |3 (23)              |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; 8 cyl: n (%)     |14 (44)             |12 (63)             |2 (15)              |</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Adding a caption for a LaTeX table</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">whole_table</span>, caption <span class="op">=</span> <span class="st">"Hello world"</span>, markup <span class="op">=</span> <span class="st">"latex"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{tabular}{l|l}</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \hline</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  &amp; mtcars (N = 32)\\</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \hline</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \bf{Miles Per Gallon} &amp; ~\\</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \hline</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ~~ min &amp; 10.4\\</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \hline</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ~~ mean &amp; 20.090625\\</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \hline</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ~~ mean &amp;plusmn; sd &amp; 20.09 &amp;plusmn; 6.03\\</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \hline</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ~~ max &amp; 33.9\\</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \hline</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \bf{Weight} &amp; ~\\</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \hline</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ~~ median &amp; 3.325\\</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \hline</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \bf{Cylinders} &amp; ~\\</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \hline</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ~~ 4 cyl: n (%) &amp; 11 (34)\\</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \hline</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ~~ 6 cyl: n (%) &amp; 7 (22)\\</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \hline</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ~~ 8 cyl: n (%) &amp; 14 (44)\\</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \hline</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \end{tabular}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Table: Hello world</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |                              |mtcars (N = 32)     |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:-----------------------------|:-------------------|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |**Miles Per Gallon**          |&amp;nbsp;&amp;nbsp;        |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; min              |10.4                |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; mean             |20.090625           |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; mean &amp;plusmn; sd |20.09 &amp;plusmn; 6.03 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; max              |33.9                |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |**Weight**                    |&amp;nbsp;&amp;nbsp;        |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; median           |3.325               |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |**Cylinders**                 |&amp;nbsp;&amp;nbsp;        |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; 4 cyl: n (%)     |11 (34)             |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; 6 cyl: n (%)     |7 (22)              |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; 8 cyl: n (%)     |14 (44)             |</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># A **warning** about grouped_df objects.</span></span></span>
 <span class="r-in"><span><span class="co"># If you use dplyr::group_by or</span></span></span>
@@ -344,7 +318,7 @@ use of these functions and caveats.</p>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   c('id')</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |                    |a (N = 1)    |b            |c            |d            |e            |f            |g            |h            |i            |j            |k            |l            |m            |n            |o            |p            |q            |r            |s            |t            |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |                    |a (N = 1)    |b (N = 1)    |c (N = 1)    |d (N = 1)    |e (N = 1)    |f (N = 1)    |g (N = 1)    |h (N = 1)    |i (N = 1)    |j (N = 1)    |k (N = 1)    |l (N = 1)    |m (N = 1)    |n (N = 1)    |o (N = 1)    |p (N = 1)    |q (N = 1)    |r (N = 1)    |s (N = 1)    |t (N = 1)    |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |:-------------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |**Head ISS**        |&amp;nbsp;&amp;nbsp; |&amp;nbsp;&amp;nbsp; |&amp;nbsp;&amp;nbsp; |&amp;nbsp;&amp;nbsp; |&amp;nbsp;&amp;nbsp; |&amp;nbsp;&amp;nbsp; |&amp;nbsp;&amp;nbsp; |&amp;nbsp;&amp;nbsp; |&amp;nbsp;&amp;nbsp; |&amp;nbsp;&amp;nbsp; |&amp;nbsp;&amp;nbsp; |&amp;nbsp;&amp;nbsp; |&amp;nbsp;&amp;nbsp; |&amp;nbsp;&amp;nbsp; |&amp;nbsp;&amp;nbsp; |&amp;nbsp;&amp;nbsp; |&amp;nbsp;&amp;nbsp; |&amp;nbsp;&amp;nbsp; |&amp;nbsp;&amp;nbsp; |&amp;nbsp;&amp;nbsp; |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; min    |5            |5            |2            |4            |3            |2            |4            |1            |3            |3            |2            |4            |5            |1            |2            |5            |6            |1            |2            |3            |</span>
@@ -385,7 +359,7 @@ use of these functions and caveats.</p>
 <span class="r-in"><span><span class="fu">summary_table</span><span class="op">(</span><span class="va">mtcars</span>, by <span class="op">=</span> <span class="st">"cyl"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |                          |4 (N = 11)             |6                       |8                       |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |                          |4 (N = 11)             |6 (N = 7)               |8 (N = 14)              |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |:-------------------------|:----------------------|:-----------------------|:-----------------------|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |**mpg**                   |&amp;nbsp;&amp;nbsp;           |&amp;nbsp;&amp;nbsp;            |&amp;nbsp;&amp;nbsp;            |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; minimum      |21.40                  |17.80                   |10.40                   |</span>
@@ -593,7 +567,7 @@ use of these functions and caveats.</p>
 <span class="r-in"><span><span class="fu">summary_table</span><span class="op">(</span><span class="va">diamonds</span>, by <span class="op">=</span> <span class="st">"cut"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |                          |Fair (N = 1610)               |Good                          |Very Good                   |Premium                    |Ideal                      |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |                          |Fair (N = 1610)               |Good (N = 4906)               |Very Good (N = 12082)       |Premium (N = 13791)        |Ideal (N = 21551)          |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |:-------------------------|:-----------------------------|:-----------------------------|:---------------------------|:--------------------------|:--------------------------|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |**carat**                 |&amp;nbsp;&amp;nbsp;                  |&amp;nbsp;&amp;nbsp;                  |&amp;nbsp;&amp;nbsp;                |&amp;nbsp;&amp;nbsp;               |&amp;nbsp;&amp;nbsp;               |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; minimum      |0.22                          |0.23                          |0.20                        |0.20                       |0.20                       |</span>
@@ -669,11 +643,11 @@ use of these functions and caveats.</p>
 <span class="r-in"><span>              by <span class="op">=</span> <span class="st">"cut"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |                        |Fair (N = 1610) |Good         |Very Good    |Premium      |Ideal        |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |:-----------------------|:---------------|:------------|:------------|:------------|:------------|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |**My Summary of Price** |&amp;nbsp;&amp;nbsp;    |&amp;nbsp;&amp;nbsp; |&amp;nbsp;&amp;nbsp; |&amp;nbsp;&amp;nbsp; |&amp;nbsp;&amp;nbsp; |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; min price  |337             |327          |336          |326          |326          |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; IQR        |3155.25         |3883         |4460.75      |5250         |3800.5       |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |                        |Fair (N = 1610) |Good (N = 4906) |Very Good (N = 12082) |Premium (N = 13791) |Ideal (N = 21551) |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:-----------------------|:---------------|:---------------|:---------------------|:-------------------|:-----------------|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |**My Summary of Price** |&amp;nbsp;&amp;nbsp;    |&amp;nbsp;&amp;nbsp;    |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;        |&amp;nbsp;&amp;nbsp;      |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; min price  |337             |327             |336                   |326                 |326               |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; IQR        |3155.25         |3883            |4460.75               |5250                |3800.5            |</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">################################################################################</span></span></span>
 <span class="r-in"><span><span class="co"># Data sets with missing values</span></span></span>
@@ -687,47 +661,47 @@ use of these functions and caveats.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $cyl</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $cyl$minimum</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ~qwraps2::frmt(min(na.omit(cyl)))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55b3a4687ef8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x562927f48808&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $cyl$`median (IQR)`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ~qwraps2::median_iqr(na.omit(cyl))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55b3a4687ef8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x562927f48808&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $cyl$`mean (sd)`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ~qwraps2::mean_sd(na.omit(cyl))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55b3a4687ef8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x562927f48808&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $cyl$maximum</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ~qwraps2::frmt(max(na.omit(cyl)))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55b3a4687ef8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x562927f48808&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $cyl$`Unknown/Missing`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ~qwraps2::n_perc(is.na(cyl))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55b3a4687ef8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x562927f48808&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $am</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $am$Automatic</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ~qwraps2::n_perc(na.omit(am) == "Automatic", digits = 0, show_symbol = FALSE)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55b3a4687ef8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x562927f48808&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $am$Manual</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ~qwraps2::n_perc(na.omit(am) == "Manual", digits = 0, show_symbol = FALSE)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55b3a4687ef8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x562927f48808&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $am$`Unknown/Missing`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ~qwraps2::n_perc(is.na(am))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55b3a4687ef8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x562927f48808&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $vs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $vs[[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ~qwraps2::n_perc(na.omit(vs), digits = 0, show_symbol = FALSE)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55b3a4687ef8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x562927f48808&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $vs$`Unknown/Missing`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ~qwraps2::n_perc(is.na(vs))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55b3a4687ef8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x562927f48808&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">summary_table</span><span class="op">(</span><span class="va">temp</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl"</span>, <span class="st">"am"</span>, <span class="st">"vs"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></span>
@@ -757,19 +731,19 @@ use of these functions and caveats.</p>
 <span class="r-in"><span><span class="fu">summary_table</span><span class="op">(</span><span class="va">temp</span>, <span class="va">our_summaries</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"trans"</span>, <span class="st">"engine"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |                              |Manual.V-Shaped (N = 12) |Auto.V-Shaped       |Manual.Straight     |Auto.Straight       |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |:-----------------------------|:------------------------|:-------------------|:-------------------|:-------------------|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |**Miles Per Gallon**          |&amp;nbsp;&amp;nbsp;             |&amp;nbsp;&amp;nbsp;        |&amp;nbsp;&amp;nbsp;        |&amp;nbsp;&amp;nbsp;        |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; min              |10.4                     |15                  |17.8                |21.4                |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; mean             |15.05                    |19.75               |20.7428571428571    |28.3714285714286    |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; mean &amp;plusmn; sd |15.05 &amp;plusmn; 2.77      |19.75 &amp;plusmn; 4.01 |20.74 &amp;plusmn; 2.47 |28.37 &amp;plusmn; 4.76 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; max              |19.2                     |26                  |24.4                |33.9                |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |**Weight**                    |&amp;nbsp;&amp;nbsp;             |&amp;nbsp;&amp;nbsp;        |&amp;nbsp;&amp;nbsp;        |&amp;nbsp;&amp;nbsp;        |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; median           |3.81                     |2.8225              |3.215               |1.935               |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |**Cylinders**                 |&amp;nbsp;&amp;nbsp;             |&amp;nbsp;&amp;nbsp;        |&amp;nbsp;&amp;nbsp;        |&amp;nbsp;&amp;nbsp;        |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; 4 cyl: n (%)     |0 (0)                    |1 (17)              |3 (43)              |7 (100)             |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; 6 cyl: n (%)     |0 (0)                    |3 (50)              |4 (57)              |0 (0)               |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; 8 cyl: n (%)     |12 (100)                 |2 (33)              |0 (0)               |0 (0)               |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |                              |Manual.V-Shaped (N = 12) |Auto.V-Shaped (N = 6) |Manual.Straight (N = 7) |Auto.Straight (N = 7) |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:-----------------------------|:------------------------|:---------------------|:-----------------------|:---------------------|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |**Miles Per Gallon**          |&amp;nbsp;&amp;nbsp;             |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;            |&amp;nbsp;&amp;nbsp;          |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; min              |10.4                     |15                    |17.8                    |21.4                  |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; mean             |15.05                    |19.75                 |20.7428571428571        |28.3714285714286      |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; mean &amp;plusmn; sd |15.05 &amp;plusmn; 2.77      |19.75 &amp;plusmn; 4.01   |20.74 &amp;plusmn; 2.47     |28.37 &amp;plusmn; 4.76   |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; max              |19.2                     |26                    |24.4                    |33.9                  |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |**Weight**                    |&amp;nbsp;&amp;nbsp;             |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;            |&amp;nbsp;&amp;nbsp;          |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; median           |3.81                     |2.8225                |3.215                   |1.935                 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |**Cylinders**                 |&amp;nbsp;&amp;nbsp;             |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;            |&amp;nbsp;&amp;nbsp;          |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; 4 cyl: n (%)     |0 (0)                    |1 (17)                |3 (43)                  |7 (100)               |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; 6 cyl: n (%)     |0 (0)                    |3 (50)                |4 (57)                  |0 (0)                 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; 8 cyl: n (%)     |12 (100)                 |2 (33)                |0 (0)                   |0 (0)                 |</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">################################################################################</span></span></span>
 <span class="r-in"><span><span class="co"># binding tables together.  The original design and expected use of</span></span></span>
@@ -817,29 +791,29 @@ use of these functions and caveats.</p>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">tab1</span>, <span class="va">tab2</span>, <span class="va">tab3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |                       |mtcars (N = 32)        |1                     |1                     |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |:----------------------|:----------------------|:---------------------|:---------------------|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |**Miles Per Gallon**   |&amp;nbsp;&amp;nbsp;           |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; min       |10.4                   |15                    |17.8                  |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; max       |33.9                   |33.9                  |33.9                  |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; mean (sd) |20.09 &amp;plusmn; 6.03    |24.39 &amp;plusmn; 6.17   |24.56 &amp;plusmn; 5.38   |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |**Displacement**       |&amp;nbsp;&amp;nbsp;           |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;          |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; min       |71.1                   |71.1                  |71.1                  |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; max       |472                    |351                   |258                   |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; mean (sd) |230.72 &amp;plusmn; 123.94 |143.53 &amp;plusmn; 87.20 |132.46 &amp;plusmn; 56.89 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |                       |mtcars (N = 32)        |0 (N = 19)             |1 (N = 13)            |0 (N = 18)             |1 (N = 14)            |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:----------------------|:----------------------|:----------------------|:---------------------|:----------------------|:---------------------|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |**Miles Per Gallon**   |&amp;nbsp;&amp;nbsp;           |&amp;nbsp;&amp;nbsp;           |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;           |&amp;nbsp;&amp;nbsp;          |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; min       |10.4                   |10.4                   |15                    |10.4                   |17.8                  |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; max       |33.9                   |24.4                   |33.9                  |26                     |33.9                  |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; mean (sd) |20.09 &amp;plusmn; 6.03    |17.15 &amp;plusmn; 3.83    |24.39 &amp;plusmn; 6.17   |16.62 &amp;plusmn; 3.86    |24.56 &amp;plusmn; 5.38   |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |**Displacement**       |&amp;nbsp;&amp;nbsp;           |&amp;nbsp;&amp;nbsp;           |&amp;nbsp;&amp;nbsp;          |&amp;nbsp;&amp;nbsp;           |&amp;nbsp;&amp;nbsp;          |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; min       |71.1                   |120.1                  |71.1                  |120.3                  |71.1                  |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; max       |472                    |472                    |351                   |472                    |258                   |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; mean (sd) |230.72 &amp;plusmn; 123.94 |290.38 &amp;plusmn; 110.17 |143.53 &amp;plusmn; 87.20 |307.15 &amp;plusmn; 106.77 |132.46 &amp;plusmn; 56.89 |</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">tab4</span>, <span class="va">tab5</span>, <span class="va">tab6</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |                       |mtcars (N = 32)    |1                  |1                  |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |:----------------------|:------------------|:------------------|:------------------|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |**Weight (1000 lbs)**  |&amp;nbsp;&amp;nbsp;       |&amp;nbsp;&amp;nbsp;       |&amp;nbsp;&amp;nbsp;       |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; min       |1.513              |1.513              |1.513              |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; max       |5.424              |3.57               |3.46               |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; mean (sd) |3.22 &amp;plusmn; 0.98 |2.41 &amp;plusmn; 0.62 |2.61 &amp;plusmn; 0.72 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |**Forward Gears**      |&amp;nbsp;&amp;nbsp;       |&amp;nbsp;&amp;nbsp;       |&amp;nbsp;&amp;nbsp;       |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; Three     |15 (47)            |0 (0)              |3 (21)             |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; Four      |12 (38)            |8 (62)             |10 (71)            |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; Five      |5 (16)             |5 (38)             |1 (7)              |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |                       |mtcars (N = 32)    |0 (N = 19)         |1 (N = 13)         |0 (N = 18)         |1 (N = 14)         |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:----------------------|:------------------|:------------------|:------------------|:------------------|:------------------|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |**Weight (1000 lbs)**  |&amp;nbsp;&amp;nbsp;       |&amp;nbsp;&amp;nbsp;       |&amp;nbsp;&amp;nbsp;       |&amp;nbsp;&amp;nbsp;       |&amp;nbsp;&amp;nbsp;       |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; min       |1.513              |2.465              |1.513              |2.14               |1.513              |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; max       |5.424              |5.424              |3.57               |5.424              |3.46               |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; mean (sd) |3.22 &amp;plusmn; 0.98 |3.77 &amp;plusmn; 0.78 |2.41 &amp;plusmn; 0.62 |3.69 &amp;plusmn; 0.90 |2.61 &amp;plusmn; 0.72 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |**Forward Gears**      |&amp;nbsp;&amp;nbsp;       |&amp;nbsp;&amp;nbsp;       |&amp;nbsp;&amp;nbsp;       |&amp;nbsp;&amp;nbsp;       |&amp;nbsp;&amp;nbsp;       |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; Three     |15 (47)            |15 (79)            |0 (0)              |12 (67)            |3 (21)             |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; Four      |12 (38)            |4 (21)             |8 (62)             |2 (11)             |10 (71)            |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |&amp;nbsp;&amp;nbsp; Five      |5 (16)             |0 (0)              |5 (38)             |4 (22)             |1 (7)              |</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># row bind is possible, but it is recommended to extend the summary instead.</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">tab1</span>, <span class="va">tab4</span><span class="op">)</span></span></span>
