@@ -38,17 +38,17 @@ I wrote this package to be as flexible and general as possible.  I hope you like
 these tools and will be able to use them in your work.
 
 This vignette presents the use of the
-``r  paste0(backtick(summary_table), ",")  ``
-``r  paste0(backtick(qsummary), ",")  ``
+`r  paste0(backtick(summary_table), ",")  `
+`r  paste0(backtick(qsummary), ",")  `
 and
-``r  backtick(qable)  ``
+`r  backtick(qable)  `
 functions for quickly building data summary tables.  We will be using summary
 statistic functions,
-``r  paste0(backtick(mean_sd), ",")  ``
-``r  paste0(backtick(median_iqr), ",")  ``
-``r  paste0(backtick(n_perc), ",")  ``
+`r  paste0(backtick(mean_sd), ",")  `
+`r  paste0(backtick(median_iqr), ",")  `
+`r  paste0(backtick(n_perc), ",")  `
 and others, from
-``r  CRANpkg(qwraps2)  ``
+`r  CRANpkg(qwraps2)  `
 as well.
 
 ## Prerequisites Example Data Set
@@ -59,16 +59,16 @@ library(qwraps2)
 
 
 We will use the data set
-``r  backtick(mtcars2)  ``
+`r  backtick(mtcars2)  `
 for the examples throughout this vignette
 data set for examples throughout this vignette.
-``r  backtick(mtcars2)  ``
+`r  backtick(mtcars2)  `
 is a modified and extended version of the base R data set
-``r  paste(backtick(mtcars), ".")  ``
+`r  paste(backtick(mtcars), ".")  `
 For details on the construction of the
-``r  backtick(mtcars2)  ``
+`r  backtick(mtcars2)  `
 data set please view the vignette:
-``r  backtick(vignette('mtcars', package = "qwraps2"))  ``
+`r  backtick(vignette('mtcars', package = "qwraps2"))  `
 
 ```{r}
 data(mtcars2)
@@ -81,12 +81,12 @@ str(mtcars2)
 
 ## Means and Standard Deviations
 
-``r  backtick(mean_sd)  ``
+`r  backtick(mean_sd)  `
 returns the (arithmetic) mean and standard deviation for numeric
 vector as a formatted character string. For example,
-``r  backtick(mean_sd(mtcars2$mpg))  ``
+`r  backtick(mean_sd(mtcars2$mpg))  `
 returns the formatted string
-``r  paste0(mean_sd(mtcars2$mpg), ".")  ``
+`r  paste0(mean_sd(mtcars2$mpg), ".")  `
 There are other options for formatting character string:
 
 ```{r}
@@ -98,18 +98,18 @@ mean_sd(mtcars2$mpg, denote_sd = "paren")
 ## Mean and Confidence intervals
 
 If you need the mean and a confidence interval there is the function
-``r  paste0(backtick(mean_ci), ".")  ``
+`r  paste0(backtick(mean_ci), ".")  `
 which returns a
-``r  backtick(qwraps2_mean_ci)  ``
+`r  backtick(qwraps2_mean_ci)  `
 object which is a
 named vector with the mean, lower confidence limit, and the upper confidence
 limit.   The printing method for
-``r  backtick(qwraps2_mean_ci)  ``
+`r  backtick(qwraps2_mean_ci)  `
 objects is a call to the
-``r  backtick(frmtci)  ``
+`r  backtick(frmtci)  `
 function.  You an modify the formatting of printed result by adjusting
 the arguments pasted to
-``r  paste0(backtick(frmtci), ".")  ``
+`r  paste0(backtick(frmtci), ".")  `
 
 ```{r}
 mci <- mean_ci(mtcars2$mpg)
@@ -122,9 +122,9 @@ print(mci, show_level = TRUE)
 ## Median and Inner Quartile Range
 
 Similar to the
-``r  backtick(mean_sd)  ``
+`r  backtick(mean_sd)  `
 function, the
-``r  backtick(median_iqr)  ``
+`r  backtick(median_iqr)  `
 returns the median and the inner quartile range (IQR) of a data vector.
 
 ```{r}
@@ -135,16 +135,16 @@ median_iqr(mtcars2$mpg)
 ## Count and Percentages
 
 The
-``r  backtick(n_perc)  ``
+`r  backtick(n_perc)  `
 function is the workhorse.
-``r  backtick(n_perc0)  ``
+`r  backtick(n_perc0)  `
 is also provided for ease of use in the same way that base R has
-``r  backtick(paste)  ``
+`r  backtick(paste)  `
 and
-``r  paste(backtick(paste0), ".")  ``
-``r  backtick(n_perc)  ``
+`r  paste(backtick(paste0), ".")  `
+`r  backtick(n_perc)  `
 returns the n (%) with the percentage sign in the string,
-``r  backtick(n_perc0)  ``
+`r  backtick(n_perc0)  `
 omits the percentage sign from the string.  The latter is good for tables,
 the former for in-line text.
 
@@ -194,13 +194,13 @@ $$
 $$
 
 When looking for the geometric standard deviation in R, the simple
-``r  backtick(exp(sd(log(x))))  ``
+`r  backtick(exp(sd(log(x))))  `
 is not exactly correct.  The geometric standard deviation
 uses $n,$ the full sample size, in the denominator, where as
 the
-``r  backtick(sd)  ``
+`r  backtick(sd)  `
 and
-``r  backtick(var)  ``
+`r  backtick(var)  `
 functions in R use the denominator $n - 1.$  To get
 the geometric standard deviation one should adjust the result by multiplying the
 variance by $(n - 1) / n$ or the standard deviation by $\sqrt{(n - 1) / n}.$
@@ -227,10 +227,10 @@ exp(sqrt((length(x) - 1) / length(x)) * sd(log(x)))
 
 
 The functions
-``r  paste0(backtick(gmean), ",")  ``
-``r  paste0(backtick(gvar), ",")  ``
+`r  paste0(backtick(gmean), ",")  `
+`r  paste0(backtick(gvar), ",")  `
 and
-``r  backtick(gsd)  ``
+`r  backtick(gsd)  `
 provide the geometric mean, variance, and standard deviation for a numeric
 vector.
 
@@ -247,10 +247,10 @@ all.equal(gsd(x), sigma_g)
 ```
 
 
-``r  backtick(gmean_sd)  ``
+`r  backtick(gmean_sd)  `
 will provide a quick way for reporting the geometric mean and
 geometric standard deviation in the same way that
-``r  backtick(mean_sd)  ``
+`r  backtick(mean_sd)  `
 does for the arithmetic mean and arithmetic standard deviation:
 
 ```{r}
@@ -264,8 +264,8 @@ gmean_sd(x)
 
 Objective: build a table reporting summary statistics for some of the variables
 in the
-``r  backtick(mtcars2)  ``
-`data.frame` overall and within subgroups.  We'll start with
+`r  backtick(mtcars2)  `
+data.frame overall and within subgroups.  We'll start with
 something very simple and build up to something bigger.
 
 Let's report the min, max, and mean (sd) for continuous variables and n (%) for
@@ -273,46 +273,46 @@ categorical variables.  We will report mpg, displacement (disp), wt (weight),
 and gear overall and by number of cylinders and transmission type.
 
 **END USER VISIBLE CHANGE:** for qwraps2 version before 0.4.2 the
-``r  backtick(summary_table)  ``
+`r  backtick(summary_table)  `
 method relied on
-``r  CRANpkg(dplyr)  ``
+`r  CRANpkg(dplyr)  `
 verbs for the implementation and end user specifications.  This created
 several limitations and required what could be considered a non-intuitive api
 due to the use of the rlang data pronoun
-``r  paste0(backtick(.data), ".")  ``
+`r  paste0(backtick(.data), ".")  `
 Building a table with the summary based on a grouping, e.g., mpg by number of
 cylinders, was achieved by the use of
-``r  backtick(dplyr::group_by)  ``
+`r  backtick(dplyr::group_by)  `
 to specify the group.  Further only one grouping variable was supported.
 Starting with version 0.5.0 the implementation of the
-``r  backtick(summary_table)  ``
+`r  backtick(summary_table)  `
 and
-``r  backtick(qsummary)  ``
+`r  backtick(qsummary)  `
 is based on base R methods.  The change in the implementation will make it
 easier for all users as the use of the tidyverse is no longer required or
 assumed.  The use of
-``r  backtick(dplyr::group_by)  ``
+`r  backtick(dplyr::group_by)  `
 is still supported, and has been improved.
 
 There are two changes to the API for defining summaries:
 1. Use of the rlang data pronoun
-``r  paste0(backtick(.data), ".")  ``
+`r  paste0(backtick(.data), ".")  `
 is no longer recommend / supported. Version 0.5.3 a warning will be given
 noting that the use of the pronoun _might_ result in unexpected behavior.
 2. A new function argument
-``r  backtick(by)  ``
+`r  backtick(by)  `
 as been added to the
-``r  backtick(summary_table)  ``
+`r  backtick(summary_table)  `
 method such that the use of
-``r  backtick(dplyr::group_by)  ``
+`r  backtick(dplyr::group_by)  `
 is no longer needed.
 
 The use of the
-``r  backtick(summary_table)  ``
+`r  backtick(summary_table)  `
 use to define a summary, that is, a list-of-lists of formulas for summarizing
 the data.frame.
 
-The inner lists are named `formula`e defining the wanted
+The inner lists are named formulae defining the wanted
 summary.  The names are important, as they are used to label row groups and row
 names in the table.
 
@@ -341,7 +341,7 @@ our_summary1 <-
 
 
 Building the table is done with a call to
-``r  backtick(summary_table)  ``
+`r  backtick(summary_table)  `
 
 
 ```{r results = "asis"}
@@ -358,7 +358,7 @@ by_cyl
 
 
 With the refactor of the
-``r  backtick(summary_table)  ``
+`r  backtick(summary_table)  `
 method in version 0.5.0 it is easier to group by multiple variables.  For
 example, getting a column for combination of cylinders and transmission type:
 
@@ -378,18 +378,18 @@ both
 
 
 If you want to change the column names, do so via the
-``r  backtick(cnames)  ``
+`r  backtick(cnames)  `
 argument to
-``r  backtick(qable)  ``
+`r  backtick(qable)  `
 via the print method for
-``r  backtick(qwraps2_summary_table)  ``
+`r  backtick(qwraps2_summary_table)  `
 objects.  Any argument
 that you want to send to
-``r  backtick(qable)  ``
+`r  backtick(qable)  `
  can be sent there when explicitly using the
-``r  backtick(print)  ``
+`r  backtick(print)  `
 method for
-``r  backtick(qwraps2_summary_table)  ``
+`r  backtick(qwraps2_summary_table)  `
 objects.
 
 ```{r results = "asis"}
@@ -402,29 +402,29 @@ print(both,
 ## Easy building of the summaries
 
 The task of building the
-``r  backtick(summaries)  ``
+`r  backtick(summaries)  `
 list-of-lists can be tedious. The function
-``r  backtick(qummaries)  ``
+`r  backtick(qummaries)  `
 is designed to make it easier.
-``r  backtick(qummaries)  ``
+`r  backtick(qummaries)  `
 will use a set of predefined
 functions to summarize numeric columns of a data.frame, a set of arguments
 to pass to
-``r  backtick(n_perc)  ``
+`r  backtick(n_perc)  `
 for categorical (character and factor) variables.
 
 By default, calling
-``r  backtick(summary_table)  ``
+`r  backtick(summary_table)  `
 will use the default summary metrics
 defined by
-``r  paste0(backtick(qsummary), ".")  ``
+`r  paste0(backtick(qsummary), ".")  `
 The purpose of
-``r  backtick(qsummary)  ``
+`r  backtick(qsummary)  `
 is to provide the same
 summary for all numeric variables within a data.frame and a single style of
 summary for categorical variables within the data.frame.  For example, the
 default summary for a set of variables from the
-``r  backtick(mtcars2)  ``
+`r  backtick(mtcars2)  `
 data set is
 
 ```{r}
@@ -444,7 +444,9 @@ numeric variables and for the categorical variables we want two show the
 denominator for each category and for the percentage, to one digit with the
 percent symbol in the table.
 Note that when defining the list of numeric_summaries that the argument place
-holder is the `%s` character.
+holder is the
+`r  backtick("%s%", dequote = TRUE)  `
+character.
 
 ```{r}
 new_summary <-
@@ -464,7 +466,7 @@ summary_table(mtcars2, new_summary)
 
 
 The summary can easily be used with a
-``r  backtick(by)  ``
+`r  backtick(by)  `
 argument
 
 ```{r results = "asis"}
@@ -479,16 +481,16 @@ summary_table(mtcars2, new_summary, by = c("cyl_factor"))
 Starting with qwraps2 version 0.6, the task of adding p-values to a summary
 table has been made considerably easier.  This is due to a change in how the
 function
-``r  backtick(qable)  ``
+`r  backtick(qable)  `
 generated the structured matrix.  Older versions of
-``r  backtick(qable)  ``
+`r  backtick(qable)  `
 generated a structured matrix and passed that matrix to
-``r  backtick(knitr::kable)  ``
+`r  backtick(knitr::kable)  `
 and returned the formatted character string.  In version 0.6
-``r  backtick(qable)  ``
+`r  backtick(qable)  `
 was changed to return the structured matrix and a separate print method was
 added to make the call to
-``r  backtick(knitr::kable) %s% "." ``
+`r  backtick(knitr::kable) %s% "." `
 
 There are many different ways to format data summary tables. Adding
 p-values to a table is just one thing that can be done in more than one way.
@@ -506,9 +508,9 @@ to be ad hoc.  Perhaps an additional column wouldn't be used and the p-values
 are edited into row group labels, for example.
 
 If you want to add a p-value column to a
-``r  backtick(qwraps2_summary_table)  ``
+`r  backtick(qwraps2_summary_table)  `
 object you can with some degree of ease.  Note that
-``r  backtick(qwraps2_summary_table)  ``
+`r  backtick(qwraps2_summary_table)  `
 objects are just character matrices.
 
 ```{r}
@@ -579,9 +581,9 @@ summary_table(mtcars2, gear_summary, by = "cyl_factor")
 
 Some data management paradigms will use attributes to keep a label associated
 with a variable in a data.frame.  Notable examples are the
-``r  CRANpkg(Hmisc)  ``
+`r  CRANpkg(Hmisc)  `
 and
-``r  paste0(CRANpkg(sjPlot), ".")  ``
+`r  paste0(CRANpkg(sjPlot), ".")  `
 If you associate a label with a variable in the data frame the that label
 will be used when building a summary table.  This feature was suggested
 https://github.com/dewittpe/qwraps2/issues/74 and implemented thusly:
@@ -602,7 +604,7 @@ attr(new_data_frame$edu, "name") <- "Education"
 
 
 When calling
-``r  backtick(qsummary)  ``
+`r  backtick(qsummary)  `
 the provide labels for the age and rt variables will
 be used.  Since the attribute "label" does not exist for the edu variable,
 edu will be used in the output.
@@ -612,13 +614,13 @@ qsummary(new_data_frame)
 ```
 
 
-This behavior is also seen with the `summary_table` call
+This behavior is also seen with the
+`r  backtick(summary_table)  `
+call.
 
 ```{r results = "asis"}
 summary_table(new_data_frame)
 ```
-
-
 
 
 

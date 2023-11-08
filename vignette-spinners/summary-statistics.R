@@ -246,7 +246,7 @@ gmean_sd(x)
 #' Objective: build a table reporting summary statistics for some of the variables
 #' in the
 {{ backtick(mtcars2) }}
-#' `data.frame` overall and within subgroups.  We'll start with
+#' data.frame overall and within subgroups.  We'll start with
 #' something very simple and build up to something bigger.
 #'
 #' Let's report the min, max, and mean (sd) for continuous variables and n (%) for
@@ -293,7 +293,7 @@ gmean_sd(x)
 #' use to define a summary, that is, a list-of-lists of formulas for summarizing
 #' the data.frame.
 #'
-#' The inner lists are named `formula`e defining the wanted
+#' The inner lists are named formulae defining the wanted
 #' summary.  The names are important, as they are used to label row groups and row
 #' names in the table.
 #'
@@ -409,7 +409,9 @@ summary_table(mtcars2[, c("mpg", "cyl_factor", "wt")])
 #' denominator for each category and for the percentage, to one digit with the
 #' percent symbol in the table.
 #' Note that when defining the list of numeric_summaries that the argument place
-#' holder is the `%s` character.
+#' holder is the
+{{ backtick("%s%", dequote = TRUE) }}
+#' character.
 new_summary <-
   qsummary(mtcars2[, c("mpg", "cyl_factor", "wt")],
            numeric_summaries = list("Minimum" = "~ min(%s)",
@@ -552,19 +554,14 @@ attr(new_data_frame$edu, "name") <- "Education"
 qsummary(new_data_frame)
 
 #'
-#' This behavior is also seen with the `summary_table` call
+#' This behavior is also seen with the
+{{ backtick(summary_table) }}
+#' call.
 #+ results = "asis"
 summary_table(new_data_frame)
 
 #'
 #'
-#'
-#'
 #' # Session Info
 #'
 print(sessionInfo(), local = FALSE)
-
-
-
-
-
