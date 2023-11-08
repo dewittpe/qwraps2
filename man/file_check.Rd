@@ -58,9 +58,25 @@ c("silent")} to silence the warnings.
 \examples{
 # create example files
 
-relative_example_file1 <- basename(tempfile(pattern = "QWRAPS2_EXAMPLE_1", fileext = ".txt", tmpdir = getwd()))
-relative_example_file2 <- basename(tempfile(pattern = "QWRAPS2_EXAMPLE_2", fileext = ".txt", tmpdir = getwd()))
-absolute_example_file  <- tempfile()
+relative_example_file1 <-
+  basename(
+    tempfile(
+      pattern = "QWRAPS2_EXAMPLE_1"
+      , fileext = ".txt"
+      , tmpdir = getwd()
+    )
+  )
+
+relative_example_file2 <-
+  basename(
+    tempfile(
+      pattern = "QWRAPS2_EXAMPLE_2"
+      , fileext = ".txt"
+      , tmpdir = getwd()
+    )
+  )
+
+absolute_example_file <- tempfile()
 
 cat("example file.", file = relative_example_file1)
 cat("Another example file.", file = relative_example_file2)
@@ -81,17 +97,26 @@ test2 <- file_check(absolute_example_file, absolute_paths = "silent")
 test2
 
 # Case Match
-test_case_match <- file_check(c(relative_example_file1, tolower(relative_example_file1)))
+test_case_match <-
+  file_check(
+    c(relative_example_file1, tolower(relative_example_file1))
+  )
 test_case_match
 
 # If one or more files is not accessable then return is FALSE and the meta data
 # is printed by default.
-test_non_existent_file <- file_check(c("UNLIKELYFILENAME", relative_example_file1, relative_example_file2))
+test_non_existent_file <-
+  file_check(
+    c("UNLIKELYFILENAME", relative_example_file1, relative_example_file2)
+  )
 test_non_existent_file
 
 # Or have an error thrown:
 \dontrun{
-file_check(c("UNLIKELYFILENAME", relative_example_file1, relative_example_file2), stop = TRUE)
+file_check(
+  c("UNLIKELYFILENAME", relative_example_file1, relative_example_file2)
+, stop = TRUE
+)
 }
 
 # Verify the md5sums as well as file access:
