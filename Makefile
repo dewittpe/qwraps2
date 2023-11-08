@@ -26,6 +26,7 @@ TESTS     = $(wildcard $(PKG_ROOT)/tests/*.R)
 VIGNETTES  = $(PKG_ROOT)/vignettes/qwraps2-formatted-summary-statistics.Rmd
 VIGNETTES += $(PKG_ROOT)/vignettes/qwraps2-data-sets.Rmd
 VIGNETTES += $(PKG_ROOT)/vignettes/qwraps2-graphics.Rmd
+VIGNETTES += $(PKG_ROOT)/vignettes/qwraps2-summary-table.Rmd
 
 ## Data targets
 DATATARGETS  = $(PKG_ROOT)/data/mtcars2.rda
