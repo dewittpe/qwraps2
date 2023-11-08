@@ -1,12 +1,12 @@
 ---
-title: "Formatted Summary Statistics and Data Summary Tables with qwraps2"
+title: "qwraps2 Formatted Summary Statistics"
 author: "Peter E. DeWitt"
 output:
  rmarkdown::html_vignette:
    toc: true
    number_sections: true
 vignette: >
- %\VignetteIndexEntry{Formatted Summary Statistics and Data Summary Tables with qwraps2}
+ %\VignetteIndexEntry{qwraps2 Formatted Summary Statistics}
  %\VignetteEngine{knitr::rmarkdown}
  %\VignetteEncoding{UTF-8}
 ---

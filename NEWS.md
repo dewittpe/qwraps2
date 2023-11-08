@@ -13,6 +13,8 @@
 * `summary_table` has gained two arguments, `qable_args` and `kable_args` to
   help with passing through arguments and being able to use the features of
   knitr::kable (#84)
+* vignettes have been renamed to have a consistent "qwraps2-<topic>" structure.
+* `summary_table` has it's own vignette.
 
 ## New Features
 
