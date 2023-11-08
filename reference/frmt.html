@@ -284,24 +284,24 @@ package.</p>
 <span class="r-in"><span><span class="va">temp2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">12</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">4</span>,</span></span>
 <span class="r-in"><span>                dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"EST"</span>, <span class="st">"LOW"</span>, <span class="st">"HIGH"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">temp2</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          EST        LOW       HIGH</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A -0.8663196  1.6700752 -1.5890144</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> B  1.5891208  0.1454909  0.2939827</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> C  0.6405257 -1.3568923 -0.2495927</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> D -1.2902595  0.1928430 -0.3055251</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          EST        LOW        HIGH</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A -0.9140364  0.6957120 -1.09830765</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B  0.7094780  0.7782867 -0.55566040</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> C  2.1680700 -0.4760758 -0.03228974</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> D -0.3158930  2.5355102 -0.51440997</span>
 <span class="r-in"><span><span class="fu">frmtci</span><span class="op">(</span><span class="va">temp2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     A                     B                     C </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "-0.87 (1.67, -1.59)"   "1.59 (0.15, 0.29)" "0.64 (-1.36, -0.25)" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "-0.91 (0.70, -1.10)"  "0.71 (0.78, -0.56)" "2.17 (-0.48, -0.03)" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     D </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "-1.29 (0.19, -0.31)" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "-0.32 (2.54, -0.51)" </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># similar for a data.frame</span></span></span>
 <span class="r-in"><span><span class="va">df2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">temp2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">frmtci</span><span class="op">(</span><span class="va">df2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     A                     B                     C </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "-0.87 (1.67, -1.59)"   "1.59 (0.15, 0.29)" "0.64 (-1.36, -0.25)" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "-0.91 (0.70, -1.10)"  "0.71 (0.78, -0.56)" "2.17 (-0.48, -0.03)" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     D </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "-1.29 (0.19, -0.31)" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "-0.32 (2.54, -0.51)" </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

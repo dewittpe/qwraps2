@@ -74,7 +74,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Graphics in qwraps2</h1>
-                        <h4 data-toc-skip class="author">Peter
+                        <h4 data-toc-skip class="author">Peter E.
 DeWitt</h4>
             
       
@@ -271,146 +271,139 @@ these graphics have been fundamentally changed as part of a major
 refactor of the <code>confusion_matrix</code> method which replaces a
 lot of the code that <code>qroc</code> and <code>qprc</code> were built
 on.</p>
-<p>Let’s start with an example of having two models for predicting if
-the price of a diamond exceeds $2,800.</p>
+<p>For this work we will consider a couple models for categorizing email
+and spam or not based on the Spambase <span class="citation">[@spambase]</span> data. More details on this data set
+can be found in the
+<code><a href="../articles/qwraps2-data-sets.html">vignette("qwraps2-data-sets", package = "qwraps2")</a></code></p>
+<p>Start by defining a training and validation splits of the spambase
+data</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">diamonds</span>, package <span class="op">=</span> <span class="st">"ggplot2"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Create two logistic regression models</span></span>
-<span><span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">price</span> <span class="op">&gt;</span> <span class="fl">2800</span><span class="op">)</span> <span class="op">~</span> <span class="va">cut</span> <span class="op">*</span> <span class="va">color</span>, data <span class="op">=</span> <span class="va">diamonds</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">price</span> <span class="op">&gt;</span> <span class="fl">2800</span><span class="op">)</span> <span class="op">~</span> <span class="va">cut</span> <span class="op">+</span> <span class="va">color</span> <span class="op">+</span> <span class="va">clarity</span>, data <span class="op">=</span> <span class="va">diamonds</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>To build ROC and/or PRC plots start by building the confusion matrix
-for each</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
+<span><span class="va">tidx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">spambase</span><span class="op">)</span><span class="op">)</span> <span class="op">&lt;=</span> <span class="fl">0.80</span></span>
+<span><span class="va">xidx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">spambase</span><span class="op">)</span> <span class="op">!=</span> <span class="st">"spam"</span><span class="op">)</span></span>
+<span><span class="va">yidx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">spambase</span><span class="op">)</span> <span class="op">==</span> <span class="st">"spam"</span><span class="op">)</span></span>
+<span><span class="va">training_set</span>   <span class="op">&lt;-</span> <span class="va">spambase</span><span class="op">[</span><span class="va">tidx</span>, <span class="op">]</span></span>
+<span><span class="va">validating_set</span> <span class="op">&lt;-</span> <span class="va">spambase</span><span class="op">[</span><span class="op">!</span><span class="va">tidx</span>, <span class="op">]</span></span></code></pre></div>
+<p>Train a few models:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/confusion_matrix.html">confusion_matrix</a></span><span class="op">(</span>truth <span class="op">=</span> <span class="va">diamonds</span><span class="op">$</span><span class="va">price</span> <span class="op">&gt;</span> <span class="fl">2800</span>, predicted <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">fit1</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">cm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/confusion_matrix.html">confusion_matrix</a></span><span class="op">(</span>truth <span class="op">=</span> <span class="va">diamonds</span><span class="op">$</span><span class="va">price</span> <span class="op">&gt;</span> <span class="fl">2800</span>, predicted <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">fit2</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Calling <code>confusion_matrix</code> will generate list object with
-the need plotting data and other results.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cm1</span><span class="op">)</span></span>
-<span><span class="co">## List of 8</span></span>
-<span><span class="co">##  $ cm_stats      :'data.frame':  38 obs. of  23 variables:</span></span>
-<span><span class="co">##   ..$ threshold      : num [1:38] -Inf 0.275 0.275 0.277 0.35 ...</span></span>
-<span><span class="co">##   ..$ TP             : int [1:38] 24705 24705 23632 23632 22848 21507 19647 18693 17752 17062 ...</span></span>
-<span><span class="co">##   ..$ TN             : int [1:38] 0 0 2829 2830 4880 7365 10389 11835 13231 14144 ...</span></span>
-<span><span class="co">##   ..$ FP             : int [1:38] 29235 29235 26406 26405 24355 21870 18846 17400 16004 15091 ...</span></span>
-<span><span class="co">##   ..$ FN             : int [1:38] 0 0 1073 1073 1857 3198 5058 6012 6953 7643 ...</span></span>
-<span><span class="co">##   ..$ sensitivity    : num [1:38] 1 1 0.957 0.957 0.925 ...</span></span>
-<span><span class="co">##   ..$ sensitivity_lcl: num [1:38] NaN NaN 0.954 0.954 0.921 ...</span></span>
-<span><span class="co">##   ..$ sensitivity_ucl: num [1:38] 1 1 0.959 0.959 0.928 ...</span></span>
-<span><span class="co">##   ..$ specificity    : num [1:38] 0 0 0.0968 0.0968 0.1669 ...</span></span>
-<span><span class="co">##   ..$ specificity_lcl: num [1:38] 0 0 0.0934 0.0935 0.1627 ...</span></span>
-<span><span class="co">##   ..$ specificity_ucl: num [1:38] NaN NaN 0.1 0.1 0.171 ...</span></span>
-<span><span class="co">##   ..$ ppv            : num [1:38] 0.458 0.458 0.472 0.472 0.484 ...</span></span>
-<span><span class="co">##   ..$ ppv_lcl        : num [1:38] 0.454 0.454 0.468 0.468 0.48 ...</span></span>
-<span><span class="co">##   ..$ ppv_ucl        : num [1:38] 0.462 0.462 0.477 0.477 0.489 ...</span></span>
-<span><span class="co">##   ..$ npv            : num [1:38] NaN NaN 0.725 0.725 0.724 ...</span></span>
-<span><span class="co">##   ..$ npv_lcl        : num [1:38] NaN NaN 0.711 0.711 0.714 ...</span></span>
-<span><span class="co">##   ..$ npv_ucl        : num [1:38] NaN NaN 0.739 0.739 0.735 ...</span></span>
-<span><span class="co">##   ..$ accuracy       : num [1:38] 0.458 0.458 0.491 0.491 0.514 ...</span></span>
-<span><span class="co">##   ..$ accuracy_lcl   : num [1:38] 0.454 0.454 0.486 0.486 0.51 ...</span></span>
-<span><span class="co">##   ..$ accuracy_ucl   : num [1:38] 0.462 0.462 0.495 0.495 0.518 ...</span></span>
-<span><span class="co">##   ..$ youden         : num [1:38] 0 0 0.0533 0.0534 0.0918 ...</span></span>
-<span><span class="co">##   ..$ mcc            : num [1:38] NA NA 0.103 0.103 0.138 ...</span></span>
-<span><span class="co">##   ..$ f1             : num [1:38] 0.628 0.628 0.632 0.632 0.635 ...</span></span>
-<span><span class="co">##  $ auroc         : num 0.627</span></span>
-<span><span class="co">##  $ auroc_ci      : num [1:2] 0.623 0.631</span></span>
-<span><span class="co">##  $ auprc         : num 0.567</span></span>
-<span><span class="co">##  $ auprc_ci      : num [1:2] 0.563 0.572</span></span>
-<span><span class="co">##  $ confint_method: chr "logit"</span></span>
-<span><span class="co">##  $ alpha         : num 0.05</span></span>
-<span><span class="co">##  $ prevalence    : num 0.458</span></span>
-<span><span class="co">##  - attr(*, "class")= chr "qwraps2_confusion_matrix"</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cm2</span><span class="op">)</span></span>
-<span><span class="co">## List of 8</span></span>
-<span><span class="co">##  $ cm_stats      :'data.frame':  279 obs. of  23 variables:</span></span>
-<span><span class="co">##   ..$ threshold      : num [1:279] -Inf 0.122 0.122 0.122 0.125 ...</span></span>
-<span><span class="co">##   ..$ TP             : int [1:279] 24705 24705 24705 24652 24638 24594 24574 24543 24524 24518 ...</span></span>
-<span><span class="co">##   ..$ TN             : int [1:279] 0 0 1 282 347 447 455 594 618 655 ...</span></span>
-<span><span class="co">##   ..$ FP             : int [1:279] 29235 29235 29234 28953 28888 28788 28780 28641 28617 28580 ...</span></span>
-<span><span class="co">##   ..$ FN             : int [1:279] 0 0 0 53 67 111 131 162 181 187 ...</span></span>
-<span><span class="co">##   ..$ sensitivity    : num [1:279] 1 1 1 0.998 0.997 ...</span></span>
-<span><span class="co">##   ..$ sensitivity_lcl: num [1:279] NaN NaN NaN 0.997 0.997 ...</span></span>
-<span><span class="co">##   ..$ sensitivity_ucl: num [1:279] 1 1 1 0.998 0.998 ...</span></span>
-<span><span class="co">##   ..$ specificity    : num [1:279] 0.00 0.00 3.42e-05 9.65e-03 1.19e-02 ...</span></span>
-<span><span class="co">##   ..$ specificity_lcl: num [1:279] 0.00 0.00 4.82e-06 8.59e-03 1.07e-02 ...</span></span>
-<span><span class="co">##   ..$ specificity_ucl: num [1:279] NaN NaN 0.000243 0.010833 0.013177 ...</span></span>
-<span><span class="co">##   ..$ ppv            : num [1:279] 0.458 0.458 0.458 0.46 0.46 ...</span></span>
-<span><span class="co">##   ..$ ppv_lcl        : num [1:279] 0.454 0.454 0.454 0.456 0.456 ...</span></span>
-<span><span class="co">##   ..$ ppv_ucl        : num [1:279] 0.462 0.462 0.462 0.464 0.465 ...</span></span>
-<span><span class="co">##   ..$ npv            : num [1:279] NaN NaN 1 0.842 0.838 ...</span></span>
-<span><span class="co">##   ..$ npv_lcl        : num [1:279] NaN NaN NaN 0.799 0.799 ...</span></span>
-<span><span class="co">##   ..$ npv_ucl        : num [1:279] NaN NaN 1 0.877 0.871 ...</span></span>
-<span><span class="co">##   ..$ accuracy       : num [1:279] 0.458 0.458 0.458 0.462 0.463 ...</span></span>
-<span><span class="co">##   ..$ accuracy_lcl   : num [1:279] 0.454 0.454 0.454 0.458 0.459 ...</span></span>
-<span><span class="co">##   ..$ accuracy_ucl   : num [1:279] 0.462 0.462 0.462 0.466 0.467 ...</span></span>
-<span><span class="co">##   ..$ youden         : num [1:279] 0.00 0.00 3.42e-05 7.50e-03 9.16e-03 ...</span></span>
-<span><span class="co">##   ..$ mcc            : num [1:279] NA NA 0.00396 0.04757 0.05228 ...</span></span>
-<span><span class="co">##   ..$ f1             : num [1:279] 0.628 0.628 0.628 0.63 0.63 ...</span></span>
-<span><span class="co">##  $ auroc         : num 0.689</span></span>
-<span><span class="co">##  $ auroc_ci      : num [1:2] 0.685 0.693</span></span>
-<span><span class="co">##  $ auprc         : num 0.645</span></span>
-<span><span class="co">##  $ auprc_ci      : num [1:2] 0.641 0.649</span></span>
-<span><span class="co">##  $ confint_method: chr "logit"</span></span>
-<span><span class="co">##  $ alpha         : num 0.05</span></span>
-<span><span class="co">##  $ prevalence    : num 0.458</span></span>
-<span><span class="co">##  - attr(*, "class")= chr "qwraps2_confusion_matrix"</span></span></code></pre></div>
-<p>Plotting ROC can be done by calling <code>qroc</code></p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/qroc-qprc.html">qroc</a></span><span class="op">(</span><span class="va">cm2</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
-<p>The plots generated a ggplot2 plots and can be modified like any
-other ggplot2 plot, for example</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Add the AUC value to the plot title</span></span>
-<span><span class="fu"><a href="../reference/qroc-qprc.html">qroc</a></span><span class="op">(</span><span class="va">cm2</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Fit 2"</span>, subtitle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"AUROC ="</span>, <span class="fu"><a href="../reference/frmt.html">frmt</a></span><span class="op">(</span><span class="va">cm2</span><span class="op">$</span><span class="va">auroc</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
-<p>You can also use the results to build up a data set for plotting
-multiple curves together.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">plot_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>Model <span class="op">=</span> <span class="st">"fit1"</span>, <span class="va">cm1</span><span class="op">$</span><span class="va">cm_stats</span><span class="op">)</span>,</span>
-<span>                   <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>Model <span class="op">=</span> <span class="st">"fit2"</span>, <span class="va">cm2</span><span class="op">$</span><span class="va">cm_stats</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/qroc-qprc.html">qroc</a></span><span class="op">(</span><span class="va">plot_data</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">Model</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="co"># with AUC in the legend</span></span>
-<span><span class="va">plot_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>Model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Fit1\nAUROC ="</span>, <span class="fu"><a href="../reference/frmt.html">frmt</a></span><span class="op">(</span><span class="va">cm1</span><span class="op">$</span><span class="va">auroc</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>, <span class="va">cm1</span><span class="op">$</span><span class="va">cm_stats</span><span class="op">)</span>,</span>
-<span>                   <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>Model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Fit2\nAUROC ="</span>, <span class="fu"><a href="../reference/frmt.html">frmt</a></span><span class="op">(</span><span class="va">cm2</span><span class="op">$</span><span class="va">auroc</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>, <span class="va">cm2</span><span class="op">$</span><span class="va">cm_stats</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/qroc-qprc.html">qroc</a></span><span class="op">(</span><span class="va">plot_data</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">Model</span>, linetype <span class="op">=</span> <span class="va">Model</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position   <span class="op">=</span> <span class="st">"bottom"</span>,</span>
-<span>                 legend.text.align <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-18-2.png" width="700"></p>
-<p>Building PRC plots is similar, just use prc instead of roc in all the
-above calls.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/qroc-qprc.html">qprc</a></span><span class="op">(</span><span class="va">cm1</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/qroc-qprc.html">qprc</a></span><span class="op">(</span><span class="va">cm2</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Fit 2"</span>, subtitle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"AUPRC ="</span>, <span class="fu"><a href="../reference/frmt.html">frmt</a></span><span class="op">(</span><span class="va">cm2</span><span class="op">$</span><span class="va">auprc</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-19-2.png" width="700"></p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/qroc-qprc.html">qprc</a></span><span class="op">(</span><span class="va">plot_data</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">Model</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-19-3.png" width="700"></p>
-<p>One caveat for plotting multiple PRC on one plot is that you’ll need
-to specify the prevalence value to plot.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">plot_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>Model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Fit1\nAUPRC ="</span>, <span class="fu"><a href="../reference/frmt.html">frmt</a></span><span class="op">(</span><span class="va">cm1</span><span class="op">$</span><span class="va">auprc</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>, <span class="va">cm1</span><span class="op">$</span><span class="va">cm_stats</span><span class="op">)</span>,</span>
-<span>                   <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>Model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Fit2\nAUPRC ="</span>, <span class="fu"><a href="../reference/frmt.html">frmt</a></span><span class="op">(</span><span class="va">cm2</span><span class="op">$</span><span class="va">auprc</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>, <span class="va">cm2</span><span class="op">$</span><span class="va">cm_stats</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">logistic_model</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span></span>
+<span>    <span class="va">spam</span> <span class="op">~</span> <span class="va">.</span></span>
+<span>  , data <span class="op">=</span> <span class="va">training_set</span></span>
+<span>  , family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/qroc-qprc.html">qprc</a></span><span class="op">(</span><span class="va">plot_data</span>, prevalence <span class="op">=</span> <span class="va">cm1</span><span class="op">$</span><span class="va">prevalence</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">Model</span>, linetype <span class="op">=</span> <span class="va">Model</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position   <span class="op">=</span> <span class="st">"bottom"</span>,</span>
-<span>                 legend.text.align <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-20-1.png" width="700"></p>
+<span><span class="va">ridge_model</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">glmnet</span><span class="fu">::</span><span class="fu"><a href="https://glmnet.stanford.edu/reference/cv.glmnet.html" class="external-link">cv.glmnet</a></span><span class="op">(</span></span>
+<span>    y <span class="op">=</span> <span class="va">training_set</span><span class="op">[</span>, <span class="va">yidx</span><span class="op">]</span></span>
+<span>  , x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">training_set</span><span class="op">[</span>, <span class="va">xidx</span><span class="op">]</span><span class="op">)</span></span>
+<span>  , family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  , alpha <span class="op">=</span> <span class="fl">0</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">lasso_model</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">glmnet</span><span class="fu">::</span><span class="fu"><a href="https://glmnet.stanford.edu/reference/cv.glmnet.html" class="external-link">cv.glmnet</a></span><span class="op">(</span></span>
+<span>    y <span class="op">=</span> <span class="va">training_set</span><span class="op">[</span>, <span class="va">yidx</span><span class="op">]</span></span>
+<span>  , x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">training_set</span><span class="op">[</span>, <span class="va">xidx</span><span class="op">]</span><span class="op">)</span></span>
+<span>  , family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  , alpha <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>Generate the predicted values on the validaiton set:</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">validating_set</span><span class="op">$</span><span class="va">logistic_model_prediction</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span></span>
+<span>    <span class="va">logistic_model</span></span>
+<span>  , newdata <span class="op">=</span> <span class="va">validating_set</span></span>
+<span>  , type <span class="op">=</span> <span class="st">"response"</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">validating_set</span><span class="op">$</span><span class="va">ridge_model_prediction</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span></span>
+<span>      <span class="va">ridge_model</span></span>
+<span>    , newx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">validating_set</span><span class="op">[</span>, <span class="va">xidx</span><span class="op">]</span><span class="op">)</span></span>
+<span>    , type <span class="op">=</span> <span class="st">"response"</span></span>
+<span>    , s <span class="op">=</span> <span class="st">"lambda.1se"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">validating_set</span><span class="op">$</span><span class="va">lasso_model_prediction</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span></span>
+<span>      <span class="va">lasso_model</span></span>
+<span>    , newx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">validating_set</span><span class="op">[</span>, <span class="va">xidx</span><span class="op">]</span><span class="op">)</span></span>
+<span>    , type <span class="op">=</span> <span class="st">"response"</span></span>
+<span>    , s <span class="op">=</span> <span class="st">"lambda.1se"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>To build ROC and/or PRC plots start by building the confusion matrix
+for each model. The qwraps2 function <code>confusion_matrix</code> makes
+this easy.</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/confusion_matrix.html">confusion_matrix</a></span><span class="op">(</span><span class="va">spam</span> <span class="op">~</span> <span class="va">logistic_model_prediction</span>, data <span class="op">=</span> <span class="va">validating_set</span><span class="op">)</span></span>
+<span><span class="va">cm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/confusion_matrix.html">confusion_matrix</a></span><span class="op">(</span><span class="va">spam</span> <span class="op">~</span> <span class="va">ridge_model_prediction</span>, data <span class="op">=</span> <span class="va">validating_set</span><span class="op">)</span></span>
+<span><span class="va">cm3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/confusion_matrix.html">confusion_matrix</a></span><span class="op">(</span><span class="va">spam</span> <span class="op">~</span> <span class="va">lasso_model_prediction</span>, data <span class="op">=</span> <span class="va">validating_set</span><span class="op">)</span></span></code></pre></div>
+<p>The ROC and PRC plots are ggplot objects and can be modified as you
+would any other ggplot object.</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/qroc-qprc.html">qroc</a></span><span class="op">(</span><span class="va">cm1</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Logisitic Model"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/qroc-qprc.html">qroc</a></span><span class="op">(</span><span class="va">cm2</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Ridge Regression Model"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-17-2.png" width="700"></p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/qroc-qprc.html">qroc</a></span><span class="op">(</span><span class="va">cm3</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"LASSO Regression Model"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-17-3.png" width="700"></p>
+<p>Graphing all three curves in one image with AUROC in the legend:</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">roc_plot_data</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>Model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Logisitic; AUROC ="</span>, <span class="fu"><a href="../reference/frmt.html">frmt</a></span><span class="op">(</span><span class="va">cm1</span><span class="op">$</span><span class="va">auroc</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>, <span class="va">cm1</span><span class="op">$</span><span class="va">cm_stats</span><span class="op">)</span></span>
+<span>    , <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>Model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Ridge; AUROC ="</span>,     <span class="fu"><a href="../reference/frmt.html">frmt</a></span><span class="op">(</span><span class="va">cm2</span><span class="op">$</span><span class="va">auroc</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>, <span class="va">cm2</span><span class="op">$</span><span class="va">cm_stats</span><span class="op">)</span></span>
+<span>    , <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>Model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"LASSO; AUROC ="</span>,     <span class="fu"><a href="../reference/frmt.html">frmt</a></span><span class="op">(</span><span class="va">cm3</span><span class="op">$</span><span class="va">auroc</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>, <span class="va">cm3</span><span class="op">$</span><span class="va">cm_stats</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/qroc-qprc.html">qroc</a></span><span class="op">(</span><span class="va">roc_plot_data</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">Model</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
+<p>Similar for PRC:</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/qroc-qprc.html">qprc</a></span><span class="op">(</span><span class="va">cm1</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Logisitic Model"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/qroc-qprc.html">qprc</a></span><span class="op">(</span><span class="va">cm2</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Ridge Regression Model"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-19-2.png" width="700"></p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/qroc-qprc.html">qprc</a></span><span class="op">(</span><span class="va">cm3</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"LASSO Regression Model"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-19-3.png" width="700"></p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">prc_plot_data</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>Model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Logisitic; AUPRC ="</span>, <span class="fu"><a href="../reference/frmt.html">frmt</a></span><span class="op">(</span><span class="va">cm1</span><span class="op">$</span><span class="va">auprc</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>, <span class="va">cm1</span><span class="op">$</span><span class="va">cm_stats</span><span class="op">)</span></span>
+<span>    , <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>Model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Ridge; AUPRC ="</span>,     <span class="fu"><a href="../reference/frmt.html">frmt</a></span><span class="op">(</span><span class="va">cm2</span><span class="op">$</span><span class="va">auprc</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>, <span class="va">cm2</span><span class="op">$</span><span class="va">cm_stats</span><span class="op">)</span></span>
+<span>    , <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>Model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"LASSO; AUPRC ="</span>,     <span class="fu"><a href="../reference/frmt.html">frmt</a></span><span class="op">(</span><span class="va">cm3</span><span class="op">$</span><span class="va">auprc</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>, <span class="va">cm3</span><span class="op">$</span><span class="va">cm_stats</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/qroc-qprc.html">qprc</a></span><span class="op">(</span><span class="va">prc_plot_data</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">Model</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="va">cm1</span><span class="op">$</span><span class="va">prevalence</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-19-4.png" width="700"></p>
+</div>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<div id="refs">
+
+</div>
 </div>
 <div class="section level2">
 <h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">## R version 4.3.2 (2023-10-31)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
@@ -436,20 +429,21 @@ to specify the prevalence value to plot.</p>
 <span><span class="co">## [1] survival_3.5-7 qwraps2_0.6.0 </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##  [1] sass_0.4.7        utf8_1.2.4        generics_0.1.3    stringi_1.7.12   </span></span>
-<span><span class="co">##  [5] lattice_0.21-9    digest_0.6.33     magrittr_2.0.3    evaluate_0.23    </span></span>
-<span><span class="co">##  [9] grid_4.3.2        fastmap_1.1.1     rprojroot_2.0.4   jsonlite_1.8.7   </span></span>
-<span><span class="co">## [13] Matrix_1.6-1.1    purrr_1.0.2       fansi_1.0.5       scales_1.2.1     </span></span>
-<span><span class="co">## [17] textshaping_0.3.7 jquerylib_0.1.4   cli_3.6.1         rlang_1.1.2      </span></span>
-<span><span class="co">## [21] munsell_0.5.0     splines_4.3.2     withr_2.5.2       cachem_1.0.8     </span></span>
-<span><span class="co">## [25] yaml_2.3.7        tools_4.3.2       memoise_2.0.1     dplyr_1.1.3      </span></span>
-<span><span class="co">## [29] colorspace_2.1-0  ggplot2_3.4.4     vctrs_0.6.4       R6_2.5.1         </span></span>
-<span><span class="co">## [33] lifecycle_1.0.4   stringr_1.5.0     fs_1.6.3          ragg_1.2.6       </span></span>
-<span><span class="co">## [37] pkgconfig_2.0.3   desc_1.4.2        pkgdown_2.0.7     pillar_1.9.0     </span></span>
-<span><span class="co">## [41] bslib_0.5.1       gtable_0.3.4      glue_1.6.2        Rcpp_1.0.11      </span></span>
-<span><span class="co">## [45] systemfonts_1.0.5 xfun_0.41         tibble_3.2.1      tidyselect_1.2.0 </span></span>
-<span><span class="co">## [49] highr_0.10        knitr_1.45        farver_2.1.1      htmltools_0.5.7  </span></span>
-<span><span class="co">## [53] rmarkdown_2.25    labeling_0.4.3    compiler_4.3.2</span></span></code></pre></div>
+<span><span class="co">##  [1] sass_0.4.7        utf8_1.2.4        generics_0.1.3    shape_1.4.6      </span></span>
+<span><span class="co">##  [5] stringi_1.7.12    lattice_0.21-9    digest_0.6.33     magrittr_2.0.3   </span></span>
+<span><span class="co">##  [9] evaluate_0.23     grid_4.3.2        iterators_1.0.14  fastmap_1.1.1    </span></span>
+<span><span class="co">## [13] foreach_1.5.2     glmnet_4.1-8      rprojroot_2.0.4   jsonlite_1.8.7   </span></span>
+<span><span class="co">## [17] Matrix_1.6-1.1    purrr_1.0.2       fansi_1.0.5       scales_1.2.1     </span></span>
+<span><span class="co">## [21] codetools_0.2-19  textshaping_0.3.7 jquerylib_0.1.4   cli_3.6.1        </span></span>
+<span><span class="co">## [25] rlang_1.1.2       munsell_0.5.0     splines_4.3.2     withr_2.5.2      </span></span>
+<span><span class="co">## [29] cachem_1.0.8      yaml_2.3.7        tools_4.3.2       memoise_2.0.1    </span></span>
+<span><span class="co">## [33] dplyr_1.1.3       colorspace_2.1-0  ggplot2_3.4.4     vctrs_0.6.4      </span></span>
+<span><span class="co">## [37] R6_2.5.1          lifecycle_1.0.4   stringr_1.5.0     fs_1.6.3         </span></span>
+<span><span class="co">## [41] ragg_1.2.6        pkgconfig_2.0.3   desc_1.4.2        pkgdown_2.0.7    </span></span>
+<span><span class="co">## [45] pillar_1.9.0      bslib_0.5.1       gtable_0.3.4      glue_1.6.2       </span></span>
+<span><span class="co">## [49] Rcpp_1.0.11       systemfonts_1.0.5 xfun_0.41         tibble_3.2.1     </span></span>
+<span><span class="co">## [53] tidyselect_1.2.0  highr_0.10        knitr_1.45        farver_2.1.1     </span></span>
+<span><span class="co">## [57] htmltools_0.5.7   rmarkdown_2.25    labeling_0.4.3    compiler_4.3.2</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
