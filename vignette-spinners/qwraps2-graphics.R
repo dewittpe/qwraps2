@@ -246,7 +246,7 @@ lasso_model <-
   )
 
 #'
-#' Generate the predicted values on the validaiton set:
+#' Generate the predicted values on the validation set:
 validating_set$logistic_model_prediction <-
   predict(
     logistic_model
