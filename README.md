@@ -4,6 +4,8 @@
 [![R-CMD-check](https://github.com/dewittpe/qwraps2/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dewittpe/qwraps2/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/dewittpe/qwraps2/branch/master/graph/badge.svg)](https://codecov.io/gh/dewittpe/qwraps2)
 
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/8049/badge)](https://www.bestpractices.dev/projects/8049)
+
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/qwraps2)](https://cran.r-project.org/package=qwraps2)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/qwraps2)](http://www.r-pkg.org/pkg/qwraps2)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/qwraps2)](http://www.r-pkg.org/pkg/qwraps2)
