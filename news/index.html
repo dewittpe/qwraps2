@@ -24,9 +24,10 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/qwraps2-data-sets.html">qwraps2 Data Sets</a>
-    <a class="dropdown-item" href="../articles/qwraps2-graphics.html">Graphics in qwraps2</a>
-    <a class="dropdown-item" href="../articles/summary-statistics.html">Formatted Summary Statistics and Data Summary Tables with qwraps2</a>
+    <a class="dropdown-item" href="../articles/qwraps2-data-sets.html">qwraps2: Data Sets</a>
+    <a class="dropdown-item" href="../articles/qwraps2-formatted-summary-statistics.html">qwraps2: Formatted Summary Statistics</a>
+    <a class="dropdown-item" href="../articles/qwraps2-graphics.html">qwraps2: Graphics</a>
+    <a class="dropdown-item" href="../articles/qwraps2-summary-table.html">qwraps2: Summary Table</a>
   </div>
 </li>
 <li class="active nav-item">
@@ -68,6 +69,9 @@
 <code>qable</code> is now and S3 method and has gained a new argument <code>kable_args</code> to make it clear what values are used by <code>qable</code> and which are passed to <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable</a></code> (<a href="https://github.com/dewittpe/qwraps2/issues/84" class="external-link">#84</a>)</li>
 <li>
 <code>summary_table</code> has gained two arguments, <code>qable_args</code> and <code>kable_args</code> to help with passing through arguments and being able to use the features of knitr::kable (<a href="https://github.com/dewittpe/qwraps2/issues/84" class="external-link">#84</a>)</li>
+<li>vignettes have been renamed to have a consistent “qwraps2-<topic>” structure.</topic></li>
+<li>
+<code>summary_table</code> has it’s own vignette.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-0-6-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-6-0"></a></h3>

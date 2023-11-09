@@ -28,9 +28,10 @@ contents are as expected (via md5sum)."><!-- mathjax --><script src="https://cdn
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/qwraps2-data-sets.html">qwraps2 Data Sets</a>
-    <a class="dropdown-item" href="../articles/qwraps2-graphics.html">Graphics in qwraps2</a>
-    <a class="dropdown-item" href="../articles/summary-statistics.html">Formatted Summary Statistics and Data Summary Tables with qwraps2</a>
+    <a class="dropdown-item" href="../articles/qwraps2-data-sets.html">qwraps2: Data Sets</a>
+    <a class="dropdown-item" href="../articles/qwraps2-formatted-summary-statistics.html">qwraps2: Formatted Summary Statistics</a>
+    <a class="dropdown-item" href="../articles/qwraps2-graphics.html">qwraps2: Graphics</a>
+    <a class="dropdown-item" href="../articles/qwraps2-summary-table.html">qwraps2: Summary Table</a>
   </div>
 </li>
 <li class="nav-item">
@@ -160,17 +161,17 @@ c("silent")</code> to silence the warnings.</p>
 <span class="r-in"><span><span class="co"># printed.  You can view the details of the checks as follows:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">test1</span>, <span class="st">"checks"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                                path</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1188c2d3cfbd9.txt QWRAPS2_EXAMPLE_1188c2d3cfbd9.txt</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2188c55691afa.txt QWRAPS2_EXAMPLE_2188c55691afa.txt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1189a4ceed32d.txt QWRAPS2_EXAMPLE_1189a4ceed32d.txt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2189a492a52a8.txt QWRAPS2_EXAMPLE_2189a492a52a8.txt</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                   absolute_path accessible case_match</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1188c2d3cfbd9.txt         FALSE       TRUE       TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2188c55691afa.txt         FALSE       TRUE       TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1189a4ceed32d.txt         FALSE       TRUE       TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2189a492a52a8.txt         FALSE       TRUE       TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                     current_md5sum</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1188c2d3cfbd9.txt 7a3409e17f9de067740e64448a86e708</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2188c55691afa.txt 798e52b92e0ae0e60f3f3db1273235d0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1189a4ceed32d.txt 7a3409e17f9de067740e64448a86e708</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2189a492a52a8.txt 798e52b92e0ae0e60f3f3db1273235d0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                   expected_md5sum md5check</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1188c2d3cfbd9.txt            &lt;NA&gt;       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2188c55691afa.txt            &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1189a4ceed32d.txt            &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2189a492a52a8.txt            &lt;NA&gt;       NA</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># access to absolute_example_file will generate a warning about</span></span></span>
 <span class="r-in"><span><span class="co"># absolute_paths by default</span></span></span>
@@ -189,17 +190,17 @@ c("silent")</code> to silence the warnings.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"checks")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                                path</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1188c2d3cfbd9.txt QWRAPS2_EXAMPLE_1188c2d3cfbd9.txt</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> qwraps2_example_1188c2d3cfbd9.txt qwraps2_example_1188c2d3cfbd9.txt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1189a4ceed32d.txt QWRAPS2_EXAMPLE_1189a4ceed32d.txt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> qwraps2_example_1189a4ceed32d.txt qwraps2_example_1189a4ceed32d.txt</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                   absolute_path accessible case_match</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1188c2d3cfbd9.txt         FALSE       TRUE       TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> qwraps2_example_1188c2d3cfbd9.txt         FALSE      FALSE      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1189a4ceed32d.txt         FALSE       TRUE       TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> qwraps2_example_1189a4ceed32d.txt         FALSE      FALSE      FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                     current_md5sum</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1188c2d3cfbd9.txt 7a3409e17f9de067740e64448a86e708</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> qwraps2_example_1188c2d3cfbd9.txt                             &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1189a4ceed32d.txt 7a3409e17f9de067740e64448a86e708</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> qwraps2_example_1189a4ceed32d.txt                             &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                   expected_md5sum md5check</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1188c2d3cfbd9.txt            &lt;NA&gt;       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> qwraps2_example_1188c2d3cfbd9.txt            &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1189a4ceed32d.txt            &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> qwraps2_example_1189a4ceed32d.txt            &lt;NA&gt;       NA</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># If one or more files is not accessable then return is FALSE and the meta data</span></span></span>
 <span class="r-in"><span><span class="co"># is printed by default.</span></span></span>
@@ -212,20 +213,20 @@ c("silent")</code> to silence the warnings.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"checks")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                                path</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> UNLIKELYFILENAME                                   UNLIKELYFILENAME</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1188c2d3cfbd9.txt QWRAPS2_EXAMPLE_1188c2d3cfbd9.txt</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2188c55691afa.txt QWRAPS2_EXAMPLE_2188c55691afa.txt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1189a4ceed32d.txt QWRAPS2_EXAMPLE_1189a4ceed32d.txt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2189a492a52a8.txt QWRAPS2_EXAMPLE_2189a492a52a8.txt</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                   absolute_path accessible case_match</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> UNLIKELYFILENAME                          FALSE      FALSE      FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1188c2d3cfbd9.txt         FALSE       TRUE       TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2188c55691afa.txt         FALSE       TRUE       TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1189a4ceed32d.txt         FALSE       TRUE       TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2189a492a52a8.txt         FALSE       TRUE       TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                     current_md5sum</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> UNLIKELYFILENAME                                              &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1188c2d3cfbd9.txt 7a3409e17f9de067740e64448a86e708</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2188c55691afa.txt 798e52b92e0ae0e60f3f3db1273235d0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1189a4ceed32d.txt 7a3409e17f9de067740e64448a86e708</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2189a492a52a8.txt 798e52b92e0ae0e60f3f3db1273235d0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                   expected_md5sum md5check</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> UNLIKELYFILENAME                             &lt;NA&gt;       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1188c2d3cfbd9.txt            &lt;NA&gt;       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2188c55691afa.txt            &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_1189a4ceed32d.txt            &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWRAPS2_EXAMPLE_2189a492a52a8.txt            &lt;NA&gt;       NA</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Or have an error thrown:</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
