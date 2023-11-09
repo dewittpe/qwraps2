@@ -44,6 +44,11 @@ stab_vs <- summary_table(mtcars, by = "vs")
 stab_cbind <- cbind(stab_am, stab_vs)
 stopifnot(identical(ncol(stab_am) + ncol(stab_vs) - 1L, ncol(stab_cbind)))
 
+################################################################################
+# check that the print method will update the attributes
+stab <- summary_table(mtcars[, c("mpg", "cyl", "am")], by = c("am"), qable_args = list(rtitle = "RTITLE"))
+attributes(stab)
+
 
 ################################################################################
 ##                                End of File                                 ##

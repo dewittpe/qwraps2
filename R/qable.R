@@ -97,23 +97,21 @@
 #'
 #' @export
 #' @rdname qable
-qable <- function(x, rtitle, rgroup, rnames = rownames(x), cnames = colnames(x), markup = getOption("qwraps2_markup", "latex"), kable_args = list(), ...) {
+qable <- function(x, rtitle = "", rgroup = numeric(0), rnames = rownames(x), cnames = colnames(x), markup = getOption("qwraps2_markup", "latex"), kable_args = list(), ...) {
   UseMethod("qable")
 }
 
 #' @export
-qable.data.frame <- function(x, rtitle, rgroup, rnames = rownames(x), cnames = colnames(x), markup = getOption("qwraps2_markup", "latex"), kable_args = list(), ...) {
+qable.data.frame <- function(x, rtitle = "", rgroup = numeric(0), rnames = rownames(x), cnames = colnames(x), markup = getOption("qwraps2_markup", "latex"), kable_args = list(), ...) {
   qable(as.matrix(x), rtitle = rtitle, rgroup = rgroup, rnames = rnames, cnames = cnames, markup = markup, kable_args = kable_args, ...)
 }
 
 #' @export
-qable.matrix <- function(x, rtitle, rgroup, rnames = rownames(x), cnames = colnames(x), markup = getOption("qwraps2_markup", "latex"), kable_args = list(), ...) {
+qable.matrix <- function(x, rtitle = "", rgroup = numeric(0), rnames = rownames(x), cnames = colnames(x), markup = getOption("qwraps2_markup", "latex"), kable_args = list(), ...) {
 
   if (!(markup %in% c("latex", "markdown"))) {
     stop("markup is either 'latex' or 'markdown'")
   }
-
-  if (missing(rgroup)) { rgroup <- numeric(0) }
 
   xmat <- matrix("~", nrow = nrow(x) + length(rgroup), ncol = 1 + ncol(x))
 
@@ -144,39 +142,16 @@ qable.matrix <- function(x, rtitle, rgroup, rnames = rownames(x), cnames = colna
   }
   colnames(xmat) <- cnames
   class(xmat) <- "qwraps2_qable"
-  attr(xmat, "markup") <- markup
-  attr(xmat, "kable_args") <- kable_args
+  attr(xmat, "qable_args") <- list(rtitle = rtitle, rgroup = rgroup, rnames = rnames, cnames = cnames, markup = markup, kable_args = kable_args, ...)
   xmat
 }
 
 #' @export
-qable.qwraps2_summary_table <- function(x, rtitle, rgroup, rnames = rownames(x), cnames = colnames(x), markup = getOption("qwraps2_markup", "latex"), kable_args = list(), ...) {
-  qargs <- attr(x, "qable_args")
-  kargs <- attr(x, "kable_args")
-  if (!("rgroup" %in% names(qargs))) {
-    qargs$rgroup <- attr(x, "rgroups")
-  }
-  if (!("rnames" %in% names(qargs))) {
-    qargs$rnames <- rownames(x)
-  }
-  if (!("cnames" %in% names(qargs))) {
-    qargs$cnames <- colnames(x)
-  }
-  if (!("kable_args" %in% names(qargs))) {
-    qargs$kable_args <- attr(x, "kable_args")
-  }
-
-  rtn <- do.call(what = qable.matrix, args = c(list(x = x), qargs, ...))
-  attributes(rtn) <- c(attributes(rtn), qargs = attr(x, "qable_args"), kable_args = attr(x, "kable_args"))
-  rtn
-}
-
-#' @export
 print.qwraps2_qable <- function(x, ...) {
-  kargs <- attr(x, "kable_args")
+  kargs <- attr(x, "qable_args")[["kable_args"]]
 
   if (!("format" %in% names(kargs))) {
-    if (attr(x, "markup") == "markdown") {
+    if (attr(x, "qable_args")[["markup"]] == "markdown") {
       kargs$format <- "pipe"
     } else {
       kargs$format <- "latex"
@@ -184,7 +159,7 @@ print.qwraps2_qable <- function(x, ...) {
   }
 
   if (!("escape" %in% names(kargs))) {
-    kargs$escape <- !(attr(x, "markup") == "latex")
+    kargs$escape <- !(attr(x, "qable_args")[["markup"]] == "latex")
   }
 
   if (!("row.names" %in% names(kargs))) {
@@ -192,7 +167,11 @@ print.qwraps2_qable <- function(x, ...) {
   }
 
   if (!("col.names" %in% names(kargs))) {
-    kargs$col.names <- colnames(x)
+    if (ncol(x) == length(attr(x, "qable_args")[["cnames"]])) {
+      kargs$col.names <- c(attr(x, "qable_args")[["cnames"]])
+    } else {
+      kargs$col.names <- c(attr(x, "qable_args")[["rtitle"]], attr(x, "qable_args")[["cnames"]])
+    }
   }
 
   k <- do.call(what = knitr::kable, args = c(list(x = x), kargs, ...))
@@ -251,9 +230,8 @@ cbind.qwraps2_qable <- function(...) {
   rtn <- do.call(cbind, lapply(tabs, unclass))
 
   colnames(rtn) <- clnms
-  attr(rtn, "markup") <- attr(tabs[[1]], "markup")
-  attr(rtn, "kable_args") <- attr(tabs[[1]], "kable_args")
-  attr(rtn, "rgroups") <- attr(tabs[[1]], "rgroups")
+  attr(rtn, "qable_args") <- attr(tabs[[1]], "qable_args")
+  attr(rtn, "qable_args")[["cnames"]] <- clnms
   class(rtn) <- class(tabs[[1]])
   rtn
 }
@@ -265,9 +243,10 @@ rbind.qwraps2_qable <- function(..., deparse.level = 1) {
 
   out <- do.call(rbind, args = c(lapply(tabs, unclass), list(deparse.level = deparse.level)))
 
-  attr(out, "rgroups") <- do.call(c, lapply(tabs, attr, "rgroups"))
-  attr(out, "markup") <- attr(tabs[[1]], "markup")
-  attr(out, "kable_args") <- attr(tabs[[1]], "kable_args")
+  attr(out, "qable_args") <- attr(tabs[[1]], "qable_args")
+  attr(out, "qable_args")[["rgroup"]] <- do.call(c, lapply(tabs, function(x) attr(x, "qable_args")[["rgroup"]]))
+  attr(out, "qable_args")[["rnames"]] <- do.call(c, lapply(tabs, function(x) attr(x, "qable_args")[["rnames"]]))
+
   class(out) <- class(tabs[[1]])
   out
 }

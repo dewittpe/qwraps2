@@ -7,7 +7,8 @@ x <- qable(mtcars2[, c("mpg", "disp")], markup = "latex")
 stopifnot(
   identical(
     attributes(x)
-  , list(dim = c(32L, 3L), dimnames = list(NULL, c("", "mpg", "disp")), class = "qwraps2_qable", markup = "latex", kable_args = list())
+    ,
+    list(dim = c(32L, 3L), dimnames = list(NULL, c("", "mpg", "disp")), class = "qwraps2_qable", qable_args = list(rtitle = "", rgroup = numeric(0), rnames = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32"), cnames = c("", "mpg", "disp"), markup = "latex", kable_args = list()))
   )
 )
 
@@ -98,10 +99,10 @@ stopifnot(identical(inherits(test, "simpleError"), TRUE))
 
 # the attributes of the object from cbind should  be those of the first object
 # passed in
-stopifnot(identical(attributes(qtab_2)$kable_args, list(caption = "2")))
-stopifnot(identical(attributes(qtab_1)$kable_args, list(caption = "1")))
-stopifnot(identical(attributes(cbind(qtab_1, qtab_2))$kable_args, list(caption = "1")))
-stopifnot(identical(attributes(cbind(qtab_2, qtab_1))$kable_args, list(caption = "2")))
+stopifnot(identical(attributes(qtab_2)$qable_args$kable_args, list(caption = "2")))
+stopifnot(identical(attributes(qtab_1)$qable_args$kable_args, list(caption = "1")))
+stopifnot(identical(attributes(cbind(qtab_1, qtab_2))$qable_args$kable_args, list(caption = "1")))
+stopifnot(identical(attributes(cbind(qtab_2, qtab_1))$qable_args$kable_args, list(caption = "2")))
 
 ################################################################################
 # testing rbind

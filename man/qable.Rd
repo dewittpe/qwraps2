@@ -6,8 +6,8 @@
 \usage{
 qable(
   x,
-  rtitle,
-  rgroup,
+  rtitle = "",
+  rgroup = numeric(0),
   rnames = rownames(x),
   cnames = colnames(x),
   markup = getOption("qwraps2_markup", "latex"),
