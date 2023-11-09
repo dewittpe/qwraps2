@@ -3,7 +3,7 @@
 
 ## Testing Environments
 
-* Github Actions: 
+* Github Actions:
   * macOS R-4.3.2
   * windows R-4.3.2
   * ubuntu R-4.3.2
@@ -23,7 +23,8 @@
 
 * win-builder.r-project.org
 
-  * R Under development (unstable) (2023-11-07 r85491 ucrt)  Status OK
+  * R Under development (unstable) (2023-11-08 r85496 ucrt):  Status OK
+  * R version 4.2.3 (2023-03-15 ucrt): Status OK
 
 * Local
 
@@ -45,4 +46,7 @@
 
 * pedalfast.data
 
-    No issues
+    - there is an error in the building of the fss vignette as a result of the
+      chagnes to qwraps2.  I am the author of pedalfast.data and I have already
+      patched this error and will submit the updated pedalfast.data package to
+      CRAN as soon as qwraps2 has been accepted and released on CRAN.
