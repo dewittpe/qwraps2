@@ -35,7 +35,7 @@ generated via `qwraps2::summary_table`.
 More text goes here ...  Table \@ref(tab:stab2) uses `knitr::kable` directly.
 
 ```{r label = "stab", echo = FALSE, results = "asis"}
-summary_table(x = tdf, summaries = summary_str, by = "disease", kable_args = list(caption = "Personal summary"))
+summary_table(x = tdf, summaries = summary_str, by = "disease", qable_args = list(kable_args = list(caption = "Personal summary")))
 ```
 
 More text goes here.
