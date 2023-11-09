@@ -1,12 +1,12 @@
 ---
-title: "qwraps2 Graphics"
+title: "qwraps2: Graphics"
 author: "Peter E. DeWitt"
 output:
  rmarkdown::html_vignette:
    toc: true
    number_sections: true
 vignette: >
- %\VignetteIndexEntry{qwraps2 Graphics}
+ %\VignetteIndexEntry{qwraps2: Graphics}
  %\VignetteEngine{knitr::rmarkdown}
  %\VignetteEncoding{UTF-8}
 ---
