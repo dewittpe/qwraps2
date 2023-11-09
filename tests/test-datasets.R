@@ -14,6 +14,90 @@ pefr
 spambase
 
 ################################################################################
+##                               mtcars2 checks                               ##
+
+# if these dim sizes fail and the dimensions have changed, make sure to update
+# the R/datasets.R documentation too
+stopifnot(inherits(mtcars2, "data.frame"))
+stopifnot(identical(nrow(mtcars2), 32L))
+stopifnot(identical(ncol(mtcars2), 19L))
+
+stopifnot(identical(names(mtcars2)[1], "make"))
+stopifnot(identical(names(mtcars2)[2], "model"))
+stopifnot(identical(names(mtcars2)[3], "mpg"))
+stopifnot(identical(names(mtcars2)[4], "disp"))
+stopifnot(identical(names(mtcars2)[5], "hp"))
+stopifnot(identical(names(mtcars2)[6], "drat"))
+stopifnot(identical(names(mtcars2)[7], "wt"))
+stopifnot(identical(names(mtcars2)[8], "qsec"))
+stopifnot(identical(names(mtcars2)[9], "cyl"))
+stopifnot(identical(names(mtcars2)[10], "cyl_character"))
+stopifnot(identical(names(mtcars2)[11], "cyl_factor"))
+stopifnot(identical(names(mtcars2)[12], "vs"))
+stopifnot(identical(names(mtcars2)[13], "engine"))
+stopifnot(identical(names(mtcars2)[14], "am"))
+stopifnot(identical(names(mtcars2)[15], "transmission"))
+stopifnot(identical(names(mtcars2)[16], "gear"))
+stopifnot(identical(names(mtcars2)[17], "gear_factor"))
+stopifnot(identical(names(mtcars2)[18], "carb"))
+stopifnot(identical(names(mtcars2)[19], "test_date"))
+
+# verify values are the same as in the mtcars data set
+stopifnot(
+  sapply(names(mtcars), function(nm) {identical(mtcars2[[nm]], mtcars[[nm]])})
+    )
+
+# verify the levels of the mtcars2$cyl_factor are as expected
+stopifnot(identical(class(mtcars2[["cyl_factor"]]), "factor"))
+stopifnot(
+  identical(
+    levels(mtcars2[["cyl_factor"]])
+    ,
+    c("6 cylinders", "4 cylinders", "8 cylinders")
+    )
+  )
+
+# character version
+stopifnot(identical(class(mtcars2[["cyl_character"]]), "character"))
+stopifnot(
+  identical(
+    sort(unique(mtcars2[["cyl_character"]]))
+    ,
+    c("4 cylinders", "6 cylinders", "8 cylinders")
+    )
+  )
+
+# gear_factor
+stopifnot(identical(class(mtcars2[["gear_factor"]]), "factor"))
+stopifnot(
+  identical(
+    levels(mtcars2[["gear_factor"]])
+    ,
+    c("3 forward gears", "4 forward gears", "5 forward gears")
+    )
+  )
+
+# engine
+stopifnot(identical(class(mtcars2[["engine"]]), "factor"))
+stopifnot(
+  identical(
+    levels(mtcars2[["engine"]])
+    ,
+    c("V-shaped", "straight")
+    )
+  )
+
+# transmission
+stopifnot(identical(class(mtcars2[["transmission"]]), "factor"))
+stopifnot(
+  identical(
+    levels(mtcars2[["transmission"]])
+    ,
+    c("Automatic", "Manual")
+    )
+  )
+
+################################################################################
 ##                              spambase checks                               ##
 # verify the names
 stopifnot(

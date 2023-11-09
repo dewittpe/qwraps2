@@ -5,7 +5,29 @@
 \alias{mtcars2}
 \title{mtcars2}
 \format{
-An object of class \code{data.frame} with 32 rows and 19 columns.
+a data.frame with 32 rows and 19 columns
+
+\tabular{rlll}{
+[,  1] \tab make          \tab Manufacturer name                        \tab parted out from \code{rownames(mtcars)} \cr
+[,  2] \tab model         \tab                                          \tab parted out from \code{rownames(mtcars)} \cr
+[,  3] \tab mpg           \tab miles per (US) gallon                    \tab identical to mtcars$mpg \cr
+[,  4] \tab disp          \tab Displacement (cu.in.)                    \tab identical to mtcars$disp \cr
+[,  5] \tab hp            \tab Gross horsepower                         \tab identical to mtcars$hp \cr
+[,  6] \tab drat          \tab Rear axle ratio                          \tab identical to mtcars$drat \cr
+[,  7] \tab wt            \tab weight (1000 lbs)                        \tab identical to mtcars$wt \cr
+[,  8] \tab qsec          \tab 1/4 mile time                            \tab identical to mtcars$qsec \cr
+[,  9] \tab cyl           \tab number of cylinders                      \tab identical to mtcars$cyl \cr
+[, 10] \tab cyl_character \tab                                          \tab \cr
+[, 11] \tab cyl_factor    \tab                                          \tab \cr
+[, 12] \tab vs            \tab Engine (0 = V-shaped, 1 = straight)      \tab identical to mtcars$vs \cr
+[, 13] \tab engine        \tab                                          \tab \cr
+[, 14] \tab am            \tab Transmission (0 = automatic, 1 = manual) \tab identical to mtcars$am \cr
+[, 15] \tab transmission  \tab                                          \tab \cr
+[, 16] \tab gear          \tab Number of forward gears                  \tab identical to mtcars$gear \cr
+[, 17] \tab gear_factor   \tab                                          \tab \cr
+[, 18] \tab carb          \tab Number of carburetors                    \tab identical to mtcars$carb \cr
+[, 19] \tab test_date     \tab fictitious testing date                  \tab \cr
+}
 }
 \usage{
 mtcars2
