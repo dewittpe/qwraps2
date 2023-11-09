@@ -107,7 +107,7 @@ argument.
 
 ## Example: Regression Model Summary Table
 
-We will build a sumamry table for a regression model with row groups for
+We will build a summary table for a regression model with row groups for
 conceptually similar predictors.
 
 
@@ -220,7 +220,7 @@ above but for subsets of the data.  When the
 `r  backtick(by)  `
 column is a factor, the columns will be in the order of the levels of the
 factor.  In comparison, the column order
-is alphabeticall if the variable is just a character.
+is alphabetical if the variable is just a character.
 
 
 ```{r label = "mtcars2_by_cylf", results = "asis"}
@@ -266,7 +266,7 @@ by_cyl_am
 ## cbind summary_table
 
 It is common that I will want to have a summary table with the first column
-reporting for the whole data sets and the additonal columns for subsets of
+reporting for the whole data sets and the additional columns for subsets of
 the data set.  The returned objects from
 `r  backtick(summary_table)  `
 can be joined together via
@@ -355,7 +355,7 @@ fpval <- frmtp(fisher.test(table(mtcars2$gear, mtcars2$cyl_factor))$p.value)
 
 
 In this case, adding the p-value column, is done by creating a empty column
-and then writting in the needed p-value on the wanted rows.  This could be
+and then writing in the needed p-value on the wanted rows.  This could be
 within a row group (tests for means) or for a row group (Fisher test).
 
 ```{r}
@@ -405,7 +405,9 @@ a large a table in smaller sections would be advantageous.  For example, it
 might be helpful to add p-values to a summary table with just one row group
 and then rbind all the tables together for printing.  Consider that in the
 above example for adding p-values we have made an assumption that the order
-of the summary and the mpvals will be static. Remembering to make the
+of the summary and the
+`r  backtick(mpvals)  `
+will be static. Remembering to make the
 sequence changes in more than one location can be more difficult than we
 would like to admit.  Writing code to be robust to such changes is
 preferable.
@@ -427,7 +429,7 @@ t_wt[  grepl("mean", t_wt[, 1]),   "pvalue"] <- "wt-pvalue"
 
 
 Calling rbind now will let us have the table in different sequences without
-having to worry about the alignment of rows bewtween different elements:
+having to worry about the alignment of rows between different elements:
 
 ```{r}
 rbind(t_mpg, t_disp, t_wt)
