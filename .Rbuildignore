@@ -16,7 +16,7 @@
 ^.*\.tar\.gz$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
-^covr-report\.html$
+^covr-.*\.html$
 ^lib/*
 ^_pkgdown\.yml$
 ^docs$

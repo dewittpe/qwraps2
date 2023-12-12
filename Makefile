@@ -36,7 +36,7 @@ DATATARGETS += $(PKG_ROOT)/data/spambase.rda
 ################################################################################
 # Recipes
 
-.PHONY: all check install clean
+.PHONY: all check install clean covr
 
 all: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
@@ -73,13 +73,22 @@ $(DATATARGETS) &: vignette-spinners/qwraps2-data-sets.R inst/spambase/spambase.d
 	R CMD BATCH --vanilla $< .data-export.Rout
 
 ################################################################################
+
+covr :
+	R --vanilla --quiet \
+		-e 'library(covr)'\
+		-e 'x <- package_coverage(type = "all", combine_types = FALSE)'\
+		-e 'report(x[["tests"]], file = "covr-report-tests.html")'\
+		-e 'report(x[["vignettes"]], file = "covr-report-vignettes.html")'\
+		-e 'report(x[["examples"]], file = "covr-report-examples.html")'\
+		-e 'x <- package_coverage(type = "all", combine_types = TRUE)'\
+		-e 'report(x, file = "covr-report-all.html")'\
+
+################################################################################
 # Other Recipes for checking the package, (un)installing, and cleaning the
 # working directory.
 #
 #
-covr-report.html : $(PKG_NAME)_$(PKG_VERSION).tar.gz
-	R --vanilla --quiet -e 'x <- covr::package_coverage(type = "tests", line_exclusions = list("R/zzz.R", "R/deprecated.R"))'\
-		-e 'covr::report(x, file = "covr-report.html")'
 
 check: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 	R CMD check $(PKG_NAME)_$(PKG_VERSION).tar.gz
