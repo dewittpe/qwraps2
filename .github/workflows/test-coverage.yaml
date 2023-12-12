@@ -28,17 +28,17 @@ jobs:
           extra-packages: covr
 
       - name: Test coverage
-        run: covr::codecov(type = "tests",  line_exclusions = list("R/zzz.R", "R/deprecated.R"), flag = "tests")
+        run: covr::codecov(type = "tests",  line_exclusions = list("R/zzz.R", "R/deprecated.R"), flags = "tests")
         shell: Rscript {0}
 
       - name: Example coverage
-        run: covr::codecov(type = "examples",  line_exclusions = list("R/zzz.R", "R/deprecated.R"), flag = "examples")
+        run: covr::codecov(type = "examples",  line_exclusions = list("R/zzz.R", "R/deprecated.R"), flags = "examples")
         shell: Rscript {0}
 
       - name: Vignette coverage
-        run: covr::codecov(type = "vignettes",  line_exclusions = list("R/zzz.R", "R/deprecated.R"), flag = "vignettes")
+        run: covr::codecov(type = "vignettes",  line_exclusions = list("R/zzz.R", "R/deprecated.R"), flags = "vignettes")
         shell: Rscript {0}
 
       - name: Total coverage
-        run: covr::codecov(type = "all",  line_exclusions = list("R/zzz.R", "R/deprecated.R"), flag = "total")
+        run: covr::codecov(type = "all",  line_exclusions = list("R/zzz.R", "R/deprecated.R"), flags = "total")
         shell: Rscript {0}
