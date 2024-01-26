@@ -1,4 +1,4 @@
-# qwraps2
+# qwraps2 <img src="man/figures/qwraps2logo.png" align="right" height="150"/>
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![R-CMD-check](https://github.com/dewittpe/qwraps2/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dewittpe/qwraps2/actions/workflows/R-CMD-check.yaml)
