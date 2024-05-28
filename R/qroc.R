@@ -87,7 +87,7 @@ qroc_ggplot <- function(data) {
   ggplot2::geom_line() +
   ggplot2::xlim(0, 1) +
   ggplot2::ylim(0, 1) +
-  ggplot2::geom_segment(ggplot2::aes(x = 0, y = 0, xend = 1, yend = 1), color = "black", linetype = 2)
+  ggplot2::annotate(geom = "segment", x = 0, y = 0, xec = 1, yend = 1, color = "black", linetype = 2)
 }
 
 #' @export
