@@ -468,7 +468,7 @@ qsummary(mtcars2[, c("mpg", "cyl_factor", "wt")])
 
 #'
 #' That default summary is used for a table as follows:
-#+label="summary_table_mtcars2_default", results = "asis"
+#+ label="summary_table_mtcars2_default", results = "asis"
 summary_table(mtcars2[, c("mpg", "cyl_factor", "wt")])
 
 #'
@@ -489,7 +489,7 @@ str(new_summary)
 
 #'
 #' The resulting table is:
-#+results = "asis"
+#+ results = "asis"
 summary_table(mtcars2, new_summary)
 
 #'
