@@ -84,7 +84,7 @@ qroc_ggplot <- function(data) {
   ggplot2::ggplot(data) +
   eval(substitute(ggplot2::aes(x = X, y = Y), list(X = as.name("FPR"), Y = as.name("TPR")))) +
   ggplot2::geom_point() +
-  ggplot2::geom_line() +
+  ggplot2::geom_path() +
   ggplot2::xlim(0, 1) +
   ggplot2::ylim(0, 1) +
   ggplot2::annotate(geom = "segment", x = 0, y = 0, xend = 1, yend = 1, color = "black", linetype = 2)
@@ -121,7 +121,7 @@ qprc_ggplot <- function(data, prevalence = NULL) {
     ggplot2::ggplot(data = data) +
     eval(substitute(ggplot2::aes(x = X, y = Y), list(X = as.name("sensitivity"), Y = as.name("ppv")))) +
     ggplot2::geom_point() +
-    ggplot2::geom_line() +
+    ggplot2::geom_path() +
     ggplot2::xlim(0, 1) +
     ggplot2::ylim(0, 1)
   if (!is.null(prevalence)) {

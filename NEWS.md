@@ -1,3 +1,7 @@
+# qwraps2 0.6.0.9000
+
+* bug fix in qroc - use `geom_path` instead of `geom_line`
+
 # qwraps2 0.6.0
 
 ## General Improvements
