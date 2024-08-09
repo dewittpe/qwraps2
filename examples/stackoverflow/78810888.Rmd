@@ -8,6 +8,7 @@ output:
 
 ```{r results = 'asis'}
 library(qwraps2)
+options(qwraps2_markup = "markdown")
 library(knitr)
 library(kableExtra)
 
@@ -23,9 +24,10 @@ df <- data.frame(
 summary <- list(
   "Groups" = list(
     "Value" = ~ median_iqr(value),
-    "Pos. (\\\\%)" = ~ qwraps2::n_perc(pos == "pos."))
+    "Pos. (%)" = ~ qwraps2::n_perc(pos == "pos."))
 )
 
 new_table <- summary_table(df, summaries = summary, by = "group")
 
 new_table
+```
