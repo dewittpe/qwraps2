@@ -1,0 +1,31 @@
+---
+title: "Untitled"
+author: "TEST"
+output:
+  pdf_document: default
+  bookdown::pdf_document2: null
+---
+
+```{r results = 'asis'}
+library(qwraps2)
+library(knitr)
+library(kableExtra)
+
+# Create som sample data
+set.seed(2)
+df <- data.frame(
+  group = as.factor(sample(c("A","B"),8, replace = T)),
+  value = sample(2:10,8, replace=F),
+  pos = as.factor(sample(c("pos.","neg."),8, replace = T))
+)
+
+# Define the table for summary_table
+summary <- list(
+  "Groups" = list(
+    "Value" = ~ median_iqr(value),
+    "Pos. (\\\\%)" = ~ qwraps2::n_perc(pos == "pos."))
+)
+
+new_table <- summary_table(df, summaries = summary, by = "group")
+
+new_table
