@@ -6,9 +6,9 @@
 
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/8049/badge)](https://www.bestpractices.dev/projects/8049)
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/qwraps2)](https://cran.r-project.org/package=qwraps2)
-[![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/qwraps2)](http://www.r-pkg.org/pkg/qwraps2)
-[![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/qwraps2)](http://www.r-pkg.org/pkg/qwraps2)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/qwraps2)](https://cran.r-project.org/package=qwraps2)
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/qwraps2)](http://www.r-pkg.org/pkg/qwraps2)
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/qwraps2)](http://www.r-pkg.org/pkg/qwraps2)
 
 [![License](https://img.shields.io/badge/licence-GPL--2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
 [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.5.0-6666ff.svg)](https://cran.r-project.org/)
