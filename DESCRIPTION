@@ -35,7 +35,7 @@ Suggests:
     glmnet,
     rbenchmark,
     rmarkdown
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 LinkingTo: Rcpp (>= 0.12.11),
     RcppArmadillo
 VignetteBuilder: knitr
