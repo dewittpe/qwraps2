@@ -5,68 +5,52 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="qwraps2">
 <title>qwraps2: Formatted Summary Statistics • qwraps2</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="qwraps2: Formatted Summary Statistics">
-<meta property="og:description" content="qwraps2">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="qwraps2: Formatted Summary Statistics">
 <meta name="robots" content="noindex">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../index.html">qwraps2</a>
 
     <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0.9000</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/qwraps2-data-sets.html">qwraps2: Data Sets</a>
-    <a class="dropdown-item" href="../articles/qwraps2-formatted-summary-statistics.html">qwraps2: Formatted Summary Statistics</a>
-    <a class="dropdown-item" href="../articles/qwraps2-graphics.html">qwraps2: Graphics</a>
-    <a class="dropdown-item" href="../articles/qwraps2-summary-table.html">qwraps2: Summary Table</a>
-  </div>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="../articles/qwraps2-data-sets.html">qwraps2: Data Sets</a></li>
+    <li><a class="dropdown-item" href="../articles/qwraps2-formatted-summary-statistics.html">qwraps2: Formatted Summary Statistics</a></li>
+    <li><a class="dropdown-item" href="../articles/qwraps2-graphics.html">qwraps2: Graphics</a></li>
+    <li><a class="dropdown-item" href="../articles/qwraps2-summary-table.html">qwraps2: Summary Table</a></li>
+  </ul>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="../news/index.html">Changelog</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/dewittpe/qwraps2/" aria-label="github">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/dewittpe/qwraps2/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-article">
 
@@ -75,12 +59,13 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>qwraps2: Formatted Summary Statistics</h1>
+
+      <h1>qwraps2: Formatted Summary Statistics</h1>
                         <h4 data-toc-skip class="author">Peter E.
 DeWitt</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/dewittpe/qwraps2/blob/HEAD/vignettes/qwraps2-formatted-summary-statistics.Rmd" class="external-link"><code>vignettes/qwraps2-formatted-summary-statistics.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/dewittpe/qwraps2/blob/main/vignettes/qwraps2-formatted-summary-statistics.Rmd" class="external-link"><code>vignettes/qwraps2-formatted-summary-statistics.Rmd</code></a></small>
       <div class="d-none name"><code>qwraps2-formatted-summary-statistics.Rmd</code></div>
     </div>
 
@@ -158,9 +143,8 @@ example, <code>mean_sd(mtcars2$mpg)</code> returns the formatted string
 string:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/mean_sd.html">mean_sd</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">mpg</span><span class="op">)</span></span>
-<span><span class="co">## [1] "20.09 &amp;plusmn; 6.03"</span></span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/mean_sd.html">mean_sd</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">mpg</span>, denote_sd <span class="op">=</span> <span class="st">"paren"</span><span class="op">)</span></span>
+<span><span class="co">## [1] "20.09 &amp;plusmn; 6.03"</span></span>
+<span><span class="fu"><a href="../reference/mean_sd.html">mean_sd</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">mpg</span>, denote_sd <span class="op">=</span> <span class="st">"paren"</span><span class="op">)</span></span>
 <span><span class="co">## [1] "20.09 (6.03)"</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -173,17 +157,15 @@ and the upper confidence limit. The printing method for
 <code>qwraps2_mean_ci</code> objects is a call to the
 <code>frmtci</code> function. You an modify the formatting of printed
 result by adjusting the arguments pasted to <code>frmtci</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mci</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mean_ci.html">mean_ci</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">mpg</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mci</span><span class="op">)</span></span>
 <span><span class="co">##  'qwraps2_mean_ci' Named num [1:3] 20.1 18 22.2</span></span>
 <span><span class="co">##  - attr(*, "names")= chr [1:3] "mean" "lcl" "ucl"</span></span>
-<span><span class="co">##  - attr(*, "alpha")= num 0.05</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mci</span></span>
-<span><span class="co">## [1] "20.09 (18.00, 22.18)"</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mci</span>, show_level <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">##  - attr(*, "alpha")= num 0.05</span></span>
+<span><span class="va">mci</span></span>
+<span><span class="co">## [1] "20.09 (18.00, 22.18)"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mci</span>, show_level <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">## [1] "20.09 (95% CI: 18.00, 22.18)"</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -192,7 +174,7 @@ result by adjusting the arguments pasted to <code>frmtci</code>.</p>
 <p>Similar to the <code>mean_sd</code> function, the
 <code>median_iqr</code> returns the median and the inner quartile range
 (IQR) of a data vector.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/median_iqr.html">median_iqr</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">mpg</span><span class="op">)</span></span>
 <span><span class="co">## [1] "19.20 (15.43, 22.80)"</span></span></code></pre></div>
 </div>
@@ -205,24 +187,19 @@ that base R has <code>paste</code> and <code>paste0</code> .
 <code>n_perc</code> returns the n (%) with the percentage sign in the
 string, <code>n_perc0</code> omits the percentage sign from the string.
 The latter is good for tables, the former for in-line text.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/n_perc.html">n_perc</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">cyl</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span></span>
-<span><span class="co">## [1] "11 (34.38%)"</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/n_perc.html">n_perc0</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">cyl</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span></span>
-<span><span class="co">## [1] "11 (34)"</span></span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">## [1] "11 (34.38%)"</span></span>
+<span><span class="fu"><a href="../reference/n_perc.html">n_perc0</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">cyl</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span></span>
+<span><span class="co">## [1] "11 (34)"</span></span>
+<span></span>
 <span><span class="fu"><a href="../reference/n_perc.html">n_perc</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">cyl_factor</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span>  <span class="co"># this returns 0 (0.00%)</span></span>
-<span><span class="co">## [1] "0 (0.00%)"</span></span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/n_perc.html">n_perc</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">cyl_factor</span> <span class="op">==</span> <span class="st">"4 cylinders"</span><span class="op">)</span></span>
-<span><span class="co">## [1] "11 (34.38%)"</span></span></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/n_perc.html">n_perc</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">cyl_factor</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">cyl_factor</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">## [1] "11 (34.38%)"</span></span></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">## [1] "0 (0.00%)"</span></span>
+<span><span class="fu"><a href="../reference/n_perc.html">n_perc</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">cyl_factor</span> <span class="op">==</span> <span class="st">"4 cylinders"</span><span class="op">)</span></span>
+<span><span class="co">## [1] "11 (34.38%)"</span></span>
+<span><span class="fu"><a href="../reference/n_perc.html">n_perc</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">cyl_factor</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">cyl_factor</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">## [1] "11 (34.38%)"</span></span>
+<span></span>
 <span><span class="co"># The count and percentage of 4 or 6 cylinders vehicles in the data set is</span></span>
 <span><span class="fu"><a href="../reference/n_perc.html">n_perc</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">cyl</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">## [1] "18 (56.25%)"</span></span></code></pre></div>
@@ -230,101 +207,100 @@ The latter is good for tables, the former for in-line text.</p>
 <div class="section level3">
 <h3 id="geometric-means-and-standard-deviations">Geometric Means and Standard Deviations<a class="anchor" aria-label="anchor" href="#geometric-means-and-standard-deviations"></a>
 </h3>
-<p>Let <span class="math inline">\(\left\{x_1, x_2, x_3, \ldots, x_n
-\right\}\)</span> be a sample of size <span class="math inline">\(n\)</span> with <span class="math inline">\(x_i
-&gt; 0\)</span> for all <span class="math inline">\(i.\)</span> Then the
-geometric mean, <span class="math inline">\(\mu_g,\)</span> and
-geometric standard deviation are</p>
-<p><span class="math display">\[
+<p>Let
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">{</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><msub><mi>x</mi><mn>3</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>x</mi><mi>n</mi></msub><mo stretchy="true" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">\left\{x_1, x_2, x_3, \ldots, x_n \right\}</annotation></semantics></math>
+be a sample of size
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
+with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>i</mi></msub><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">x_i &gt; 0</annotation></semantics></math>
+for all
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">i.</annotation></semantics></math>
+Then the geometric mean,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>μ</mi><mi>g</mi></msub><mo>,</mo></mrow><annotation encoding="application/x-tex">\mu_g,</annotation></semantics></math>
+and geometric standard deviation are</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>μ</mi><mi>g</mi></msub><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mfrac><mn>1</mn><mi>n</mi></mfrac></msup><mo>=</mo><msup><mi>b</mi><mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msub><mo>log</mo><mi>b</mi></msub><msub><mi>x</mi><mi>i</mi></msub></mrow></msup><mo>,</mo></mrow><annotation encoding="application/x-tex">
 \begin{equation}
-  \mu_g = \left( \prod_{i = 1}^{n} x_i \right)^{\frac{1}{n}} = b^{
-\sum_{i =
+  \mu_g = \left( \prod_{i = 1}^{n} x_i \right)^{\frac{1}{n}} = b^{ \sum_{i =
   1}^{n} \log_{b} x_i },
 \end{equation}
-\]</span> and <span class="math display">\[
+</annotation></semantics></math> and
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>σ</mi><mi>g</mi></msub><mo>=</mo><msup><mi>b</mi><msqrt><mfrac><mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msup><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>log</mo><mi>b</mi></msub><mfrac><msub><mi>x</mi><mi>i</mi></msub><msub><mi>μ</mi><mi>g</mi></msub></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup></mrow><mi>n</mi></mfrac></msqrt></msup></mrow><annotation encoding="application/x-tex">
 \begin{equation}
   \sigma_g = b ^ {
   \sqrt{
-    \frac{\sum_{i = 1}^{n} \left( \log_{b} \frac{x_i}{\mu_g}
-\right)^2}{n}
+    \frac{\sum_{i = 1}^{n} \left( \log_{b} \frac{x_i}{\mu_g} \right)^2}{n}
   }
   }
 \end{equation}
-\]</span> or, for clarity, <span class="math display">\[
+</annotation></semantics></math> or, for clarity,
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mo>log</mo><mi>b</mi></msub><msub><mi>σ</mi><mi>g</mi></msub><mo>=</mo><msqrt><mfrac><mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msup><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>log</mo><mi>b</mi></msub><mfrac><msub><mi>x</mi><mi>i</mi></msub><msub><mi>μ</mi><mi>g</mi></msub></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup></mrow><mi>n</mi></mfrac></msqrt></mrow><annotation encoding="application/x-tex">
 \begin{equation}
   \log_{b} \sigma_g =
   \sqrt{ \frac{\sum_{i = 1}^{n} \left( \log_{b} \frac{x_i}{\mu_g}
   \right)^2}{n}}
 \end{equation}
-\]</span></p>
+</annotation></semantics></math></p>
 <p>When looking for the geometric standard deviation in R, the simple
 <code>exp(sd(log(x)))</code> is not exactly correct. The geometric
-standard deviation uses <span class="math inline">\(n,\)</span> the full
-sample size, in the denominator, where as the <code>sd</code> and
-<code>var</code> functions in R use the denominator <span class="math inline">\(n - 1.\)</span> To get the geometric standard
-deviation one should adjust the result by multiplying the variance by
-<span class="math inline">\((n - 1) / n\)</span> or the standard
-deviation by <span class="math inline">\(\sqrt{(n - 1) / n}.\)</span>
+standard deviation uses
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>,</mo></mrow><annotation encoding="application/x-tex">n,</annotation></semantics></math>
+the full sample size, in the denominator, where as the <code>sd</code>
+and <code>var</code> functions in R use the denominator
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>−</mo><mn>1</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">n - 1.</annotation></semantics></math>
+To get the geometric standard deviation one should adjust the result by
+multiplying the variance by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">(n - 1) / n</annotation></semantics></math>
+or the standard deviation by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msqrt><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><mi>n</mi></mrow></msqrt><mi>.</mi></mrow><annotation encoding="application/x-tex">\sqrt{(n - 1) / n}.</annotation></semantics></math>
 See the example below.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">6</span>, min <span class="op">=</span> <span class="fl">4</span>, max <span class="op">=</span> <span class="fl">70</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># geometric mean</span></span>
 <span><span class="va">mu_g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/prod.html" class="external-link">prod</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">**</span> <span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">mu_g</span></span>
-<span><span class="co">## [1] 46.50714</span></span></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## [1] 46.50714</span></span></code></pre></div>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fl">1.2</span> <span class="op">**</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">x</span>, base <span class="op">=</span> <span class="fl">1.2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## [1] 46.50714</span></span></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">## [1] 46.50714</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## [1] 46.50714</span></span>
+<span><span class="fl">1.2</span> <span class="op">**</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">x</span>, base <span class="op">=</span> <span class="fl">1.2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## [1] 46.50714</span></span>
+<span></span>
 <span><span class="co"># geometric standard deviation</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>  <span class="co">## This is wrong</span></span>
-<span><span class="co">## [1] 1.500247</span></span></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">## [1] 1.500247</span></span>
+<span></span>
 <span><span class="co"># these equations are correct</span></span>
 <span><span class="va">sigma_g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">x</span> <span class="op">/</span> <span class="va">mu_g</span><span class="op">)</span> <span class="op">**</span> <span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">sigma_g</span></span>
-<span><span class="co">## [1] 1.448151</span></span></code></pre></div>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">## [1] 1.448151</span></span>
+<span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">## [1] 1.448151</span></span></code></pre></div>
 <p>The functions <code>gmean</code>, <code>gvar</code>, and
 <code>gsd</code> provide the geometric mean, variance, and standard
 deviation for a numeric vector.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/gmean.html">gmean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">## [1] 46.50714</span></span></code></pre></div>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="fu"><a href="../reference/gmean.html">gmean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">mu_g</span><span class="op">)</span></span>
-<span><span class="co">## [1] TRUE</span></span></code></pre></div>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">## [1] 46.50714</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="fu"><a href="../reference/gmean.html">gmean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">mu_g</span><span class="op">)</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span></span>
 <span><span class="fu"><a href="../reference/gmean.html">gvar</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">## [1] 1.146958</span></span></code></pre></div>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="fu"><a href="../reference/gmean.html">gvar</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">sigma_g</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>  <span class="co"># This is supposed to be FALSE</span></span>
-<span><span class="co">## [1] "Mean relative difference: 0.8284385"</span></span></code></pre></div>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="fu"><a href="../reference/gmean.html">gvar</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">sigma_g</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## [1] TRUE</span></span></code></pre></div>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">## [1] 1.146958</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="fu"><a href="../reference/gmean.html">gvar</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">sigma_g</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>  <span class="co"># This is supposed to be FALSE</span></span>
+<span><span class="co">## [1] "Mean relative difference: 0.8284385"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="fu"><a href="../reference/gmean.html">gvar</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">sigma_g</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span></span>
 <span><span class="fu"><a href="../reference/gmean.html">gsd</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">## [1] 1.448151</span></span></code></pre></div>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="fu"><a href="../reference/gmean.html">gsd</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">sigma_g</span><span class="op">)</span></span>
+<span><span class="co">## [1] 1.448151</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="fu"><a href="../reference/gmean.html">gsd</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">sigma_g</span><span class="op">)</span></span>
 <span><span class="co">## [1] TRUE</span></span></code></pre></div>
 <p><code>gmean_sd</code> will provide a quick way for reporting the
 geometric mean and geometric standard deviation in the same way that
 <code>mean_sd</code> does for the arithmetic mean and arithmetic
 standard deviation:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/gmean_sd.html">gmean_sd</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">## [1] "46.51 &amp;plusmn; 1.45"</span></span></code></pre></div>
 </div>
@@ -335,15 +311,15 @@ standard deviation:</p>
 <p>The function <code>summary_table</code> appears to be the most widely
 used tool provided by the qwraps2 package. As such, that function has
 earned its own vignette.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"qwraps2-summary-table"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>, local <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">## R version 4.4.0 (2024-04-24)</span></span>
+<span><span class="co">## R version 4.4.1 (2024-06-14)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
 <span><span class="co">## Running under: Ubuntu 22.04.4 LTS</span></span>
 <span><span class="co">## </span></span>
@@ -358,16 +334,15 @@ earned its own vignette.</p>
 <span><span class="co">## [1] qwraps2_0.6.0.9000</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##  [1] vctrs_0.6.5       cli_3.6.2         knitr_1.47        rlang_1.1.4      </span></span>
-<span><span class="co">##  [5] xfun_0.44         purrr_1.0.2       textshaping_0.4.0 jsonlite_1.8.8   </span></span>
-<span><span class="co">##  [9] htmltools_0.5.8.1 ragg_1.3.2        sass_0.4.9        rmarkdown_2.27   </span></span>
-<span><span class="co">## [13] evaluate_0.23     jquerylib_0.1.4   fastmap_1.2.0     yaml_2.3.8       </span></span>
-<span><span class="co">## [17] lifecycle_1.0.4   memoise_2.0.1     compiler_4.4.0    fs_1.6.4         </span></span>
-<span><span class="co">## [21] Rcpp_1.0.12       systemfonts_1.1.0 digest_0.6.35     R6_2.5.1         </span></span>
-<span><span class="co">## [25] magrittr_2.0.3    bslib_0.7.0       tools_4.4.0       pkgdown_2.0.9    </span></span>
-<span><span class="co">## [29] cachem_1.1.0      desc_1.4.3</span></span></code></pre></div>
+<span><span class="co">##  [1] digest_0.6.37     desc_1.4.3        R6_2.5.1          fastmap_1.2.0    </span></span>
+<span><span class="co">##  [5] xfun_0.47         cachem_1.1.0      knitr_1.48        htmltools_0.5.8.1</span></span>
+<span><span class="co">##  [9] rmarkdown_2.28    lifecycle_1.0.4   cli_3.6.3         pkgdown_2.1.0    </span></span>
+<span><span class="co">## [13] sass_0.4.9        textshaping_0.4.0 jquerylib_0.1.4   systemfonts_1.1.0</span></span>
+<span><span class="co">## [17] compiler_4.4.1    tools_4.4.1       ragg_1.3.3        evaluate_0.24.0  </span></span>
+<span><span class="co">## [21] bslib_0.8.0       Rcpp_1.0.13       yaml_2.3.10       jsonlite_1.8.8   </span></span>
+<span><span class="co">## [25] rlang_1.1.4       fs_1.6.4</span></span></code></pre></div>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
@@ -378,15 +353,15 @@ earned its own vignette.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>

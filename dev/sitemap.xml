@@ -1,147 +1,51 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/ISSUE_TEMPLATE.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/articles/qwraps2-data-sets.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/articles/qwraps2-formatted-summary-statistics.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/articles/qwraps2-graphics.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/articles/qwraps2-summary-table.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/authors.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/index.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/news/index.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/Rpkg.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/StatStepribbon.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/backtick.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/check_comments.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/confusion_matrix.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/deprecated.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/extract.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/file_check.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/frmt.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/ggplot2_tools.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/gmean.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/gmean_sd.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/lazyload_cache.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/ll.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/logit.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/mean_ci.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/mean_sd.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/mean_se.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/median_iqr.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/mtcars2.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/n_perc.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/pefr.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/pkg_check.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/qable.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/qacf.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/qblandaltman.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/qkmplot.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/qroc-qprc.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/qwraps2-package.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/qwraps2-utilities.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/set_diff.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/spambase.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/spin_comments.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/stat_stepribbon.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/summary_table.html</loc>
-  </url>
-  <url>
-    <loc>http://www.peteredewitt.com/qwraps2/dev/reference/traprule.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/CONTRIBUTING.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/ISSUE_TEMPLATE.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/LICENSE.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/articles/index.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/articles/qwraps2-data-sets.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/articles/qwraps2-formatted-summary-statistics.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/articles/qwraps2-graphics.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/articles/qwraps2-summary-table.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/authors.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/index.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/news/index.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/Rpkg.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/StatStepribbon.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/backtick.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/check_comments.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/confusion_matrix.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/deprecated.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/extract.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/file_check.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/frmt.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/ggplot2_tools.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/gmean.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/gmean_sd.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/index.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/lazyload_cache.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/ll.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/logit.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/mean_ci.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/mean_sd.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/mean_se.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/median_iqr.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/mtcars2.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/n_perc.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/pefr.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/pkg_check.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/qable.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/qacf.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/qblandaltman.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/qkmplot.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/qroc-qprc.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/qwraps2-package.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/qwraps2-utilities.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/set_diff.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/spambase.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/spin_comments.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/stat_stepribbon.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/summary_table.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/traprule.html</loc></url>
 </urlset>
+
