@@ -36,10 +36,10 @@
 #'   \item TP: True Positive  = truth = 1 & prediction >= threshold.
 #' }
 #'
-#' The statistics returned in the \code{stats} element are:
+#' The statistics returned in the \code{cm_stats} element are:
 #' \itemize{
 #'   \item accuracy    = (TP + TN) / (TP + TN + FP + FN)
-#'   \item sensitivity, aka true positive rate = TP / (TP + FN)
+#'   \item sensitivity, aka true positive rate or recall = TP / (TP + FN)
 #'   \item specificity, aka true negative rate = TN / (TN + FP)
 #'   \item positive predictive value (PPV), aka precision = TP / (TP + FP)
 #'   \item negative predictive value (NPV) = TN / (TN + FN)
@@ -68,11 +68,22 @@
 #' defined to be 0.
 #'
 #' @return
-#' \code{confusion_matrix} returns a data.frame with columns
+#' \code{confusion_matrix} returns a list with elements
 #' \itemize{
-#'   \item
-#'   \item
-#'   \item
+#'   \item \code{cm_stats} a data.frame with columns:
+#'   \item \code{auroc} numeric value for the area under the receiver operating
+#'   curve
+#'   \item \code{auroc_ci} a numeric vector of length two with the lower and
+#'   upper bounds for a 100(1-alpha)\% confidence interval about the auroc
+#'   \item \code{auprc} numeric value for the area under the precision recall
+#'   curve
+#'   \item \code{auprc_ci} a numeric vector of length two with the lower and
+#'   upper limits for a 100(1-alpha)\% confidence interval about the auprc
+#'   \item \code{confint_method} a character string reporting the method used to
+#'   build the \code{auroc_ci} and \code{auprc_ci}
+#'   \item \code{alpha} the alpha level of the confidence intervals
+#'   \item \code{prevalence} the proportion of the input of positive cases, that
+#'   is (TP + FN) / (TP + FN + FP + TN) = P / (P + N)
 #' }
 #'
 #' @examples

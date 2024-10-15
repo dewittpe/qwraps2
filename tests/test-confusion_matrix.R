@@ -30,7 +30,8 @@ stopifnot(all.equal(cm1, cm2, check.attributes = FALSE))
 
 con_mat <- confusion_matrix(truth = truth, predicted = test, thresholds = NULL)
 
-# check names
+# check names, if this fails and is due to a change in the code, make sure the
+# documentation for the return of confusion_matrix has been updated.
 stopifnot(
   names(con_mat) == c("cm_stats", "auroc", "auroc_ci", "auprc", "auprc_ci", "confint_method", "alpha", "prevalence")
 )
