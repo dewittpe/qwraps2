@@ -1,19 +1,19 @@
-# Version 0.6.0
-- Initial submission 8 Nov 2023
+# Version 0.6.1
+- Initial submission 15 Oct 2024
 
 ## Testing Environments
 
 * Github Actions:
-  * macOS R-4.3.2
-  * windows R-4.3.2
-  * ubuntu R-4.3.2
+  * macOS R-4.4.1
+  * windows R-4.4.1
+  * ubuntu R-4.4.1
   * ubuntu R-devel
-  * ubuntu R-4.2.3
+  * ubuntu R-4.3.3
 
 * win-builder.r-project.org
 
-* Local (macOS Monterey 12.6)
-  * R 4.3.2
+* Local (macOS Sonoma 14.6)
+  * R 4.4.1
 
 ## R CMD Check results
 
@@ -36,17 +36,22 @@
 
 ### Reverse suggests:
 
+* cpr
+
+    No issues
+
 * ensr
+
+    No issues
+
+* pedalfast.data
+
+    No issues
+
+* phoenix
 
     No issues
 
 * REDCapExporter
 
     No issues
-
-* pedalfast.data
-
-    - there is an error in the building of the fss vignette as a result of the
-      chagnes to qwraps2.  I am the author of pedalfast.data and I have already
-      patched this error and will submit the updated pedalfast.data package to
-      CRAN as soon as qwraps2 has been accepted and released on CRAN.
