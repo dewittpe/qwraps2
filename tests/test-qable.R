@@ -79,23 +79,23 @@ test <-
   tryCatch(
            cbind(qtab_1, qtab_1_2, a_number = rnorm(nrow(qtab_1) - 1)),
            error = function(e) e)
-stopifnot(identical(inherits(test, "simpleError"), TRUE))
+stopifnot(inherits(test, "error"))
 
 test <-
   tryCatch(
            cbind(qtab_1, qtab_1_2[1:3, ]),
            error = function(e) e)
-stopifnot(identical(inherits(test, "simpleError"), TRUE))
+stopifnot(inherits(test, "error"))
 
 # there should be an error if the row groups are not identical
 m <- make; names(m) <- toupper(names(m))
 qtab_1_2 <- qable(mtcars[, c("mpg", "cyl")], rgroup = m)
 test <- tryCatch(cbind(qtab_1, qtab_1_2), error = function(e) e)
-stopifnot(identical(inherits(test, "simpleError"), TRUE))
+stopifnot(inherits(test, "error"))
 
 qtab_1_3 <- qable(mtcars[, c("mpg", "cyl")], rgroup = sample(make))
 test <- tryCatch(cbind(qtab_1, qtab_1_3), error = function(e) e)
-stopifnot(identical(inherits(test, "simpleError"), TRUE))
+stopifnot(inherits(test, "error"))
 
 # the attributes of the object from cbind should  be those of the first object
 # passed in

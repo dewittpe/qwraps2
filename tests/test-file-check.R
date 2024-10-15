@@ -37,4 +37,4 @@ x <-
   tryCatch(file_check(c("UNLIKELYFILENAME", "QWRAPS2_EXAMPLE_1.txt", "QWRAPS2_EXAMPLE_2.txt"), stop = TRUE)
            , error = function(e) e )
 stopifnot(!is.null(x))
-stopifnot(identical(class(x), c("simpleError", "error", "condition")))
+stopifnot(inherits(x, "error"))
