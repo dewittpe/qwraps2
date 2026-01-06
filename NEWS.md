@@ -1,3 +1,9 @@
+# qwraps2 0.6.2
+
+## Bug Fixes
+
+* Replace `Rf_error()` with `Rcpp::stop()` (#115)
+
 # qwraps2 0.6.1
 
 * bug fix in qroc - use `geom_path` instead of `geom_line`
