@@ -55,7 +55,7 @@ pkg_check(c("qwraps2", "ggplot2", "NOT a PCKG"))
 #> attr(,"checks")
 #>               package version available installed_version
 #> qwraps2       qwraps2      NA      TRUE             0.6.2
-#> ggplot2       ggplot2      NA      TRUE             4.0.1
+#> ggplot2       ggplot2      NA      TRUE             4.0.2
 #> NOT a PCKG NOT a PCKG      NA     FALSE              <NA>
 
 # verify the version for just ggplot2
@@ -69,7 +69,7 @@ pkg_check(c("qwraps2", "ggplot2"), c("42.3.14", "2.2.0"))
 #> attr(,"checks")
 #>         package version available installed_version
 #> qwraps2 qwraps2 42.3.14     FALSE             0.6.2
-#> ggplot2 ggplot2   2.2.0      TRUE             4.0.1
+#> ggplot2 ggplot2   2.2.0      TRUE             4.0.2
 
 if (FALSE) { # \dontrun{
   # You can have the function throw an error is any of the checks fail

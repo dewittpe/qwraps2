@@ -15,7 +15,7 @@ downloads](https://cranlogs.r-pkg.org/badges/qwraps2)](http://www.r-pkg.org/pkg/
 [![CRAN RStudio mirror
 downloads](https://cranlogs.r-pkg.org/badges/grand-total/qwraps2)](http://www.r-pkg.org/pkg/qwraps2)
 
-[![License](https://img.shields.io/badge/licence-GPL--2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+[![License](https://img.shields.io/badge/licence-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 [![minimal R
 version](https://img.shields.io/badge/R%3E%3D-3.5.0-6666ff.svg)](https://cran.r-project.org/)
 
@@ -91,11 +91,11 @@ make build-options=--no-build-vignettes
 
 ### From CRAN
 
-Download and install from [The Comprehensive R Archive Network
-(CRAN)](https://cran.r-project.org/).
+Download and install from the RStudio [The Comprehensive R Archive
+Network (CRAN)](https://cran.rstudio.com/) mirror.
 
 ``` R
-install.packages("qwraps2", repo = "http://cran.rstudio.com")
+install.packages("qwraps2", repo = "https://cran.rstudio.com")
 ```
 
 ### Developmental

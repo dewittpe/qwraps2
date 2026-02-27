@@ -78,7 +78,7 @@ different options which are available and what they control.
 
 - Pediatric Dentistry:
 
-  - <http://www.aapd.org/publications/>
+  - <https://www.aapd.org/publications/>
 
   - `options(qwraps2_journal = "pediatric_dentistry")`
 
@@ -98,7 +98,7 @@ Useful links:
 
 - <https://github.com/dewittpe/qwraps2/>
 
-- <http://www.peteredewitt.com/qwraps2/>
+- <https://www.peteredewitt.com/qwraps2/>
 
 - Report bugs at <https://github.com/dewittpe/qwraps2/issues>
 
