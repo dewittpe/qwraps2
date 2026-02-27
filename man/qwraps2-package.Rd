@@ -84,7 +84,7 @@ different options which are available and what they control.
 
   \item Pediatric Dentistry:
   \itemize{
-    \item \url{http://www.aapd.org/publications/}
+    \item \url{https://www.aapd.org/publications/}
     \item \code{options(qwraps2_journal = "pediatric_dentistry")}
     \item P-value formatting  as of March 2015.
 
@@ -104,7 +104,7 @@ different options which are available and what they control.
 Useful links:
 \itemize{
   \item \url{https://github.com/dewittpe/qwraps2/}
-  \item \url{http://www.peteredewitt.com/qwraps2/}
+  \item \url{https://www.peteredewitt.com/qwraps2/}
   \item Report bugs at \url{https://github.com/dewittpe/qwraps2/issues}
 }
 

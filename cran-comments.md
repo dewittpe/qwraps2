@@ -1,3 +1,27 @@
+# Version 0.6.2
+
+* bug fixes
+* minor spelling and gammer fixes
+
+## Testing Environments
+
+* Local MacOS R 4.5.2
+  * Status OK
+
+* GitHub Actions
+  * macOS R-latest
+  * windows R-latest
+  * ubuntu R-latest
+  * ubuntu R-devel
+  * ubuntu R-oldrel-1
+
+  * Status OK
+
+* win-builder.r-project.org
+
+  * Status OK
+
+
 # Version 0.6.1
 - Initial submission 15 Oct 2024
 

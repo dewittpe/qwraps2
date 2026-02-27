@@ -74,7 +74,7 @@
 #'
 #'   \item Pediatric Dentistry:
 #'   \itemize{
-#'     \item \url{http://www.aapd.org/publications/}
+#'     \item \url{https://www.aapd.org/publications/}
 #'     \item \code{options(qwraps2_journal = "pediatric_dentistry")}
 #'     \item P-value formatting  as of March 2015.
 #'
