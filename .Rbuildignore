@@ -24,4 +24,4 @@
 ^\.github$
 ^LICENSE\.md$
 ^CRAN-SUBMISSION$
-^qwraps2\.Rchecks/*
+^qwraps2\.Rcheck/*
