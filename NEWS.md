@@ -1,5 +1,11 @@
 # qwraps2 0.6.2.9000
 
+## Bug Fixes
+
+* Correct `confusion_matrix()` edge-case handling for sensitivity, positive
+  predictive value, and F1 when `TP == 0` and exactly one of `FP` or `FN` is
+  positive. These metrics now follow the documented GERBIL convention.
+
 ## Deprecations
 
 * Functions `logit` and `invlogit` have been deprecated in favor of base R

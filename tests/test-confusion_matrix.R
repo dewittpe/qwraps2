@@ -67,6 +67,27 @@ stopifnot(con_mat[["cm_stats"]][is.finite(con_mat$cm_stats$threshold), ][["speci
 stopifnot(con_mat[["cm_stats"]][is.finite(con_mat$cm_stats$threshold), ][["ppv"]] == 20 / 53)
 stopifnot(con_mat[["cm_stats"]][is.finite(con_mat$cm_stats$threshold), ][["npv"]] == 37 / 47)
 
+# GERBIL convention for indeterminate sensitivity, PPV, and F1: if TP, FP, and
+# FN are all 0 then all three metrics are 1; if TP is 0 and FP + FN > 0 then all
+# three metrics are 0.
+cm_one_fp <- confusion_matrix(truth = 0, predicted = 1, thresholds = 1)$cm_stats
+cm_one_fp <- cm_one_fp[is.finite(cm_one_fp$threshold), ]
+stopifnot(cm_one_fp$sensitivity == 0)
+stopifnot(cm_one_fp$ppv == 0)
+stopifnot(cm_one_fp$f1 == 0)
+
+cm_one_fn <- confusion_matrix(truth = 1, predicted = 0, thresholds = 1)$cm_stats
+cm_one_fn <- cm_one_fn[is.finite(cm_one_fn$threshold), ]
+stopifnot(cm_one_fn$sensitivity == 0)
+stopifnot(cm_one_fn$ppv == 0)
+stopifnot(cm_one_fn$f1 == 0)
+
+cm_empty_positive_prediction <- confusion_matrix(truth = 0, predicted = 0, thresholds = Inf)$cm_stats
+cm_empty_positive_prediction <- cm_empty_positive_prediction[cm_empty_positive_prediction$threshold == Inf, ]
+stopifnot(cm_empty_positive_prediction$sensitivity == 1)
+stopifnot(cm_empty_positive_prediction$ppv == 1)
+stopifnot(cm_empty_positive_prediction$f1 == 1)
+
 # errors if non-binomial fit is passed
 fit <- glm(mpg > 20 ~ wt, data = mtcars)
 test <- tryCatch(confusion_matrix(fit), error = function(e) e)

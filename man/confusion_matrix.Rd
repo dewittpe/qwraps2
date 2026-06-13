@@ -133,7 +133,7 @@ Synonyms for the statistics:
 }
 
 Sensitivity and PPV could, in some cases, be indeterminate due to division by
-zero.  To address this we will use the following rule based on the DICE group
+zero.  To address this we use the GERBIL convention from the DICE group
 \url{https://github.com/dice-group/gerbil/wiki/Precision,-Recall-and-F1-measure}:
 If TP, FP, and FN are all 0, then PPV, sensitivity, and F1 will be defined to
 be 1.  If TP are 0 and FP + FN > 0, then PPV, sensitivity, and F1 are all

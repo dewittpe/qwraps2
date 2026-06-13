@@ -61,7 +61,7 @@
 #' }
 #'
 #' Sensitivity and PPV could, in some cases, be indeterminate due to division by
-#' zero.  To address this we will use the following rule based on the DICE group
+#' zero.  To address this we use the GERBIL convention from the DICE group
 #' \url{https://github.com/dice-group/gerbil/wiki/Precision,-Recall-and-F1-measure}:
 #' If TP, FP, and FN are all 0, then PPV, sensitivity, and F1 will be defined to
 #' be 1.  If TP are 0 and FP + FN > 0, then PPV, sensitivity, and F1 are all
@@ -248,11 +248,12 @@ accuracy <- function(TP, TN, FP, FN, ...) {
 }
 
 sensitivity <- function(TP, TN, FP, FN, ...) {
-  # The following rule to deal with division by zero is based on the DICE group
+  # The following rule to deal with division by zero follows the GERBIL
+  # convention from the DICE group.
   # <URL: https://github.com/dice-group/gerbil/wiki/Precision,-Recall-and-F1-measure>:
   if ((TP + FP + FN) == 0) {
     rtn <- 1
-  } else if ((TP == 0) & (FP + FN > 1)) {
+  } else if ((TP == 0) & (FP + FN > 0)) {
     rtn <- 0
   } else {
     rtn <- TP / (TP + FN)
@@ -266,11 +267,12 @@ specificity <- function(TP, TN, FP, FN, ...) {
 }
 
 precision <- PPV <- function(TP, TN, FP, FN, ...) {
-  # The following rule to deal with division by zero is based on the DICE group
+  # The following rule to deal with division by zero follows the GERBIL
+  # convention from the DICE group.
   # <URL: https://github.com/dice-group/gerbil/wiki/Precision,-Recall-and-F1-measure>:
   if ((TP + FP + FN) == 0) {
     rtn <- 1
-  } else if ((TP == 0) & (FP + FN > 1)) {
+  } else if ((TP == 0) & (FP + FN > 0)) {
     rtn <- 0
   } else {
     rtn <- TP / (TP + FP)
@@ -303,7 +305,7 @@ FOR <- function(TP, TN, FP, FN, ...) {
 F1 <- function(TP, TN, FP, FN, ...) {
   if ((TP + FP + FN) == 0) {
     rtn <- 1
-  } else if ((TP == 0) & (FP + FN > 1)) {
+  } else if ((TP == 0) & (FP + FN > 0)) {
     rtn <- 0
   } else {
     rtn <- (2 * TP) / (2 * TP + FP + FN)
