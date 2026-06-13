@@ -154,11 +154,10 @@ qblandaltman(pefr_mini)
 #' # qkmplot: Kaplan Meier Plots
 #'
 # create a survfit object
-require(survival)
 leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x, data = survival::aml)
 
 # base R km plot
-survival:::plot.survfit(leukemia.surv, conf.int = TRUE, lty = 2:3, col = 1:2)
+plot(leukemia.surv, conf.int = TRUE, lty = 2:3, col = 1:2)
 
 #+ fig.width = 5
 # qkmplot
@@ -179,7 +178,7 @@ qkmplot(leukemia_km_data)
 #' Intercept only models are easy to plot too.
 #+ fig.width = 5
 intonly_fit <- survival::survfit(survival::Surv(time, status) ~ 1, data = survival::aml)
-survival:::plot.survfit(intonly_fit, conf.int = TRUE)
+plot(intonly_fit, conf.int = TRUE)
 qkmplot(intonly_fit, conf_int = TRUE)
 
 #'
@@ -287,7 +286,7 @@ cm3 <- confusion_matrix(spam ~ lasso_model_prediction, data = validating_set)
 #'
 #' The ROC and PRC plots are ggplot objects and can be modified as you would any
 #' other ggplot object.
-qroc(cm1) + ggplot2::ggtitle("Logisitic Model")
+qroc(cm1) + ggplot2::ggtitle("Logistic Model")
 qroc(cm2) + ggplot2::ggtitle("Ridge Regression Model")
 qroc(cm3) + ggplot2::ggtitle("LASSO Regression Model")
 
@@ -295,7 +294,7 @@ qroc(cm3) + ggplot2::ggtitle("LASSO Regression Model")
 #' Graphing all three curves in one image with AUROC in the legend:
 roc_plot_data <-
   rbind(
-      cbind(Model = paste("Logisitic; AUROC =", frmt(cm1$auroc, 3)), cm1$cm_stats)
+      cbind(Model = paste("Logistic; AUROC =", frmt(cm1$auroc, 3)), cm1$cm_stats)
     , cbind(Model = paste("Ridge; AUROC =",     frmt(cm2$auroc, 3)), cm2$cm_stats)
     , cbind(Model = paste("LASSO; AUROC =",     frmt(cm3$auroc, 3)), cm3$cm_stats)
     )
@@ -306,13 +305,13 @@ qroc(roc_plot_data) +
 
 #'
 #' Similar for PRC:
-qprc(cm1) + ggplot2::ggtitle("Logisitic Model")
+qprc(cm1) + ggplot2::ggtitle("Logistic Model")
 qprc(cm2) + ggplot2::ggtitle("Ridge Regression Model")
 qprc(cm3) + ggplot2::ggtitle("LASSO Regression Model")
 
 prc_plot_data <-
   rbind(
-      cbind(Model = paste("Logisitic; AUPRC =", frmt(cm1$auprc, 3)), cm1$cm_stats)
+      cbind(Model = paste("Logistic; AUPRC =", frmt(cm1$auprc, 3)), cm1$cm_stats)
     , cbind(Model = paste("Ridge; AUPRC =",     frmt(cm2$auprc, 3)), cm2$cm_stats)
     , cbind(Model = paste("LASSO; AUPRC =",     frmt(cm3$auprc, 3)), cm3$cm_stats)
     )

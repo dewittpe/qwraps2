@@ -2,7 +2,7 @@
 
 ## Deprecations
 
-* Functions `logit` and `invlogit` have been deprecated infavor of base R
+* Functions `logit` and `invlogit` have been deprecated in favor of base R
   `qlogis` and `plogis` respectively.  When `logit` and `invlogit` were
   originally written they were faster than `qlogis` and `plogis`, that is no
   longer true.
@@ -26,15 +26,15 @@
 * Updating roxygen dependencies to correctly document the package.
 * Extend documentation and testing of `set_diff`
 * The default value for `conf_int` in `qacf` has been modified from `0.05` to `1 - getOption("qwraps2_alpha", 0.05)`
-* `ggplot2_extract_legend` is now and S3 method
-* `qable` is now and S3 method and has gained a new argument `kable_args` to
+* `ggplot2_extract_legend` is now an S3 method
+* `qable` is now an S3 method and has gained a new argument `kable_args` to
   make it clear what values are used by `qable` and which are passed to
   `knitr::kable` (#84)
 * `summary_table` has gained two arguments, `qable_args` and `kable_args` to
   help with passing through arguments and being able to use the features of
   knitr::kable (#84)
 * vignettes have been renamed to have a consistent "qwraps2-<topic>" structure.
-* `summary_table` has it's own vignette.
+* `summary_table` has its own vignette.
 
 ## New Features
 
@@ -66,7 +66,7 @@
 
 * Extend the S3 methods provided for `qroc_build_data_frame`
 
-* **Potentially breaking Change** `confusion_matrix` has been undergone a major
+* **Potentially breaking Change** `confusion_matrix` has undergone a major
   refactor.  If nothing else, the return object is now a data.frame with more
   output than before.  The inputs are hopefully easier for end users as well.
   This change includes the addition of the function `auc` and major refactor of
@@ -77,7 +77,7 @@
 * `summary_table_042` and `tab_summary`, the tidyverse versions of summary table
   that had been deprecated have been removed from the package. (#96)
 
-* `qroc_build_data_frame` as been deprecated in favor of `auc`
+* `qroc_build_data_frame` has been deprecated in favor of `auc`
 
 
 # qwraps2 0.5.2

@@ -41,14 +41,14 @@ NULL
 #' @export
 #' @rdname qroc_build_data_frame
 qroc_build_data_frame <- function(fit, truth = NULL, n_threshold = 200, ...) {
-  .Deprecated(new = "confusion_matrix", msg = "qroc_build_data_frame as been replaced by confusion_matrix(), this will become an error message in a later release of qwraps2")
+  .Deprecated(new = "confusion_matrix", msg = "qroc_build_data_frame has been replaced by confusion_matrix(), this will become an error message in a later release of qwraps2")
   UseMethod("qroc_build_data_frame")
 }
 
 #' @export
 #' @rdname qroc_build_data_frame
 qroc_build_data_frame.default <- function(fit, truth = NULL, n_threshold = 200, ...) {
-  .Deprecated(new = "confusion_matrix", msg = "qroc_build_data_frame as been replaced by confusion_matrix(), this will become an error message in a later release of qwraps2")
+  .Deprecated(new = "confusion_matrix", msg = "qroc_build_data_frame has been replaced by confusion_matrix(), this will become an error message in a later release of qwraps2")
   stopifnot(!is.null(truth))
   stopifnot(length(fit) == length(truth))
 
@@ -84,7 +84,7 @@ qroc_build_data_frame.default <- function(fit, truth = NULL, n_threshold = 200, 
 #' @export
 #' @rdname qroc_build_data_frame
 qroc_build_data_frame.glm <- function(fit, truth = NULL, n_threshold = 200, ...) {
-  .Deprecated(new = "auc", msg = "qroc_build_data_frame as been replaced by auc(), this will become an error message in a later release of qwraps2")
+  .Deprecated(new = "auc", msg = "qroc_build_data_frame has been replaced by auc(), this will become an error message in a later release of qwraps2")
 
   stopifnot(fit$family$family %in% c("binomial", "quasibinomial"))
 
@@ -97,7 +97,7 @@ qroc_build_data_frame.glm <- function(fit, truth = NULL, n_threshold = 200, ...)
 #' @export
 #' @rdname qroc_build_data_frame
 qprc_build_data_frame <- function(fit, n_threshold = 200, ...) {
-  .Deprecated(new = "auc", msg = "qprc_build_data_frame as been replaced by auc(), this will become an error message in a later release of qwraps2")
+  .Deprecated(new = "auc", msg = "qprc_build_data_frame has been replaced by auc(), this will become an error message in a later release of qwraps2")
 
   # find the predicted values
   pred_vals <- stats::predict(fit, ..., type = "response")

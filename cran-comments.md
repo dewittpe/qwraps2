@@ -1,7 +1,7 @@
 # Version 0.6.2
 
 * bug fixes
-* minor spelling and gammer fixes
+* minor spelling and grammar fixes
 
 ## Testing Environments
 
