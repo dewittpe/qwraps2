@@ -25,6 +25,18 @@ stopifnot(any(grepl("142E\\ +\\|21\\.4", output_markdown)))
 test <- tryCatch(qable(mtcars2, markup = "rts"), error = function(e) e)
 stopifnot(inherits(test, "error"))
 
+# errors for malformed row groups
+test <- tryCatch(qable(matrix(1:4, nrow = 2), rgroup = c(A = 1)), error = function(e) e)
+stopifnot(inherits(test, "error"))
+stopifnot(grepl("sum\\(rgroup\\)", test$message))
+
+test <- tryCatch(qable(matrix(1:4, nrow = 2), rgroup = c(A = 0, B = 2)), error = function(e) e)
+stopifnot(inherits(test, "error"))
+stopifnot(grepl("positive integer", test$message))
+
+test <- tryCatch(qable(matrix(1:4, nrow = 2), rgroup = c(1, 1)), error = function(e) e)
+stopifnot(inherits(test, "error"))
+stopifnot(grepl("named vector", test$message))
 
 # rtitle
 out <- capture.output(print(qable(mtcars[1, ], rtitle = "user defined rtitle")))

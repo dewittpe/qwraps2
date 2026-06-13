@@ -88,6 +88,14 @@ stopifnot(cm_empty_positive_prediction$sensitivity == 1)
 stopifnot(cm_empty_positive_prediction$ppv == 1)
 stopifnot(cm_empty_positive_prediction$f1 == 1)
 
+# Boundary confidence intervals should not produce NaNs when proportions are
+# exactly zero or one.
+cm_perfect <- confusion_matrix(truth = c(0, 1), predicted = c(0.2, 0.8), thresholds = 0.5)
+cm_perfect_stats <- cm_perfect$cm_stats
+stopifnot(!any(is.nan(unlist(cm_perfect_stats[, grepl("_(lcl|ucl)$", names(cm_perfect_stats))]))))
+stopifnot(!any(is.nan(cm_perfect$auroc_ci)))
+stopifnot(!any(is.nan(cm_perfect$auprc_ci)))
+
 # errors if non-binomial fit is passed
 fit <- glm(mpg > 20 ~ wt, data = mtcars)
 test <- tryCatch(confusion_matrix(fit), error = function(e) e)

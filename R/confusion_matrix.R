@@ -342,12 +342,22 @@ MCC <- function(TP, TN, FP, FN, ...) {
 }
 
 proportion_confint <- function(p, n, method = "logit", alpha = getOption("qwraps2_alpha", 0.05)) {
+  if (n == 0L || is.na(p)) {
+    return(c(NA_real_, NA_real_))
+  }
+
   z <- stats::qnorm(1 - alpha/2)
 
   if (method == "logit") {
-    m <- stats::qlogis(p)
-    tau <- 1 / sqrt( n * p * (1 - p) )
-    rtn <- stats::plogis(m + c(-z, z) * tau)
+    if (p <= 0) {
+      rtn <- c(0, 0)
+    } else if (p >= 1) {
+      rtn <- c(1, 1)
+    } else {
+      m <- stats::qlogis(p)
+      tau <- 1 / sqrt( n * p * (1 - p) )
+      rtn <- stats::plogis(m + c(-z, z) * tau)
+    }
   } else if (method == "binomial") {
     rtn <- p + c(-z, z) * sqrt( p * (1 - p) / n)
   } else if (method == "wilson_score") {

@@ -154,6 +154,10 @@ qrmst.survfit <- function(x, tau = Inf) {
 #' @rdname qkmplot
 qrmst.qkmplot_data <- function(x, tau = Inf) {
 
+  if (is.null(x$strata)) {
+    x$strata <- "All"
+  }
+
   d <- split(x, x$strata)
 
   if (is.infinite(tau)) {

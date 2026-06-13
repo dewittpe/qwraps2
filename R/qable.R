@@ -113,6 +113,18 @@ qable.matrix <- function(x, rtitle = "", rgroup = numeric(0), rnames = rownames(
     stop("markup is either 'latex' or 'markdown'")
   }
 
+  if (length(rgroup) > 0) {
+    if (is.null(names(rgroup)) || any(!nzchar(names(rgroup)))) {
+      stop("rgroup must be a named vector.")
+    }
+    if (!is.numeric(rgroup) || any(is.na(rgroup)) || any(rgroup <= 0) || any(rgroup != as.integer(rgroup))) {
+      stop("rgroup must contain positive integer counts.")
+    }
+    if (sum(rgroup) != nrow(x)) {
+      stop("sum(rgroup) must equal nrow(x).")
+    }
+  }
+
   xmat <- matrix("~", nrow = nrow(x) + length(rgroup), ncol = 1 + ncol(x))
 
   if (length(rgroup) > 0) {

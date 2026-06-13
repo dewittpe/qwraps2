@@ -339,7 +339,8 @@ qsummary.data.frame <- function(x,
                summaries <- numeric_summaries
              } else if (is.character(x[[variable]]) | is.factor(x[[variable]])) {
                lvls <- levels(as.factor(x[[variable]]))
-               summaries <- as.list(paste0("~ qwraps2::n_perc(%s == '", lvls, "', ", npa, ")"))
+               qlvls <- vapply(lvls, deparse, character(1L))
+               summaries <- as.list(paste0("~ qwraps2::n_perc(%s == ", qlvls, ", ", npa, ")"))
                summaries <- stats::setNames(summaries, lvls)
              } else if (is.logical(x[[variable]])) {
                summaries <- as.list(paste0("~ qwraps2::n_perc(%s, ", npa, ")"))

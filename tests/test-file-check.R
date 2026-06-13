@@ -3,6 +3,10 @@ e <- new.env()
 example("file_check", local = e)
 ls(envir = e)
 
+test <- tryCatch(file_check(character(0)), error = function(e) e)
+stopifnot(inherits(test, "error"))
+stopifnot(grepl("paths must have length greater than zero", test$message))
+
 ################################################################################
 #                                    Test 1                                    #
 stopifnot(isTRUE(e$test1))

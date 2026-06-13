@@ -127,6 +127,9 @@
 #' @export
 file_check <- function(paths, md5sums = NULL, absolute_paths = c("warn", "stop", "silent"), stop = FALSE) {
   paths <- as.character(paths)
+  if (!length(paths)) {
+    stop("paths must have length greater than zero.")
+  }
   md5sums <- as.character(md5sums)
   current_md5sums <- tools::md5sum(path.expand(paths))
   md5check <- rep(NA, length(paths))
@@ -193,4 +196,3 @@ print.qwraps2_file_check <- function(x, ...) {
     print.default(x)
   }
 }
-

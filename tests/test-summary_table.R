@@ -17,6 +17,12 @@ stopifnot(identical(qs[["cyl_character"]],
                        "6 cylinders" = ~ qwraps2::n_perc(cyl_character == "6 cylinders", digits = 0, show_symbol = FALSE),
                        "8 cylinders" = ~ qwraps2::n_perc(cyl_character == "8 cylinders", digits = 0, show_symbol = FALSE))))
 
+qs_quoted <- qsummary(data.frame(x = c("A's", 'B "quoted"', "plain")))
+stopifnot(identical(names(qs_quoted$x), c("A's", 'B "quoted"', "plain")))
+
+st_quoted <- summary_table(data.frame(x = c("A's", 'B "quoted"', "plain")))
+stopifnot(inherits(st_quoted, "qwraps2_summary_table"))
+
 # expect warnings
 temp <- dplyr::group_by(mtcars, am, vs)
 

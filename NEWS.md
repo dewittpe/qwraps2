@@ -5,6 +5,13 @@
 * Correct `confusion_matrix()` edge-case handling for sensitivity, positive
   predictive value, and F1 when `TP == 0` and exactly one of `FP` or `FN` is
   positive. These metrics now follow the documented GERBIL convention.
+* Improve `confusion_matrix()` confidence intervals for boundary proportions
+  of zero or one.
+* Allow `qrmst()` to work with unstratified `survfit` objects.
+* Correct `qsummary()` formula generation for character and factor levels that
+  contain quotes.
+* Add clearer error handling for empty `file_check()` paths and invalid
+  `qable()` row groups.
 
 ## Deprecations
 
