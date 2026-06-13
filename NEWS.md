@@ -12,6 +12,8 @@
   contain quotes.
 * Add clearer error handling for empty `file_check()` paths and invalid
   `qable()` row groups.
+* Correct and clarify vignette text for geometric means, geometric variance,
+  and ROC terminology.
 
 ## Deprecations
 

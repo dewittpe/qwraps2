@@ -489,9 +489,9 @@ summary_table(new_data_frame)
 The task of building the
 `r  backtick(summaries)  `
 list-of-lists can be tedious. The function
-`r  backtick(qummaries)  `
+`r  backtick(qsummary)  `
 is designed to make it easier.
-`r  backtick(qummaries)  `
+`r  backtick(qsummary)  `
 will use a set of predefined
 functions to summarize numeric columns of a data.frame, a set of arguments
 to pass to

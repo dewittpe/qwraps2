@@ -10,7 +10,7 @@
 \alias{qprc.default}
 \alias{qprc.qwraps2_confusion_matrix}
 \alias{qprc.glm}
-\title{Receiver-Operator and Precision-Recall Curves}
+\title{Receiver Operating Characteristic and Precision-Recall Curves}
 \usage{
 qroc(x, ...)
 

@@ -38,7 +38,7 @@
 #' gvar(x)
 #'
 #' # geometric sd
-#' exp(sd(log(x)))                                     ## This is wrong (incorrect sample size)
+#' exp(sd(log(x)))                                     ## Uses n - 1
 #' exp(sqrt((length(x) - 1) / length(x)) * sd(log(x))) ## Correct calculation
 #' gsd(x)
 #'
@@ -78,4 +78,3 @@ gsd <- function(x, na_rm = FALSE) {
   }
   exp(sqrt((length(x) - 1) / length(x) * stats::var(log(x))))
 }
-

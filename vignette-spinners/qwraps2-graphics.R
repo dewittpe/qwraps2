@@ -184,7 +184,7 @@ qkmplot(intonly_fit, conf_int = TRUE)
 #'
 # /* ------------------------------------------------------------------------ */
 #'
-#' # qroc and qprc: Receiver Operating Curve and Precision Recall Curve
+#' # qroc and qprc: Receiver Operating Characteristic Curve and Precision-Recall Curve
 #'
 #' Starting in
 {{ Rpkg(qwraps2) }}

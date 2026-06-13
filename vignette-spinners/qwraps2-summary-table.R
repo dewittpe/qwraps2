@@ -442,9 +442,9 @@ summary_table(new_data_frame)
 #' The task of building the
 {{ backtick(summaries) }}
 #' list-of-lists can be tedious. The function
-{{ backtick(qummaries) }}
+{{ backtick(qsummary) }}
 #' is designed to make it easier.
-{{ backtick(qummaries) }}
+{{ backtick(qsummary) }}
 #' will use a set of predefined
 #' functions to summarize numeric columns of a data.frame, a set of arguments
 #' to pass to

@@ -73,7 +73,7 @@ library(qwraps2)
 #' For details on the construction of the
 {{ backtick(mtcars2) }}
 #' data set please view the vignette:
-{{ backtick(vignette('mtcars', package = "qwraps2")) }}
+{{ backtick(vignette('qwraps2-data-sets', package = "qwraps2")) }}
 data(mtcars2)
 str(mtcars2)
 
@@ -160,8 +160,8 @@ n_perc(mtcars2$cyl %in% c(4, 6))
 #'
 #' $$
 #' \begin{equation}
-#'   \mu_g = \left( \prod_{i = 1}^{n} x_i \right)^{\frac{1}{n}} = b^{ \sum_{i =
-#'   1}^{n} \log_{b} x_i },
+#'   \mu_g = \left( \prod_{i = 1}^{n} x_i \right)^{\frac{1}{n}} =
+#'   b^{ \frac{1}{n} \sum_{i = 1}^{n} \log_{b} x_i },
 #' \end{equation}
 #' $$
 #' and
@@ -185,8 +185,9 @@ n_perc(mtcars2$cyl %in% c(4, 6))
 #'
 #' When looking for the geometric standard deviation in R, the simple
 {{ backtick(exp(sd(log(x)))) }}
-#' is not exactly correct.  The geometric standard deviation
-#' uses $n,$ the full sample size, in the denominator, where as
+#' does not match the population-denominator definition used here.  The
+#' geometric standard deviation above uses $n,$ the full sample size, in the
+#' denominator, whereas
 #' the
 {{ backtick(sd) }}
 #' and
@@ -204,13 +205,17 @@ exp(mean(log(x)))
 1.2 ** mean(log(x, base = 1.2))
 
 # geometric standard deviation
-exp(sd(log(x)))  ## This is wrong
+exp(sd(log(x)))  ## Uses the sample denominator, n - 1
 
 # these equations are correct
 sigma_g <- exp(sqrt(sum(log(x / mu_g) ** 2) / length(x)))
 sigma_g
 
 exp(sqrt((length(x) - 1) / length(x)) * sd(log(x)))
+
+# geometric variance
+geometric_variance <- exp(log(sigma_g) ** 2)
+geometric_variance
 
 #'
 #' The functions
@@ -219,13 +224,14 @@ exp(sqrt((length(x) - 1) / length(x)) * sd(log(x)))
 #' and
 {{ backtick(gsd) }}
 #' provide the geometric mean, variance, and standard deviation for a numeric
-#' vector.
+#' vector.  Here, geometric variance is defined as $\exp((\log \sigma_g)^2),$
+#' not as $\sigma_g^2.$
 gmean(x)
 all.equal(gmean(x), mu_g)
 
 gvar(x)
-all.equal(gvar(x), sigma_g^2)  # This is supposed to be FALSE
-all.equal(gvar(x), exp(log(sigma_g)^2))
+all.equal(gvar(x), sigma_g^2)       # This is supposed to be FALSE
+all.equal(gvar(x), geometric_variance)
 
 gsd(x)
 all.equal(gsd(x), sigma_g)
