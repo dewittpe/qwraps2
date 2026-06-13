@@ -112,6 +112,11 @@ Useful links:
 \author{
 \strong{Maintainer}: Peter DeWitt \email{dewittpe@gmail.com} (\href{https://orcid.org/0000-0002-6391-0795}{ORCID})
 
+Authors:
+\itemize{
+  \item Peter DeWitt \email{dewittpe@gmail.com} (\href{https://orcid.org/0000-0002-6391-0795}{ORCID})
+}
+
 Other contributors:
 \itemize{
   \item Tell Bennett \email{tell.bennett@cuanschutz.edu} (\href{https://orcid.org/0000-0003-1483-4236}{ORCID}) [contributor]

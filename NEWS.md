@@ -1,3 +1,12 @@
+# qwraps2 0.6.2.9000
+
+## Deprecations
+
+* Functions `logit` and `invlogit` have been deprecated infavor of base R
+  `qlogis` and `plogis` respectively.  When `logit` and `invlogit` were
+  originally written they were faster than `qlogis` and `plogis`, that is no
+  longer true.
+
 # qwraps2 0.6.2
 
 ## Bug Fixes

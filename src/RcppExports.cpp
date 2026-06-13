@@ -11,28 +11,6 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// logit
-Rcpp::NumericVector logit(Rcpp::NumericVector x);
-RcppExport SEXP _qwraps2_logit(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(logit(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// invlogit
-Rcpp::NumericVector invlogit(Rcpp::NumericVector x);
-RcppExport SEXP _qwraps2_invlogit(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(invlogit(x));
-    return rcpp_result_gen;
-END_RCPP
-}
 // traprule
 double traprule(arma::vec x, arma::vec y);
 RcppExport SEXP _qwraps2_traprule(SEXP xSEXP, SEXP ySEXP) {
@@ -47,8 +25,6 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_qwraps2_logit", (DL_FUNC) &_qwraps2_logit, 1},
-    {"_qwraps2_invlogit", (DL_FUNC) &_qwraps2_invlogit, 1},
     {"_qwraps2_traprule", (DL_FUNC) &_qwraps2_traprule, 2},
     {NULL, NULL, 0}
 };

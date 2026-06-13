@@ -10,7 +10,12 @@ PKG_ROOT    = .
 PKG_VERSION = $(shell gawk '/^Version:/{print $$2}' $(PKG_ROOT)/DESCRIPTION)
 PKG_NAME    = $(shell gawk '/^Package:/{print $$2}' $(PKG_ROOT)/DESCRIPTION)
 
-CRAN = "https://cran.rstudio.com"
+R         ?= R --vanilla
+RSCRIPT   ?= Rscript --vanilla
+RCMDBATCH ?= R CMD BATCH --vanilla
+
+CRAN     ?= https://cran.rstudio.com
+REPOS    := "options(repos=c(CRAN='$(CRAN)'))"
 
 # General Package Dependencies
 SRC       = $(wildcard $(PKG_ROOT)/src/*.cpp)
@@ -41,19 +46,20 @@ DATATARGETS += $(PKG_ROOT)/data/spambase.rda
 all: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
 $(PKG_NAME)_$(PKG_VERSION).tar.gz: .install_dev_deps.Rout .document.Rout $(VIGNETTES) $(TESTS)
-	R CMD build --md5 $(build-options) $(PKG_ROOT)
+	$(R) CMD build --md5 $(build-options) $(PKG_ROOT)
 
 .install_dev_deps.Rout : $(PKG_ROOT)/DESCRIPTION
-	Rscript --vanilla --quiet -e "options(repo = c('$(CRAN)'))" \
-		-e "if (!require(devtools)) {install.packages('devtools', repo = c('$(CRAN)'))}" \
-		-e "options(warn = 2)" \
-		-e "devtools::install_dev_deps()"
-	touch $@
+	$(RSCRIPT) --quiet -e $(REPOS) \
+	  -e "if (!requireNamespace('pak', quietly=TRUE)) \
+	       install.packages('pak', repos='$(CRAN)')" \
+	  -e "options(warn=2)" \
+	  -e "pak::local_install_dev_deps(root = '$(PKG_ROOT)')" \
+	  > $@ 2>&1
 
 .document.Rout: $(SRC) $(RFILES) $(DATATARGETS) $(EXAMPLES) $(PKG_ROOT)/DESCRIPTION
-	Rscript --vanilla --quiet -e "options(warn = 2)" \
+	$(RSCRIPT) --quiet -e "options(warn = 2)" \
 		-e "devtools::document('$(PKG_ROOT)')"
-	touch $@
+	@touch $@
 
 ################################################################################
 # Recipes for Vignettes
@@ -63,19 +69,21 @@ $(PKG_NAME)_$(PKG_VERSION).tar.gz: .install_dev_deps.Rout .document.Rout $(VIGNE
 # List the explicit targets above
 
 $(PKG_ROOT)/vignettes/%.Rmd : $(PKG_ROOT)/vignette-spinners/%.R
-	R --vanilla --quiet -e "knitr::spin(hair = '$<', knit = FALSE)"
+	$(R) --quiet -e "knitr::spin(hair = '$<', knit = FALSE)"
 	mv $(basename $<).Rmd $@
 
 ################################################################################
 # Data Sets
 #
 $(DATATARGETS) &: vignette-spinners/qwraps2-data-sets.R inst/spambase/spambase.data inst/spambase/spambase.names
-	R CMD BATCH --vanilla $< .data-export.Rout
+	$(RCMDBATCH) $< .data-export.Rout
 
 ################################################################################
 
 covr :
-	R --vanilla --quiet \
+	$(R) --quiet \
+	  -e "if (!requireNamespace('covr', quietly=TRUE)) \
+	       install.packages('covr', repos='$(CRAN)')" \
 		-e 'library(covr)'\
 		-e 'x <- package_coverage(type = "all", combine_types = FALSE)'\
 		-e 'report(x[["tests"]], file = "covr-report-tests.html")'\
@@ -91,23 +99,27 @@ covr :
 #
 
 check: $(PKG_NAME)_$(PKG_VERSION).tar.gz
-	R CMD check $(PKG_NAME)_$(PKG_VERSION).tar.gz
+	$(R) CMD check $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
 check-as-cran: $(PKG_NAME)_$(PKG_VERSION).tar.gz
-	R CMD check --as-cran $(PKG_NAME)_$(PKG_VERSION).tar.gz
+	$(R) CMD check --as-cran $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
 install: $(PKG_NAME)_$(PKG_VERSION).tar.gz
-	R CMD INSTALL $(PKG_NAME)_$(PKG_VERSION).tar.gz
+	$(R) CMD INSTALL $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
 uninstall :
-	R --vanilla --quiet -e "try(remove.packages('$(PKG_NAME)'), silent = TRUE)"
+	$(R) --quiet -e "try(remove.packages('$(PKG_NAME)'), silent = TRUE)"
 
 site: $(PKG_NAME)_$(PKG_VERSION).tar.gz
-	R --vanilla --quiet -e "pkgdown::build_site()"
+	$(R) --quiet \
+	  -e "if (!requireNamespace('covr', quietly=TRUE)) \
+	       install.packages('covr', repos='$(CRAN)')" \
+		-e "pkgdown::build_site()"
 
 clean:
 	$(RM) -f  $(PKG_NAME)_$(PKG_VERSION).tar.gz
 	$(RM) -rf $(PKG_NAME).Rcheck
 	$(RM) -f .document.Rout
 	$(RM) -f .install_dev_deps.Rout
+	$(RM) -f src/*.o src/*.so
 

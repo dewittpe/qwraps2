@@ -1,12 +1,29 @@
-#' Deprecated Functions
+#' Deprecated logit and invlogit
 #'
-#' Archive of deprecated functions. Some of these might be removed from the
-#' package in later releases.
+#' Deprecated logit and invlogit functions.  When originally written they were
+#' faster than the base R \code{\link{qlogis}} and \code{\link{plogis}}.
+#' However, that is no longer the case.
+#' 
+#' @param x a numeric vector
 #'
-#' @name deprecated
+#' @name logit
 NULL
 
-#' qroc and qprc building of data frames:
+#' @export
+#' @rdname logit
+logit <- function(x) {
+  .Deprecated(new = "stats::qlogis", msg = "qwraps2::logit and qwraps2::invlogit were nice to haves and faster than stats::qlogis and stats::plogis, but that is no longer true.")
+  stats::qlogis(x)
+}
+
+#' @export
+#' @rdname logit
+invlogit <- function(x) {
+  .Deprecated(new = "stats::plogis", msg = "qwraps2::logit and qwraps2::invlogit were nice to haves and faster than stats::qlogis and stats::plogis, but that is no longer true.")
+  stats::plogis(x)
+}
+
+#' Deprecated qroc and qprc building of data frames:
 #'
 #' Deprecated methods for building the data sets needed for plotting roc and prc
 #' plots.  use \code{\link{confusion_matrix}} instead.
@@ -18,16 +35,18 @@ NULL
 #' @param n_threshold number of thresholds to use to estimate auroc or auprc
 #' @param ... passed to \code{\link[stats]{predict}}
 #'
+#' @name qroc_build_data_frame
+NULL
+
 #' @export
-#' @rdname deprecated
+#' @rdname qroc_build_data_frame
 qroc_build_data_frame <- function(fit, truth = NULL, n_threshold = 200, ...) {
   .Deprecated(new = "confusion_matrix", msg = "qroc_build_data_frame as been replaced by confusion_matrix(), this will become an error message in a later release of qwraps2")
   UseMethod("qroc_build_data_frame")
 }
 
-
 #' @export
-#' @rdname deprecated
+#' @rdname qroc_build_data_frame
 qroc_build_data_frame.default <- function(fit, truth = NULL, n_threshold = 200, ...) {
   .Deprecated(new = "confusion_matrix", msg = "qroc_build_data_frame as been replaced by confusion_matrix(), this will become an error message in a later release of qwraps2")
   stopifnot(!is.null(truth))
@@ -63,7 +82,7 @@ qroc_build_data_frame.default <- function(fit, truth = NULL, n_threshold = 200, 
 }
 
 #' @export
-#' @rdname deprecated
+#' @rdname qroc_build_data_frame
 qroc_build_data_frame.glm <- function(fit, truth = NULL, n_threshold = 200, ...) {
   .Deprecated(new = "auc", msg = "qroc_build_data_frame as been replaced by auc(), this will become an error message in a later release of qwraps2")
 
@@ -76,7 +95,7 @@ qroc_build_data_frame.glm <- function(fit, truth = NULL, n_threshold = 200, ...)
 }
 
 #' @export
-#' @rdname deprecated
+#' @rdname qroc_build_data_frame
 qprc_build_data_frame <- function(fit, n_threshold = 200, ...) {
   .Deprecated(new = "auc", msg = "qprc_build_data_frame as been replaced by auc(), this will become an error message in a later release of qwraps2")
 
