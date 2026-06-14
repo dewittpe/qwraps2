@@ -4,3 +4,59 @@ template:
 
 development:
   mode: auto
+
+reference:
+  - title: Summary Tables
+    desc: Build formatted summary tables from data frames.
+    contents:
+      - summary_table
+      - qsummary
+      - qable
+  - title: Formatting Summary Statistics
+    desc: Format numeric summaries, p-values, confidence intervals, and package names.
+    contents:
+      - frmt
+      - mean_sd
+      - mean_se
+      - mean_ci
+      - median_iqr
+      - n_perc
+      - gmean
+      - gmean_sd
+      - Rpkg
+      - backtick
+  - title: Graphics
+    desc: ggplot2-based helper plots.
+    contents:
+      - qacf
+      - qblandaltman
+      - qkmplot
+      - qroc-qprc
+      - stat_stepribbon
+      - StatStepribbon
+      - ggplot2_extract_legend
+  - title: Classification Metrics
+    contents:
+      - confusion_matrix
+  - title: Data
+    contents:
+      - mtcars2
+      - pefr
+      - spambase
+  - title: Utilities
+    contents:
+      - file_check
+      - pkg_check
+      - lazyload_cache_dir
+      - ll
+      - set_diff
+      - spin_comments
+      - check_comments
+      - traprule
+      - extract_fstat
+      - "%s%"
+  - title: Deprecated Functions
+    desc: Retained for backward compatibility.
+    contents:
+      - logit
+      - qroc_build_data_frame
