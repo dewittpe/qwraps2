@@ -15,7 +15,6 @@
 <url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/backtick.html</loc></url>
 <url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/check_comments.html</loc></url>
 <url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/confusion_matrix.html</loc></url>
-<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/deprecated.html</loc></url>
 <url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/extract.html</loc></url>
 <url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/file_check.html</loc></url>
 <url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/frmt.html</loc></url>
@@ -39,6 +38,7 @@
 <url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/qblandaltman.html</loc></url>
 <url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/qkmplot.html</loc></url>
 <url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/qroc-qprc.html</loc></url>
+<url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/qroc_build_data_frame.html</loc></url>
 <url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/qwraps2-package.html</loc></url>
 <url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/qwraps2-utilities.html</loc></url>
 <url><loc>http://www.peteredewitt.com/qwraps2/dev/reference/set_diff.html</loc></url>

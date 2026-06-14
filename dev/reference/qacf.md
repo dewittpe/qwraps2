@@ -1,0 +1,87 @@
+# Autocorrelation plot
+
+ggplot2 style autocorrelation plot
+
+## Usage
+
+``` r
+qacf(
+  x,
+  conf_level = 1 - getOption("qwraps2_alpha", 0.05),
+  show_sig = FALSE,
+  ...
+)
+```
+
+## Arguments
+
+- x:
+
+  object
+
+- conf_level:
+
+  confidence level for determining ‘significant’ correlations
+
+- show_sig:
+
+  logical, highlight significant correlations
+
+- ...:
+
+  Other arguments passed to [`acf`](https://rdrr.io/r/stats/acf.html)
+
+## Value
+
+a ggplot.
+
+## Details
+
+qacf calls [`acf`](https://rdrr.io/r/stats/acf.html) to generate a data
+set which is then plotted via ggplot2.
+
+More details and examples for graphics within qwraps2 are in the
+vignette(“qwraps2-graphics”, package = “qwraps2”)
+
+## See also
+
+[`acf`](https://rdrr.io/r/stats/acf.html).
+
+## Examples
+
+``` r
+# Generate a random data set
+set.seed(42)
+n <- 250
+x1 <- x2 <- x3 <- x4 <- vector('numeric', length = n)
+x1[1] <- runif(1)
+x2[1] <- runif(1)
+x3[1] <- runif(1)
+x4[1] <- runif(1)
+
+# white noise
+Z_1 <- rnorm(n, 0, 1)
+Z_2 <- rnorm(n, 0, 2)
+Z_3 <- rnorm(n, 0, 5)
+
+for(i in 2:n)
+{
+  x1[i] <- x1[i-1] + Z_1[i] - Z_1[i-1] + x4[i-1] - x2[i-1]
+  x2[i] <- x2[i-1] - 2 * Z_2[i] + Z_2[i-1] - x4[i-1]
+  x3[i] <- x3[i-1] + x2[i-1] + 0.2 * Z_3[i] + Z_3[i-1]
+  x4[i] <- x4[i-1] + runif(1, 0.5, 1.5) * x4[i-1]
+}
+testdf <- data.frame(x1, x2, x3, x4)
+
+# qacf plot for one variable
+qacf(testdf$x1)
+
+qacf(testdf$x1, show_sig = TRUE)
+
+
+# more than one variable
+qacf(testdf)
+
+qacf(testdf, show_sig = TRUE)
+
+```
