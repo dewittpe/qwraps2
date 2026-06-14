@@ -15,12 +15,12 @@
 #' set via \code{options()}.
 #'
 #' Default settings report the P-value exactly if P >
-#' \code{getOptions("qwraps2_frmtp_digits", 4)} and reports
-#' P < \code{10^-(getOptions("qwraps2_frmtp_digits", 2))} otherwise.  By the
+#' \code{getOption("qwraps2_frmtp_digits", 4)} and reports
+#' P < \code{10^-(getOption("qwraps2_frmtp_digits", 2))} otherwise.  By the
 #' leading zero is controlled via
-#' \code{getOptions("qwraps2_frmtp_leading0", TRUE)}
+#' \code{getOption("qwraps2_frmtp_leading0", TRUE)}
 #' and a upper or lower case P is controlled by
-#' \code{getOptions("qwraps2_frmtp_case", "upper")}.  These options are ignored
+#' \code{getOption("qwraps2_frmtp_case", "upper")}.  These options are ignored
 #' if \code{style != "default"}.
 #'
 #' Journals with predefined P-value formatting are noted in the
@@ -372,7 +372,7 @@ Gitlabpkg <- function(pkg, username) {
 
 #' Backtick
 #'
-#' Encapsulate a string in backticks. Very helpful for in line code in
+#' Encapsulate a string in backticks. Very helpful for inline code in
 #' \code{\link[knitr]{spin}} scripts.
 #'
 #' @param x the thing to be deparsed and encapsulated in backticks

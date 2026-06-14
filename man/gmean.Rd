@@ -65,6 +65,6 @@ gsd(x, na_rm = TRUE)
 }
 \seealso{
 \code{\link{gmean_sd}} for easy formatting of the geometric mean and
-standard deviation.  \code{vignette("summary-statistics", package =
-"qwraps2")}.
+standard deviation.
+\code{vignette("qwraps2-formatted-summary-statistics", package = "qwraps2")}.
 }

@@ -2,11 +2,11 @@
 #'
 #' Tools useful for building data summary tables.
 #'
-#' \code{summary_table} can be used to generate good looking, simple tables in
-#' LaTeX or markdown.  Functions like xtables::print.xtable and Hmisc::latex
-#' provide many more tools for formatting tables.  The purpose of
-#' \code{summary_table} is to generate good looking tables quickly within
-#' workflow for summarizing a data set.
+#' \code{summary_table} can be used to generate good-looking, simple tables in
+#' LaTeX or markdown.  Functions like \code{xtable::print.xtable} and
+#' \code{Hmisc::latex} provide many more tools for formatting tables.  The
+#' purpose of \code{summary_table} is to generate readable tables quickly while
+#' summarizing a data set.
 #'
 #' Creating a list-of-lists of summary functions to apply to a data set will
 #' allow the exploration of the whole data set and grouped data sets.  In the
@@ -18,28 +18,32 @@
 #' The list-of-lists should be thought of as follows:  the outer list defines
 #' row groups, the inner lists define the rows within each row group.
 #'
-#' More detailed use of these functions can be found the "summary-statistics"
-#' vignette.
+#' More detailed use of these functions can be found in the
+#' \code{vignette("qwraps2-summary-table", package = "qwraps2")}.
 #'
 #' The \code{print} method for the \code{qwraps2_summary_table} objects is just
 #' a simple wrapper for \code{\link{qable}}.
 #'
 #' @param x a \code{data.frame}.
-#' @param summaries a list of lists of formulea for summarizing the data set.
+#' @param summaries a list of lists of formulas for summarizing the data set.
 #' See Details and examples.
 #' @param by a character vector of variable names to generate the summary by,
-#' that is one column for each unique values of the variables specified.
+#' that is, one column for each unique value or combination of values of the
+#' variables specified.
 #' @param qable_args additional values passed to \code{\link{qable}}
 #' @param ... pass through
 #'
 #' @seealso \code{\link{qsummary}} for generating the summaries,
-#' \code{\link{qable}} for marking up \code{qwraps2_data_summary} objects.
-#' The \code{vignette("summary-statistics", package = "qwraps2")} for detailed
-#' use of these functions and caveats.
+#' \code{\link{qable}} for marking up \code{qwraps2_summary_table} objects.
+#' The \code{vignette("qwraps2-summary-table", package = "qwraps2")} for
+#' detailed use of these functions and caveats.
 #'
 #' @return a \code{qwraps2_summary_table} object.
 #'
 #' @examples
+#' summary_table(mtcars[, c("mpg", "cyl", "am")])
+#' summary_table(mtcars[, c("mpg", "cyl", "am")], by = "am")
+#'
 #' # A list-of-lists for the summaries arg.  This object is of the basic form:
 #' #
 #' # list("row group A" =
@@ -95,7 +99,7 @@
 #' # data as expected.  For example, let's build a data set with twenty subjects
 #' # and injury severity scores for head and face injuries.  We'll clean the data
 #' # by finding the max ISS score for each subject and then reporting summary
-#' # statistics there of.
+#' # statistics thereof.
 #' set.seed(42)
 #' dat <- data.frame(id = letters[1:20],
 #'                   head_iss = sample(1:6, 20, replace = TRUE, prob = 10 * (6:1)),
@@ -220,7 +224,7 @@
 #' options(qwraps2_markup = orig_opt)
 #'
 #' # Detailed examples in the vignette
-#' # vignette("summary-statistics", package = "qwraps2")
+#' # vignette("qwraps2-summary-table", package = "qwraps2")
 #'
 #'
 #' @export

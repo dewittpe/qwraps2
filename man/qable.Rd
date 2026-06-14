@@ -62,7 +62,7 @@ package.
  rnames[5] \tab x[5, 1]   \tab x[5, 1]   \cr
 }
 
-Passing arguments to \code{link[knitr]{kable}} is done via the list
+Passing arguments to \code{\link[knitr]{kable}} is done via the list
 \code{kable_args}.  This is an improvement in 0.6.0 to address arguments with
 different use between qable and kable but the same name, notably
 \code{format}.  Within the print method for \code{qwraps2_qable} objects,
@@ -114,9 +114,9 @@ qable(mtcars[sort(rownames(mtcars)), ],
 \seealso{
 \code{\link[knitr]{kable}}
 
-\code{\link{summary_table}}, for an example of build a data summary table.
+\code{\link{summary_table}}, for an example of building a data summary table.
 
 For more detail on arguments you can pass via \code{kable_args} look at the
-non-exported functions form the knitr package \code{knitr:::kable_latex},
+non-exported functions from the knitr package \code{knitr:::kable_latex},
 \code{knitr:::kable_markdown}, or others.
 }

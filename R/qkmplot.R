@@ -3,8 +3,9 @@
 #' @description A ggplot2 version of a Kaplan-Meier Plot
 #'
 #' @details
-#' Functions to build, explicitly or implicitly, data.frames and then creating a
-#' ggplot2 KM plot.
+#' Functions to build data frames explicitly or implicitly and then create a
+#' ggplot2 Kaplan-Meier plot. \code{qkmplot_build_data_frame} is retained as a
+#' backward-compatible alias for \code{qkmplot_build_data_frame}.
 #'
 #' More details and examples for graphics within qwraps2 are in the
 #' vignette(\dQuote{qwraps2-graphics}, package = \dQuote{qwraps2})
@@ -22,7 +23,7 @@
 #'
 #' qkmplot(leukemia.surv, conf_int = TRUE)
 #'
-#' qkmplot_bulid_data_frame(leukemia.surv)
+#' qkmplot_build_data_frame(leukemia.surv)
 #'
 #' qrmst(leukemia.surv) # NaN for rmst.se in Nonmaintained strata as last observation is an event
 #' qrmst(leukemia.surv, 44)
@@ -54,7 +55,7 @@ qkmplot.default <- function(x, conf_int = FALSE, ...) {
 
 #' @export
 qkmplot.survfit <- function(x, conf_int = FALSE, ...) {
-  qkmplot_ggplot(qkmplot_bulid_data_frame(x), conf_int = conf_int, ...)
+  qkmplot_ggplot(qkmplot_build_data_frame(x), conf_int = conf_int, ...)
 }
 
 #' @export
@@ -67,7 +68,7 @@ qkmplot_ggplot <- function(dat, conf_int = FALSE, ...) {
                  if (!is.null(dat$strata)) {eval(substitute(ggplot2::aes(colour = X, fill = Y), list(X = as.name("strata"), Y = as.name("strata")))) } else {NULL},
                  ggplot2::geom_step(),
                  ggplot2::ylim(c(0, 1)),
-                 ggplot2::ylab("Survivial"),
+                 ggplot2::ylab("Survival"),
                  ggplot2::geom_point(data = dat[dat$n.censor > 0, ], shape = 3, alpha = 0.9))
 
   if (conf_int) {
@@ -83,13 +84,13 @@ qkmplot_ggplot <- function(dat, conf_int = FALSE, ...) {
 
 #' @export
 #' @rdname qkmplot
-qkmplot_bulid_data_frame <- function(x) {
-  UseMethod("qkmplot_bulid_data_frame")
+qkmplot_build_data_frame <- function(x) {
+  UseMethod("qkmplot_build_data_frame")
 }
 
 #' @export
 #' @rdname qkmplot
-qkmplot_bulid_data_frame.survfit <- function(x) {
+qkmplot_build_data_frame.survfit <- function(x) {
 
   plot_data <- data.frame(time = x[['time']],
                           n.risk = x[['n.risk']],
@@ -145,7 +146,7 @@ qrmst <- function(x, tau = Inf) {
 #' @export
 #' @rdname qkmplot
 qrmst.survfit <- function(x, tau = Inf) {
-  d <- qkmplot_bulid_data_frame(x)
+  d <- qkmplot_build_data_frame(x)
   # d <- subset(d, d$time > 0)
   qrmst.qkmplot_data(d, tau = tau)
 }

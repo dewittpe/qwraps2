@@ -14,6 +14,17 @@
   `qable()` row groups.
 * Correct and clarify vignette text for geometric means, geometric variance,
   and ROC terminology.
+* Replace `qkmplot_bulid_data_frame()` with `qkmplot_build_data_frame()` as the
+  correctly spelled alias for
+
+## Documentation
+
+* Improve the package-level overview, vignette navigation, and
+  `summary_table()` help for new users.
+* Add a pkgdown reference index and copy edit source documentation, including
+  vignette spinners and utility help pages.
+* Remove stale symlink setup instructions from contributor documentation and
+  update the vignette-spinner Makefile template to generate real `.Rmd` files.
 
 ## Deprecations
 

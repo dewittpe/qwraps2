@@ -165,10 +165,10 @@ qkmplot(leukemia.surv, conf_int = TRUE)
 
 #'
 #' The function
-{{ backtick(qkmplot_bulid_data_frame) }}
+{{ backtick(qkmplot_build_data_frame) }}
 #' can be used to generate a data.frame needed for building a KM plot.  This
 #' could be helpful for creating bespoke plots.
-leukemia_km_data <- qkmplot_bulid_data_frame(leukemia.surv)
+leukemia_km_data <- qkmplot_build_data_frame(leukemia.surv)
 head(leukemia_km_data, 3)
 
 #+ fig.width = 5
@@ -197,13 +197,13 @@ qkmplot(intonly_fit, conf_int = TRUE)
 {{ backtick(qprc) }}
 #' were built on.
 #'
-#' For this work we will consider a couple models for categorizing email and
-#' spam or not based on the Spambase [@spambase] data.  More details on this
+#' For this work we will consider a couple models for categorizing email as
+#' spam or not spam based on the Spambase [@spambase] data.  More details on this
 #' data set can be found in the
 {{ backtick(vignette('qwraps2-data-sets', package = "qwraps2")) }}
 
 #'
-#' Start by defining a training and validation splits of the spambase data
+#' Start by defining training and validation splits of the spambase data
 set.seed(42)
 tidx <- runif(nrow(spambase)) <= 0.80
 xidx <- which(names(spambase) != "spam")

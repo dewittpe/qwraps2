@@ -65,10 +65,8 @@ library(qwraps2)
 #'
 #' We will use the data set
 {{ backtick(mtcars2) }}
-#' for the examples throughout this vignette
-#' data set for examples throughout this vignette.
-{{ backtick(mtcars2) }}
-#' is a modified and extended version of the base R data set
+#' for the examples throughout this vignette. It is a modified and extended
+#' version of the base R data set
 {{ paste(backtick(mtcars), ".") }}
 #' For details on the construction of the
 {{ backtick(mtcars2) }}
@@ -89,7 +87,7 @@ str(mtcars2)
 {{ backtick(mean_sd(mtcars2$mpg)) }}
 #' returns the formatted string
 {{ paste0(mean_sd(mtcars2$mpg), ".") }}
-#' There are other options for formatting character string:
+#' There are other options for formatting the character string:
 mean_sd(mtcars2$mpg)
 mean_sd(mtcars2$mpg, denote_sd = "paren")
 
@@ -106,8 +104,8 @@ mean_sd(mtcars2$mpg, denote_sd = "paren")
 {{ backtick(qwraps2_mean_ci) }}
 #' objects is a call to the
 {{ backtick(frmtci) }}
-#' function.  You an modify the formatting of printed result by adjusting
-#' the arguments pasted to
+#' function.  You can modify the formatting of the printed result by adjusting
+#' the arguments passed to
 {{ paste0(backtick(frmtci), ".") }}
 mci <- mean_ci(mtcars2$mpg)
 str(mci)
@@ -148,7 +146,7 @@ n_perc(mtcars2$cyl_factor == 4)  # this returns 0 (0.00%)
 n_perc(mtcars2$cyl_factor == "4 cylinders")
 n_perc(mtcars2$cyl_factor == levels(mtcars2$cyl_factor)[2])
 
-# The count and percentage of 4 or 6 cylinders vehicles in the data set is
+# The count and percentage of 4 or 6 cylinder vehicles in the data set is
 n_perc(mtcars2$cyl %in% c(4, 6))
 
 #'

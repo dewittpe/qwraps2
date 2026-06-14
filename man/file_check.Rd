@@ -103,7 +103,7 @@ test_case_match <-
   )
 test_case_match
 
-# If one or more files is not accessable then return is FALSE and the meta data
+# If one or more files is not accessible then return is FALSE and the metadata
 # is printed by default.
 test_non_existent_file <-
   file_check(

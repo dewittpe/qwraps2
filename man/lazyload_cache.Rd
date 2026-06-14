@@ -44,7 +44,7 @@ only objects for which this is true will be loaded.}
 Lazyload Cached label(s) or a whole directory.
 }
 \details{
-These functions helpful for loading cached chunks into an interactive R
+These functions are helpful for loading cached chunks into an interactive R
 session.  Consider the following scenario: you use knitr and have cached
 chunks for lazyloading.  You've created the document, close up your IDE and
 move on to the next project.  Later, you revisit the initial project and need
@@ -55,7 +55,7 @@ quickly (lazy)load the chunks into an active R session.
 
 Use \code{lazyload_cache_dir} to load a whole directory of cached objects.
 
-Use \code{lazyload_cache_labels} to load and explicit set of cached chunks.
+Use \code{lazyload_cache_labels} to load an explicit set of cached chunks.
 }
 \examples{
 # this example is based on \url{https://stackoverflow.com/a/41439691/1104685}
@@ -67,9 +67,9 @@ dir.create(tmpdir)
 oldwd <- getwd()
 setwd(tmpdir)
 
-# build and example .Rmd file
-# note that the variable x is created in the first chunck and then over
-# written in the second chunk
+# build an example .Rmd file
+# note that the variable x is created in the first chunk and then overwritten
+# in the second chunk
 cat("---",
     "title: \"A Report\"",
     "output: html_document",
@@ -89,7 +89,7 @@ cat("---",
     sep = "\n",
     file = tmprmd)
 
-# knit the file.  evaluate the chuncks in a new environment so we can compare
+# knit the file.  evaluate the chunks in a new environment so we can compare
 # the objects after loading the cache.
 kenv <- new.env()
 knitr::knit(input = tmprmd, envir = kenv)
@@ -101,7 +101,7 @@ ls(envir = kenv)
 list.files(path = tmpdir, recursive = TRUE)
 
 # create three more environment, and load only the first chunk into the
-# first, and the second chunck into the second, and then load all of the
+# first, and the second chunk into the second, and then load all of the
 # cache into the third
 env1 <- new.env()
 env2 <- new.env()
@@ -117,13 +117,13 @@ lazyload_cache_labels(labels = "second-chunk",
 
 lazyload_cache_dir(path = paste0(tmpdir, "/cache"), envir = env3)
 
-# Look at the conents of each of these environments
+# Look at the contents of each of these environments
 ls(envir = kenv)
 ls(envir = env1)
 ls(envir = env2)
 ls(envir = env3)
 
-# The regression models are only fitted once an should be the same in all the
+# The regression models are only fitted once and should be the same in all the
 # environments where they exist, as should the variables x_is_e and x_is_pi
 all.equal(kenv$mpg_by_wt_hp, env1$mpg_by_wt_hp)
 all.equal(env1$mpg_by_wt_hp, env3$mpg_by_wt_hp)
@@ -131,10 +131,10 @@ all.equal(env1$mpg_by_wt_hp, env3$mpg_by_wt_hp)
 all.equal(kenv$mpg_by_wt_hp_am, env2$mpg_by_wt_hp_am)
 all.equal(env2$mpg_by_wt_hp_am, env3$mpg_by_wt_hp_am)
 
-# The value of x, however, should be different in the differnet
+# The value of x, however, should be different in the different
 # environments.  For kenv, env2, and env3 the value should be exp(1) as that
 # was the last assignment value.  In env1 the value should be pi as that is
-# the only relevent assignment.
+# the only relevant assignment.
 
 all.equal(kenv$x, exp(1))
 all.equal(env1$x, pi)

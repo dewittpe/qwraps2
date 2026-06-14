@@ -295,7 +295,7 @@ print(both,
 #' of a categorical variable across multiple (column) groups, then I would argue
 #' that the p-value resulting from a chi square test or a Fisher exact test
 #' would be best placed on the line of the table labeling the row group.
-#' However, say we reported the minimum, median, mean, and maximum with in a
+#' However, say we reported the minimum, median, mean, and maximum within a
 #' row group for one variable.  The p-value from a t-test, or other meaningful
 #' test for the difference in mean, I would suggest should be reported on the
 #' line of the summary table for the mean, not the row group itself.
@@ -312,7 +312,7 @@ print(both,
 str(both)
 
 #'
-#' For this example, we will added p-values for testing the difference in the
+#' For this example, we will add p-values for testing the difference in the
 #' mean between the three cylinder groups and the distribution of forward gears
 #' by cylinder groups.
 # difference in means
@@ -327,7 +327,7 @@ mpvals <-
 fpval <- frmtp(fisher.test(table(mtcars2$gear, mtcars2$cyl_factor))$p.value)
 
 #'
-#' In this case, adding the p-value column, is done by creating a empty column
+#' In this case, adding the p-value column, is done by creating an empty column
 #' and then writing in the needed p-value on the wanted rows.  This could be
 #' within a row group (tests for means) or for a row group (Fisher test).
 both <- cbind(both, "P-value" = "")
@@ -367,7 +367,7 @@ summary_table(mtcars2, gear_summary, by = "cyl_factor")
 #' ## rbind summary_table
 #'
 #' There is a rbind method of summary tables.  This can be useful when building
-#' a large a table in smaller sections would be advantageous.  For example, it
+#' a large table in smaller sections would be advantageous.  For example, it
 #' might be helpful to add p-values to a summary table with just one row group
 #' and then rbind all the tables together for printing.  Consider that in the
 #' above example for adding p-values we have made an assumption that the order
@@ -405,7 +405,7 @@ rbind(t_wt, t_disp, t_mpg)
 {{ CRANpkg(Hmisc) }}
 #' and
 {{ CRANpkg(sjPlot) %s% "." }}
-#' If you associate a label with a variable in the data frame the that label
+#' If you associate a label with a variable in the data frame, that label
 #' will be used when building a summary table.  This feature was suggested
 #' https://github.com/dewittpe/qwraps2/issues/74 and implemented thusly:
 
@@ -424,7 +424,7 @@ attr(new_data_frame$edu, "name") <- "Education"
 #'
 #' When calling
 {{ backtick(qsummary) }}
-#' the provide labels for the age and rt variables will
+#' the provided labels for the age and rt variables will
 #' be used.  Since the attribute "label" does not exist for the edu variable,
 #' edu will be used in the output.
 qsummary(new_data_frame)
@@ -473,11 +473,11 @@ summary_table(mtcars2[, c("mpg", "cyl_factor", "wt")])
 
 #'
 #' Now, say we want to only report the minimum and maximum for each of the
-#' numeric variables and for the categorical variables we want two show the
+#' numeric variables and for the categorical variables we want to show the
 #' denominator for each category and for the percentage, to one digit with the
 #' percent symbol in the table.
-#' Note that when defining the list of numeric_summaries that the argument place
-#' holder is the
+#' Note that when defining the list of numeric_summaries that the argument
+#' placeholder is the
 {{ backtick("%s%", dequote = TRUE) }}
 #' character.
 new_summary <-

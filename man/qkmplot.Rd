@@ -2,8 +2,8 @@
 % Please edit documentation in R/qkmplot.R
 \name{qkmplot}
 \alias{qkmplot}
-\alias{qkmplot_bulid_data_frame}
-\alias{qkmplot_bulid_data_frame.survfit}
+\alias{qkmplot_build_data_frame}
+\alias{qkmplot_build_data_frame.survfit}
 \alias{qrmst}
 \alias{qrmst.survfit}
 \alias{qrmst.qkmplot_data}
@@ -11,9 +11,9 @@
 \usage{
 qkmplot(x, conf_int = FALSE, ...)
 
-qkmplot_bulid_data_frame(x)
+qkmplot_build_data_frame(x)
 
-\method{qkmplot_bulid_data_frame}{survfit}(x)
+\method{qkmplot_build_data_frame}{survfit}(x)
 
 qrmst(x, tau = Inf)
 
@@ -37,8 +37,9 @@ a ggplot.
 A ggplot2 version of a Kaplan-Meier Plot
 }
 \details{
-Functions to build, explicitly or implicitly, data.frames and then creating a
-ggplot2 KM plot.
+Functions to build data frames explicitly or implicitly and then create a
+ggplot2 Kaplan-Meier plot. \code{qkmplot_build_data_frame} is retained as a
+backward-compatible alias for \code{qkmplot_build_data_frame}.
 
 More details and examples for graphics within qwraps2 are in the
 vignette(\dQuote{qwraps2-graphics}, package = \dQuote{qwraps2})
@@ -50,7 +51,7 @@ leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x, data = surv
 
 qkmplot(leukemia.surv, conf_int = TRUE)
 
-qkmplot_bulid_data_frame(leukemia.surv)
+qkmplot_build_data_frame(leukemia.surv)
 
 qrmst(leukemia.surv) # NaN for rmst.se in Nonmaintained strata as last observation is an event
 qrmst(leukemia.surv, 44)

@@ -12,7 +12,7 @@ backtick(x, dequote = FALSE)
 \item{dequote}{remove the first and last double or signal quote form \code{x}}
 }
 \description{
-Encapsulate a string in backticks. Very helpful for in line code in
+Encapsulate a string in backticks. Very helpful for inline code in
 \code{\link[knitr]{spin}} scripts.
 }
 \examples{

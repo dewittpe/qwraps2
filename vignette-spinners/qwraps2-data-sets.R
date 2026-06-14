@@ -37,11 +37,11 @@ mtcars2 <- mtcars
 str(mtcars2)
 
 #'
-#' The cyl column provides the number of cylinders for in the engine of the
+#' The cyl column provides the number of cylinders in the engine of the
 #' automobiles.  We will use two additional versions of this information, one as
 #' character column and one as a factor.  Please note that the order of the
 #' factor levels is intentionally set to be non-sequential.  This will help to
-#' illustrate the ordering or results when using a factor or a character vector
+#' illustrate the ordering of results when using a factor or a character vector
 #' as a grouping variable.
 mtcars2$cyl_character <- paste(mtcars2$cyl, "cylinders")
 mtcars2$cyl_factor    <- factor(mtcars2$cyl,
@@ -56,8 +56,8 @@ mtcars2$gear_factor <-
 #'
 #' Engine configuration: the
 {{ backtick(vs) }}
-#' column is an integer vector for indicating
-#' V-shaped or straight.  The constructed column engine is a factor the same
+#' column is an integer vector indicating
+#' V-shaped or straight.  The constructed column engine is a factor with the same
 #' information as a labeled factor.
 mtcars2$engine <-
   factor(mtcars2$vs, levels = c(0, 1), labels = c("V-shaped", "straight"))
@@ -81,12 +81,12 @@ mtcars2$model <- sub("^(\\w+)\\s(.+)", "\\2", rownames(mtcars2))
 rownames(mtcars2) <- NULL
 
 #'
-#' To have some dates to use in examples we are going to add an mostly
+#' To have some dates to use in examples we are going to add a mostly
 #' arbitrary date column to mtcars2.  Given that the data came from the March
 #' through July issues of _Motor Trend_ in 1974, we will create a
 {{ backtick(test_date) }}
 #' column starting in January 1974 forward with one to three tests per week
-#' through May 1974.  This assumes the data is in chronological order of the data.
+#' through May 1974.  This assumes the data is in chronological order.
 set.seed(42)
 mtcars2$test_date <-
   as.POSIXct("1974-01-03", tz = "GMT") +
@@ -202,7 +202,7 @@ head(pefr)
 #'
 #' # Spambase
 #'
-#' Spambase [@spambase] is a useful data set for example needed a binary outcome
+#' Spambase [@spambase] is a useful data set for examples needing a binary outcome
 #' and several possible predictors.  The data set and documentation can be found
 #' in this package in the directory on your machine at:
 system.file("spambase", package = "qwraps2")

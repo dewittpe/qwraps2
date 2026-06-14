@@ -9,7 +9,6 @@ stopifnot(pkg_check(c("qwraps2", "NOT A PKG")) == FALSE)
 # verify FALSE is installed package is < provided version
 stopifnot(pkg_check(c("qwraps2"), "999.999.999") == FALSE)
 
-# Expect an error to be thrown with the `stop` arguement is used.
+# Expect an error to be thrown when the `stop` argument is used.
 test <- tryCatch(pkg_check(c("qwraps2", "NOT A PKG"), stop = TRUE), error = function(e) e)
 stopifnot(inherits(test, 'error'))
-

@@ -44,7 +44,7 @@ mean_se <- function(x,
   cl <- as.list(match.call())
   if (!("na_rm" %in% names(cl)) & ("na.rm" %in% names(cl))) {
     na_rm <- cl$na.rm
-    warning("qwraps2::mean_sd uses the argument `na_rm`, not `na.rm`.")
+    warning("qwraps2::mean_se uses the argument `na_rm`, not `na.rm`.")
   }
   stopifnot(inherits(na_rm, "logical"))
   stopifnot(length(markup) == 1L)
@@ -72,4 +72,3 @@ mean_se <- function(x,
 
   return(rtn)
 }
-
