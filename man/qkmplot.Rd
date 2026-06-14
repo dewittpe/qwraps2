@@ -38,8 +38,9 @@ A ggplot2 version of a Kaplan-Meier Plot
 }
 \details{
 Functions to build data frames explicitly or implicitly and then create a
-ggplot2 Kaplan-Meier plot. \code{qkmplot_build_data_frame} is retained as a
-backward-compatible alias for \code{qkmplot_build_data_frame}.
+ggplot2 Kaplan-Meier plot. The misspelled
+\code{qkmplot_bulid_data_frame} is retained as a deprecated
+backward-compatible wrapper for \code{qkmplot_build_data_frame}.
 
 More details and examples for graphics within qwraps2 are in the
 vignette(\dQuote{qwraps2-graphics}, package = \dQuote{qwraps2})

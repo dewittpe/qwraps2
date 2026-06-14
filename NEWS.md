@@ -14,8 +14,9 @@
   `qable()` row groups.
 * Correct and clarify vignette text for geometric means, geometric variance,
   and ROC terminology.
-* Replace `qkmplot_bulid_data_frame()` with `qkmplot_build_data_frame()` as the
-  correctly spelled alias for
+* Add `qkmplot_build_data_frame()` as the correctly spelled helper and retain
+  `qkmplot_bulid_data_frame()` as a deprecated wrapper for backward
+  compatibility.
 
 ## Documentation
 
@@ -32,6 +33,8 @@
   `qlogis` and `plogis` respectively.  When `logit` and `invlogit` were
   originally written they were faster than `qlogis` and `plogis`, that is no
   longer true.
+* `qkmplot_bulid_data_frame()` has been deprecated in favor of the correctly
+  spelled `qkmplot_build_data_frame()`.
 
 # qwraps2 0.6.2
 

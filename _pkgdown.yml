@@ -59,4 +59,5 @@ reference:
     desc: Retained for backward compatibility.
     contents:
       - logit
+      - qkmplot_bulid_data_frame
       - qroc_build_data_frame

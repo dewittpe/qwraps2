@@ -23,6 +23,23 @@ invlogit <- function(x) {
   stats::plogis(x)
 }
 
+#' Deprecated qkmplot data-frame builder
+#'
+#' Deprecated misspelled wrapper for \code{\link{qkmplot_build_data_frame}}.
+#'
+#' @param x object
+#'
+#' @name qkmplot_bulid_data_frame
+NULL
+
+#' @export
+#' @rdname qkmplot_bulid_data_frame
+qkmplot_bulid_data_frame <- function(x) {
+  .Deprecated(new = "qkmplot_build_data_frame",
+              msg = "qkmplot_bulid_data_frame() was misspelled; use qkmplot_build_data_frame() instead.")
+  qkmplot_build_data_frame(x)
+}
+
 #' Deprecated qroc and qprc building of data frames:
 #'
 #' Deprecated methods for building the data sets needed for plotting roc and prc
