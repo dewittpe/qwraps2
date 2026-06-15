@@ -1,3 +1,27 @@
+# Version 0.6.3
+
+* Fixes error on CRAN resulting for a suggested package being removed from CRAN.
+* bug fixes
+* minor spelling and grammar fixes
+
+## Testing Environments
+
+* Local MacOS R 4.6.0
+  * Status OK
+
+* GitHub Actions
+  * macOS R-latest
+  * windows R-latest
+  * ubuntu R-latest
+  * ubuntu R-devel
+  * ubuntu R-oldrel-1
+
+  * Status OK
+
+* win-builder.r-project.org
+
+  * Status OK
+
 # Version 0.6.2
 
 * bug fixes
