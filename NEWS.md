@@ -27,6 +27,11 @@
 * Remove stale symlink setup instructions from contributor documentation and
   update the vignette-spinner Makefile template to generate real `.Rmd` files.
 
+## Improvements
+
+* `print.qwraps2_set_diff` gains `verbose` to control when long sets of unique
+  values are printed.
+
 ## Deprecations
 
 * Functions `logit` and `invlogit` have been deprecated in favor of base R

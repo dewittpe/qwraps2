@@ -38,6 +38,17 @@
 #' set_b <- c("B", "A")
 #' set_diff(set_a, set_b)
 #'
+#' # When there are 10 or more unique items in either set, the default print will
+#' # omit printing them by default.  Use the verbose argument to change this
+#'
+#' x <-
+#'   set_diff(
+#'     x = c(LETTERS, letters[1:10]),
+#'     y = letters
+#'   )
+#' print(x)
+#' print(x, verbose = TRUE)
+#'
 #' @export
 set_diff <- function(x, y) {
   out <-
@@ -52,15 +63,21 @@ set_diff <- function(x, y) {
   out
 }
 
+#' @param verbose a logical value indicating whether to print the unique
+#' elements in each set.
+#' @param ... ignored
+#'
 #' @export
-print.qwraps2_set_diff <- function(x, ...) {
+#' @rdname set_diff
+print.qwraps2_set_diff <- function(x, verbose = (length(x$x_only) < 10 && length(x$y_only) < 10), ...) {
+  stopifnot(is.logical(verbose), length(verbose) == 1L, !is.na(verbose))
+
   cat("Total number of unique values: ", length(x$all_values), "\n",
       "Number of elements in both ", attr(x, "xname"), " and ", attr(x, "yname"), ": ", length(x$both), "\n",
       "Number of elements only in ", attr(x, "xname"), ": ", length(x$x_only),
-      if (length(x$x_only)) paste0("\n  unique elements: ", paste(x$x_only, collapse = ", "), "\n") else "\n",
+      if (verbose && length(x$x_only)) paste0("\n  unique elements: ", paste(x$x_only, collapse = ", "), "\n") else "\n",
       "Number of elements only in ", attr(x, "yname"), ": ", length(x$y_only),
-      if (length(x$y_only)) paste0("\n  unique elements: ", paste(x$y_only, collapse = ", "), "\n") else "\n",
+      if (verbose && length(x$y_only)) paste0("\n  unique elements: ", paste(x$y_only, collapse = ", "), "\n") else "\n",
       sep = "")
   invisible(x)
 }
-

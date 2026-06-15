@@ -2,12 +2,20 @@
 % Please edit documentation in R/set_diff.R
 \name{set_diff}
 \alias{set_diff}
+\alias{print.qwraps2_set_diff}
 \title{Set Differences}
 \usage{
 set_diff(x, y)
+
+\method{print}{qwraps2_set_diff}(x, verbose = (length(x$x_only) < 10 && length(x$y_only) < 10), ...)
 }
 \arguments{
 \item{x, y}{vectors (of the same mode)}
+
+\item{verbose}{a logical value indicating whether to print the unique
+elements in each set.}
+
+\item{...}{ignored}
 }
 \value{
 a qwraps2_set_diff object, a list of set comparisons
@@ -46,5 +54,16 @@ set_diff(set_b, set_a)
 set_a <- c("A", "A", "B")
 set_b <- c("B", "A")
 set_diff(set_a, set_b)
+
+# When there are 10 or more unique items in either set, the default print will
+# omit printing them by default.  Use the verbose argument to change this
+
+x <-
+  set_diff(
+    x = c(LETTERS, letters[1:10]),
+    y = letters
+  )
+print(x)
+print(x, verbose = TRUE)
 
 }

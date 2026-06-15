@@ -45,3 +45,18 @@ stopifnot(sd_ab$equal      == setequal(set_b, set_a))
 sd_ab_printed <- print(sd_ab)
 stopifnot(!is.null(sd_ab_printed))
 stopifnot(identical(sd_ab_printed, sd_ab))
+
+# verify the verbose argument controls printing of unique elements
+sd_long <- set_diff(letters[1:15], letters[11:26])
+default_print <- capture.output(print(sd_long))
+verbose_print <- capture.output(print(sd_long, verbose = TRUE))
+quiet_print <- capture.output(print(sd_ab, verbose = FALSE))
+
+stopifnot(!any(grepl("unique elements", default_print, fixed = TRUE)))
+stopifnot(any(grepl("unique elements", verbose_print, fixed = TRUE)))
+stopifnot(!any(grepl("unique elements", quiet_print, fixed = TRUE)))
+
+test <- tryCatch(print(sd_ab, verbose = NA), error = function(e) e)
+stopifnot(inherits(test, "error"))
+test <- tryCatch(print(sd_ab, verbose = c(TRUE, FALSE)), error = function(e) e)
+stopifnot(inherits(test, "error"))
