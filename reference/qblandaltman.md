@@ -63,6 +63,7 @@ lancet 327, no. 8476 (1986): 307-310.
 ## Examples
 
 ``` r
+
 data(pefr)
 pefr_m1 <-
   cbind("Large" = pefr[pefr$measurement == 1 & pefr$meter == "Wright peak flow meter", "pefr"],

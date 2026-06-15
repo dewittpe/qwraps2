@@ -37,6 +37,7 @@ spin_comments(hair, comment = c("^[# ]*/[*]", "^.*[*]/ *$"), text = NULL, ...)
 ## Examples
 
 ``` r
+
 spin_comments(hair = system.file("examples/spinner1.R", package = "qwraps2"))
 #> Warning: comments must be put in pairs of start and end delimiters.
 #>   * started on line 5; ended on line 7

@@ -1,6 +1,6 @@
 # Backtick
 
-Encapsulate a string in backticks. Very helpful for in line code in
+Encapsulate a string in backticks. Very helpful for inline code in
 [`spin`](https://rdrr.io/pkg/knitr/man/spin.html) scripts.
 
 ## Usage

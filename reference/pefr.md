@@ -12,12 +12,12 @@ pefr
 
 a data frame with four columns
 
-|         |             |                                                          |
-|---------|-------------|----------------------------------------------------------|
-| \[, 1\] | subject     | id number                                                |
-| \[, 2\] | measurement | first or second                                          |
-| \[, 3\] | meter       | “Wright peak flow meter” or “Mini Write peak flow meter” |
-| \[, 4\] | pefr        | peak expiratory flow rate (liters / min)                 |
+|  |  |  |
+|----|----|----|
+| \[, 1\] | subject | id number |
+| \[, 2\] | measurement | first or second |
+| \[, 3\] | meter | “Wright peak flow meter” or “Mini Write peak flow meter” |
+| \[, 4\] | pefr | peak expiratory flow rate (liters / min) |
 
 ## Details
 

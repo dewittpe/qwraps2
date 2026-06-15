@@ -68,6 +68,7 @@ be extended in future versions.
 ## Examples
 
 ``` r
+
 gmean_sd(mtcars$mpg, markup = "latex")
 #> [1] "19.25 $\\pm$ 1.34"
 gmean_sd(mtcars$mpg, markup = "markdown")

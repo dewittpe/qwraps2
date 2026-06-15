@@ -9,6 +9,9 @@ vector1 and vector2.
 
 ``` r
 set_diff(x, y)
+
+# S3 method for class 'qwraps2_set_diff'
+print(x, verbose = (length(x$x_only) < 10 && length(x$y_only) < 10), ...)
 ```
 
 ## Arguments
@@ -16,6 +19,15 @@ set_diff(x, y)
 - x, y:
 
   vectors (of the same mode)
+
+- verbose:
+
+  a logical value indicating whether to print the unique elements in
+  each set.
+
+- ...:
+
+  ignored
 
 ## Value
 
@@ -34,6 +46,7 @@ a qwraps2_set_diff object, a list of set comparisons
 ## Examples
 
 ``` r
+
 # example with two sets which as a union are the upper and lower case vowels.
 set_a <- c("A", "a", "E",      "I", "i", "O", "o", "U", "u", "E", "I")
 set_b <- c("A", "a", "E", "e",      "i",      "o", "U", "u", "u", "a", "e")
@@ -88,4 +101,25 @@ set_diff(set_a, set_b)
 #> Number of elements in both set_a and set_b: 2
 #> Number of elements only in set_a: 0
 #> Number of elements only in set_b: 0
+
+# When there are 10 or more unique items in either set, the default print will
+# omit printing them by default.  Use the verbose argument to change this
+
+x <-
+  set_diff(
+    x = c(LETTERS, letters[1:10]),
+    y = letters
+  )
+print(x)
+#> Total number of unique values: 52
+#> Number of elements in both c(LETTERS, letters[1:10]) and letters: 10
+#> Number of elements only in c(LETTERS, letters[1:10]): 26
+#> Number of elements only in letters: 16
+print(x, verbose = TRUE)
+#> Total number of unique values: 52
+#> Number of elements in both c(LETTERS, letters[1:10]) and letters: 10
+#> Number of elements only in c(LETTERS, letters[1:10]): 26
+#>   unique elements: A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z
+#> Number of elements only in letters: 16
+#>   unique elements: k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z
 ```

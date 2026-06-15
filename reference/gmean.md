@@ -31,11 +31,12 @@ a numeric value
 
 [`gmean_sd`](http://www.peteredewitt.com/qwraps2/reference/gmean_sd.md)
 for easy formatting of the geometric mean and standard deviation.
-`vignette("summary-statistics", package = "qwraps2")`.
+[`vignette("qwraps2-formatted-summary-statistics", package = "qwraps2")`](http://www.peteredewitt.com/qwraps2/articles/qwraps2-formatted-summary-statistics.md).
 
 ## Examples
 
 ``` r
+
 gmean(mtcars$mpg)
 #> [1] 19.25006
 identical(gmean(mtcars$mpg), exp(mean(log(mtcars$mpg))))
@@ -72,7 +73,7 @@ gvar(x)
 #> [1] 1.252071
 
 # geometric sd
-exp(sd(log(x)))                                     ## This is wrong (incorrect sample size)
+exp(sd(log(x)))                                     ## Uses n - 1
 #> [1] 1.63563
 exp(sqrt((length(x) - 1) / length(x)) * sd(log(x))) ## Correct calculation
 #> [1] 1.606616

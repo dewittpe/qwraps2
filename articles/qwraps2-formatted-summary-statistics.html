@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>qwraps2: Formatted Summary Statistics • qwraps2</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="qwraps2: Formatted Summary Statistics">
 </head>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">qwraps2</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -99,11 +99,10 @@ well.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dewittpe/qwraps2/" class="external-link">qwraps2</a></span><span class="op">)</span></span></code></pre></div>
 <p>We will use the data set <code>mtcars2</code> for the examples
-throughout this vignette data set for examples throughout this vignette.
-<code>mtcars2</code> is a modified and extended version of the base R
-data set <code>mtcars</code> . For details on the construction of the
-<code>mtcars2</code> data set please view the vignette:
-<code>vignette("mtcars", package = "qwraps2")</code></p>
+throughout this vignette. It is a modified and extended version of the
+base R data set <code>mtcars</code> . For details on the construction of
+the <code>mtcars2</code> data set please view the vignette:
+<code><a href="../articles/qwraps2-data-sets.html">vignette("qwraps2-data-sets", package = "qwraps2")</a></code></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">)</span></span>
@@ -138,7 +137,7 @@ data set <code>mtcars</code> . For details on the construction of the
 <p><code>mean_sd</code> returns the (arithmetic) mean and standard
 deviation for numeric vector as a formatted character string. For
 example, <code>mean_sd(mtcars2$mpg)</code> returns the formatted string
-20.09 ± 6.03. There are other options for formatting character
+20.09 ± 6.03. There are other options for formatting the character
 string:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/mean_sd.html">mean_sd</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">mpg</span><span class="op">)</span></span>
@@ -154,8 +153,9 @@ string:</p>
 object which is a named vector with the mean, lower confidence limit,
 and the upper confidence limit. The printing method for
 <code>qwraps2_mean_ci</code> objects is a call to the
-<code>frmtci</code> function. You an modify the formatting of printed
-result by adjusting the arguments pasted to <code>frmtci</code>.</p>
+<code>frmtci</code> function. You can modify the formatting of the
+printed result by adjusting the arguments passed to
+<code>frmtci</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mci</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mean_ci.html">mean_ci</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">mpg</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mci</span><span class="op">)</span></span>
@@ -199,7 +199,7 @@ The latter is good for tables, the former for in-line text.</p>
 <span><span class="fu"><a href="../reference/n_perc.html">n_perc</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">cyl_factor</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">cyl_factor</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">## [1] "11 (34.38%)"</span></span>
 <span></span>
-<span><span class="co"># The count and percentage of 4 or 6 cylinders vehicles in the data set is</span></span>
+<span><span class="co"># The count and percentage of 4 or 6 cylinder vehicles in the data set is</span></span>
 <span><span class="fu"><a href="../reference/n_perc.html">n_perc</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">cyl</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">## [1] "18 (56.25%)"</span></span></code></pre></div>
 </div>
@@ -217,13 +217,13 @@ for all
 Then the geometric mean,
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>μ</mi><mi>g</mi></msub><mo>,</mo></mrow><annotation encoding="application/x-tex">\mu_g,</annotation></semantics></math>
 and geometric standard deviation are</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>μ</mi><mi>g</mi></msub><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mfrac><mn>1</mn><mi>n</mi></mfrac></msup><mo>=</mo><msup><mi>b</mi><mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msub><mo>log</mo><mi>b</mi></msub><msub><mi>x</mi><mi>i</mi></msub></mrow></msup><mo>,</mo></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>μ</mi><mi>g</mi></msub><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mfrac><mn>1</mn><mi>n</mi></mfrac></msup><mo>=</mo><msup><mi>b</mi><mrow><mfrac><mn>1</mn><mi>n</mi></mfrac><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msub><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><mi>b</mi></msub><msub><mi>x</mi><mi>i</mi></msub></mrow></msup><mo>,</mo></mrow><annotation encoding="application/x-tex">
 \begin{equation}
-  \mu_g = \left( \prod_{i = 1}^{n} x_i \right)^{\frac{1}{n}} = b^{ \sum_{i =
-  1}^{n} \log_{b} x_i },
+  \mu_g = \left( \prod_{i = 1}^{n} x_i \right)^{\frac{1}{n}} =
+  b^{ \frac{1}{n} \sum_{i = 1}^{n} \log_{b} x_i },
 \end{equation}
 </annotation></semantics></math> and
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>σ</mi><mi>g</mi></msub><mo>=</mo><msup><mi>b</mi><msqrt><mfrac><mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msup><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>log</mo><mi>b</mi></msub><mfrac><msub><mi>x</mi><mi>i</mi></msub><msub><mi>μ</mi><mi>g</mi></msub></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup></mrow><mi>n</mi></mfrac></msqrt></msup></mrow><annotation encoding="application/x-tex">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>σ</mi><mi>g</mi></msub><mo>=</mo><msup><mi>b</mi><msqrt><mfrac><mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msup><mrow><mo stretchy="true" form="prefix">(</mo><msub><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><mi>b</mi></msub><mfrac><msub><mi>x</mi><mi>i</mi></msub><msub><mi>μ</mi><mi>g</mi></msub></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup></mrow><mi>n</mi></mfrac></msqrt></msup></mrow><annotation encoding="application/x-tex">
 \begin{equation}
   \sigma_g = b ^ {
   \sqrt{
@@ -232,7 +232,7 @@ and geometric standard deviation are</p>
   }
 \end{equation}
 </annotation></semantics></math> or, for clarity,
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mo>log</mo><mi>b</mi></msub><msub><mi>σ</mi><mi>g</mi></msub><mo>=</mo><msqrt><mfrac><mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msup><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>log</mo><mi>b</mi></msub><mfrac><msub><mi>x</mi><mi>i</mi></msub><msub><mi>μ</mi><mi>g</mi></msub></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup></mrow><mi>n</mi></mfrac></msqrt></mrow><annotation encoding="application/x-tex">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><mi>b</mi></msub><msub><mi>σ</mi><mi>g</mi></msub><mo>=</mo><msqrt><mfrac><mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msup><mrow><mo stretchy="true" form="prefix">(</mo><msub><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><mi>b</mi></msub><mfrac><msub><mi>x</mi><mi>i</mi></msub><msub><mi>μ</mi><mi>g</mi></msub></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup></mrow><mi>n</mi></mfrac></msqrt></mrow><annotation encoding="application/x-tex">
 \begin{equation}
   \log_{b} \sigma_g =
   \sqrt{ \frac{\sum_{i = 1}^{n} \left( \log_{b} \frac{x_i}{\mu_g}
@@ -240,17 +240,17 @@ and geometric standard deviation are</p>
 \end{equation}
 </annotation></semantics></math></p>
 <p>When looking for the geometric standard deviation in R, the simple
-<code>exp(sd(log(x)))</code> is not exactly correct. The geometric
-standard deviation uses
+<code>exp(sd(log(x)))</code> does not match the population-denominator
+definition used here. The geometric standard deviation above uses
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>,</mo></mrow><annotation encoding="application/x-tex">n,</annotation></semantics></math>
-the full sample size, in the denominator, where as the <code>sd</code>
+the full sample size, in the denominator, whereas the <code>sd</code>
 and <code>var</code> functions in R use the denominator
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>−</mo><mn>1</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">n - 1.</annotation></semantics></math>
 To get the geometric standard deviation one should adjust the result by
 multiplying the variance by
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">(n - 1) / n</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">(n - 1) / n</annotation></semantics></math>
 or the standard deviation by
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msqrt><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><mi>n</mi></mrow></msqrt><mi>.</mi></mrow><annotation encoding="application/x-tex">\sqrt{(n - 1) / n}.</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msqrt><mrow><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mi>n</mi></mrow></msqrt><mi>.</mi></mrow><annotation encoding="application/x-tex">\sqrt{(n - 1) / n}.</annotation></semantics></math>
 See the example below.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">6</span>, min <span class="op">=</span> <span class="fl">4</span>, max <span class="op">=</span> <span class="fl">70</span><span class="op">)</span></span>
@@ -265,7 +265,7 @@ See the example below.</p>
 <span><span class="co">## [1] 46.50714</span></span>
 <span></span>
 <span><span class="co"># geometric standard deviation</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>  <span class="co">## This is wrong</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>  <span class="co">## Uses the sample denominator, n - 1</span></span>
 <span><span class="co">## [1] 1.500247</span></span>
 <span></span>
 <span><span class="co"># these equations are correct</span></span>
@@ -274,10 +274,18 @@ See the example below.</p>
 <span><span class="co">## [1] 1.448151</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## [1] 1.448151</span></span></code></pre></div>
+<span><span class="co">## [1] 1.448151</span></span>
+<span></span>
+<span><span class="co"># geometric variance</span></span>
+<span><span class="va">geometric_variance</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">sigma_g</span><span class="op">)</span> <span class="op">**</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">geometric_variance</span></span>
+<span><span class="co">## [1] 1.146958</span></span></code></pre></div>
 <p>The functions <code>gmean</code>, <code>gvar</code>, and
 <code>gsd</code> provide the geometric mean, variance, and standard
-deviation for a numeric vector.</p>
+deviation for a numeric vector. Here, geometric variance is defined as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">exp</mi><mo>⁡</mo></mrow><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="prefix">(</mo><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><msub><mi>σ</mi><mi>g</mi></msub><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">\exp((\log \sigma_g)^2),</annotation></semantics></math>
+not as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>σ</mi><mi>g</mi><mn>2</mn></msubsup><mi>.</mi></mrow><annotation encoding="application/x-tex">\sigma_g^2.</annotation></semantics></math></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/gmean.html">gmean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">## [1] 46.50714</span></span>
@@ -286,9 +294,9 @@ deviation for a numeric vector.</p>
 <span></span>
 <span><span class="fu"><a href="../reference/gmean.html">gvar</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">## [1] 1.146958</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="fu"><a href="../reference/gmean.html">gvar</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">sigma_g</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>  <span class="co"># This is supposed to be FALSE</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="fu"><a href="../reference/gmean.html">gvar</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">sigma_g</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>       <span class="co"># This is supposed to be FALSE</span></span>
 <span><span class="co">## [1] "Mean relative difference: 0.8284385"</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="fu"><a href="../reference/gmean.html">gvar</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">sigma_g</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="fu"><a href="../reference/gmean.html">gvar</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">geometric_variance</span><span class="op">)</span></span>
 <span><span class="co">## [1] TRUE</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/gmean.html">gsd</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
@@ -318,9 +326,9 @@ earned its own vignette.</p>
 </h2>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>, local <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">## R version 4.5.2 (2025-10-31)</span></span>
+<span><span class="co">## R version 4.6.0 (2026-04-24)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
-<span><span class="co">## Running under: Ubuntu 24.04.3 LTS</span></span>
+<span><span class="co">## Running under: Ubuntu 24.04.4 LTS</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
 <span><span class="co">## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
@@ -330,16 +338,16 @@ earned its own vignette.</p>
 <span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] qwraps2_0.6.2</span></span>
+<span><span class="co">## [1] qwraps2_0.6.3</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
 <span><span class="co">##  [1] digest_0.6.39     desc_1.4.3        R6_2.6.1          fastmap_1.2.0    </span></span>
-<span><span class="co">##  [5] xfun_0.56         cachem_1.1.0      knitr_1.51        htmltools_0.5.9  </span></span>
-<span><span class="co">##  [9] rmarkdown_2.30    lifecycle_1.0.5   cli_3.6.5         sass_0.4.10      </span></span>
-<span><span class="co">## [13] pkgdown_2.2.0     textshaping_1.0.4 jquerylib_0.1.4   systemfonts_1.3.1</span></span>
-<span><span class="co">## [17] compiler_4.5.2    tools_4.5.2       ragg_1.5.0        evaluate_1.0.5   </span></span>
-<span><span class="co">## [21] bslib_0.10.0      Rcpp_1.1.1        yaml_2.3.12       jsonlite_2.0.0   </span></span>
-<span><span class="co">## [25] rlang_1.1.7       fs_1.6.6</span></span></code></pre></div>
+<span><span class="co">##  [5] xfun_0.58         cachem_1.1.0      knitr_1.51        htmltools_0.5.9  </span></span>
+<span><span class="co">##  [9] rmarkdown_2.31    lifecycle_1.0.5   cli_3.6.6         sass_0.4.10      </span></span>
+<span><span class="co">## [13] pkgdown_2.2.0     textshaping_1.0.5 jquerylib_0.1.4   systemfonts_1.3.2</span></span>
+<span><span class="co">## [17] compiler_4.6.0    tools_4.6.0       ragg_1.5.2        bslib_0.11.0     </span></span>
+<span><span class="co">## [21] evaluate_1.0.5    Rcpp_1.1.1-1.1    yaml_2.3.12       otel_0.2.0       </span></span>
+<span><span class="co">## [25] jsonlite_2.0.0    rlang_1.2.0       fs_2.1.0          htmlwidgets_1.6.4</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

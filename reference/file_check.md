@@ -104,17 +104,17 @@ test1
 # printed.  You can view the details of the checks as follows:
 attr(test1, "checks")
 #>                                                                path
-#> QWRAPS2_EXAMPLE_11997519c81a7.txt QWRAPS2_EXAMPLE_11997519c81a7.txt
-#> QWRAPS2_EXAMPLE_219977fabbc77.txt QWRAPS2_EXAMPLE_219977fabbc77.txt
+#> QWRAPS2_EXAMPLE_11a631d9f080f.txt QWRAPS2_EXAMPLE_11a631d9f080f.txt
+#> QWRAPS2_EXAMPLE_21a633d63cf12.txt QWRAPS2_EXAMPLE_21a633d63cf12.txt
 #>                                   absolute_path accessible case_match
-#> QWRAPS2_EXAMPLE_11997519c81a7.txt         FALSE       TRUE       TRUE
-#> QWRAPS2_EXAMPLE_219977fabbc77.txt         FALSE       TRUE       TRUE
+#> QWRAPS2_EXAMPLE_11a631d9f080f.txt         FALSE       TRUE       TRUE
+#> QWRAPS2_EXAMPLE_21a633d63cf12.txt         FALSE       TRUE       TRUE
 #>                                                     current_md5sum
-#> QWRAPS2_EXAMPLE_11997519c81a7.txt 7a3409e17f9de067740e64448a86e708
-#> QWRAPS2_EXAMPLE_219977fabbc77.txt 798e52b92e0ae0e60f3f3db1273235d0
+#> QWRAPS2_EXAMPLE_11a631d9f080f.txt 7a3409e17f9de067740e64448a86e708
+#> QWRAPS2_EXAMPLE_21a633d63cf12.txt 798e52b92e0ae0e60f3f3db1273235d0
 #>                                   expected_md5sum md5check
-#> QWRAPS2_EXAMPLE_11997519c81a7.txt            <NA>       NA
-#> QWRAPS2_EXAMPLE_219977fabbc77.txt            <NA>       NA
+#> QWRAPS2_EXAMPLE_11a631d9f080f.txt            <NA>       NA
+#> QWRAPS2_EXAMPLE_21a633d63cf12.txt            <NA>       NA
 
 # access to absolute_example_file will generate a warning about
 # absolute_paths by default
@@ -133,19 +133,19 @@ test_case_match
 #> [1] FALSE
 #> attr(,"checks")
 #>                                                                path
-#> QWRAPS2_EXAMPLE_11997519c81a7.txt QWRAPS2_EXAMPLE_11997519c81a7.txt
-#> qwraps2_example_11997519c81a7.txt qwraps2_example_11997519c81a7.txt
+#> QWRAPS2_EXAMPLE_11a631d9f080f.txt QWRAPS2_EXAMPLE_11a631d9f080f.txt
+#> qwraps2_example_11a631d9f080f.txt qwraps2_example_11a631d9f080f.txt
 #>                                   absolute_path accessible case_match
-#> QWRAPS2_EXAMPLE_11997519c81a7.txt         FALSE       TRUE       TRUE
-#> qwraps2_example_11997519c81a7.txt         FALSE      FALSE      FALSE
+#> QWRAPS2_EXAMPLE_11a631d9f080f.txt         FALSE       TRUE       TRUE
+#> qwraps2_example_11a631d9f080f.txt         FALSE      FALSE      FALSE
 #>                                                     current_md5sum
-#> QWRAPS2_EXAMPLE_11997519c81a7.txt 7a3409e17f9de067740e64448a86e708
-#> qwraps2_example_11997519c81a7.txt                             <NA>
+#> QWRAPS2_EXAMPLE_11a631d9f080f.txt 7a3409e17f9de067740e64448a86e708
+#> qwraps2_example_11a631d9f080f.txt                             <NA>
 #>                                   expected_md5sum md5check
-#> QWRAPS2_EXAMPLE_11997519c81a7.txt            <NA>       NA
-#> qwraps2_example_11997519c81a7.txt            <NA>       NA
+#> QWRAPS2_EXAMPLE_11a631d9f080f.txt            <NA>       NA
+#> qwraps2_example_11a631d9f080f.txt            <NA>       NA
 
-# If one or more files is not accessable then return is FALSE and the meta data
+# If one or more files is not accessible then return is FALSE and the metadata
 # is printed by default.
 test_non_existent_file <-
   file_check(
@@ -156,20 +156,20 @@ test_non_existent_file
 #> attr(,"checks")
 #>                                                                path
 #> UNLIKELYFILENAME                                   UNLIKELYFILENAME
-#> QWRAPS2_EXAMPLE_11997519c81a7.txt QWRAPS2_EXAMPLE_11997519c81a7.txt
-#> QWRAPS2_EXAMPLE_219977fabbc77.txt QWRAPS2_EXAMPLE_219977fabbc77.txt
+#> QWRAPS2_EXAMPLE_11a631d9f080f.txt QWRAPS2_EXAMPLE_11a631d9f080f.txt
+#> QWRAPS2_EXAMPLE_21a633d63cf12.txt QWRAPS2_EXAMPLE_21a633d63cf12.txt
 #>                                   absolute_path accessible case_match
 #> UNLIKELYFILENAME                          FALSE      FALSE      FALSE
-#> QWRAPS2_EXAMPLE_11997519c81a7.txt         FALSE       TRUE       TRUE
-#> QWRAPS2_EXAMPLE_219977fabbc77.txt         FALSE       TRUE       TRUE
+#> QWRAPS2_EXAMPLE_11a631d9f080f.txt         FALSE       TRUE       TRUE
+#> QWRAPS2_EXAMPLE_21a633d63cf12.txt         FALSE       TRUE       TRUE
 #>                                                     current_md5sum
 #> UNLIKELYFILENAME                                              <NA>
-#> QWRAPS2_EXAMPLE_11997519c81a7.txt 7a3409e17f9de067740e64448a86e708
-#> QWRAPS2_EXAMPLE_219977fabbc77.txt 798e52b92e0ae0e60f3f3db1273235d0
+#> QWRAPS2_EXAMPLE_11a631d9f080f.txt 7a3409e17f9de067740e64448a86e708
+#> QWRAPS2_EXAMPLE_21a633d63cf12.txt 798e52b92e0ae0e60f3f3db1273235d0
 #>                                   expected_md5sum md5check
 #> UNLIKELYFILENAME                             <NA>       NA
-#> QWRAPS2_EXAMPLE_11997519c81a7.txt            <NA>       NA
-#> QWRAPS2_EXAMPLE_219977fabbc77.txt            <NA>       NA
+#> QWRAPS2_EXAMPLE_11a631d9f080f.txt            <NA>       NA
+#> QWRAPS2_EXAMPLE_21a633d63cf12.txt            <NA>       NA
 
 # Or have an error thrown:
 if (FALSE) { # \dontrun{

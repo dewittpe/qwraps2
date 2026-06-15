@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>qwraps2: Data Sets • qwraps2</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="qwraps2: Data Sets">
 </head>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">qwraps2</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,7 +73,7 @@ DeWitt</h4>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dewittpe/qwraps2/" class="external-link">qwraps2</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"qwraps2"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] '0.6.2'</span></span></code></pre>
+<pre><code><span><span class="co">## [1] '0.6.3'</span></span></code></pre>
 <div class="section level2">
 <h2 id="mtcars2">mtcars2<a class="anchor" aria-label="anchor" href="#mtcars2"></a>
 </h2>
@@ -104,12 +104,12 @@ construction of mtcars2.</p>
 <span><span class="co">##  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="co">##  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...</span></span>
 <span><span class="co">##  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</span></span></code></pre>
-<p>The cyl column provides the number of cylinders for in the engine of
-the automobiles. We will use two additional versions of this
-information, one as character column and one as a factor. Please note
-that the order of the factor levels is intentionally set to be
-non-sequential. This will help to illustrate the ordering or results
-when using a factor or a character vector as a grouping variable.</p>
+<p>The cyl column provides the number of cylinders in the engine of the
+automobiles. We will use two additional versions of this information,
+one as character column and one as a factor. Please note that the order
+of the factor levels is intentionally set to be non-sequential. This
+will help to illustrate the ordering of results when using a factor or a
+character vector as a grouping variable.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mtcars2</span><span class="op">$</span><span class="va">cyl_character</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">cyl</span>, <span class="st">"cylinders"</span><span class="op">)</span></span>
 <span><span class="va">mtcars2</span><span class="op">$</span><span class="va">cyl_factor</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">cyl</span>,</span>
@@ -120,8 +120,8 @@ when using a factor or a character vector as a grouping variable.</p>
 <code class="sourceCode R"><span><span class="va">mtcars2</span><span class="op">$</span><span class="va">gear_factor</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">gear</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span>, <span class="st">"forward gears"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Engine configuration: the <code>vs</code> column is an integer vector
-for indicating V-shaped or straight. The constructed column engine is a
-factor the same information as a labeled factor.</p>
+indicating V-shaped or straight. The constructed column engine is a
+factor with the same information as a labeled factor.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mtcars2</span><span class="op">$</span><span class="va">engine</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">vs</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"V-shaped"</span>, <span class="st">"straight"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -139,12 +139,12 @@ omit the rownames.</p>
 <code class="sourceCode R"><span><span class="va">mtcars2</span><span class="op">$</span><span class="va">make</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub</a></span><span class="op">(</span><span class="st">"^(\\w+)\\s(.+)"</span>, <span class="st">"\\1"</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">mtcars2</span><span class="op">$</span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub</a></span><span class="op">(</span><span class="st">"^(\\w+)\\s(.+)"</span>, <span class="st">"\\2"</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div>
-<p>To have some dates to use in examples we are going to add an mostly
+<p>To have some dates to use in examples we are going to add a mostly
 arbitrary date column to mtcars2. Given that the data came from the
 March through July issues of <em>Motor Trend</em> in 1974, we will
 create a <code>test_date</code> column starting in January 1974 forward
 with one to three tests per week through May 1974. This assumes the data
-is in chronological order of the data.</p>
+is in chronological order.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
 <span><span class="va">mtcars2</span><span class="op">$</span><span class="va">test_date</span> <span class="op">&lt;-</span></span>
@@ -369,7 +369,7 @@ use of Bland-Altman plots via <code>qblandaltman</code>.</p>
 <h2 id="spambase">Spambase<a class="anchor" aria-label="anchor" href="#spambase"></a>
 </h2>
 <p>Spambase <span class="citation">(Hopkins and Suermondt 1999)</span>
-is a useful data set for example needed a binary outcome and several
+is a useful data set for examples needing a binary outcome and several
 possible predictors. The data set and documentation can be found in this
 package in the directory on your machine at:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
@@ -411,7 +411,7 @@ outcome <code>spam</code></p>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-bland1986statistical" class="csl-entry">
 Bland, J Martin, and DouglasG Altman. 1986. <span>“Statistical Methods
 for Assessing Agreement Between Two Methods of Clinical
@@ -424,7 +424,7 @@ and Selection of Variables in Linear Regression.”</span>
 </div>
 <div id="ref-spambase" class="csl-entry">
 Hopkins, Reeber, Mark, and Jaap Suermondt. 1999.
-<span>“<span>Spambase</span>.”</span> UCI Machine Learning Repository.
+<em><span>Spambase</span></em>. UCI Machine Learning Repository.
 </div>
 </div>
 </div>
@@ -433,9 +433,9 @@ Hopkins, Reeber, Mark, and Jaap Suermondt. 1999.
 </h2>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## R version 4.5.2 (2025-10-31)</span></span>
+<pre><code><span><span class="co">## R version 4.6.0 (2026-04-24)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
-<span><span class="co">## Running under: Ubuntu 24.04.3 LTS</span></span>
+<span><span class="co">## Running under: Ubuntu 24.04.4 LTS</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
 <span><span class="co">## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
@@ -454,16 +454,16 @@ Hopkins, Reeber, Mark, and Jaap Suermondt. 1999.
 <span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] qwraps2_0.6.2</span></span>
+<span><span class="co">## [1] qwraps2_0.6.3</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
 <span><span class="co">##  [1] digest_0.6.39     desc_1.4.3        R6_2.6.1          fastmap_1.2.0    </span></span>
-<span><span class="co">##  [5] xfun_0.56         cachem_1.1.0      knitr_1.51        htmltools_0.5.9  </span></span>
-<span><span class="co">##  [9] rmarkdown_2.30    lifecycle_1.0.5   cli_3.6.5         sass_0.4.10      </span></span>
-<span><span class="co">## [13] pkgdown_2.2.0     textshaping_1.0.4 jquerylib_0.1.4   systemfonts_1.3.1</span></span>
-<span><span class="co">## [17] compiler_4.5.2    tools_4.5.2       ragg_1.5.0        evaluate_1.0.5   </span></span>
-<span><span class="co">## [21] bslib_0.10.0      Rcpp_1.1.1        yaml_2.3.12       jsonlite_2.0.0   </span></span>
-<span><span class="co">## [25] rlang_1.1.7       fs_1.6.6</span></span></code></pre>
+<span><span class="co">##  [5] xfun_0.58         cachem_1.1.0      knitr_1.51        htmltools_0.5.9  </span></span>
+<span><span class="co">##  [9] rmarkdown_2.31    lifecycle_1.0.5   cli_3.6.6         sass_0.4.10      </span></span>
+<span><span class="co">## [13] pkgdown_2.2.0     textshaping_1.0.5 jquerylib_0.1.4   systemfonts_1.3.2</span></span>
+<span><span class="co">## [17] compiler_4.6.0    tools_4.6.0       ragg_1.5.2        bslib_0.11.0     </span></span>
+<span><span class="co">## [21] evaluate_1.0.5    Rcpp_1.1.1-1.1    yaml_2.3.12       otel_0.2.0       </span></span>
+<span><span class="co">## [25] jsonlite_2.0.0    rlang_1.2.0       fs_2.1.0          htmlwidgets_1.6.4</span></span></code></pre>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

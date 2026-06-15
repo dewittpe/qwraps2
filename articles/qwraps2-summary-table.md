@@ -1,6 +1,7 @@
 # qwraps2: Summary Table
 
 ``` r
+
 set.seed(42)
 library(qwraps2)
 options(qwraps2_markup = "markdown")
@@ -26,6 +27,7 @@ variable, subject id, and two variables, V2, and V3. For simplicity, we
 will order the data by group and id as well.
 
 ``` r
+
 d <- data.frame(
        group = sample(size = 15, paste0("grp", 1:5), replace = TRUE)
      , id = sample(size = 15, x = LETTERS)
@@ -38,6 +40,7 @@ d <- d[order(d$group, d$id), ]
 Making a simple table via kable:
 
 ``` r
+
 knitr::kable(d, row.names = FALSE)
 ```
 
@@ -66,6 +69,7 @@ and the value the number of rows. For the *ordered* data this is a
 simple call to table:
 
 ``` r
+
 c(table(d$group))
 ## grp1 grp2 grp4 grp5 
 ##    5    5    3    2
@@ -76,6 +80,7 @@ the id column as the row names we have the same information but in
 format that is better for humans:
 
 ``` r
+
 qable(  x = d[, c("V2", "V3")]
       , rgroup = c(table(d$group)) # row group
       , rnames = d$id              # row names
@@ -117,6 +122,7 @@ We will build a summary table for a regression model with row groups for
 conceptually similar predictors.
 
 ``` r
+
 model <-
   glm(spam ~
         word_freq_your + word_freq_conference + word_freq_business +
@@ -145,20 +151,20 @@ qable(model_summary[-1, c('odd_ratio', 'lcl', 'ucl', 'pval')]
       )
 ```
 
-| Parameter               | Odds Ratio | Lower Conf. Limit | Upper Conf. Limit |       P-value |
-|:------------------------|-----------:|------------------:|------------------:|--------------:|
-| **Word Frequency**      |            |                   |                   |               |
-|    Your                 |      1.802 |             1.678 |             1.934 | *P* \< 0.0001 |
-|    Conference           |      0.001 |             0.000 |             0.012 | *P* \< 0.0001 |
-|    Business             |      3.573 |             2.721 |             4.693 | *P* \< 0.0001 |
-| **Character Frequency** |            |                   |                   |               |
-|    ;                    |      0.325 |             0.136 |             0.779 |  *P* = 0.0117 |
-|    !                    |      4.148 |             3.336 |             5.158 | *P* \< 0.0001 |
-| **Capital Run Length**  |            |                   |                   |               |
-|    Total                |      1.000 |             1.000 |             1.001 | *P* \< 0.0001 |
-|    Longest              |      1.017 |             1.014 |             1.019 | *P* \< 0.0001 |
+| Parameter | Odds Ratio | Lower Conf. Limit | Upper Conf. Limit | P-value |
+|:---|---:|---:|---:|---:|
+| **Word Frequency** |    |    |    |    |
+|    Your | 1.802 | 1.678 | 1.934 | *P* \< 0.0001 |
+|    Conference | 0.001 | 0.000 | 0.012 | *P* \< 0.0001 |
+|    Business | 3.573 | 2.721 | 4.693 | *P* \< 0.0001 |
+| **Character Frequency** |    |    |    |    |
+|    ; | 0.325 | 0.136 | 0.779 | *P* = 0.0117 |
+|    ! | 4.148 | 3.336 | 5.158 | *P* \< 0.0001 |
+| **Capital Run Length** |    |    |    |    |
+|    Total | 1.000 | 1.000 | 1.001 | *P* \< 0.0001 |
+|    Longest | 1.017 | 1.014 | 1.019 | *P* \< 0.0001 |
 
-Regression Model Summary
+Regression Model Summary {.table}
 
 ## summary_table
 
@@ -186,6 +192,7 @@ names are important, as they are used to label row groups and row names
 in the table.
 
 ``` r
+
 our_summary1 <-
   list("Miles Per Gallon" =
        list("min"       = ~ min(mpg),
@@ -211,6 +218,7 @@ Building the table is done with a call to `summary_table` and rendered
 in Table @ref(tab:mtcars_whole).
 
 ``` r
+
 whole <-
   summary_table(
     x = mtcars2
@@ -240,7 +248,7 @@ whole
 |    Four               | 12 (38)          |
 |    Five               | 5 (16)           |
 
-mtcars2 data summary
+mtcars2 data summary {.table}
 
 ### Summarize by
 
@@ -251,6 +259,7 @@ factor. In comparison, the column order is alphabetical if the variable
 is just a character.
 
 ``` r
+
 by_cylf <-
   summary_table(
     x = mtcars2
@@ -262,29 +271,30 @@ by_cylf <-
 by_cylf
 ```
 
-| Summary Statistics    | 6 cylinders (N = 7) | 4 cylinders (N = 11) | 8 cylinders (N = 14) |
-|:----------------------|:--------------------|:---------------------|:---------------------|
-| **Miles Per Gallon**  |                     |                      |                      |
-|    min                | 17.8                | 21.4                 | 10.4                 |
-|    max                | 21.4                | 33.9                 | 19.2                 |
-|    mean (sd)          | 19.74 ± 1.45        | 26.66 ± 4.51         | 15.10 ± 2.56         |
-| **Displacement**      |                     |                      |                      |
-|    min                | 145                 | 71.1                 | 275.8                |
-|    median             | 167.6               | 108                  | 350.5                |
-|    max                | 258                 | 146.7                | 472                  |
-|    mean (sd)          | 183.31 ± 41.56      | 105.14 ± 26.87       | 353.10 ± 67.77       |
-| **Weight (1000 lbs)** |                     |                      |                      |
-|    min                | 2.62                | 1.513                | 3.17                 |
-|    max                | 3.46                | 3.19                 | 5.424                |
-|    mean (sd)          | 3.12 ± 0.36         | 2.29 ± 0.57          | 4.00 ± 0.76          |
-| **Forward Gears**     |                     |                      |                      |
-|    Three              | 2 (29)              | 1 (9)                | 12 (86)              |
-|    Four               | 4 (57)              | 8 (73)               | 0 (0)                |
-|    Five               | 1 (14)              | 2 (18)               | 2 (14)               |
+| Summary Statistics | 6 cylinders (N = 7) | 4 cylinders (N = 11) | 8 cylinders (N = 14) |
+|:---|:---|:---|:---|
+| **Miles Per Gallon** |    |    |    |
+|    min | 17.8 | 21.4 | 10.4 |
+|    max | 21.4 | 33.9 | 19.2 |
+|    mean (sd) | 19.74 ± 1.45 | 26.66 ± 4.51 | 15.10 ± 2.56 |
+| **Displacement** |    |    |    |
+|    min | 145 | 71.1 | 275.8 |
+|    median | 167.6 | 108 | 350.5 |
+|    max | 258 | 146.7 | 472 |
+|    mean (sd) | 183.31 ± 41.56 | 105.14 ± 26.87 | 353.10 ± 67.77 |
+| **Weight (1000 lbs)** |    |    |    |
+|    min | 2.62 | 1.513 | 3.17 |
+|    max | 3.46 | 3.19 | 5.424 |
+|    mean (sd) | 3.12 ± 0.36 | 2.29 ± 0.57 | 4.00 ± 0.76 |
+| **Forward Gears** |    |    |    |
+|    Three | 2 (29) | 1 (9) | 12 (86) |
+|    Four | 4 (57) | 8 (73) | 0 (0) |
+|    Five | 1 (14) | 2 (18) | 2 (14) |
 
-mtcars2 data summary by cyl_factor
+mtcars2 data summary by cyl_factor {.table}
 
 ``` r
+
 by_cylc <-
   summary_table(
     x = mtcars2
@@ -296,27 +306,27 @@ by_cylc <-
 by_cylc
 ```
 
-| Summary Statistics    | 4 cylinders (N = 11) | 6 cylinders (N = 7) | 8 cylinders (N = 14) |
-|:----------------------|:---------------------|:--------------------|:---------------------|
-| **Miles Per Gallon**  |                      |                     |                      |
-|    min                | 21.4                 | 17.8                | 10.4                 |
-|    max                | 33.9                 | 21.4                | 19.2                 |
-|    mean (sd)          | 26.66 ± 4.51         | 19.74 ± 1.45        | 15.10 ± 2.56         |
-| **Displacement**      |                      |                     |                      |
-|    min                | 71.1                 | 145                 | 275.8                |
-|    median             | 108                  | 167.6               | 350.5                |
-|    max                | 146.7                | 258                 | 472                  |
-|    mean (sd)          | 105.14 ± 26.87       | 183.31 ± 41.56      | 353.10 ± 67.77       |
-| **Weight (1000 lbs)** |                      |                     |                      |
-|    min                | 1.513                | 2.62                | 3.17                 |
-|    max                | 3.19                 | 3.46                | 5.424                |
-|    mean (sd)          | 2.29 ± 0.57          | 3.12 ± 0.36         | 4.00 ± 0.76          |
-| **Forward Gears**     |                      |                     |                      |
-|    Three              | 1 (9)                | 2 (29)              | 12 (86)              |
-|    Four               | 8 (73)               | 4 (57)              | 0 (0)                |
-|    Five               | 2 (18)               | 1 (14)              | 2 (14)               |
+| Summary Statistics | 4 cylinders (N = 11) | 6 cylinders (N = 7) | 8 cylinders (N = 14) |
+|:---|:---|:---|:---|
+| **Miles Per Gallon** |    |    |    |
+|    min | 21.4 | 17.8 | 10.4 |
+|    max | 33.9 | 21.4 | 19.2 |
+|    mean (sd) | 26.66 ± 4.51 | 19.74 ± 1.45 | 15.10 ± 2.56 |
+| **Displacement** |    |    |    |
+|    min | 71.1 | 145 | 275.8 |
+|    median | 108 | 167.6 | 350.5 |
+|    max | 146.7 | 258 | 472 |
+|    mean (sd) | 105.14 ± 26.87 | 183.31 ± 41.56 | 353.10 ± 67.77 |
+| **Weight (1000 lbs)** |    |    |    |
+|    min | 1.513 | 2.62 | 3.17 |
+|    max | 3.19 | 3.46 | 5.424 |
+|    mean (sd) | 2.29 ± 0.57 | 3.12 ± 0.36 | 4.00 ± 0.76 |
+| **Forward Gears** |    |    |    |
+|    Three | 1 (9) | 2 (29) | 12 (86) |
+|    Four | 8 (73) | 4 (57) | 0 (0) |
+|    Five | 2 (18) | 1 (14) | 2 (14) |
 
-mtcars2 data summary by cyl_character
+mtcars2 data summary by cyl_character {.table}
 
 You are also able to generate summaries by multiple columns. For
 example, Table @ref(tab:mtcars2_by_cyl_transmission) reports the summary
@@ -324,6 +334,7 @@ by the combination of the number of cylinders and the type of
 transmission.
 
 ``` r
+
 by_cyl_am <-
   summary_table(
     x = mtcars2
@@ -333,25 +344,25 @@ by_cyl_am <-
 by_cyl_am
 ```
 
-|                       | 6 cylinders.Automatic (N = 4) | 4 cylinders.Automatic (N = 3) | 8 cylinders.Automatic (N = 12) | 6 cylinders.Manual (N = 3) | 4 cylinders.Manual (N = 8) | 8 cylinders.Manual (N = 2) |
-|:----------------------|:------------------------------|:------------------------------|:-------------------------------|:---------------------------|:---------------------------|:---------------------------|
-| **Miles Per Gallon**  |                               |                               |                                |                            |                            |                            |
-|    min                | 17.8                          | 21.5                          | 10.4                           | 19.7                       | 21.4                       | 15                         |
-|    max                | 21.4                          | 24.4                          | 19.2                           | 21                         | 33.9                       | 15.8                       |
-|    mean (sd)          | 19.12 ± 1.63                  | 22.90 ± 1.45                  | 15.05 ± 2.77                   | 20.57 ± 0.75               | 28.07 ± 4.48               | 15.40 ± 0.57               |
-| **Displacement**      |                               |                               |                                |                            |                            |                            |
-|    min                | 167.6                         | 120.1                         | 275.8                          | 145                        | 71.1                       | 301                        |
-|    median             | 196.3                         | 140.8                         | 355                            | 160                        | 87.05                      | 326                        |
-|    max                | 258                           | 146.7                         | 472                            | 160                        | 121                        | 351                        |
-|    mean (sd)          | 204.55 ± 44.74                | 135.87 ± 13.97                | 357.62 ± 71.82                 | 155.00 ± 8.66              | 93.61 ± 20.48              | 326.00 ± 35.36             |
-| **Weight (1000 lbs)** |                               |                               |                                |                            |                            |                            |
-|    min                | 3.215                         | 2.465                         | 3.435                          | 2.62                       | 1.513                      | 3.17                       |
-|    max                | 3.46                          | 3.19                          | 5.424                          | 2.875                      | 2.78                       | 3.57                       |
-|    mean (sd)          | 3.39 ± 0.12                   | 2.94 ± 0.41                   | 4.10 ± 0.77                    | 2.75 ± 0.13                | 2.04 ± 0.41                | 3.37 ± 0.28                |
-| **Forward Gears**     |                               |                               |                                |                            |                            |                            |
-|    Three              | 2 (50)                        | 1 (33)                        | 12 (100)                       | 0 (0)                      | 0 (0)                      | 0 (0)                      |
-|    Four               | 2 (50)                        | 2 (67)                        | 0 (0)                          | 2 (67)                     | 6 (75)                     | 0 (0)                      |
-|    Five               | 0 (0)                         | 0 (0)                         | 0 (0)                          | 1 (33)                     | 2 (25)                     | 2 (100)                    |
+|  | 6 cylinders.Automatic (N = 4) | 4 cylinders.Automatic (N = 3) | 8 cylinders.Automatic (N = 12) | 6 cylinders.Manual (N = 3) | 4 cylinders.Manual (N = 8) | 8 cylinders.Manual (N = 2) |
+|:---|:---|:---|:---|:---|:---|:---|
+| **Miles Per Gallon** |    |    |    |    |    |    |
+|    min | 17.8 | 21.5 | 10.4 | 19.7 | 21.4 | 15 |
+|    max | 21.4 | 24.4 | 19.2 | 21 | 33.9 | 15.8 |
+|    mean (sd) | 19.12 ± 1.63 | 22.90 ± 1.45 | 15.05 ± 2.77 | 20.57 ± 0.75 | 28.07 ± 4.48 | 15.40 ± 0.57 |
+| **Displacement** |    |    |    |    |    |    |
+|    min | 167.6 | 120.1 | 275.8 | 145 | 71.1 | 301 |
+|    median | 196.3 | 140.8 | 355 | 160 | 87.05 | 326 |
+|    max | 258 | 146.7 | 472 | 160 | 121 | 351 |
+|    mean (sd) | 204.55 ± 44.74 | 135.87 ± 13.97 | 357.62 ± 71.82 | 155.00 ± 8.66 | 93.61 ± 20.48 | 326.00 ± 35.36 |
+| **Weight (1000 lbs)** |    |    |    |    |    |    |
+|    min | 3.215 | 2.465 | 3.435 | 2.62 | 1.513 | 3.17 |
+|    max | 3.46 | 3.19 | 5.424 | 2.875 | 2.78 | 3.57 |
+|    mean (sd) | 3.39 ± 0.12 | 2.94 ± 0.41 | 4.10 ± 0.77 | 2.75 ± 0.13 | 2.04 ± 0.41 | 3.37 ± 0.28 |
+| **Forward Gears** |    |    |    |    |    |    |
+|    Three | 2 (50) | 1 (33) | 12 (100) | 0 (0) | 0 (0) | 0 (0) |
+|    Four | 2 (50) | 2 (67) | 0 (0) | 2 (67) | 6 (75) | 0 (0) |
+|    Five | 0 (0) | 0 (0) | 0 (0) | 1 (33) | 2 (25) | 2 (100) |
 
 ### cbind summary_table
 
@@ -367,37 +378,39 @@ However, there is an easy way to modify the qable_args and kable_args
 via the print method.
 
 ``` r
+
 both <- cbind(whole, by_cylf)
 both
 ```
 
-|                       | mtcars2 (N = 32) | 6 cylinders (N = 7) | 4 cylinders (N = 11) | 8 cylinders (N = 14) |
-|:----------------------|:-----------------|:--------------------|:---------------------|:---------------------|
-| **Miles Per Gallon**  |                  |                     |                      |                      |
-|    min                | 10.4             | 17.8                | 21.4                 | 10.4                 |
-|    max                | 33.9             | 21.4                | 33.9                 | 19.2                 |
-|    mean (sd)          | 20.09 ± 6.03     | 19.74 ± 1.45        | 26.66 ± 4.51         | 15.10 ± 2.56         |
-| **Displacement**      |                  |                     |                      |                      |
-|    min                | 71.1             | 145                 | 71.1                 | 275.8                |
-|    median             | 196.3            | 167.6               | 108                  | 350.5                |
-|    max                | 472              | 258                 | 146.7                | 472                  |
-|    mean (sd)          | 230.72 ± 123.94  | 183.31 ± 41.56      | 105.14 ± 26.87       | 353.10 ± 67.77       |
-| **Weight (1000 lbs)** |                  |                     |                      |                      |
-|    min                | 1.513            | 2.62                | 1.513                | 3.17                 |
-|    max                | 5.424            | 3.46                | 3.19                 | 5.424                |
-|    mean (sd)          | 3.22 ± 0.98      | 3.12 ± 0.36         | 2.29 ± 0.57          | 4.00 ± 0.76          |
-| **Forward Gears**     |                  |                     |                      |                      |
-|    Three              | 15 (47)          | 2 (29)              | 1 (9)                | 12 (86)              |
-|    Four               | 12 (38)          | 4 (57)              | 8 (73)               | 0 (0)                |
-|    Five               | 5 (16)           | 1 (14)              | 2 (18)               | 2 (14)               |
+|  | mtcars2 (N = 32) | 6 cylinders (N = 7) | 4 cylinders (N = 11) | 8 cylinders (N = 14) |
+|:---|:---|:---|:---|:---|
+| **Miles Per Gallon** |    |    |    |    |
+|    min | 10.4 | 17.8 | 21.4 | 10.4 |
+|    max | 33.9 | 21.4 | 33.9 | 19.2 |
+|    mean (sd) | 20.09 ± 6.03 | 19.74 ± 1.45 | 26.66 ± 4.51 | 15.10 ± 2.56 |
+| **Displacement** |    |    |    |    |
+|    min | 71.1 | 145 | 71.1 | 275.8 |
+|    median | 196.3 | 167.6 | 108 | 350.5 |
+|    max | 472 | 258 | 146.7 | 472 |
+|    mean (sd) | 230.72 ± 123.94 | 183.31 ± 41.56 | 105.14 ± 26.87 | 353.10 ± 67.77 |
+| **Weight (1000 lbs)** |    |    |    |    |
+|    min | 1.513 | 2.62 | 1.513 | 3.17 |
+|    max | 5.424 | 3.46 | 3.19 | 5.424 |
+|    mean (sd) | 3.22 ± 0.98 | 3.12 ± 0.36 | 2.29 ± 0.57 | 4.00 ± 0.76 |
+| **Forward Gears** |    |    |    |    |
+|    Three | 15 (47) | 2 (29) | 1 (9) | 12 (86) |
+|    Four | 12 (38) | 4 (57) | 8 (73) | 0 (0) |
+|    Five | 5 (16) | 1 (14) | 2 (18) | 2 (14) |
 
-mtcars2 data summary
+mtcars2 data summary {.table style="width:100%;"}
 
 If you want to update how a summary table is printed, you can do so by
 calling the print method explicitly while passing a new set of
 `qable_args`, see Table @ref(tab:updated_both).
 
 ``` r
+
 
 print(both,
       qable_args = list(
@@ -410,27 +423,27 @@ print(both,
       ))
 ```
 
-| ROW-TITLE             |      Col 0      |          Col 1 |     Col 2      |          Col 3 |
-|:----------------------|:---------------:|---------------:|:--------------:|---------------:|
-| **Miles Per Gallon**  |                 |                |                |                |
-|    min                |      10.4       |           17.8 |      21.4      |           10.4 |
-|    max                |      33.9       |           21.4 |      33.9      |           19.2 |
-|    mean (sd)          |  20.09 ± 6.03   |   19.74 ± 1.45 |  26.66 ± 4.51  |   15.10 ± 2.56 |
-| **Displacement**      |                 |                |                |                |
-|    min                |      71.1       |            145 |      71.1      |          275.8 |
-|    median             |      196.3      |          167.6 |      108       |          350.5 |
-|    max                |       472       |            258 |     146.7      |            472 |
-|    mean (sd)          | 230.72 ± 123.94 | 183.31 ± 41.56 | 105.14 ± 26.87 | 353.10 ± 67.77 |
-| **Weight (1000 lbs)** |                 |                |                |                |
-|    min                |      1.513      |           2.62 |     1.513      |           3.17 |
-|    max                |      5.424      |           3.46 |      3.19      |          5.424 |
-|    mean (sd)          |   3.22 ± 0.98   |    3.12 ± 0.36 |  2.29 ± 0.57   |    4.00 ± 0.76 |
-| **Forward Gears**     |                 |                |                |                |
-|    Three              |     15 (47)     |         2 (29) |     1 (9)      |        12 (86) |
-|    Four               |     12 (38)     |         4 (57) |     8 (73)     |          0 (0) |
-|    Five               |     5 (16)      |         1 (14) |     2 (18)     |         2 (14) |
+| ROW-TITLE | Col 0 | Col 1 | Col 2 | Col 3 |
+|:---|:--:|---:|:--:|---:|
+| **Miles Per Gallon** |    |    |    |    |
+|    min | 10.4 | 17.8 | 21.4 | 10.4 |
+|    max | 33.9 | 21.4 | 33.9 | 19.2 |
+|    mean (sd) | 20.09 ± 6.03 | 19.74 ± 1.45 | 26.66 ± 4.51 | 15.10 ± 2.56 |
+| **Displacement** |    |    |    |    |
+|    min | 71.1 | 145 | 71.1 | 275.8 |
+|    median | 196.3 | 167.6 | 108 | 350.5 |
+|    max | 472 | 258 | 146.7 | 472 |
+|    mean (sd) | 230.72 ± 123.94 | 183.31 ± 41.56 | 105.14 ± 26.87 | 353.10 ± 67.77 |
+| **Weight (1000 lbs)** |    |    |    |    |
+|    min | 1.513 | 2.62 | 1.513 | 3.17 |
+|    max | 5.424 | 3.46 | 3.19 | 5.424 |
+|    mean (sd) | 3.22 ± 0.98 | 3.12 ± 0.36 | 2.29 ± 0.57 | 4.00 ± 0.76 |
+| **Forward Gears** |    |    |    |    |
+|    Three | 15 (47) | 2 (29) | 1 (9) | 12 (86) |
+|    Four | 12 (38) | 4 (57) | 8 (73) | 0 (0) |
+|    Five | 5 (16) | 1 (14) | 2 (18) | 2 (14) |
 
-mtcars2 data summary - new caption
+mtcars2 data summary - new caption {.table style="width:100%;"}
 
 ### Adding P-values to a Summary Table
 
@@ -441,7 +454,7 @@ each level of a categorical variable across multiple (column) groups,
 then I would argue that the p-value resulting from a chi square test or
 a Fisher exact test would be best placed on the line of the table
 labeling the row group. However, say we reported the minimum, median,
-mean, and maximum with in a row group for one variable. The p-value from
+mean, and maximum within a row group for one variable. The p-value from
 a t-test, or other meaningful test for the difference in mean, I would
 suggest should be reported on the line of the summary table for the
 mean, not the row group itself.
@@ -456,6 +469,7 @@ that `qwraps2_summary_table` objects are just character matrices with
 additional attributes.
 
 ``` r
+
 str(both)
 ##  'qwraps2_summary_table' chr [1:17, 1:5] "**Miles Per Gallon**" ...
 ##  - attr(*, "dimnames")=List of 2
@@ -472,11 +486,12 @@ str(both)
 ##   .. ..$ caption: chr "mtcars2 data summary"
 ```
 
-For this example, we will added p-values for testing the difference in
-the mean between the three cylinder groups and the distribution of
-forward gears by cylinder groups.
+For this example, we will add p-values for testing the difference in the
+mean between the three cylinder groups and the distribution of forward
+gears by cylinder groups.
 
 ``` r
+
 # difference in means
 mpvals <-
   sapply(
@@ -489,48 +504,51 @@ mpvals <-
 fpval <- frmtp(fisher.test(table(mtcars2$gear, mtcars2$cyl_factor))$p.value)
 ```
 
-In this case, adding the p-value column, is done by creating a empty
+In this case, adding the p-value column, is done by creating an empty
 column and then writing in the needed p-value on the wanted rows. This
 could be within a row group (tests for means) or for a row group (Fisher
 test).
 
 ``` r
+
 both <- cbind(both, "P-value" = "")
 both[grepl("mean \\(sd\\)", both[, 1]), "P-value"] <- mpvals
 both[grepl("Forward Gears", both[, 1]), "P-value"] <- fpval
 ```
 
 ``` r
+
 print(both, qable_args = list(kable_args = list(caption = "mtcars2 summary with p-values")))
 ```
 
-|                       | mtcars2 (N = 32) | 6 cylinders (N = 7) | 4 cylinders (N = 11) | 8 cylinders (N = 14) | P-value       |
-|:----------------------|:-----------------|:--------------------|:---------------------|:---------------------|:--------------|
-| **Miles Per Gallon**  |                  |                     |                      |                      |               |
-|    min                | 10.4             | 17.8                | 21.4                 | 10.4                 |               |
-|    max                | 33.9             | 21.4                | 33.9                 | 19.2                 |               |
-|    mean (sd)          | 20.09 ± 6.03     | 19.74 ± 1.45        | 26.66 ± 4.51         | 15.10 ± 2.56         | *P* \< 0.0001 |
-| **Displacement**      |                  |                     |                      |                      |               |
-|    min                | 71.1             | 145                 | 71.1                 | 275.8                |               |
-|    median             | 196.3            | 167.6               | 108                  | 350.5                |               |
-|    max                | 472              | 258                 | 146.7                | 472                  |               |
-|    mean (sd)          | 230.72 ± 123.94  | 183.31 ± 41.56      | 105.14 ± 26.87       | 353.10 ± 67.77       | *P* \< 0.0001 |
-| **Weight (1000 lbs)** |                  |                     |                      |                      |               |
-|    min                | 1.513            | 2.62                | 1.513                | 3.17                 |               |
-|    max                | 5.424            | 3.46                | 3.19                 | 5.424                |               |
-|    mean (sd)          | 3.22 ± 0.98      | 3.12 ± 0.36         | 2.29 ± 0.57          | 4.00 ± 0.76          | *P* \< 0.0001 |
-| **Forward Gears**     |                  |                     |                      |                      | *P* \< 0.0001 |
-|    Three              | 15 (47)          | 2 (29)              | 1 (9)                | 12 (86)              |               |
-|    Four               | 12 (38)          | 4 (57)              | 8 (73)               | 0 (0)                |               |
-|    Five               | 5 (16)           | 1 (14)              | 2 (18)               | 2 (14)               |               |
+|  | mtcars2 (N = 32) | 6 cylinders (N = 7) | 4 cylinders (N = 11) | 8 cylinders (N = 14) | P-value |
+|:---|:---|:---|:---|:---|:---|
+| **Miles Per Gallon** |    |    |    |    |  |
+|    min | 10.4 | 17.8 | 21.4 | 10.4 |  |
+|    max | 33.9 | 21.4 | 33.9 | 19.2 |  |
+|    mean (sd) | 20.09 ± 6.03 | 19.74 ± 1.45 | 26.66 ± 4.51 | 15.10 ± 2.56 | *P* \< 0.0001 |
+| **Displacement** |    |    |    |    |  |
+|    min | 71.1 | 145 | 71.1 | 275.8 |  |
+|    median | 196.3 | 167.6 | 108 | 350.5 |  |
+|    max | 472 | 258 | 146.7 | 472 |  |
+|    mean (sd) | 230.72 ± 123.94 | 183.31 ± 41.56 | 105.14 ± 26.87 | 353.10 ± 67.77 | *P* \< 0.0001 |
+| **Weight (1000 lbs)** |    |    |    |    |  |
+|    min | 1.513 | 2.62 | 1.513 | 3.17 |  |
+|    max | 5.424 | 3.46 | 3.19 | 5.424 |  |
+|    mean (sd) | 3.22 ± 0.98 | 3.12 ± 0.36 | 2.29 ± 0.57 | 4.00 ± 0.76 | *P* \< 0.0001 |
+| **Forward Gears** |    |    |    |    | *P* \< 0.0001 |
+|    Three | 15 (47) | 2 (29) | 1 (9) | 12 (86) |  |
+|    Four | 12 (38) | 4 (57) | 8 (73) | 0 (0) |  |
+|    Five | 5 (16) | 1 (14) | 2 (18) | 2 (14) |  |
 
-mtcars2 summary with p-values
+mtcars2 summary with p-values {.table style="width:100%;"}
 
 Another option you might consider is to have the p-value in the row
 group name. Consider the following construction. The p-values are added
 to the names of the row groups when building the summary table.
 
 ``` r
+
 gear_summary <-
   list("Forward Gears" =
        list("Three" = ~ qwraps2::n_perc0(gear == 3),
@@ -551,20 +569,20 @@ setNames(gear_summary,
 summary_table(mtcars2, gear_summary, by = "cyl_factor")
 ```
 
-|                                  | 6 cylinders (N = 7) | 4 cylinders (N = 11) | 8 cylinders (N = 14) |
-|:---------------------------------|:--------------------|:---------------------|:---------------------|
-| **Forward Gears: *P* \< 0.0001** |                     |                      |                      |
-|    Three                         | 2 (29)              | 1 (9)                | 12 (86)              |
-|    Four                          | 4 (57)              | 8 (73)               | 0 (0)                |
-|    Five                          | 1 (14)              | 2 (18)               | 2 (14)               |
-| **Transmission: *P* = 0.0091**   |                     |                      |                      |
-|    Automatic                     | 4 (57)              | 3 (27)               | 12 (86)              |
-|    Manual                        | 3 (43)              | 8 (73)               | 2 (14)               |
+|  | 6 cylinders (N = 7) | 4 cylinders (N = 11) | 8 cylinders (N = 14) |
+|:---|:---|:---|:---|
+| **Forward Gears: *P* \< 0.0001** |    |    |    |
+|    Three | 2 (29) | 1 (9) | 12 (86) |
+|    Four | 4 (57) | 8 (73) | 0 (0) |
+|    Five | 1 (14) | 2 (18) | 2 (14) |
+| **Transmission: *P* = 0.0091** |    |    |    |
+|    Automatic | 4 (57) | 3 (27) | 12 (86) |
+|    Manual | 3 (43) | 8 (73) | 2 (14) |
 
 ### rbind summary_table
 
 There is a rbind method of summary tables. This can be useful when
-building a large a table in smaller sections would be advantageous. For
+building a large table in smaller sections would be advantageous. For
 example, it might be helpful to add p-values to a summary table with
 just one row group and then rbind all the tables together for printing.
 Consider that in the above example for adding p-values we have made an
@@ -574,6 +592,7 @@ location can be more difficult than we would like to admit. Writing code
 to be robust to such changes is preferable.
 
 ``` r
+
 t_mpg  <- summary_table(mtcars2, summaries = our_summary1["Miles Per Gallon"], by = "cyl_factor")
 t_disp <- summary_table(mtcars2, summaries = our_summary1["Displacement"], by = "cyl_factor")
 t_wt   <- summary_table(mtcars2, summaries = our_summary1["Weight (1000 lbs)"], by = "cyl_factor")
@@ -592,6 +611,7 @@ without having to worry about the alignment of rows between different
 elements:
 
 ``` r
+
 rbind(t_mpg, t_disp, t_wt)
 ## 
 ## 
@@ -636,11 +656,12 @@ Some data management paradigms will use attributes to keep a label
 associated with a variable in a data.frame. Notable examples are the
 *[Hmisc](https://cran.r-project.org/package=Hmisc)* and
 *[sjPlot](https://cran.r-project.org/package=sjPlot)*. If you associate
-a label with a variable in the data frame the that label will be used
-when building a summary table. This feature was suggested
+a label with a variable in the data frame, that label will be used when
+building a summary table. This feature was suggested
 <https://github.com/dewittpe/qwraps2/issues/74> and implemented thusly:
 
 ``` r
+
 new_data_frame <-
   data.frame(age = c(18, 20, 24, 17, 43),
              edu = c(1, 3, 1, 5, 2),
@@ -654,11 +675,12 @@ attr(new_data_frame$rt,  "label") <- "Reaction time"
 attr(new_data_frame$edu, "name") <- "Education"
 ```
 
-When calling `qsummary` the provide labels for the age and rt variables
+When calling `qsummary` the provided labels for the age and rt variables
 will be used. Since the attribute “label” does not exist for the edu
 variable, edu will be used in the output.
 
 ``` r
+
 qsummary(new_data_frame)
 ## $`Age in years`
 ## $`Age in years`$minimum
@@ -705,6 +727,7 @@ qsummary(new_data_frame)
 This behavior is also seen with the `summary_table` call.
 
 ``` r
+
 summary_table(new_data_frame)
 ```
 
@@ -729,8 +752,8 @@ summary_table(new_data_frame)
 ### Alternative building of the summaries
 
 The task of building the `summaries` list-of-lists can be tedious. The
-function `qummaries` is designed to make it easier. `qummaries` will use
-a set of predefined functions to summarize numeric columns of a
+function `qsummary` is designed to make it easier. `qsummary` will use a
+set of predefined functions to summarize numeric columns of a
 data.frame, a set of arguments to pass to `n_perc` for categorical
 (character and factor) variables.
 
@@ -742,6 +765,7 @@ the default summary for a set of variables from the `mtcars2` data set
 is
 
 ``` r
+
 qsummary(mtcars2[, c("mpg", "cyl_factor", "wt")])
 ## $mpg
 ## $mpg$minimum
@@ -785,6 +809,7 @@ qsummary(mtcars2[, c("mpg", "cyl_factor", "wt")])
 That default summary is used for a table as follows:
 
 ``` r
+
 summary_table(mtcars2[, c("mpg", "cyl_factor", "wt")])
 ```
 
@@ -806,12 +831,13 @@ summary_table(mtcars2[, c("mpg", "cyl_factor", "wt")])
 |    maximum      | 5.42                                               |
 
 Now, say we want to only report the minimum and maximum for each of the
-numeric variables and for the categorical variables we want two show the
+numeric variables and for the categorical variables we want to show the
 denominator for each category and for the percentage, to one digit with
 the percent symbol in the table. Note that when defining the list of
-numeric_summaries that the argument place holder is the `%s%` character.
+numeric_summaries that the argument placeholder is the `%s%` character.
 
 ``` r
+
 new_summary <-
   qsummary(mtcars2[, c("mpg", "cyl_factor", "wt")],
            numeric_summaries = list("Minimum" = "~ min(%s)",
@@ -841,6 +867,7 @@ str(new_summary)
 The resulting table is:
 
 ``` r
+
 summary_table(mtcars2, new_summary)
 ```
 
@@ -860,10 +887,11 @@ summary_table(mtcars2, new_summary)
 ## Session Info
 
 ``` r
+
 print(sessionInfo(), local = FALSE)
-## R version 4.5.2 (2025-10-31)
+## R version 4.6.0 (2026-04-24)
 ## Platform: x86_64-pc-linux-gnu
-## Running under: Ubuntu 24.04.3 LTS
+## Running under: Ubuntu 24.04.4 LTS
 ## 
 ## Matrix products: default
 ## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
@@ -873,14 +901,14 @@ print(sessionInfo(), local = FALSE)
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] qwraps2_0.6.2
+## [1] qwraps2_0.6.3
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] digest_0.6.39     desc_1.4.3        R6_2.6.1          fastmap_1.2.0    
-##  [5] xfun_0.56         cachem_1.1.0      knitr_1.51        htmltools_0.5.9  
-##  [9] rmarkdown_2.30    lifecycle_1.0.5   cli_3.6.5         sass_0.4.10      
-## [13] pkgdown_2.2.0     textshaping_1.0.4 jquerylib_0.1.4   systemfonts_1.3.1
-## [17] compiler_4.5.2    tools_4.5.2       ragg_1.5.0        evaluate_1.0.5   
-## [21] bslib_0.10.0      Rcpp_1.1.1        yaml_2.3.12       jsonlite_2.0.0   
-## [25] rlang_1.1.7       fs_1.6.6
+##  [5] xfun_0.58         cachem_1.1.0      knitr_1.51        htmltools_0.5.9  
+##  [9] rmarkdown_2.31    lifecycle_1.0.5   cli_3.6.6         sass_0.4.10      
+## [13] pkgdown_2.2.0     textshaping_1.0.5 jquerylib_0.1.4   systemfonts_1.3.2
+## [17] compiler_4.6.0    tools_4.6.0       ragg_1.5.2        bslib_0.11.0     
+## [21] evaluate_1.0.5    Rcpp_1.1.1-1.1    yaml_2.3.12       otel_0.2.0       
+## [25] jsonlite_2.0.0    rlang_1.2.0       fs_2.1.0          htmlwidgets_1.6.4
 ```

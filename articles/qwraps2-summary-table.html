@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>qwraps2: Summary Table • qwraps2</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="qwraps2: Summary Table">
 </head>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">qwraps2</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -1361,7 +1361,7 @@ each level of a categorical variable across multiple (column) groups,
 then I would argue that the p-value resulting from a chi square test or
 a Fisher exact test would be best placed on the line of the table
 labeling the row group. However, say we reported the minimum, median,
-mean, and maximum with in a row group for one variable. The p-value from
+mean, and maximum within a row group for one variable. The p-value from
 a t-test, or other meaningful test for the difference in mean, I would
 suggest should be reported on the line of the summary table for the
 mean, not the row group itself.</p>
@@ -1387,8 +1387,8 @@ character matrices with additional attributes.</p>
 <span><span class="co">##   ..$ markup    : chr "markdown"</span></span>
 <span><span class="co">##   ..$ kable_args:List of 1</span></span>
 <span><span class="co">##   .. ..$ caption: chr "mtcars2 data summary"</span></span></code></pre></div>
-<p>For this example, we will added p-values for testing the difference
-in the mean between the three cylinder groups and the distribution of
+<p>For this example, we will add p-values for testing the difference in
+the mean between the three cylinder groups and the distribution of
 forward gears by cylinder groups.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># difference in means</span></span>
@@ -1401,7 +1401,7 @@ forward gears by cylinder groups.</p>
 <span></span>
 <span><span class="co"># Fisher test</span></span>
 <span><span class="va">fpval</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/frmt.html">frmtp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/fisher.test.html" class="external-link">fisher.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">gear</span>, <span class="va">mtcars2</span><span class="op">$</span><span class="va">cyl_factor</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">p.value</span><span class="op">)</span></span></code></pre></div>
-<p>In this case, adding the p-value column, is done by creating a empty
+<p>In this case, adding the p-value column, is done by creating an empty
 column and then writing in the needed p-value on the wanted rows. This
 could be within a row group (tests for means) or for a row group (Fisher
 test).</p>
@@ -1658,7 +1658,7 @@ to the names of the row groups when building the summary table.</p>
 <h3 id="rbind-summary_table">rbind summary_table<a class="anchor" aria-label="anchor" href="#rbind-summary_table"></a>
 </h3>
 <p>There is a rbind method of summary tables. This can be useful when
-building a large a table in smaller sections would be advantageous. For
+building a large table in smaller sections would be advantageous. For
 example, it might be helpful to add p-values to a summary table with
 just one row group and then rbind all the tables together for printing.
 Consider that in the above example for adding p-values we have made an
@@ -1726,8 +1726,8 @@ elements:</p>
 associated with a variable in a data.frame. Notable examples are the
 <em><a href="https://cran.r-project.org/package=Hmisc" class="external-link">Hmisc</a></em>
 and <em><a href="https://cran.r-project.org/package=sjPlot" class="external-link">sjPlot</a></em>. If you
-associate a label with a variable in the data frame the that label will
-be used when building a summary table. This feature was suggested <a href="https://github.com/dewittpe/qwraps2/issues/74" class="external-link uri">https://github.com/dewittpe/qwraps2/issues/74</a> and
+associate a label with a variable in the data frame, that label will be
+used when building a summary table. This feature was suggested <a href="https://github.com/dewittpe/qwraps2/issues/74" class="external-link uri">https://github.com/dewittpe/qwraps2/issues/74</a> and
 implemented thusly:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">new_data_frame</span> <span class="op">&lt;-</span></span>
@@ -1741,9 +1741,9 @@ implemented thusly:</p>
 <span></span>
 <span><span class="co"># mistakenly set the attribute to name instead of label</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">new_data_frame</span><span class="op">$</span><span class="va">edu</span>, <span class="st">"name"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"Education"</span></span></code></pre></div>
-<p>When calling <code>qsummary</code> the provide labels for the age and
-rt variables will be used. Since the attribute “label” does not exist
-for the edu variable, edu will be used in the output.</p>
+<p>When calling <code>qsummary</code> the provided labels for the age
+and rt variables will be used. Since the attribute “label” does not
+exist for the edu variable, edu will be used in the output.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/summary_table.html">qsummary</a></span><span class="op">(</span><span class="va">new_data_frame</span><span class="op">)</span></span>
 <span><span class="co">## $`Age in years`</span></span>
@@ -1863,8 +1863,8 @@ call.</p>
 <h3 id="alternative-building-of-the-summaries">Alternative building of the summaries<a class="anchor" aria-label="anchor" href="#alternative-building-of-the-summaries"></a>
 </h3>
 <p>The task of building the <code>summaries</code> list-of-lists can be
-tedious. The function <code>qummaries</code> is designed to make it
-easier. <code>qummaries</code> will use a set of predefined functions to
+tedious. The function <code>qsummary</code> is designed to make it
+easier. <code>qsummary</code> will use a set of predefined functions to
 summarize numeric columns of a data.frame, a set of arguments to pass to
 <code>n_perc</code> for categorical (character and factor)
 variables.</p>
@@ -1986,10 +1986,10 @@ is</p>
 </tbody>
 </table>
 <p>Now, say we want to only report the minimum and maximum for each of
-the numeric variables and for the categorical variables we want two show
+the numeric variables and for the categorical variables we want to show
 the denominator for each category and for the percentage, to one digit
 with the percent symbol in the table. Note that when defining the list
-of numeric_summaries that the argument place holder is the
+of numeric_summaries that the argument placeholder is the
 <code>%s%</code> character.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">new_summary</span> <span class="op">&lt;-</span></span>
@@ -2074,9 +2074,9 @@ of numeric_summaries that the argument place holder is the
 </h2>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>, local <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">## R version 4.5.2 (2025-10-31)</span></span>
+<span><span class="co">## R version 4.6.0 (2026-04-24)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
-<span><span class="co">## Running under: Ubuntu 24.04.3 LTS</span></span>
+<span><span class="co">## Running under: Ubuntu 24.04.4 LTS</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
 <span><span class="co">## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
@@ -2086,16 +2086,16 @@ of numeric_summaries that the argument place holder is the
 <span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] qwraps2_0.6.2</span></span>
+<span><span class="co">## [1] qwraps2_0.6.3</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
 <span><span class="co">##  [1] digest_0.6.39     desc_1.4.3        R6_2.6.1          fastmap_1.2.0    </span></span>
-<span><span class="co">##  [5] xfun_0.56         cachem_1.1.0      knitr_1.51        htmltools_0.5.9  </span></span>
-<span><span class="co">##  [9] rmarkdown_2.30    lifecycle_1.0.5   cli_3.6.5         sass_0.4.10      </span></span>
-<span><span class="co">## [13] pkgdown_2.2.0     textshaping_1.0.4 jquerylib_0.1.4   systemfonts_1.3.1</span></span>
-<span><span class="co">## [17] compiler_4.5.2    tools_4.5.2       ragg_1.5.0        evaluate_1.0.5   </span></span>
-<span><span class="co">## [21] bslib_0.10.0      Rcpp_1.1.1        yaml_2.3.12       jsonlite_2.0.0   </span></span>
-<span><span class="co">## [25] rlang_1.1.7       fs_1.6.6</span></span></code></pre></div>
+<span><span class="co">##  [5] xfun_0.58         cachem_1.1.0      knitr_1.51        htmltools_0.5.9  </span></span>
+<span><span class="co">##  [9] rmarkdown_2.31    lifecycle_1.0.5   cli_3.6.6         sass_0.4.10      </span></span>
+<span><span class="co">## [13] pkgdown_2.2.0     textshaping_1.0.5 jquerylib_0.1.4   systemfonts_1.3.2</span></span>
+<span><span class="co">## [17] compiler_4.6.0    tools_4.6.0       ragg_1.5.2        bslib_0.11.0     </span></span>
+<span><span class="co">## [21] evaluate_1.0.5    Rcpp_1.1.1-1.1    yaml_2.3.12       otel_0.2.0       </span></span>
+<span><span class="co">## [25] jsonlite_2.0.0    rlang_1.2.0       fs_2.1.0          htmlwidgets_1.6.4</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

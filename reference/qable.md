@@ -79,11 +79,11 @@ is:
 | rnames\[4\] | x\[4, 1\]   | x\[4, 1\]   |
 | rnames\[5\] | x\[5, 1\]   | x\[5, 1\]   |
 
-Passing arguments to `link[knitr]{kable}` is done via the list
-`kable_args`. This is an improvement in 0.6.0 to address arguments with
-different use between qable and kable but the same name, notably
-`format`. Within the print method for `qwraps2_qable` objects, some
-default arguments for knitr::kable are created.
+Passing arguments to [`kable`](https://rdrr.io/pkg/knitr/man/kable.html)
+is done via the list `kable_args`. This is an improvement in 0.6.0 to
+address arguments with different use between qable and kable but the
+same name, notably `format`. Within the print method for `qwraps2_qable`
+objects, some default arguments for knitr::kable are created.
 
 Defaults if the named element of `kable_args` is missing:
 `kable_args$format` will be "latex" if `markup = "latex"` and will be
@@ -100,10 +100,10 @@ Defaults if the named element of `kable_args` is missing:
 [`kable`](https://rdrr.io/pkg/knitr/man/kable.html)
 
 [`summary_table`](http://www.peteredewitt.com/qwraps2/reference/summary_table.md),
-for an example of build a data summary table.
+for an example of building a data summary table.
 
 For more detail on arguments you can pass via `kable_args` look at the
-non-exported functions form the knitr package `knitr:::kable_latex`,
+non-exported functions from the knitr package `knitr:::kable_latex`,
 `knitr:::kable_markdown`, or others.
 
 ## Examples

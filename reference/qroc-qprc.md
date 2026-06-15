@@ -1,4 +1,4 @@
-# Receiver-Operator and Precision-Recall Curves
+# Receiver Operating Characteristic and Precision-Recall Curves
 
 Construction of ROC and PRC data and plots.
 

@@ -18,13 +18,14 @@ qsummary(x, numeric_summaries, n_perc_args, env = parent.frame())
 
 - summaries:
 
-  a list of lists of formulea for summarizing the data set. See Details
+  a list of lists of formulas for summarizing the data set. See Details
   and examples.
 
 - by:
 
   a character vector of variable names to generate the summary by, that
-  is one column for each unique values of the variables specified.
+  is, one column for each unique value or combination of values of the
+  variables specified.
 
 - qable_args:
 
@@ -57,11 +58,11 @@ a `qwraps2_summary_table` object.
 
 ## Details
 
-`summary_table` can be used to generate good looking, simple tables in
-LaTeX or markdown. Functions like xtables::print.xtable and Hmisc::latex
-provide many more tools for formatting tables. The purpose of
-`summary_table` is to generate good looking tables quickly within
-workflow for summarizing a data set.
+`summary_table` can be used to generate good-looking, simple tables in
+LaTeX or markdown. Functions like `xtable::print.xtable` and
+`Hmisc::latex` provide many more tools for formatting tables. The
+purpose of `summary_table` is to generate readable tables quickly while
+summarizing a data set.
 
 Creating a list-of-lists of summary functions to apply to a data set
 will allow the exploration of the whole data set and grouped data sets.
@@ -74,8 +75,8 @@ The list-of-lists should be thought of as follows: the outer list
 defines row groups, the inner lists define the rows within each row
 group.
 
-More detailed use of these functions can be found the
-"summary-statistics" vignette.
+More detailed use of these functions can be found in the
+[`vignette("qwraps2-summary-table", package = "qwraps2")`](http://www.peteredewitt.com/qwraps2/articles/qwraps2-summary-table.md).
 
 The `print` method for the `qwraps2_summary_table` objects is just a
 simple wrapper for
@@ -85,13 +86,88 @@ simple wrapper for
 
 `qsummary` for generating the summaries,
 [`qable`](http://www.peteredewitt.com/qwraps2/reference/qable.md) for
-marking up `qwraps2_data_summary` objects. The
-`vignette("summary-statistics", package = "qwraps2")` for detailed use
-of these functions and caveats.
+marking up `qwraps2_summary_table` objects. The
+[`vignette("qwraps2-summary-table", package = "qwraps2")`](http://www.peteredewitt.com/qwraps2/articles/qwraps2-summary-table.md)
+for detailed use of these functions and caveats.
 
 ## Examples
 
 ``` r
+summary_table(mtcars[, c("mpg", "cyl", "am")])
+#> 
+#> \begin{tabular}{l|l}
+#> \hline
+#>  & mtcars[, c("mpg", "cyl", "am")] (N = 32)\\
+#> \hline
+#> \bf{mpg} & ~\\
+#> \hline
+#> ~~ minimum & 10.40\\
+#> \hline
+#> ~~ median (IQR) & 19.20 (15.43, 22.80)\\
+#> \hline
+#> ~~ mean (sd) & 20.09 $\pm$ 6.03\\
+#> \hline
+#> ~~ maximum & 33.90\\
+#> \hline
+#> \bf{cyl} & ~\\
+#> \hline
+#> ~~ minimum & 4.00\\
+#> \hline
+#> ~~ median (IQR) & 6.00 (4.00, 8.00)\\
+#> \hline
+#> ~~ mean (sd) & 6.19 $\pm$ 1.79\\
+#> \hline
+#> ~~ maximum & 8.00\\
+#> \hline
+#> \bf{am} & ~\\
+#> \hline
+#> ~~ minimum & 0.00\\
+#> \hline
+#> ~~ median (IQR) & 0.00 (0.00, 1.00)\\
+#> \hline
+#> ~~ mean (sd) & 0.41 $\pm$ 0.50\\
+#> \hline
+#> ~~ maximum & 1.00\\
+#> \hline
+#> \end{tabular}
+summary_table(mtcars[, c("mpg", "cyl", "am")], by = "am")
+#> 
+#> \begin{tabular}{l|l|l}
+#> \hline
+#>  & 0 (N = 19) & 1 (N = 13)\\
+#> \hline
+#> \bf{mpg} & ~ & ~\\
+#> \hline
+#> ~~ minimum & 10.40 & 15.00\\
+#> \hline
+#> ~~ median (IQR) & 17.30 (14.95, 19.20) & 22.80 (21.00, 30.40)\\
+#> \hline
+#> ~~ mean (sd) & 17.15 $\pm$ 3.83 & 24.39 $\pm$ 6.17\\
+#> \hline
+#> ~~ maximum & 24.40 & 33.90\\
+#> \hline
+#> \bf{cyl} & ~ & ~\\
+#> \hline
+#> ~~ minimum & 4.00 & 4.00\\
+#> \hline
+#> ~~ median (IQR) & 8.00 (6.00, 8.00) & 4.00 (4.00, 6.00)\\
+#> \hline
+#> ~~ mean (sd) & 6.95 $\pm$ 1.54 & 5.08 $\pm$ 1.55\\
+#> \hline
+#> ~~ maximum & 8.00 & 8.00\\
+#> \hline
+#> \bf{am} & ~ & ~\\
+#> \hline
+#> ~~ minimum & 0.00 & 1.00\\
+#> \hline
+#> ~~ median (IQR) & 0.00 (0.00, 0.00) & 1.00 (1.00, 1.00)\\
+#> \hline
+#> ~~ mean (sd) & 0.00 $\pm$ 0.00 & 1.00 $\pm$ 0.00\\
+#> \hline
+#> ~~ maximum & 0.00 & 1.00\\
+#> \hline
+#> \end{tabular}
+
 # A list-of-lists for the summaries arg.  This object is of the basic form:
 #
 # list("row group A" =
@@ -226,7 +302,7 @@ print(whole_table, caption = "Hello world", markup = "latex")
 # data as expected.  For example, let's build a data set with twenty subjects
 # and injury severity scores for head and face injuries.  We'll clean the data
 # by finding the max ISS score for each subject and then reporting summary
-# statistics there of.
+# statistics thereof.
 set.seed(42)
 dat <- data.frame(id = letters[1:20],
                   head_iss = sample(1:6, 20, replace = TRUE, prob = 10 * (6:1)),
@@ -599,47 +675,47 @@ qsummary(temp[, c("cyl", "am", "vs")])
 #> $cyl
 #> $cyl$minimum
 #> ~qwraps2::frmt(min(na.omit(cyl)))
-#> <environment: 0x56291ad4ec08>
+#> <environment: 0x55cc11ab6c08>
 #> 
 #> $cyl$`median (IQR)`
 #> ~qwraps2::median_iqr(na.omit(cyl))
-#> <environment: 0x56291ad4ec08>
+#> <environment: 0x55cc11ab6c08>
 #> 
 #> $cyl$`mean (sd)`
 #> ~qwraps2::mean_sd(na.omit(cyl))
-#> <environment: 0x56291ad4ec08>
+#> <environment: 0x55cc11ab6c08>
 #> 
 #> $cyl$maximum
 #> ~qwraps2::frmt(max(na.omit(cyl)))
-#> <environment: 0x56291ad4ec08>
+#> <environment: 0x55cc11ab6c08>
 #> 
 #> $cyl$`Unknown/Missing`
 #> ~qwraps2::n_perc(is.na(cyl))
-#> <environment: 0x56291ad4ec08>
+#> <environment: 0x55cc11ab6c08>
 #> 
 #> 
 #> $am
 #> $am$Automatic
 #> ~qwraps2::n_perc(na.omit(am) == "Automatic", digits = 0, show_symbol = FALSE)
-#> <environment: 0x56291ad4ec08>
+#> <environment: 0x55cc11ab6c08>
 #> 
 #> $am$Manual
 #> ~qwraps2::n_perc(na.omit(am) == "Manual", digits = 0, show_symbol = FALSE)
-#> <environment: 0x56291ad4ec08>
+#> <environment: 0x55cc11ab6c08>
 #> 
 #> $am$`Unknown/Missing`
 #> ~qwraps2::n_perc(is.na(am))
-#> <environment: 0x56291ad4ec08>
+#> <environment: 0x55cc11ab6c08>
 #> 
 #> 
 #> $vs
 #> $vs[[1]]
 #> ~qwraps2::n_perc(na.omit(vs), digits = 0, show_symbol = FALSE)
-#> <environment: 0x56291ad4ec08>
+#> <environment: 0x55cc11ab6c08>
 #> 
 #> $vs$`Unknown/Missing`
 #> ~qwraps2::n_perc(is.na(vs))
-#> <environment: 0x56291ad4ec08>
+#> <environment: 0x55cc11ab6c08>
 #> 
 #> 
 summary_table(temp[, c("cyl", "am", "vs")])
@@ -808,6 +884,6 @@ if (FALSE) { # \dontrun{
 options(qwraps2_markup = orig_opt)
 
 # Detailed examples in the vignette
-# vignette("summary-statistics", package = "qwraps2")
+# vignette("qwraps2-summary-table", package = "qwraps2")
 
 ```

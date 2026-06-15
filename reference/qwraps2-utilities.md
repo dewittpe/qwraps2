@@ -22,6 +22,7 @@ e1 %s% e2
 ## Examples
 
 ``` r
+
 # base R
 paste0("A longer string ", "can be ", "built")
 #> [1] "A longer string can be built"

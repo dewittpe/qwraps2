@@ -28,6 +28,7 @@ Gitlabpkg(pkg, username)
 ## Examples
 
 ``` r
+
 Rpkg(qwraps2)
 #> [1] "*qwraps2*"
 Rpkg("qwraps2")

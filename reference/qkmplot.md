@@ -7,10 +7,10 @@ A ggplot2 version of a Kaplan-Meier Plot
 ``` r
 qkmplot(x, conf_int = FALSE, ...)
 
-qkmplot_bulid_data_frame(x)
+qkmplot_build_data_frame(x)
 
 # S3 method for class 'survfit'
-qkmplot_bulid_data_frame(x)
+qkmplot_build_data_frame(x)
 
 qrmst(x, tau = Inf)
 
@@ -45,8 +45,10 @@ a ggplot.
 
 ## Details
 
-Functions to build, explicitly or implicitly, data.frames and then
-creating a ggplot2 KM plot.
+Functions to build data frames explicitly or implicitly and then create
+a ggplot2 Kaplan-Meier plot. The misspelled `qkmplot_bulid_data_frame`
+is retained as a deprecated backward-compatible wrapper for
+`qkmplot_build_data_frame`.
 
 More details and examples for graphics within qwraps2 are in the
 vignette(“qwraps2-graphics”, package = “qwraps2”)
@@ -64,7 +66,7 @@ qkmplot(leukemia.surv, conf_int = TRUE)
 #> (`stat_step_ribbon()`).
 
 
-qkmplot_bulid_data_frame(leukemia.surv)
+qkmplot_build_data_frame(leukemia.surv)
 #>    time n.risk n.event n.censor       surv     upper      lower          strata
 #> 2     0     11       0        0 1.00000000 1.0000000 1.00000000    x=Maintained
 #> 3     9     11       1        0 0.90909091 1.0000000 0.75413385    x=Maintained

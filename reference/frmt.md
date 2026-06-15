@@ -115,12 +115,12 @@ Default settings are controlled through the function arguments but
 should be set via [`options()`](https://rdrr.io/r/base/options.html).
 
 Default settings report the P-value exactly if P \>
-`getOptions("qwraps2_frmtp_digits", 4)` and reports P \<
-`10^-(getOptions("qwraps2_frmtp_digits", 2))` otherwise. By the leading
-zero is controlled via `getOptions("qwraps2_frmtp_leading0", TRUE)` and
-a upper or lower case P is controlled by
-`getOptions("qwraps2_frmtp_case", "upper")`. These options are ignored
-if `style != "default"`.
+`getOption("qwraps2_frmtp_digits", 4)` and reports P \<
+`10^-(getOption("qwraps2_frmtp_digits", 2))` otherwise. By the leading
+zero is controlled via `getOption("qwraps2_frmtp_leading0", TRUE)` and a
+upper or lower case P is controlled by
+`getOption("qwraps2_frmtp_case", "upper")`. These options are ignored if
+`style != "default"`.
 
 Journals with predefined P-value formatting are noted in the
 [qwraps2](http://www.peteredewitt.com/qwraps2/reference/qwraps2-package.md)
@@ -146,6 +146,7 @@ BiocStyle package.
 ## Examples
 
 ``` r
+
 ### Formatting numbers
 integers <- c(1234L, 9861230L)
 numbers  <- c(1234,  9861230)
@@ -229,22 +230,22 @@ frmtci(temp, show_level = "confidence between: ")
 temp2 <- matrix(rnorm(12), nrow = 4,
                 dimnames = list(c("A", "B", "C", "D"), c("EST", "LOW", "HIGH")))
 temp2
-#>          EST        LOW        HIGH
-#> A -1.8218177 -0.5536994  0.51242695
-#> B -0.2473253  0.6289820 -1.86301149
-#> C -0.2441996  2.0650249 -0.52201251
-#> D -0.2827054 -1.6309894 -0.05260191
+#>            EST        LOW       HIGH
+#> A -1.400043517  0.6215527 -0.2441996
+#> B  0.255317055  1.1484116 -0.2827054
+#> C -2.437263611 -1.8218177 -0.5536994
+#> D -0.005571287 -0.2473253  0.6289820
 frmtci(temp2)
 #>                      A                      B                      C 
-#>  "-1.82 (-0.55, 0.51)"  "-0.25 (0.63, -1.86)"  "-0.24 (2.07, -0.52)" 
+#>  "-1.40 (0.62, -0.24)"   "0.26 (1.15, -0.28)" "-2.44 (-1.82, -0.55)" 
 #>                      D 
-#> "-0.28 (-1.63, -0.05)" 
+#>  "-0.01 (-0.25, 0.63)" 
 
 # similar for a data.frame
 df2 <- as.data.frame(temp2)
 frmtci(df2)
 #>                      A                      B                      C 
-#>  "-1.82 (-0.55, 0.51)"  "-0.25 (0.63, -1.86)"  "-0.24 (2.07, -0.52)" 
+#>  "-1.40 (0.62, -0.24)"   "0.26 (1.15, -0.28)" "-2.44 (-1.82, -0.55)" 
 #>                      D 
-#> "-0.28 (-1.63, -0.05)" 
+#>  "-0.01 (-0.25, 0.63)" 
 ```

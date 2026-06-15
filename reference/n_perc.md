@@ -85,6 +85,7 @@ advantageous for use in building tables.
 ## Examples
 
 ``` r
+
 n_perc(c(0, 1,1, 1, 0, 0), show_denom = "always")
 #> [1] "3/6 (50.00\\%)"
 n_perc(c(0, 1,1, 1, 0, 0, NA), na_rm = TRUE)

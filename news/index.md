@@ -1,6 +1,66 @@
 # Changelog
 
+## qwraps2 0.6.2.9000
+
+### Bug Fixes
+
+- Correct
+  [`confusion_matrix()`](http://www.peteredewitt.com/qwraps2/reference/confusion_matrix.md)
+  edge-case handling for sensitivity, positive predictive value, and F1
+  when `TP == 0` and exactly one of `FP` or `FN` is positive. These
+  metrics now follow the documented GERBIL convention.
+- Improve
+  [`confusion_matrix()`](http://www.peteredewitt.com/qwraps2/reference/confusion_matrix.md)
+  confidence intervals for boundary proportions of zero or one.
+- Allow
+  [`qrmst()`](http://www.peteredewitt.com/qwraps2/reference/qkmplot.md)
+  to work with unstratified `survfit` objects.
+- Correct
+  [`qsummary()`](http://www.peteredewitt.com/qwraps2/reference/summary_table.md)
+  formula generation for character and factor levels that contain
+  quotes.
+- Add clearer error handling for empty
+  [`file_check()`](http://www.peteredewitt.com/qwraps2/reference/file_check.md)
+  paths and invalid
+  [`qable()`](http://www.peteredewitt.com/qwraps2/reference/qable.md)
+  row groups.
+- Correct and clarify vignette text for geometric means, geometric
+  variance, and ROC terminology.
+- Add
+  [`qkmplot_build_data_frame()`](http://www.peteredewitt.com/qwraps2/reference/qkmplot.md)
+  as the correctly spelled helper and retain
+  [`qkmplot_bulid_data_frame()`](http://www.peteredewitt.com/qwraps2/reference/qkmplot_bulid_data_frame.md)
+  as a deprecated wrapper for backward compatibility.
+
+### Documentation
+
+- Improve the package-level overview, vignette navigation, and
+  [`summary_table()`](http://www.peteredewitt.com/qwraps2/reference/summary_table.md)
+  help for new users.
+- Add a pkgdown reference index and copy edit source documentation,
+  including vignette spinners and utility help pages.
+- Remove stale symlink setup instructions from contributor documentation
+  and update the vignette-spinner Makefile template to generate real
+  `.Rmd` files.
+
+### Improvements
+
+- `print.qwraps2_set_diff` gains `verbose` to control when long sets of
+  unique values are printed.
+
+### Deprecations
+
+- Functions `logit` and `invlogit` have been deprecated in favor of base
+  R `qlogis` and `plogis` respectively. When `logit` and `invlogit` were
+  originally written they were faster than `qlogis` and `plogis`, that
+  is no longer true.
+- [`qkmplot_bulid_data_frame()`](http://www.peteredewitt.com/qwraps2/reference/qkmplot_bulid_data_frame.md)
+  has been deprecated in favor of the correctly spelled
+  [`qkmplot_build_data_frame()`](http://www.peteredewitt.com/qwraps2/reference/qkmplot.md).
+
 ## qwraps2 0.6.2
+
+CRAN release: 2026-02-28
 
 ### Bug Fixes
 
@@ -25,18 +85,17 @@ CRAN release: 2023-11-09
 - Extend documentation and testing of `set_diff`
 - The default value for `conf_int` in `qacf` has been modified from
   `0.05` to `1 - getOption("qwraps2_alpha", 0.05)`
-- `ggplot2_extract_legend` is now and S3 method
-- `qable` is now and S3 method and has gained a new argument
-  `kable_args` to make it clear what values are used by `qable` and
-  which are passed to
-  [`knitr::kable`](https://rdrr.io/pkg/knitr/man/kable.html)
+- `ggplot2_extract_legend` is now an S3 method
+- `qable` is now an S3 method and has gained a new argument `kable_args`
+  to make it clear what values are used by `qable` and which are passed
+  to [`knitr::kable`](https://rdrr.io/pkg/knitr/man/kable.html)
   ([\#84](https://github.com/dewittpe/qwraps2/issues/84))
 - `summary_table` has gained two arguments, `qable_args` and
   `kable_args` to help with passing through arguments and being able to
   use the features of knitr::kable
   ([\#84](https://github.com/dewittpe/qwraps2/issues/84))
 - vignettes have been renamed to have a consistent “qwraps2-” structure.
-- `summary_table` has it’s own vignette.
+- `summary_table` has its own vignette.
 
 ### New Features
 
@@ -69,11 +128,11 @@ CRAN release: 2023-11-09
 
 - Extend the S3 methods provided for `qroc_build_data_frame`
 
-- **Potentially breaking Change** `confusion_matrix` has been undergone
-  a major refactor. If nothing else, the return object is now a
-  data.frame with more output than before. The inputs are hopefully
-  easier for end users as well. This change includes the addition of the
-  function `auc` and major refactor of `qroc` and `qprc`.
+- **Potentially breaking Change** `confusion_matrix` has undergone a
+  major refactor. If nothing else, the return object is now a data.frame
+  with more output than before. The inputs are hopefully easier for end
+  users as well. This change includes the addition of the function `auc`
+  and major refactor of `qroc` and `qprc`.
 
 ### Deprecated / Removed
 
@@ -81,7 +140,7 @@ CRAN release: 2023-11-09
   summary table that had been deprecated have been removed from the
   package. ([\#96](https://github.com/dewittpe/qwraps2/issues/96))
 
-- `qroc_build_data_frame` as been deprecated in favor of `auc`
+- `qroc_build_data_frame` has been deprecated in favor of `auc`
 
 ## qwraps2 0.5.2
 
