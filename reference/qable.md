@@ -1,4 +1,4 @@
-# Qable: an extended version of knitr::kable
+# qable: an extended version of knitr::kable
 
 Create a simple table via
 [`kable`](https://rdrr.io/pkg/knitr/man/kable.html) with row groups and

@@ -119,7 +119,7 @@
 <div class="section level3">
 <h3 id="building-the-package">Building the package<a class="anchor" aria-label="anchor" href="#building-the-package"></a>
 </h3>
-<p>Use the makefile. RStudio users, you will find a <code>qwraps2.Rproj</code> that will set the default to use the makefile in the build. My preferred IDE is <a href="https://neovim.io" class="external-link">neovim</a> with the <a href="https://github.com/jalvesaq/Nvim-R" class="external-link">Nvim-R</a> plug-in and I prefer to work on a Debian system. After cloning the repo, a simple call</p>
+<p>Use the <code>Makefile</code>. After cloning the repo, a simple call</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>make</span></code></pre></div>
 <p>will build the package. This includes generating man files via <a href="https://cran.r-project.org/package=roxygen2" class="external-link">roxygen2</a>, building the vignettes, and then building the package via <code>R CMD build .</code>. Passing arguments to <code>R CMD build</code> can be done too. For example, building the package without the vignettes is done via:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>make build<span class="sc">-</span>options<span class="ot">=</span><span class="sc">--</span>no<span class="sc">-</span>build<span class="sc">-</span>vignettes</span></code></pre></div>

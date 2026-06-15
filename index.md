@@ -65,11 +65,7 @@ please fork the repo, add the feature, and send me a pull request.
 
 ### Building the package
 
-Use the makefile. RStudio users, you will find a `qwraps2.Rproj` that
-will set the default to use the makefile in the build. My preferred IDE
-is [neovim](https://neovim.io) with the
-[Nvim-R](https://github.com/jalvesaq/Nvim-R) plug-in and I prefer to
-work on a Debian system. After cloning the repo, a simple call
+Use the `Makefile`. After cloning the repo, a simple call
 
 ``` R
 make

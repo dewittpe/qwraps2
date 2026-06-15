@@ -1,6 +1,6 @@
 # Changelog
 
-## qwraps2 0.6.2.9000
+## qwraps2 0.6.3
 
 ### Bug Fixes
 
@@ -31,6 +31,10 @@
   as the correctly spelled helper and retain
   [`qkmplot_bulid_data_frame()`](http://www.peteredewitt.com/qwraps2/reference/qkmplot_bulid_data_frame.md)
   as a deprecated wrapper for backward compatibility.
+- Add
+  [`GitHubpkg()`](http://www.peteredewitt.com/qwraps2/reference/Rpkg.md)
+  as an alias for
+  [`Githubpkg()`](http://www.peteredewitt.com/qwraps2/reference/Rpkg.md)
 
 ### Documentation
 
@@ -40,7 +44,7 @@
 - Add a pkgdown reference index and copy edit source documentation,
   including vignette spinners and utility help pages.
 - Remove stale symlink setup instructions from contributor documentation
-  and update the vignette-spinner Makefile template to generate real
+  and update the vignette-spinner `Makefile` template to generate real
   `.Rmd` files.
 
 ### Improvements

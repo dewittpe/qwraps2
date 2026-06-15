@@ -64,7 +64,7 @@ different options which are available and what they control.
 - `getOption("qwraps2_journal", "default")` if a journal has specific
   formatting for p-values or other statistics, this option will control
   the output. Many other options are ignored if this is any other than
-  default. Check the github wiki, or this file, for current lists of
+  default. Check the GitHub wiki, or this file, for current lists of
   implemented journal style methods.
 
 - `getOption("qwraps2_markup", "latex")` value set to 'latex' or to

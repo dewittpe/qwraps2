@@ -79,7 +79,7 @@ number of non-missing values will be reported by default. Omission of
 the non-missing values can be controlled by setting
 `show_denom = "never"`.
 
-The function n_perc0 uses a set of default arguments which may be
+The function `n_perc0` uses a set of default arguments which may be
 advantageous for use in building tables.
 
 ## Examples

@@ -8,7 +8,7 @@ Build formatted summary tables from data frames.
   [`qsummary()`](http://www.peteredewitt.com/qwraps2/reference/summary_table.md)
   : Data Summary Tables
 - [`qable()`](http://www.peteredewitt.com/qwraps2/reference/qable.md) :
-  Qable: an extended version of knitr::kable
+  qable: an extended version of knitr::kable
 
 ## Formatting Summary Statistics
 
@@ -41,6 +41,7 @@ names.
 - [`Rpkg()`](http://www.peteredewitt.com/qwraps2/reference/Rpkg.md)
   [`CRANpkg()`](http://www.peteredewitt.com/qwraps2/reference/Rpkg.md)
   [`Githubpkg()`](http://www.peteredewitt.com/qwraps2/reference/Rpkg.md)
+  [`GitHubpkg()`](http://www.peteredewitt.com/qwraps2/reference/Rpkg.md)
   [`Gitlabpkg()`](http://www.peteredewitt.com/qwraps2/reference/Rpkg.md)
   : Formatting Style on URLs for packages on CRAN, Github, and Gitlab.
 - [`backtick()`](http://www.peteredewitt.com/qwraps2/reference/backtick.md)

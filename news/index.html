@@ -40,9 +40,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.6.2.9000" id="qwraps2-0629000">qwraps2 0.6.2.9000<a class="anchor" aria-label="anchor" href="#qwraps2-0629000"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.6.3" id="qwraps2-063">qwraps2 0.6.3<a class="anchor" aria-label="anchor" href="#qwraps2-063"></a></h2>
 <div class="section level3">
-<h3 id="bug-fixes-0-6-2-9000">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-6-2-9000"></a></h3>
+<h3 id="bug-fixes-0-6-3">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-6-3"></a></h3>
 <ul><li>Correct <code><a href="../reference/confusion_matrix.html">confusion_matrix()</a></code> edge-case handling for sensitivity, positive predictive value, and F1 when <code>TP == 0</code> and exactly one of <code>FP</code> or <code>FN</code> is positive. These metrics now follow the documented GERBIL convention.</li>
 <li>Improve <code><a href="../reference/confusion_matrix.html">confusion_matrix()</a></code> confidence intervals for boundary proportions of zero or one.</li>
 <li>Allow <code><a href="../reference/qkmplot.html">qrmst()</a></code> to work with unstratified <code>survfit</code> objects.</li>
@@ -50,20 +50,22 @@
 <li>Add clearer error handling for empty <code><a href="../reference/file_check.html">file_check()</a></code> paths and invalid <code><a href="../reference/qable.html">qable()</a></code> row groups.</li>
 <li>Correct and clarify vignette text for geometric means, geometric variance, and ROC terminology.</li>
 <li>Add <code><a href="../reference/qkmplot.html">qkmplot_build_data_frame()</a></code> as the correctly spelled helper and retain <code><a href="../reference/qkmplot_bulid_data_frame.html">qkmplot_bulid_data_frame()</a></code> as a deprecated wrapper for backward compatibility.</li>
+<li>Add <code><a href="../reference/Rpkg.html">GitHubpkg()</a></code> as an alias for <code><a href="../reference/Rpkg.html">Githubpkg()</a></code>
+</li>
 </ul></div>
 <div class="section level3">
-<h3 id="documentation-0-6-2-9000">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-6-2-9000"></a></h3>
+<h3 id="documentation-0-6-3">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-6-3"></a></h3>
 <ul><li>Improve the package-level overview, vignette navigation, and <code><a href="../reference/summary_table.html">summary_table()</a></code> help for new users.</li>
 <li>Add a pkgdown reference index and copy edit source documentation, including vignette spinners and utility help pages.</li>
-<li>Remove stale symlink setup instructions from contributor documentation and update the vignette-spinner Makefile template to generate real <code>.Rmd</code> files.</li>
+<li>Remove stale symlink setup instructions from contributor documentation and update the vignette-spinner <code>Makefile</code> template to generate real <code>.Rmd</code> files.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="improvements-0-6-2-9000">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-6-2-9000"></a></h3>
+<h3 id="improvements-0-6-3">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-6-3"></a></h3>
 <ul><li>
 <code>print.qwraps2_set_diff</code> gains <code>verbose</code> to control when long sets of unique values are printed.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="deprecations-0-6-2-9000">Deprecations<a class="anchor" aria-label="anchor" href="#deprecations-0-6-2-9000"></a></h3>
+<h3 id="deprecations-0-6-3">Deprecations<a class="anchor" aria-label="anchor" href="#deprecations-0-6-3"></a></h3>
 <ul><li>Functions <code>logit</code> and <code>invlogit</code> have been deprecated in favor of base R <code>qlogis</code> and <code>plogis</code> respectively. When <code>logit</code> and <code>invlogit</code> were originally written they were faster than <code>qlogis</code> and <code>plogis</code>, that is no longer true.</li>
 <li>
 <code><a href="../reference/qkmplot_bulid_data_frame.html">qkmplot_bulid_data_frame()</a></code> has been deprecated in favor of the correctly spelled <code><a href="../reference/qkmplot.html">qkmplot_build_data_frame()</a></code>.</li>

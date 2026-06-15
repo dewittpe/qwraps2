@@ -12,6 +12,8 @@ CRANpkg(pkg)
 
 Githubpkg(pkg, username)
 
+GitHubpkg(pkg, username)
+
 Gitlabpkg(pkg, username)
 ```
 

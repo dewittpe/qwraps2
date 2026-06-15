@@ -1,7 +1,7 @@
 # Deprecated qroc and qprc building of data frames:
 
-Deprecated methods for building the data sets needed for plotting roc
-and prc plots. use
+Deprecated methods for building the data sets needed for plotting
+Receiver-Operating Curves and Precision-Recall Curves. Use
 [`confusion_matrix`](http://www.peteredewitt.com/qwraps2/reference/confusion_matrix.md)
 instead.
 
