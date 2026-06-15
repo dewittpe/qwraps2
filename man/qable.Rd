@@ -2,7 +2,7 @@
 % Please edit documentation in R/qable.R
 \name{qable}
 \alias{qable}
-\title{Qable: an extended version of knitr::kable}
+\title{qable: an extended version of knitr::kable}
 \usage{
 qable(
   x,

@@ -4,6 +4,7 @@
 \alias{Rpkg}
 \alias{CRANpkg}
 \alias{Githubpkg}
+\alias{GitHubpkg}
 \alias{Gitlabpkg}
 \title{Formatting Style on URLs for packages on CRAN, Github, and Gitlab.}
 \usage{
@@ -12,6 +13,8 @@ Rpkg(pkg)
 CRANpkg(pkg)
 
 Githubpkg(pkg, username)
+
+GitHubpkg(pkg, username)
 
 Gitlabpkg(pkg, username)
 }

@@ -360,6 +360,12 @@ Githubpkg <- function(pkg, username) {
 
 #' @export
 #' @rdname Rpkg
+GitHubpkg <- function(pkg, username) {
+  Githubpkg(pkg, username)
+}
+
+#' @export
+#' @rdname Rpkg
 Gitlabpkg <- function(pkg, username) {
   pkg <- deparse(substitute(pkg))
   pkg <- gsub("\"|\'", "", pkg)

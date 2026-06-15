@@ -66,7 +66,7 @@ can be controlled by setting \code{na.rm = TRUE}.  In this case, the number
 of non-missing values will be reported by default.  Omission of the
 non-missing values can be controlled by setting \code{show_denom = "never"}.
 
-The function n_perc0 uses a set of default arguments which may be
+The function \code{n_perc0} uses a set of default arguments which may be
 advantageous for use in building tables.
 }
 \examples{

@@ -42,8 +42,9 @@ qkmplot_bulid_data_frame <- function(x) {
 
 #' Deprecated qroc and qprc building of data frames:
 #'
-#' Deprecated methods for building the data sets needed for plotting roc and prc
-#' plots.  use \code{\link{confusion_matrix}} instead.
+#' Deprecated methods for building the data sets needed for plotting
+#' Receiver-Operating Curves and Precision-Recall Curves. Use
+#' \code{\link{confusion_matrix}} instead.
 #'
 #' @param fit a \code{glm} fit with \code{family = binomial()}, or predicted
 #' values

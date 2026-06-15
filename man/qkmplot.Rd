@@ -46,29 +46,30 @@ More details and examples for graphics within qwraps2 are in the
 vignette(\dQuote{qwraps2-graphics}, package = \dQuote{qwraps2})
 }
 \examples{
-require(survival)
+if (require(survival)) {
 
-leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x, data = survival::aml)
+  leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x, data = survival::aml)
 
-qkmplot(leukemia.surv, conf_int = TRUE)
+  qkmplot(leukemia.surv, conf_int = TRUE)
 
-qkmplot_build_data_frame(leukemia.surv)
+  qkmplot_build_data_frame(leukemia.surv)
 
-qrmst(leukemia.surv) # NaN for rmst.se in Nonmaintained strata as last observation is an event
-qrmst(leukemia.surv, 44)
+  qrmst(leukemia.surv) # NaN for rmst.se in Nonmaintained strata as last observation is an event
+  qrmst(leukemia.surv, 44)
 
-# pbc examples
-pbc_fit <-
-  survival::survfit(
-      formula = survival::Surv(time, status > 0) ~ trt
-    , data = pbc
-    , subset = !is.na(trt)
-  )
+  # pbc examples
+  pbc_fit <-
+    survival::survfit(
+        formula = survival::Surv(time, status > 0) ~ trt
+      , data = pbc
+      , subset = !is.na(trt)
+    )
 
-qkmplot(pbc_fit)
-qkmplot(pbc_fit, conf_int = TRUE)
+  qkmplot(pbc_fit)
+  qkmplot(pbc_fit, conf_int = TRUE)
 
-qrmst(pbc_fit)
-qrmst(pbc_fit)
+  qrmst(pbc_fit)
+  qrmst(pbc_fit)
+}
 
 }

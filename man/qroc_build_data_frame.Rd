@@ -27,6 +27,7 @@ observations, 0/1 or FALSE/TRUE values, of equal length to \code{fit}}
 \item{...}{passed to \code{\link[stats]{predict}}}
 }
 \description{
-Deprecated methods for building the data sets needed for plotting roc and prc
-plots.  use \code{\link{confusion_matrix}} instead.
+Deprecated methods for building the data sets needed for plotting
+Receiver-Operating Curves and Precision-Recall Curves. Use
+\code{\link{confusion_matrix}} instead.
 }

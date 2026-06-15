@@ -1,4 +1,4 @@
-#' @title Qable: an extended version of knitr::kable
+#' @title qable: an extended version of knitr::kable
 #'
 #' @description Create a simple table via \code{\link[knitr]{kable}} with row
 #' groups and rownames similar to those of \code{\link[Hmisc]{latex}} from the
