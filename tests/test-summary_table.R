@@ -23,22 +23,23 @@ stopifnot(identical(names(qs_quoted$x), c("A's", 'B "quoted"', "plain")))
 st_quoted <- summary_table(data.frame(x = c("A's", 'B "quoted"', "plain")))
 stopifnot(inherits(st_quoted, "qwraps2_summary_table"))
 
-# expect warnings
-temp <- dplyr::group_by(mtcars, am, vs)
+if ( requireNamespace("dplyr", quietly = TRUE) ) {
+  # expect warnings
+  temp <- dplyr::group_by(mtcars, am, vs)
 
-test <- tryCatch(summary_table(temp), warning = function(w) w)
-stopifnot(identical(inherits(test, "warning"), TRUE) &
-          identical(grepl("grouped_df detected", test$message), TRUE))
+  test <- tryCatch(summary_table(temp), warning = function(w) w)
+  stopifnot(identical(inherits(test, "warning"), TRUE) &
+            identical(grepl("grouped_df detected", test$message), TRUE))
 
-test <- tryCatch(summary_table(temp, by = "am"), warning = function(w) w)
-stopifnot(identical(inherits(test, "warning"), TRUE) &
-          identical(grepl("You've passed", test$message), TRUE))
+  test <- tryCatch(summary_table(temp, by = "am"), warning = function(w) w)
+  stopifnot(identical(inherits(test, "warning"), TRUE) &
+            identical(grepl("You've passed", test$message), TRUE))
 
 # dplyr::group_by equivalent output
-out1 <- capture.output(suppressWarnings(summary_table(temp)))
-out2 <- capture.output(summary_table(mtcars, by = c("am", "vs")))
-stopifnot(identical(out1, out2))
-
+  out1 <- capture.output(suppressWarnings(summary_table(temp)))
+  out2 <- capture.output(summary_table(mtcars, by = c("am", "vs")))
+  stopifnot(identical(out1, out2))
+}
 
 ################################################################################
 # check the number of columns is as expected for summary tables
@@ -54,7 +55,6 @@ stopifnot(identical(ncol(stab_am) + ncol(stab_vs) - 1L, ncol(stab_cbind)))
 # check that the print method will update the attributes
 stab <- summary_table(mtcars[, c("mpg", "cyl", "am")], by = c("am"), qable_args = list(rtitle = "RTITLE"))
 attributes(stab)
-
 
 ################################################################################
 ##                                End of File                                 ##

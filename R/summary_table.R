@@ -83,52 +83,53 @@
 #' grouped_by_table
 #'
 #' # an equivalent call if you are using the tidyverse:
-#' summary_table(dplyr::group_by(mtcars, am), our_summaries)
+#' if (requireNamespace("dplyr", quietly = TRUE)) {
+#'   summary_table(dplyr::group_by(mtcars, am), our_summaries)
 #'
-#' # To build a table with a column for the whole data set and each of the am
-#' # levels
-#' cbind(whole_table, grouped_by_table)
+#'   # To build a table with a column for the whole data set and each of the am
+#'   # levels
+#'   cbind(whole_table, grouped_by_table)
 #'
-#' # Adding a caption for a LaTeX table
-#' print(whole_table, caption = "Hello world", markup = "latex")
+#'   # Adding a caption for a LaTeX table
+#'   print(whole_table, caption = "Hello world", markup = "latex")
 #'
-#' # A **warning** about grouped_df objects.
-#' # If you use dplyr::group_by or
-#' # dplyr::rowwise to manipulate a data set and fail to use dplyr::ungroup you
-#' # might find a table that takes a long time to create and does not summarize the
-#' # data as expected.  For example, let's build a data set with twenty subjects
-#' # and injury severity scores for head and face injuries.  We'll clean the data
-#' # by finding the max ISS score for each subject and then reporting summary
-#' # statistics thereof.
-#' set.seed(42)
-#' dat <- data.frame(id = letters[1:20],
-#'                   head_iss = sample(1:6, 20, replace = TRUE, prob = 10 * (6:1)),
-#'                   face_iss = sample(1:6, 20, replace = TRUE, prob = 10 * (6:1)))
-#' dat <- dplyr::group_by(dat, id)
-#' dat <- dplyr::mutate(dat, iss = max(head_iss, face_iss))
+#'   # A **warning** about grouped_df objects.
+#'   # If you use dplyr::group_by or
+#'   # dplyr::rowwise to manipulate a data set and fail to use dplyr::ungroup you
+#'   # might find a table that takes a long time to create and does not summarize the
+#'   # data as expected.  For example, let's build a data set with twenty subjects
+#'   # and injury severity scores for head and face injuries.  We'll clean the data
+#'   # by finding the max ISS score for each subject and then reporting summary
+#'   # statistics thereof.
+#'   set.seed(42)
+#'   dat <- data.frame(id = letters[1:20],
+#'                     head_iss = sample(1:6, 20, replace = TRUE, prob = 10 * (6:1)),
+#'                     face_iss = sample(1:6, 20, replace = TRUE, prob = 10 * (6:1)))
+#'   dat <- dplyr::group_by(dat, id)
+#'   dat <- dplyr::mutate(dat, iss = max(head_iss, face_iss))
 #'
-#' iss_summary <-
-#'   list("Head ISS" =
-#'        list("min"    = ~ min(head_iss),
-#'             "median" = ~ median(head_iss),
-#'             "max"    = ~ max(head_iss)),
-#'        "Face ISS" =
-#'        list("min"    = ~ min(face_iss),
-#'             "median" = ~ median(face_iss),
-#'             "max"    = ~ max(face_iss)),
-#'        "Max ISS" =
-#'        list("min"    = ~ min(iss),
-#'             "median" = ~ median(iss),
-#'             "max"    = ~ max(iss)))
+#'   iss_summary <-
+#'     list("Head ISS" =
+#'          list("min"    = ~ min(head_iss),
+#'               "median" = ~ median(head_iss),
+#'               "max"    = ~ max(head_iss)),
+#'          "Face ISS" =
+#'          list("min"    = ~ min(face_iss),
+#'               "median" = ~ median(face_iss),
+#'               "max"    = ~ max(face_iss)),
+#'          "Max ISS" =
+#'          list("min"    = ~ min(iss),
+#'               "median" = ~ median(iss),
+#'               "max"    = ~ max(iss)))
 #'
-#' # Want: a table with one column for all subjects with nine rows divided up into
-#' # three row groups.  However, the following call will create a table with 20
-#' # columns, one for each subject because dat is a grouped_df
-#' summary_table(dat, iss_summary)
+#'   # Want: a table with one column for all subjects with nine rows divided up into
+#'   # three row groups.  However, the following call will create a table with 20
+#'   # columns, one for each subject because dat is a grouped_df
+#'   summary_table(dat, iss_summary)
 #'
-#' # Ungroup the data.frame to get the correct output
-#' summary_table(dplyr::ungroup(dat), iss_summary)
-#'
+#'   # Ungroup the data.frame to get the correct output
+#'   summary_table(dplyr::ungroup(dat), iss_summary)
+#' }
 #'
 #' ################################################################################
 #' # The Default call will work with non-syntactically valid names and will
@@ -199,12 +200,12 @@
 #'        )
 #'
 #' tab1 <- summary_table(mtcars, our_summary1)
-#' tab2 <- summary_table(dplyr::group_by(mtcars, am), our_summary1)
-#' tab3 <- summary_table(dplyr::group_by(mtcars, vs), our_summary1)
+#' tab2 <- summary_table(mtcars, our_summary1, by = "am")
+#' tab3 <- summary_table(mtcars, our_summary1, by = "vs")
 #'
 #' tab4 <- summary_table(mtcars, our_summary2)
-#' tab5 <- summary_table(dplyr::group_by(mtcars, am), our_summary2)
-#' tab6 <- summary_table(dplyr::group_by(mtcars, vs), our_summary2)
+#' tab5 <- summary_table(mtcars, our_summary2, by = "am")
+#' tab6 <- summary_table(mtcars, our_summary2, by = "vs")
 #'
 #' cbind(tab1, tab2, tab3)
 #' cbind(tab4, tab5, tab6)

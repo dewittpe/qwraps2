@@ -41,7 +41,7 @@ DATATARGETS += $(PKG_ROOT)/data/spambase.rda
 ################################################################################
 # Recipes
 
-.PHONY: all check install clean covr
+.PHONY: all check check-no-suggests install clean covr
 
 all: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
@@ -100,6 +100,9 @@ covr :
 
 check: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 	$(R) CMD check $(PKG_NAME)_$(PKG_VERSION).tar.gz
+
+check-no-suggests: $(PKG_NAME)_$(PKG_VERSION).tar.gz
+	_R_CHECK_DEPENDS_ONLY_=true _R_CHECK_FORCE_SUGGESTS_=false $(R) CMD check $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
 check-as-cran: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 	$(R) CMD check --as-cran $(PKG_NAME)_$(PKG_VERSION).tar.gz
