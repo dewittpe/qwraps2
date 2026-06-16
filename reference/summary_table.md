@@ -630,47 +630,47 @@ qsummary(temp[, c("cyl", "am", "vs")])
 #> $cyl
 #> $cyl$minimum
 #> ~qwraps2::frmt(min(na.omit(cyl)))
-#> <environment: 0x55f2bd57c748>
+#> <environment: 0x55c7a603cb68>
 #> 
 #> $cyl$`median (IQR)`
 #> ~qwraps2::median_iqr(na.omit(cyl))
-#> <environment: 0x55f2bd57c748>
+#> <environment: 0x55c7a603cb68>
 #> 
 #> $cyl$`mean (sd)`
 #> ~qwraps2::mean_sd(na.omit(cyl))
-#> <environment: 0x55f2bd57c748>
+#> <environment: 0x55c7a603cb68>
 #> 
 #> $cyl$maximum
 #> ~qwraps2::frmt(max(na.omit(cyl)))
-#> <environment: 0x55f2bd57c748>
+#> <environment: 0x55c7a603cb68>
 #> 
 #> $cyl$`Unknown/Missing`
 #> ~qwraps2::n_perc(is.na(cyl))
-#> <environment: 0x55f2bd57c748>
+#> <environment: 0x55c7a603cb68>
 #> 
 #> 
 #> $am
 #> $am$Automatic
 #> ~qwraps2::n_perc(na.omit(am) == "Automatic", digits = 0, show_symbol = FALSE)
-#> <environment: 0x55f2bd57c748>
+#> <environment: 0x55c7a603cb68>
 #> 
 #> $am$Manual
 #> ~qwraps2::n_perc(na.omit(am) == "Manual", digits = 0, show_symbol = FALSE)
-#> <environment: 0x55f2bd57c748>
+#> <environment: 0x55c7a603cb68>
 #> 
 #> $am$`Unknown/Missing`
 #> ~qwraps2::n_perc(is.na(am))
-#> <environment: 0x55f2bd57c748>
+#> <environment: 0x55c7a603cb68>
 #> 
 #> 
 #> $vs
 #> $vs[[1]]
 #> ~qwraps2::n_perc(na.omit(vs), digits = 0, show_symbol = FALSE)
-#> <environment: 0x55f2bd57c748>
+#> <environment: 0x55c7a603cb68>
 #> 
 #> $vs$`Unknown/Missing`
 #> ~qwraps2::n_perc(is.na(vs))
-#> <environment: 0x55f2bd57c748>
+#> <environment: 0x55c7a603cb68>
 #> 
 #> 
 summary_table(temp[, c("cyl", "am", "vs")])
