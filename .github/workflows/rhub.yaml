@@ -65,10 +65,6 @@ jobs:
           token: ${{ secrets.RHUB_TOKEN }}
           job-config: ${{ matrix.config.job-config }}
       - uses: r-hub/actions/run-check@v1
-        env:
-          # Use official R internal flags instead of overwriting R-hub's native CHECK_ARGS
-          _R_CHECK_VIGNETTES_NLINES_: ${{ matrix.config.id == 'nosuggests' && '0' || '' }}
-          _R_CHECK_SKIP_VIGNETTES_: ${{ matrix.config.id == 'nosuggests' && 'true' || '' }}
         with:
           token: ${{ secrets.RHUB_TOKEN }}
           job-config: ${{ matrix.config.job-config }}
