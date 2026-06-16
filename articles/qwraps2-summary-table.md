@@ -2,6 +2,11 @@
 
 ``` r
 
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+``` r
+
 set.seed(42)
 library(qwraps2)
 options(qwraps2_markup = "markdown")

@@ -1,5 +1,12 @@
 # qwraps2: Graphics
 
+``` r
+
+library(qwraps2)
+packageVersion("qwraps2")
+## [1] '0.6.3'
+```
+
 There are several graphics generated within qwraps2. The naming
 convention for the “quick” plots was inspired by the (deprecated)
 *[ggplot2](https://cran.r-project.org/package=ggplot2)* function
@@ -38,7 +45,7 @@ testdf <- data.frame(x1, x2, x3, x4)
 acf(testdf$x1)
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-1-1.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-2-1.png)
 
 ``` r
 
@@ -47,14 +54,14 @@ acf(testdf$x1)
 qacf(testdf$x1)
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-1-2.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-2-2.png)
 
 ``` r
 
 qacf(testdf$x1, show_sig = TRUE)
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-1-3.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-2-3.png)
 
 ``` r
 
@@ -62,21 +69,21 @@ qacf(testdf$x1, show_sig = TRUE)
 acf(testdf)
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-2-1.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-3-1.png)
 
 ``` r
 
 qacf(testdf)
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-2-2.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-3-2.png)
 
 ``` r
 
 qacf(testdf, show_sig = TRUE)
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-2-3.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-3-3.png)
 
 ### Tips and tricks
 
@@ -139,7 +146,7 @@ ggplot2::ggplot(data = as.data.frame(pefr_m1)) +
   ggplot2::geom_abline(slope = 1)
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-5-1.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-6-1.png)
 
 However, for many reasons, the above is misleading. One simple note:
 correlation is not a metric for agreement, i.e., perfect agreement would
@@ -155,7 +162,7 @@ difference in the measurements on the y-axis:
 qblandaltman(pefr_m1)
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-6-1.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-7-1.png)
 
 ``` r
 
@@ -168,7 +175,7 @@ ggplot2::last_plot() +
   ggplot2::ylab("Difference in the measurements")
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-6-2.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-7-2.png)
 
 There is no distinct relationship between the differences and the
 average, but the difference in the measurements between the two meters
@@ -188,7 +195,7 @@ pefr_mini <-
 qblandaltman(pefr_mini)
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-7-1.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-8-1.png)
 
 ## qkmplot: Kaplan Meier Plots
 
@@ -201,7 +208,7 @@ leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x, data = surv
 plot(leukemia.surv, conf.int = TRUE, lty = 2:3, col = 1:2)
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-8-1.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-9-1.png)
 
 ``` r
 
@@ -211,7 +218,7 @@ qkmplot(leukemia.surv, conf_int = TRUE)
 ## (`stat_step_ribbon()`).
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-9-1.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-10-1.png)
 
 The function `qkmplot_build_data_frame` can be used to generate a
 data.frame needed for building a KM plot. This could be helpful for
@@ -232,7 +239,7 @@ head(leukemia_km_data, 3)
 qkmplot(leukemia_km_data)
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-11-1.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-12-1.png)
 
 Intercept only models are easy to plot too.
 
@@ -242,14 +249,14 @@ intonly_fit <- survival::survfit(survival::Surv(time, status) ~ 1, data = surviv
 plot(intonly_fit, conf.int = TRUE)
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-12-1.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-13-1.png)
 
 ``` r
 
 qkmplot(intonly_fit, conf_int = TRUE)
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-12-2.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-13-2.png)
 
 ## qroc and qprc: Receiver Operating Characteristic Curve and Precision-Recall Curve
 
@@ -354,21 +361,21 @@ would any other ggplot object.
 qroc(cm1) + ggplot2::ggtitle("Logistic Model")
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-17-1.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-18-1.png)
 
 ``` r
 
 qroc(cm2) + ggplot2::ggtitle("Ridge Regression Model")
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-17-2.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-18-2.png)
 
 ``` r
 
 qroc(cm3) + ggplot2::ggtitle("LASSO Regression Model")
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-17-3.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-18-3.png)
 
 Graphing all three curves in one image with AUROC in the legend:
 
@@ -386,7 +393,7 @@ qroc(roc_plot_data) +
   ggplot2::theme(legend.position = "bottom")
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-18-1.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-19-1.png)
 
 Similar for PRC:
 
@@ -395,21 +402,21 @@ Similar for PRC:
 qprc(cm1) + ggplot2::ggtitle("Logistic Model")
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-19-1.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-20-1.png)
 
 ``` r
 
 qprc(cm2) + ggplot2::ggtitle("Ridge Regression Model")
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-19-2.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-20-2.png)
 
 ``` r
 
 qprc(cm3) + ggplot2::ggtitle("LASSO Regression Model")
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-19-3.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-20-3.png)
 
 ``` r
 
@@ -427,7 +434,7 @@ qprc(prc_plot_data) +
   ggplot2::theme(legend.position = "bottom")
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-19-4.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-20-4.png)
 
 ## References
 
