@@ -36,5 +36,7 @@ Suggests:
     rmarkdown
 LinkingTo: Rcpp (>= 0.12.11),
     RcppArmadillo
-VignetteBuilder: knitr
+VignetteBuilder: 
+    knitr,
+    rmarkdown
 Config/roxygen2/version: 8.0.0
