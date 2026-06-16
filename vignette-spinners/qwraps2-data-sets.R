@@ -12,16 +12,6 @@
 #'  %\VignetteEncoding{UTF-8}
 #'---
 #'
-#+ setup, include = FALSE
-# List the suggested packages this vignette explicitly depends on
-needed_pkgs <- c("rmarkdown")
-missing <- !sapply(needed_pkgs, requireNamespace, quietly = TRUE)
-if (any(missing)) {
-  message("Skipping vignette: missing suggested packages.")
-  knitr::knit_exit()
-}
-knitr::opts_chunk$set(collapse = TRUE)
-#'
 # /*
 devtools::load_all()
 # */
