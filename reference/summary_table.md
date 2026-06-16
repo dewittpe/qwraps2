@@ -237,46 +237,55 @@ grouped_by_table
 #> |&nbsp;&nbsp; 8 cyl: n (%)     |12 (63)             |2 (15)              |
 
 # an equivalent call if you are using the tidyverse:
-summary_table(dplyr::group_by(mtcars, am), our_summaries)
+if (requireNamespace("dplyr", quietly = TRUE)) {
+  summary_table(dplyr::group_by(mtcars, am), our_summaries)
+
+  # To build a table with a column for the whole data set and each of the am
+  # levels
+  cbind(whole_table, grouped_by_table)
+
+  # Adding a caption for a LaTeX table
+  print(whole_table, caption = "Hello world", markup = "latex")
+
+  # A **warning** about grouped_df objects.
+  # If you use dplyr::group_by or
+  # dplyr::rowwise to manipulate a data set and fail to use dplyr::ungroup you
+  # might find a table that takes a long time to create and does not summarize the
+  # data as expected.  For example, let's build a data set with twenty subjects
+  # and injury severity scores for head and face injuries.  We'll clean the data
+  # by finding the max ISS score for each subject and then reporting summary
+  # statistics thereof.
+  set.seed(42)
+  dat <- data.frame(id = letters[1:20],
+                    head_iss = sample(1:6, 20, replace = TRUE, prob = 10 * (6:1)),
+                    face_iss = sample(1:6, 20, replace = TRUE, prob = 10 * (6:1)))
+  dat <- dplyr::group_by(dat, id)
+  dat <- dplyr::mutate(dat, iss = max(head_iss, face_iss))
+
+  iss_summary <-
+    list("Head ISS" =
+         list("min"    = ~ min(head_iss),
+              "median" = ~ median(head_iss),
+              "max"    = ~ max(head_iss)),
+         "Face ISS" =
+         list("min"    = ~ min(face_iss),
+              "median" = ~ median(face_iss),
+              "max"    = ~ max(face_iss)),
+         "Max ISS" =
+         list("min"    = ~ min(iss),
+              "median" = ~ median(iss),
+              "max"    = ~ max(iss)))
+
+  # Want: a table with one column for all subjects with nine rows divided up into
+  # three row groups.  However, the following call will create a table with 20
+  # columns, one for each subject because dat is a grouped_df
+  summary_table(dat, iss_summary)
+
+  # Ungroup the data.frame to get the correct output
+  summary_table(dplyr::ungroup(dat), iss_summary)
+}
 #> Warning: grouped_df detected. Setting `by` argument to
 #>   c('am')
-#> 
-#> 
-#> |                              |0 (N = 19)          |1 (N = 13)          |
-#> |:-----------------------------|:-------------------|:-------------------|
-#> |**Miles Per Gallon**          |&nbsp;&nbsp;        |&nbsp;&nbsp;        |
-#> |&nbsp;&nbsp; min              |10.4                |15                  |
-#> |&nbsp;&nbsp; mean             |17.1473684210526    |24.3923076923077    |
-#> |&nbsp;&nbsp; mean &plusmn; sd |17.15 &plusmn; 3.83 |24.39 &plusmn; 6.17 |
-#> |&nbsp;&nbsp; max              |24.4                |33.9                |
-#> |**Weight**                    |&nbsp;&nbsp;        |&nbsp;&nbsp;        |
-#> |&nbsp;&nbsp; median           |3.52                |2.32                |
-#> |**Cylinders**                 |&nbsp;&nbsp;        |&nbsp;&nbsp;        |
-#> |&nbsp;&nbsp; 4 cyl: n (%)     |3 (16)              |8 (62)              |
-#> |&nbsp;&nbsp; 6 cyl: n (%)     |4 (21)              |3 (23)              |
-#> |&nbsp;&nbsp; 8 cyl: n (%)     |12 (63)             |2 (15)              |
-
-# To build a table with a column for the whole data set and each of the am
-# levels
-cbind(whole_table, grouped_by_table)
-#> 
-#> 
-#> |                              |mtcars (N = 32)     |0 (N = 19)          |1 (N = 13)          |
-#> |:-----------------------------|:-------------------|:-------------------|:-------------------|
-#> |**Miles Per Gallon**          |&nbsp;&nbsp;        |&nbsp;&nbsp;        |&nbsp;&nbsp;        |
-#> |&nbsp;&nbsp; min              |10.4                |10.4                |15                  |
-#> |&nbsp;&nbsp; mean             |20.090625           |17.1473684210526    |24.3923076923077    |
-#> |&nbsp;&nbsp; mean &plusmn; sd |20.09 &plusmn; 6.03 |17.15 &plusmn; 3.83 |24.39 &plusmn; 6.17 |
-#> |&nbsp;&nbsp; max              |33.9                |24.4                |33.9                |
-#> |**Weight**                    |&nbsp;&nbsp;        |&nbsp;&nbsp;        |&nbsp;&nbsp;        |
-#> |&nbsp;&nbsp; median           |3.325               |3.52                |2.32                |
-#> |**Cylinders**                 |&nbsp;&nbsp;        |&nbsp;&nbsp;        |&nbsp;&nbsp;        |
-#> |&nbsp;&nbsp; 4 cyl: n (%)     |11 (34)             |3 (16)              |8 (62)              |
-#> |&nbsp;&nbsp; 6 cyl: n (%)     |7 (22)              |4 (21)              |3 (23)              |
-#> |&nbsp;&nbsp; 8 cyl: n (%)     |14 (44)             |12 (63)             |2 (15)              |
-
-# Adding a caption for a LaTeX table
-print(whole_table, caption = "Hello world", markup = "latex")
 #> 
 #> 
 #> Table: Hello world
@@ -294,61 +303,8 @@ print(whole_table, caption = "Hello world", markup = "latex")
 #> |&nbsp;&nbsp; 4 cyl: n (%)     |11 (34)             |
 #> |&nbsp;&nbsp; 6 cyl: n (%)     |7 (22)              |
 #> |&nbsp;&nbsp; 8 cyl: n (%)     |14 (44)             |
-
-# A **warning** about grouped_df objects.
-# If you use dplyr::group_by or
-# dplyr::rowwise to manipulate a data set and fail to use dplyr::ungroup you
-# might find a table that takes a long time to create and does not summarize the
-# data as expected.  For example, let's build a data set with twenty subjects
-# and injury severity scores for head and face injuries.  We'll clean the data
-# by finding the max ISS score for each subject and then reporting summary
-# statistics thereof.
-set.seed(42)
-dat <- data.frame(id = letters[1:20],
-                  head_iss = sample(1:6, 20, replace = TRUE, prob = 10 * (6:1)),
-                  face_iss = sample(1:6, 20, replace = TRUE, prob = 10 * (6:1)))
-dat <- dplyr::group_by(dat, id)
-dat <- dplyr::mutate(dat, iss = max(head_iss, face_iss))
-
-iss_summary <-
-  list("Head ISS" =
-       list("min"    = ~ min(head_iss),
-            "median" = ~ median(head_iss),
-            "max"    = ~ max(head_iss)),
-       "Face ISS" =
-       list("min"    = ~ min(face_iss),
-            "median" = ~ median(face_iss),
-            "max"    = ~ max(face_iss)),
-       "Max ISS" =
-       list("min"    = ~ min(iss),
-            "median" = ~ median(iss),
-            "max"    = ~ max(iss)))
-
-# Want: a table with one column for all subjects with nine rows divided up into
-# three row groups.  However, the following call will create a table with 20
-# columns, one for each subject because dat is a grouped_df
-summary_table(dat, iss_summary)
 #> Warning: grouped_df detected. Setting `by` argument to
 #>   c('id')
-#> 
-#> 
-#> |                    |a (N = 1)    |b (N = 1)    |c (N = 1)    |d (N = 1)    |e (N = 1)    |f (N = 1)    |g (N = 1)    |h (N = 1)    |i (N = 1)    |j (N = 1)    |k (N = 1)    |l (N = 1)    |m (N = 1)    |n (N = 1)    |o (N = 1)    |p (N = 1)    |q (N = 1)    |r (N = 1)    |s (N = 1)    |t (N = 1)    |
-#> |:-------------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|:------------|
-#> |**Head ISS**        |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |
-#> |&nbsp;&nbsp; min    |5            |5            |2            |4            |3            |2            |4            |1            |3            |3            |2            |4            |5            |1            |2            |5            |6            |1            |2            |3            |
-#> |&nbsp;&nbsp; median |5            |5            |2            |4            |3            |2            |4            |1            |3            |3            |2            |4            |5            |1            |2            |5            |6            |1            |2            |3            |
-#> |&nbsp;&nbsp; max    |5            |5            |2            |4            |3            |2            |4            |1            |3            |3            |2            |4            |5            |1            |2            |5            |6            |1            |2            |3            |
-#> |**Face ISS**        |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |
-#> |&nbsp;&nbsp; min    |5            |1            |6            |5            |1            |2            |2            |5            |2            |4            |4            |4            |2            |3            |1            |4            |1            |1            |5            |3            |
-#> |&nbsp;&nbsp; median |5            |1            |6            |5            |1            |2            |2            |5            |2            |4            |4            |4            |2            |3            |1            |4            |1            |1            |5            |3            |
-#> |&nbsp;&nbsp; max    |5            |1            |6            |5            |1            |2            |2            |5            |2            |4            |4            |4            |2            |3            |1            |4            |1            |1            |5            |3            |
-#> |**Max ISS**         |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |
-#> |&nbsp;&nbsp; min    |5            |5            |6            |5            |3            |2            |4            |5            |3            |4            |4            |4            |5            |3            |2            |5            |6            |1            |5            |3            |
-#> |&nbsp;&nbsp; median |5            |5            |6            |5            |3            |2            |4            |5            |3            |4            |4            |4            |5            |3            |2            |5            |6            |1            |5            |3            |
-#> |&nbsp;&nbsp; max    |5            |5            |6            |5            |3            |2            |4            |5            |3            |4            |4            |4            |5            |3            |2            |5            |6            |1            |5            |3            |
-
-# Ungroup the data.frame to get the correct output
-summary_table(dplyr::ungroup(dat), iss_summary)
 #> 
 #> 
 #> |                    |dplyr::ungroup(dat) (N = 20) |
@@ -365,7 +321,6 @@ summary_table(dplyr::ungroup(dat), iss_summary)
 #> |&nbsp;&nbsp; min    |1                            |
 #> |&nbsp;&nbsp; median |4                            |
 #> |&nbsp;&nbsp; max    |6                            |
-
 
 ################################################################################
 # The Default call will work with non-syntactically valid names and will
@@ -675,47 +630,47 @@ qsummary(temp[, c("cyl", "am", "vs")])
 #> $cyl
 #> $cyl$minimum
 #> ~qwraps2::frmt(min(na.omit(cyl)))
-#> <environment: 0x55de51497820>
+#> <environment: 0x556be899c388>
 #> 
 #> $cyl$`median (IQR)`
 #> ~qwraps2::median_iqr(na.omit(cyl))
-#> <environment: 0x55de51497820>
+#> <environment: 0x556be899c388>
 #> 
 #> $cyl$`mean (sd)`
 #> ~qwraps2::mean_sd(na.omit(cyl))
-#> <environment: 0x55de51497820>
+#> <environment: 0x556be899c388>
 #> 
 #> $cyl$maximum
 #> ~qwraps2::frmt(max(na.omit(cyl)))
-#> <environment: 0x55de51497820>
+#> <environment: 0x556be899c388>
 #> 
 #> $cyl$`Unknown/Missing`
 #> ~qwraps2::n_perc(is.na(cyl))
-#> <environment: 0x55de51497820>
+#> <environment: 0x556be899c388>
 #> 
 #> 
 #> $am
 #> $am$Automatic
 #> ~qwraps2::n_perc(na.omit(am) == "Automatic", digits = 0, show_symbol = FALSE)
-#> <environment: 0x55de51497820>
+#> <environment: 0x556be899c388>
 #> 
 #> $am$Manual
 #> ~qwraps2::n_perc(na.omit(am) == "Manual", digits = 0, show_symbol = FALSE)
-#> <environment: 0x55de51497820>
+#> <environment: 0x556be899c388>
 #> 
 #> $am$`Unknown/Missing`
 #> ~qwraps2::n_perc(is.na(am))
-#> <environment: 0x55de51497820>
+#> <environment: 0x556be899c388>
 #> 
 #> 
 #> $vs
 #> $vs[[1]]
 #> ~qwraps2::n_perc(na.omit(vs), digits = 0, show_symbol = FALSE)
-#> <environment: 0x55de51497820>
+#> <environment: 0x556be899c388>
 #> 
 #> $vs$`Unknown/Missing`
 #> ~qwraps2::n_perc(is.na(vs))
-#> <environment: 0x55de51497820>
+#> <environment: 0x556be899c388>
 #> 
 #> 
 summary_table(temp[, c("cyl", "am", "vs")])
@@ -787,20 +742,12 @@ our_summary2 <-
        )
 
 tab1 <- summary_table(mtcars, our_summary1)
-tab2 <- summary_table(dplyr::group_by(mtcars, am), our_summary1)
-#> Warning: grouped_df detected. Setting `by` argument to
-#>   c('am')
-tab3 <- summary_table(dplyr::group_by(mtcars, vs), our_summary1)
-#> Warning: grouped_df detected. Setting `by` argument to
-#>   c('vs')
+tab2 <- summary_table(mtcars, our_summary1, by = "am")
+tab3 <- summary_table(mtcars, our_summary1, by = "vs")
 
 tab4 <- summary_table(mtcars, our_summary2)
-tab5 <- summary_table(dplyr::group_by(mtcars, am), our_summary2)
-#> Warning: grouped_df detected. Setting `by` argument to
-#>   c('am')
-tab6 <- summary_table(dplyr::group_by(mtcars, vs), our_summary2)
-#> Warning: grouped_df detected. Setting `by` argument to
-#>   c('vs')
+tab5 <- summary_table(mtcars, our_summary2, by = "am")
+tab6 <- summary_table(mtcars, our_summary2, by = "vs")
 
 cbind(tab1, tab2, tab3)
 #> 
