@@ -18,6 +18,8 @@ devtools::load_all()
 # */
 library(qwraps2)
 packageVersion("qwraps2")
+has_survival <- requireNamespace("survival", quietly = TRUE)
+has_glmnet <- requireNamespace("glmnet", quietly = TRUE)
 
 #'
 #' There are several graphics generated within qwraps2.  The naming convention
@@ -153,13 +155,13 @@ qblandaltman(pefr_mini)
 #'
 #' # qkmplot: Kaplan Meier Plots
 #'
+#+ eval = has_survival, fig.width = 5
 # create a survfit object
 leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x, data = survival::aml)
 
 # base R km plot
 plot(leukemia.surv, conf.int = TRUE, lty = 2:3, col = 1:2)
 
-#+ fig.width = 5
 # qkmplot
 qkmplot(leukemia.surv, conf_int = TRUE)
 
@@ -168,15 +170,14 @@ qkmplot(leukemia.surv, conf_int = TRUE)
 {{ backtick(qkmplot_build_data_frame) }}
 #' can be used to generate a data.frame needed for building a KM plot.  This
 #' could be helpful for creating bespoke plots.
+#+ eval = has_survival, fig.width = 5
 leukemia_km_data <- qkmplot_build_data_frame(leukemia.surv)
 head(leukemia_km_data, 3)
-
-#+ fig.width = 5
 qkmplot(leukemia_km_data)
 
 #'
 #' Intercept only models are easy to plot too.
-#+ fig.width = 5
+#+ eval = has_survival, fig.width = 5
 intonly_fit <- survival::survfit(survival::Surv(time, status) ~ 1, data = survival::aml)
 plot(intonly_fit, conf.int = TRUE)
 qkmplot(intonly_fit, conf_int = TRUE)
@@ -220,7 +221,7 @@ mean(validating_set$spam)
 # */
 #'
 #'
-#' Train a few models:
+#' Train a few models.  Start with base R glm.
 logistic_model <-
   glm(
     spam ~ .
@@ -228,6 +229,9 @@ logistic_model <-
   , family = binomial()
   )
 
+#'
+#' Use glmnet to build a ridge and a lasso model
+#+ eval = has_glmnet
 ridge_model <-
   glmnet::cv.glmnet(
     y = training_set[, yidx]
@@ -253,6 +257,9 @@ validating_set$logistic_model_prediction <-
   , type = "response"
   )
 
+#'
+#'
+#+ eval = has_glmnet
 validating_set$ridge_model_prediction <-
   as.numeric(
     predict(
@@ -280,6 +287,9 @@ validating_set$lasso_model_prediction <-
 {{ backtick(confusion_matrix) }}
 #' makes this easy.
 cm1 <- confusion_matrix(spam ~ logistic_model_prediction, data = validating_set)
+
+#'
+#+ eval = has_glmnet
 cm2 <- confusion_matrix(spam ~ ridge_model_prediction, data = validating_set)
 cm3 <- confusion_matrix(spam ~ lasso_model_prediction, data = validating_set)
 
@@ -287,14 +297,17 @@ cm3 <- confusion_matrix(spam ~ lasso_model_prediction, data = validating_set)
 #' The ROC and PRC plots are ggplot objects and can be modified as you would any
 #' other ggplot object.
 qroc(cm1) + ggplot2::ggtitle("Logistic Model")
+#'
+#+ eval = has_glmnet
 qroc(cm2) + ggplot2::ggtitle("Ridge Regression Model")
 qroc(cm3) + ggplot2::ggtitle("LASSO Regression Model")
 
 #'
 #' Graphing all three curves in one image with AUROC in the legend:
+#+ eval = has_glmnet
 roc_plot_data <-
   rbind(
-      cbind(Model = paste("Logistic; AUROC =", frmt(cm1$auroc, 3)), cm1$cm_stats)
+      cbind(Model = paste("Logistic; AUROC =",  frmt(cm1$auroc, 3)), cm1$cm_stats)
     , cbind(Model = paste("Ridge; AUROC =",     frmt(cm2$auroc, 3)), cm2$cm_stats)
     , cbind(Model = paste("LASSO; AUROC =",     frmt(cm3$auroc, 3)), cm3$cm_stats)
     )
@@ -306,6 +319,9 @@ qroc(roc_plot_data) +
 #'
 #' Similar for PRC:
 qprc(cm1) + ggplot2::ggtitle("Logistic Model")
+
+#'
+#+ eval = has_glmnet
 qprc(cm2) + ggplot2::ggtitle("Ridge Regression Model")
 qprc(cm3) + ggplot2::ggtitle("LASSO Regression Model")
 
@@ -320,9 +336,6 @@ qprc(prc_plot_data) +
   ggplot2::aes(color = Model) +
   ggplot2::geom_hline(yintercept = cm1$prevalence) +
   ggplot2::theme(legend.position = "bottom")
-
-
-
 
 #'
 # /* ------------------------------------------------------------------------ */

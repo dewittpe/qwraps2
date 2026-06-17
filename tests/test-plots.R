@@ -25,8 +25,10 @@ e_qroc <- new.env()
 example("qroc", local = e_qroc, ask = FALSE)
 
 ################################################################################
-e_qkmp <- new.env()
-example("qkmplot", local = e_qkmp, ask = FALSE)
+if (requireNamespace("survival", quietly = TRUE)) {
+  e_qkmp <- new.env()
+  example("qkmplot", local = e_qkmp, ask = FALSE)
+}
 
 ################################################################################
 e_qba <- new.env()

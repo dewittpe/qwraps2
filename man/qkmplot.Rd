@@ -46,9 +46,10 @@ More details and examples for graphics within qwraps2 are in the
 vignette(\dQuote{qwraps2-graphics}, package = \dQuote{qwraps2})
 }
 \examples{
-if (require(survival)) {
+if (requireNamespace("survival", quietly = TRUE)) {
 
-  leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x, data = survival::aml)
+  leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x,
+                                     data = survival::aml)
 
   qkmplot(leukemia.surv, conf_int = TRUE)
 
@@ -61,7 +62,7 @@ if (require(survival)) {
   pbc_fit <-
     survival::survfit(
         formula = survival::Surv(time, status > 0) ~ trt
-      , data = pbc
+      , data = survival::pbc
       , subset = !is.na(trt)
     )
 
