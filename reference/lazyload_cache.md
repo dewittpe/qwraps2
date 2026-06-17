@@ -112,13 +112,13 @@ kenv <- new.env()
 knitr::knit(input = tmprmd, envir = kenv)
 #> 
 #> 
-#> processing file: /tmp/RtmphVydvY/llcache_eg/report1a055217c700Rmd
+#> processing file: /tmp/RtmpJiSDkw/llcache_eg/report1a5f649da084Rmd
 #> 1/4               
 #> 2/4 [first-chunk] 
 #> 3/4               
 #> 4/4 [second-chunk]
-#> output file: report1a055217c700Rmd.txt
-#> [1] "report1a055217c700Rmd.txt"
+#> output file: report1a5f649da084Rmd.txt
+#> [1] "report1a5f649da084Rmd.txt"
 
 # The objects defined in the .Rmd file are now in kenv
 ls(envir = kenv)
@@ -134,8 +134,8 @@ list.files(path = tmpdir, recursive = TRUE)
 #> [5] "cache/second-chunk_8e4f33e2310468ad8f108c019d707830.RData"
 #> [6] "cache/second-chunk_8e4f33e2310468ad8f108c019d707830.rdb"  
 #> [7] "cache/second-chunk_8e4f33e2310468ad8f108c019d707830.rdx"  
-#> [8] "report1a055217c700Rmd"                                    
-#> [9] "report1a055217c700Rmd.txt"                                
+#> [8] "report1a5f649da084Rmd"                                    
+#> [9] "report1a5f649da084Rmd.txt"                                
 
 # create three more environment, and load only the first chunk into the
 # first, and the second chunk into the second, and then load all of the
@@ -147,16 +147,16 @@ env3 <- new.env()
 lazyload_cache_labels(labels = "first-chunk",
                       path = paste0(tmpdir, "/cache"),
                       envir = env1)
-#> Lazyloading /tmp/RtmphVydvY/llcache_eg/cache/first-chunk_4e3140196fb03528521fad11269d001c
+#> Lazyloading /tmp/RtmpJiSDkw/llcache_eg/cache/first-chunk_4e3140196fb03528521fad11269d001c
 
 lazyload_cache_labels(labels = "second-chunk",
                       path = paste0(tmpdir, "/cache"),
                       envir = env2)
-#> Lazyloading /tmp/RtmphVydvY/llcache_eg/cache/second-chunk_8e4f33e2310468ad8f108c019d707830
+#> Lazyloading /tmp/RtmpJiSDkw/llcache_eg/cache/second-chunk_8e4f33e2310468ad8f108c019d707830
 
 lazyload_cache_dir(path = paste0(tmpdir, "/cache"), envir = env3)
-#> Lazyloading: /tmp/RtmphVydvY/llcache_eg/cache/first-chunk
-#> Lazyloading: /tmp/RtmphVydvY/llcache_eg/cache/second-chunk
+#> Lazyloading: /tmp/RtmpJiSDkw/llcache_eg/cache/first-chunk
+#> Lazyloading: /tmp/RtmpJiSDkw/llcache_eg/cache/second-chunk
 
 # Look at the contents of each of these environments
 ls(envir = kenv)

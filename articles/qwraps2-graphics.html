@@ -70,10 +70,6 @@ DeWitt</h4>
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dewittpe/qwraps2/" class="external-link">qwraps2</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"qwraps2"</span><span class="op">)</span></span>
-<span><span class="co">## [1] '0.6.3'</span></span></code></pre></div>
 <p>There are several graphics generated within qwraps2. The naming
 convention for the “quick” plots was inspired by the (deprecated) <em><a href="https://cran.r-project.org/package=ggplot2" class="external-link">ggplot2</a></em>
 function <code>qplot</code>. The development, flexibility, and
@@ -83,7 +79,7 @@ provided.</p>
 <h2 id="qacf-autocorrelation-plots">qacf: Autocorrelation Plots<a class="anchor" aria-label="anchor" href="#qacf-autocorrelation-plots"></a>
 </h2>
 <p>Generate an example data set.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
 <span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">250</span></span>
 <span><span class="va">x1</span> <span class="op">&lt;-</span> <span class="va">x2</span> <span class="op">&lt;-</span> <span class="va">x3</span> <span class="op">&lt;-</span> <span class="va">x4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a></span><span class="op">(</span><span class="st">'numeric'</span>, length <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span>
@@ -108,25 +104,25 @@ provided.</p>
 <span></span>
 <span><span class="co"># Base acf plot for one variable</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/acf.html" class="external-link">acf</a></span><span class="op">(</span><span class="va">testdf</span><span class="op">$</span><span class="va">x1</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="" width="700"></p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-1-1.png" class="r-plt" alt="" width="700"></p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># qacf plot for one variable</span></span>
 <span><span class="fu"><a href="../reference/qacf.html">qacf</a></span><span class="op">(</span><span class="va">testdf</span><span class="op">$</span><span class="va">x1</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-2-2.png" class="r-plt" alt="" width="700"></p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-1-2.png" class="r-plt" alt="" width="700"></p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/qacf.html">qacf</a></span><span class="op">(</span><span class="va">testdf</span><span class="op">$</span><span class="va">x1</span>, show_sig <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-2-3.png" class="r-plt" alt="" width="700"></p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-1-3.png" class="r-plt" alt="" width="700"></p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># more than one variable</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/acf.html" class="external-link">acf</a></span><span class="op">(</span><span class="va">testdf</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="480"></p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="" width="480"></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/qacf.html">qacf</a></span><span class="op">(</span><span class="va">testdf</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-3-2.png" class="r-plt" alt="" width="480"></p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-2-2.png" class="r-plt" alt="" width="480"></p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/qacf.html">qacf</a></span><span class="op">(</span><span class="va">testdf</span>, show_sig <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-3-3.png" class="r-plt" alt="" width="480"></p>
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-2-3.png" class="r-plt" alt="" width="480"></p>
 <div class="section level3">
 <h3 id="tips-and-tricks">Tips and tricks<a class="anchor" aria-label="anchor" href="#tips-and-tricks"></a>
 </h3>
@@ -134,7 +130,7 @@ provided.</p>
 <code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">stats::acf</a></code> to produce the statistics needed for the plot.
 If you want to get at the data itself to build your own acf plot you can
 extract the data frame from the qacf return:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">acf_plot_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qacf.html">qacf</a></span><span class="op">(</span><span class="va">testdf</span><span class="op">)</span><span class="op">$</span><span class="va">data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">acf_plot_data</span><span class="op">)</span></span>
 <span><span class="co">##   lag variable      value significant facets</span></span>
@@ -158,13 +154,13 @@ examples we use the provided pefr data set which was transcribed from
 details on that data set.</p>
 <p>The following replicates the figures in <span class="citation">[@bland1986statistical]</span>.</p>
 <p>Using the first measurement only:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pefr_m1</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="st">"Large"</span> <span class="op">=</span> <span class="va">pefr</span><span class="op">[</span><span class="va">pefr</span><span class="op">$</span><span class="va">measurement</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="va">pefr</span><span class="op">$</span><span class="va">meter</span> <span class="op">==</span> <span class="st">"Wright peak flow meter"</span>, <span class="st">"pefr"</span><span class="op">]</span>,</span>
 <span>        <span class="st">"Mini"</span>  <span class="op">=</span> <span class="va">pefr</span><span class="op">[</span><span class="va">pefr</span><span class="op">$</span><span class="va">measurement</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="va">pefr</span><span class="op">$</span><span class="va">meter</span> <span class="op">==</span> <span class="st">"Mini Wright peak flow meter"</span>, <span class="st">"pefr"</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p>A standard x-y style plot and a correlation coefficient suggests that
 the two meters provide reasonably similar results.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">pefr_m1</span><span class="op">)</span></span>
 <span><span class="co">##           Large      Mini</span></span>
 <span><span class="co">## Large 1.0000000 0.9432794</span></span>
@@ -178,7 +174,7 @@ the two meters provide reasonably similar results.</p>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html" class="external-link">xlim</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">800</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html" class="external-link">ylim</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">800</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_abline</a></span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="700"></p>
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="700"></p>
 <p>However, for many reasons, the above is misleading. One simple note:
 correlation is not a metric for agreement, i.e., perfect agreement would
 be shown if all the data points fell on the line of equality whereas
@@ -186,11 +182,11 @@ perfect correlation occurs when the data points are simply
 co-linear.</p>
 <p>The Bland Altman plot plots the average value on the x-axis and the
 difference in the measurements on the y-axis:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># default plot</span></span>
 <span><span class="fu"><a href="../reference/qblandaltman.html">qblandaltman</a></span><span class="op">(</span><span class="va">pefr_m1</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="700"></p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="700"></p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># modified plot</span></span>
 <span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/get_last_plot.html" class="external-link">last_plot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -198,7 +194,7 @@ difference in the measurements on the y-axis:</p>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html" class="external-link">ylim</a></span><span class="op">(</span><span class="op">-</span><span class="fl">100</span>, <span class="fl">100</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Average of two meters"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Difference in the measurements"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-7-2.png" class="r-plt" alt="" width="700"></p>
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-6-2.png" class="r-plt" alt="" width="700"></p>
 <p>There is no distinct relationship between the differences and the
 average, but the difference in the measurements between the two meters
 was observed to range between -73 and 81 liters per minute. Such a
@@ -206,51 +202,51 @@ discrepancy between the meters is not observable from the simple x-y
 plot.</p>
 <p>Reliability, or repeatability, of measurements can also be
 investigated with a Bland Altman plot.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pefr_mini</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>m1 <span class="op">=</span> <span class="va">pefr</span><span class="op">[</span><span class="va">pefr</span><span class="op">$</span><span class="va">measurement</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="va">pefr</span><span class="op">$</span><span class="va">meter</span> <span class="op">==</span> <span class="st">"Mini Wright peak flow meter"</span>, <span class="st">"pefr"</span><span class="op">]</span>,</span>
 <span>        m2 <span class="op">=</span> <span class="va">pefr</span><span class="op">[</span><span class="va">pefr</span><span class="op">$</span><span class="va">measurement</span> <span class="op">==</span> <span class="fl">2</span> <span class="op">&amp;</span> <span class="va">pefr</span><span class="op">$</span><span class="va">meter</span> <span class="op">==</span> <span class="st">"Mini Wright peak flow meter"</span>, <span class="st">"pefr"</span><span class="op">]</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/qblandaltman.html">qblandaltman</a></span><span class="op">(</span><span class="va">pefr_mini</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="700"></p>
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="qkmplot-kaplan-meier-plots">qkmplot: Kaplan Meier Plots<a class="anchor" aria-label="anchor" href="#qkmplot-kaplan-meier-plots"></a>
 </h2>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create a survfit object</span></span>
 <span><span class="va">leukemia.surv</span> <span class="op">&lt;-</span> <span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/survfit.html" class="external-link">survfit</a></span><span class="op">(</span><span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span>, data <span class="op">=</span> <span class="fu">survival</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/survival/man/aml.html" class="external-link">aml</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># base R km plot</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">leukemia.surv</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">3</span>, col <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" alt="" width="700"></p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="700"></p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># qkmplot</span></span>
 <span><span class="fu"><a href="../reference/qkmplot.html">qkmplot</a></span><span class="op">(</span><span class="va">leukemia.surv</span>, conf_int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">## Warning: Removed 1 row containing non-finite outside the scale range</span></span>
 <span><span class="co">## (`stat_step_ribbon()`).</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="480"></p>
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" alt="" width="480"></p>
 <p>The function <code>qkmplot_build_data_frame</code> can be used to
 generate a data.frame needed for building a KM plot. This could be
 helpful for creating bespoke plots.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">leukemia_km_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qkmplot.html">qkmplot_build_data_frame</a></span><span class="op">(</span><span class="va">leukemia.surv</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">leukemia_km_data</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">##   time n.risk n.event n.censor      surv upper     lower       strata</span></span>
 <span><span class="co">## 2    0     11       0        0 1.0000000     1 1.0000000 x=Maintained</span></span>
 <span><span class="co">## 3    9     11       1        0 0.9090909     1 0.7541338 x=Maintained</span></span>
 <span><span class="co">## 4   13     10       1        1 0.8181818     1 0.6192490 x=Maintained</span></span></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/qkmplot.html">qkmplot</a></span><span class="op">(</span><span class="va">leukemia_km_data</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="480"></p>
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="480"></p>
 <p>Intercept only models are easy to plot too.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">intonly_fit</span> <span class="op">&lt;-</span> <span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/survfit.html" class="external-link">survfit</a></span><span class="op">(</span><span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span> <span class="op">~</span> <span class="fl">1</span>, data <span class="op">=</span> <span class="fu">survival</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/survival/man/aml.html" class="external-link">aml</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">intonly_fit</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="480"></p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="480"></p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/qkmplot.html">qkmplot</a></span><span class="op">(</span><span class="va">intonly_fit</span>, conf_int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-13-2.png" class="r-plt" alt="" width="480"></p>
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-12-2.png" class="r-plt" alt="" width="480"></p>
 </div>
 <div class="section level2">
 <h2 id="qroc-and-qprc-receiver-operating-characteristic-curve-and-precision-recall-curve">qroc and qprc: Receiver Operating Characteristic Curve and
@@ -267,7 +263,7 @@ can be found in the
 <code><a href="../articles/qwraps2-data-sets.html">vignette("qwraps2-data-sets", package = "qwraps2")</a></code></p>
 <p>Start by defining training and validation splits of the spambase
 data</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
 <span><span class="va">tidx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">spambase</span><span class="op">)</span><span class="op">)</span> <span class="op">&lt;=</span> <span class="fl">0.80</span></span>
 <span><span class="va">xidx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">spambase</span><span class="op">)</span> <span class="op">!=</span> <span class="st">"spam"</span><span class="op">)</span></span>
@@ -275,7 +271,7 @@ data</p>
 <span><span class="va">training_set</span>   <span class="op">&lt;-</span> <span class="va">spambase</span><span class="op">[</span><span class="va">tidx</span>, <span class="op">]</span></span>
 <span><span class="va">validating_set</span> <span class="op">&lt;-</span> <span class="va">spambase</span><span class="op">[</span><span class="op">!</span><span class="va">tidx</span>, <span class="op">]</span></span></code></pre></div>
 <p>Train a few models:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">logistic_model</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span></span>
 <span>    <span class="va">spam</span> <span class="op">~</span> <span class="va">.</span></span>
@@ -300,7 +296,7 @@ data</p>
 <span>  , alpha <span class="op">=</span> <span class="fl">1</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p>Generate the predicted values on the validation set:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">validating_set</span><span class="op">$</span><span class="va">logistic_model_prediction</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span></span>
 <span>    <span class="va">logistic_model</span></span>
@@ -330,23 +326,23 @@ data</p>
 <p>To build ROC and/or PRC plots start by building the confusion matrix
 for each model. The qwraps2 function <code>confusion_matrix</code> makes
 this easy.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/confusion_matrix.html">confusion_matrix</a></span><span class="op">(</span><span class="va">spam</span> <span class="op">~</span> <span class="va">logistic_model_prediction</span>, data <span class="op">=</span> <span class="va">validating_set</span><span class="op">)</span></span>
 <span><span class="va">cm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/confusion_matrix.html">confusion_matrix</a></span><span class="op">(</span><span class="va">spam</span> <span class="op">~</span> <span class="va">ridge_model_prediction</span>, data <span class="op">=</span> <span class="va">validating_set</span><span class="op">)</span></span>
 <span><span class="va">cm3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/confusion_matrix.html">confusion_matrix</a></span><span class="op">(</span><span class="va">spam</span> <span class="op">~</span> <span class="va">lasso_model_prediction</span>, data <span class="op">=</span> <span class="va">validating_set</span><span class="op">)</span></span></code></pre></div>
 <p>The ROC and PRC plots are ggplot objects and can be modified as you
 would any other ggplot object.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/qroc-qprc.html">qroc</a></span><span class="op">(</span><span class="va">cm1</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Logistic Model"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-18-1.png" class="r-plt" alt="" width="700"></p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-17-1.png" class="r-plt" alt="" width="700"></p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/qroc-qprc.html">qroc</a></span><span class="op">(</span><span class="va">cm2</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Ridge Regression Model"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-18-2.png" class="r-plt" alt="" width="700"></p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-17-2.png" class="r-plt" alt="" width="700"></p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/qroc-qprc.html">qroc</a></span><span class="op">(</span><span class="va">cm3</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"LASSO Regression Model"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-18-3.png" class="r-plt" alt="" width="700"></p>
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-17-3.png" class="r-plt" alt="" width="700"></p>
 <p>Graphing all three curves in one image with AUROC in the legend:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">roc_plot_data</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span></span>
 <span>      <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>Model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Logistic; AUROC ="</span>, <span class="fu"><a href="../reference/frmt.html">frmt</a></span><span class="op">(</span><span class="va">cm1</span><span class="op">$</span><span class="va">auroc</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>, <span class="va">cm1</span><span class="op">$</span><span class="va">cm_stats</span><span class="op">)</span></span>
@@ -357,18 +353,18 @@ would any other ggplot object.</p>
 <span><span class="fu"><a href="../reference/qroc-qprc.html">qroc</a></span><span class="op">(</span><span class="va">roc_plot_data</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">Model</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-19-1.png" class="r-plt" alt="" width="700"></p>
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-18-1.png" class="r-plt" alt="" width="700"></p>
 <p>Similar for PRC:</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/qroc-qprc.html">qprc</a></span><span class="op">(</span><span class="va">cm1</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Logistic Model"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-20-1.png" class="r-plt" alt="" width="700"></p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-19-1.png" class="r-plt" alt="" width="700"></p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/qroc-qprc.html">qprc</a></span><span class="op">(</span><span class="va">cm2</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Ridge Regression Model"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-20-2.png" class="r-plt" alt="" width="700"></p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-19-2.png" class="r-plt" alt="" width="700"></p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/qroc-qprc.html">qprc</a></span><span class="op">(</span><span class="va">cm3</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"LASSO Regression Model"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-20-3.png" class="r-plt" alt="" width="700"></p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-19-3.png" class="r-plt" alt="" width="700"></p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">prc_plot_data</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span></span>
@@ -381,7 +377,7 @@ would any other ggplot object.</p>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">Model</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="va">cm1</span><span class="op">$</span><span class="va">prevalence</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-20-4.png" class="r-plt" alt="" width="700"></p>
+<p><img src="qwraps2-graphics_files/figure-html/unnamed-chunk-19-4.png" class="r-plt" alt="" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
@@ -393,7 +389,7 @@ would any other ggplot object.</p>
 <div class="section level2">
 <h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">## R version 4.6.0 (2026-04-24)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>

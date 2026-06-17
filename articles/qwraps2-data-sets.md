@@ -4,8 +4,9 @@
 
 library(qwraps2)
 packageVersion("qwraps2")
-## [1] '0.6.3'
 ```
+
+    ## [1] '0.6.3'
 
 ## mtcars2
 
@@ -26,19 +27,20 @@ Starting with the original mtcars:
 
 mtcars2 <- mtcars
 str(mtcars2)
-## 'data.frame':    32 obs. of  11 variables:
-##  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
-##  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
-##  $ disp: num  160 160 108 258 360 ...
-##  $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
-##  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
-##  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
-##  $ qsec: num  16.5 17 18.6 19.4 17 ...
-##  $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
-##  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
-##  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
-##  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...
 ```
+
+    ## 'data.frame':    32 obs. of  11 variables:
+    ##  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+    ##  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
+    ##  $ disp: num  160 160 108 258 360 ...
+    ##  $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+    ##  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+    ##  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+    ##  $ qsec: num  16.5 17 18.6 19.4 17 ...
+    ##  $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
+    ##  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
+    ##  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
+    ##  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...
 
 The cyl column provides the number of cylinders in the engine of the
 automobiles. We will use two additional versions of this information,
@@ -132,27 +134,28 @@ the variables tell us the same information, but in different formats.
 ``` r
 
 str(mtcars2)
-## 'data.frame':    32 obs. of  19 variables:
-##  $ make         : chr  "Mazda" "Mazda" "Datsun" "Hornet" ...
-##  $ model        : chr  "RX4" "RX4 Wag" "710" "4 Drive" ...
-##  $ mpg          : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
-##  $ disp         : num  160 160 108 258 360 ...
-##  $ hp           : num  110 110 93 110 175 105 245 62 95 123 ...
-##  $ drat         : num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
-##  $ wt           : num  2.62 2.88 2.32 3.21 3.44 ...
-##  $ qsec         : num  16.5 17 18.6 19.4 17 ...
-##  $ cyl          : num  6 6 4 6 8 6 8 4 4 6 ...
-##  $ cyl_character: chr  "6 cylinders" "6 cylinders" "4 cylinders" "6 cylinders" ...
-##  $ cyl_factor   : Factor w/ 3 levels "6 cylinders",..: 1 1 2 1 3 1 3 2 2 1 ...
-##  $ vs           : num  0 0 1 1 0 1 0 1 1 1 ...
-##  $ engine       : Factor w/ 2 levels "V-shaped","straight": 1 1 2 2 1 2 1 2 2 2 ...
-##  $ am           : num  1 1 1 0 0 0 0 0 0 0 ...
-##  $ transmission : Factor w/ 2 levels "Automatic","Manual": 2 2 2 1 1 1 1 1 1 1 ...
-##  $ gear         : num  4 4 4 3 3 3 3 4 4 4 ...
-##  $ gear_factor  : Factor w/ 3 levels "3 forward gears",..: 2 2 2 1 1 1 1 2 2 2 ...
-##  $ carb         : num  4 4 1 1 2 1 4 2 2 4 ...
-##  $ test_date    : POSIXct, format: "1974-01-05" "1974-01-07" ...
 ```
+
+    ## 'data.frame':    32 obs. of  19 variables:
+    ##  $ make         : chr  "Mazda" "Mazda" "Datsun" "Hornet" ...
+    ##  $ model        : chr  "RX4" "RX4 Wag" "710" "4 Drive" ...
+    ##  $ mpg          : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+    ##  $ disp         : num  160 160 108 258 360 ...
+    ##  $ hp           : num  110 110 93 110 175 105 245 62 95 123 ...
+    ##  $ drat         : num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+    ##  $ wt           : num  2.62 2.88 2.32 3.21 3.44 ...
+    ##  $ qsec         : num  16.5 17 18.6 19.4 17 ...
+    ##  $ cyl          : num  6 6 4 6 8 6 8 4 4 6 ...
+    ##  $ cyl_character: chr  "6 cylinders" "6 cylinders" "4 cylinders" "6 cylinders" ...
+    ##  $ cyl_factor   : Factor w/ 3 levels "6 cylinders",..: 1 1 2 1 3 1 3 2 2 1 ...
+    ##  $ vs           : num  0 0 1 1 0 1 0 1 1 1 ...
+    ##  $ engine       : Factor w/ 2 levels "V-shaped","straight": 1 1 2 2 1 2 1 2 2 2 ...
+    ##  $ am           : num  1 1 1 0 0 0 0 0 0 0 ...
+    ##  $ transmission : Factor w/ 2 levels "Automatic","Manual": 2 2 2 1 1 1 1 1 1 1 ...
+    ##  $ gear         : num  4 4 4 3 3 3 3 4 4 4 ...
+    ##  $ gear_factor  : Factor w/ 3 levels "3 forward gears",..: 2 2 2 1 1 1 1 2 2 2 ...
+    ##  $ carb         : num  4 4 1 1 2 1 4 2 2 4 ...
+    ##  $ test_date    : POSIXct, format: "1974-01-05" "1974-01-07" ...
 
 | Element | Name | Description |
 |---:|:---|:---|
@@ -235,14 +238,15 @@ pefr <-
 pefr$pefr <- do.call(c, pefr_table[, 2:5])
 
 head(pefr)
-##   subject measurement                  meter pefr
-## 1       1           1 Wright peak flow meter  494
-## 2       2           1 Wright peak flow meter  395
-## 3       3           1 Wright peak flow meter  516
-## 4       4           1 Wright peak flow meter  434
-## 5       5           1 Wright peak flow meter  476
-## 6       6           1 Wright peak flow meter  557
 ```
+
+    ##   subject measurement                  meter pefr
+    ## 1       1           1 Wright peak flow meter  494
+    ## 2       2           1 Wright peak flow meter  395
+    ## 3       3           1 Wright peak flow meter  516
+    ## 4       4           1 Wright peak flow meter  434
+    ## 5       5           1 Wright peak flow meter  476
+    ## 6       6           1 Wright peak flow meter  557
 
 See
 [`vignette("qwraps2-graphics", package = "qwraps2")`](http://www.peteredewitt.com/qwraps2/articles/qwraps2-graphics.md)
@@ -259,8 +263,9 @@ machine at:
 ``` r
 
 system.file("spambase", package = "qwraps2")
-## [1] "/home/runner/work/_temp/Library/qwraps2/spambase"
 ```
+
+    ## [1] "/home/runner/work/_temp/Library/qwraps2/spambase"
 
 The data set `spambase` was generated thusly:
 
@@ -299,8 +304,9 @@ There are 4,601 rows of data with 57 predictors for the binary outcome
 ``` r
 
 n_perc(spambase$spam) # count and percent of spam messages
-## [1] "1,813 (39.40\\%)"
 ```
+
+    ## [1] "1,813 (39.40\\%)"
 
 ## References
 
@@ -319,35 +325,36 @@ Learning Repository.
 ``` r
 
 sessionInfo()
-## R version 4.6.0 (2026-04-24)
-## Platform: x86_64-pc-linux-gnu
-## Running under: Ubuntu 24.04.4 LTS
-## 
-## Matrix products: default
-## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
-## LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0
-## 
-## locale:
-##  [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
-##  [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   
-##  [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          
-## [10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   
-## 
-## time zone: UTC
-## tzcode source: system (glibc)
-## 
-## attached base packages:
-## [1] stats     graphics  grDevices utils     datasets  methods   base     
-## 
-## other attached packages:
-## [1] qwraps2_0.6.3
-## 
-## loaded via a namespace (and not attached):
-##  [1] digest_0.6.39     desc_1.4.3        R6_2.6.1          fastmap_1.2.0    
-##  [5] xfun_0.58         cachem_1.1.0      knitr_1.51        htmltools_0.5.9  
-##  [9] rmarkdown_2.31    lifecycle_1.0.5   cli_3.6.6         sass_0.4.10      
-## [13] pkgdown_2.2.0     textshaping_1.0.5 jquerylib_0.1.4   systemfonts_1.3.2
-## [17] compiler_4.6.0    tools_4.6.0       ragg_1.5.2        bslib_0.11.0     
-## [21] evaluate_1.0.5    Rcpp_1.1.1-1.1    yaml_2.3.12       otel_0.2.0       
-## [25] jsonlite_2.0.0    rlang_1.2.0       fs_2.1.0          htmlwidgets_1.6.4
 ```
+
+    ## R version 4.6.0 (2026-04-24)
+    ## Platform: x86_64-pc-linux-gnu
+    ## Running under: Ubuntu 24.04.4 LTS
+    ## 
+    ## Matrix products: default
+    ## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
+    ## LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0
+    ## 
+    ## locale:
+    ##  [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
+    ##  [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   
+    ##  [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          
+    ## [10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   
+    ## 
+    ## time zone: UTC
+    ## tzcode source: system (glibc)
+    ## 
+    ## attached base packages:
+    ## [1] stats     graphics  grDevices utils     datasets  methods   base     
+    ## 
+    ## other attached packages:
+    ## [1] qwraps2_0.6.3
+    ## 
+    ## loaded via a namespace (and not attached):
+    ##  [1] digest_0.6.39     desc_1.4.3        R6_2.6.1          fastmap_1.2.0    
+    ##  [5] xfun_0.58         cachem_1.1.0      knitr_1.51        htmltools_0.5.9  
+    ##  [9] rmarkdown_2.31    lifecycle_1.0.5   cli_3.6.6         sass_0.4.10      
+    ## [13] pkgdown_2.2.0     textshaping_1.0.5 jquerylib_0.1.4   systemfonts_1.3.2
+    ## [17] compiler_4.6.0    tools_4.6.0       ragg_1.5.2        bslib_0.11.0     
+    ## [21] evaluate_1.0.5    Rcpp_1.1.1-1.1    yaml_2.3.12       otel_0.2.0       
+    ## [25] jsonlite_2.0.0    rlang_1.2.0       fs_2.1.0          htmlwidgets_1.6.4
