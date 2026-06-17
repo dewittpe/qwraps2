@@ -56,9 +56,10 @@ vignette(“qwraps2-graphics”, package = “qwraps2”)
 ## Examples
 
 ``` r
-if (require(survival)) {
+if (requireNamespace("survival", quietly = TRUE)) {
 
-  leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x, data = survival::aml)
+  leukemia.surv <- survival::survfit(survival::Surv(time, status) ~ x,
+                                     data = survival::aml)
 
   qkmplot(leukemia.surv, conf_int = TRUE)
 
@@ -71,7 +72,7 @@ if (require(survival)) {
   pbc_fit <-
     survival::survfit(
         formula = survival::Surv(time, status > 0) ~ trt
-      , data = pbc
+      , data = survival::pbc
       , subset = !is.na(trt)
     )
 
@@ -81,7 +82,6 @@ if (require(survival)) {
   qrmst(pbc_fit)
   qrmst(pbc_fit)
 }
-#> Loading required package: survival
 #>       strata     rmst     rmtl  rmst.se  tau
 #> trt=1  trt=1 2755.835 1767.165 138.3484 4523
 #> trt=2  trt=2 2811.100 1711.900 142.7538 4523

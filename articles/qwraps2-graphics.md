@@ -205,13 +205,14 @@ plot(leukemia.surv, conf.int = TRUE, lty = 2:3, col = 1:2)
 
 ``` r
 
+
 # qkmplot
 qkmplot(leukemia.surv, conf_int = TRUE)
 ## Warning: Removed 1 row containing non-finite outside the scale range
 ## (`stat_step_ribbon()`).
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-9-1.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-8-2.png)
 
 The function `qkmplot_build_data_frame` can be used to generate a
 data.frame needed for building a KM plot. This could be helpful for
@@ -225,14 +226,10 @@ head(leukemia_km_data, 3)
 ## 2    0     11       0        0 1.0000000     1 1.0000000 x=Maintained
 ## 3    9     11       1        0 0.9090909     1 0.7541338 x=Maintained
 ## 4   13     10       1        1 0.8181818     1 0.6192490 x=Maintained
-```
-
-``` r
-
 qkmplot(leukemia_km_data)
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-11-1.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-9-1.png)
 
 Intercept only models are easy to plot too.
 
@@ -242,14 +239,14 @@ intonly_fit <- survival::survfit(survival::Surv(time, status) ~ 1, data = surviv
 plot(intonly_fit, conf.int = TRUE)
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-12-1.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-10-1.png)
 
 ``` r
 
 qkmplot(intonly_fit, conf_int = TRUE)
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-12-2.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-10-2.png)
 
 ## qroc and qprc: Receiver Operating Characteristic Curve and Precision-Recall Curve
 
@@ -275,7 +272,7 @@ training_set   <- spambase[tidx, ]
 validating_set <- spambase[!tidx, ]
 ```
 
-Train a few models:
+Train a few models. Start with base R glm.
 
 ``` r
 
@@ -286,6 +283,11 @@ logistic_model <-
   , family = binomial()
   )
 ## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+Use glmnet to build a ridge and a lasso model
+
+``` r
 
 ridge_model <-
   glmnet::cv.glmnet(
@@ -314,6 +316,9 @@ validating_set$logistic_model_prediction <-
   , newdata = validating_set
   , type = "response"
   )
+```
+
+``` r
 
 validating_set$ridge_model_prediction <-
   as.numeric(
@@ -342,6 +347,10 @@ each model. The qwraps2 function `confusion_matrix` makes this easy.
 ``` r
 
 cm1 <- confusion_matrix(spam ~ logistic_model_prediction, data = validating_set)
+```
+
+``` r
+
 cm2 <- confusion_matrix(spam ~ ridge_model_prediction, data = validating_set)
 cm3 <- confusion_matrix(spam ~ lasso_model_prediction, data = validating_set)
 ```
@@ -354,21 +363,21 @@ would any other ggplot object.
 qroc(cm1) + ggplot2::ggtitle("Logistic Model")
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-17-1.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-18-1.png)
 
 ``` r
 
 qroc(cm2) + ggplot2::ggtitle("Ridge Regression Model")
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-17-2.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-19-1.png)
 
 ``` r
 
 qroc(cm3) + ggplot2::ggtitle("LASSO Regression Model")
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-17-3.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-19-2.png)
 
 Graphing all three curves in one image with AUROC in the legend:
 
@@ -376,7 +385,7 @@ Graphing all three curves in one image with AUROC in the legend:
 
 roc_plot_data <-
   rbind(
-      cbind(Model = paste("Logistic; AUROC =", frmt(cm1$auroc, 3)), cm1$cm_stats)
+      cbind(Model = paste("Logistic; AUROC =",  frmt(cm1$auroc, 3)), cm1$cm_stats)
     , cbind(Model = paste("Ridge; AUROC =",     frmt(cm2$auroc, 3)), cm2$cm_stats)
     , cbind(Model = paste("LASSO; AUROC =",     frmt(cm3$auroc, 3)), cm3$cm_stats)
     )
@@ -386,7 +395,7 @@ qroc(roc_plot_data) +
   ggplot2::theme(legend.position = "bottom")
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-18-1.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-20-1.png)
 
 Similar for PRC:
 
@@ -395,21 +404,21 @@ Similar for PRC:
 qprc(cm1) + ggplot2::ggtitle("Logistic Model")
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-19-1.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-21-1.png)
 
 ``` r
 
 qprc(cm2) + ggplot2::ggtitle("Ridge Regression Model")
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-19-2.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-22-1.png)
 
 ``` r
 
 qprc(cm3) + ggplot2::ggtitle("LASSO Regression Model")
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-19-3.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-22-2.png)
 
 ``` r
 
@@ -427,7 +436,7 @@ qprc(prc_plot_data) +
   ggplot2::theme(legend.position = "bottom")
 ```
 
-![](qwraps2-graphics_files/figure-html/unnamed-chunk-19-4.png)
+![](qwraps2-graphics_files/figure-html/unnamed-chunk-22-3.png)
 
 ## References
 
@@ -460,18 +469,18 @@ sessionInfo()
 ## [1] qwraps2_0.6.3
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] glmnet_5.0         Matrix_1.7-5       gtable_0.3.6       jsonlite_2.0.0    
+##  [1] Matrix_1.7-5       glmnet_5.0         gtable_0.3.6       jsonlite_2.0.0    
 ##  [5] dplyr_1.2.1        compiler_4.6.0     tidyselect_1.2.1   Rcpp_1.1.1-1.1    
 ##  [9] jquerylib_0.1.4    splines_4.6.0      systemfonts_1.3.2  scales_1.4.0      
 ## [13] textshaping_1.0.5  yaml_2.3.12        fastmap_1.2.0      lattice_0.22-9    
 ## [17] ggplot2_4.0.3      R6_2.6.1           labeling_0.4.3     generics_0.1.4    
 ## [21] shape_1.4.6.1      knitr_1.51         iterators_1.0.14   htmlwidgets_1.6.4 
-## [25] tibble_3.3.1       desc_1.4.3         bslib_0.11.0       pillar_1.11.1     
+## [25] tibble_3.3.1       desc_1.4.3         pillar_1.11.1      bslib_0.11.0      
 ## [29] RColorBrewer_1.1-3 rlang_1.2.0        cachem_1.1.0       xfun_0.58         
-## [33] fs_2.1.0           sass_0.4.10        S7_0.2.2           otel_0.2.0        
-## [37] cli_3.6.6          withr_3.0.2        pkgdown_2.2.0      magrittr_2.0.5    
-## [41] foreach_1.5.2      digest_0.6.39      grid_4.6.0         lifecycle_1.0.5   
+## [33] S7_0.2.2           fs_2.1.0           sass_0.4.10        otel_0.2.0        
+## [37] cli_3.6.6          withr_3.0.2        magrittr_2.0.5     pkgdown_2.2.0     
+## [41] digest_0.6.39      foreach_1.5.2      grid_4.6.0         lifecycle_1.0.5   
 ## [45] vctrs_0.7.3        evaluate_1.0.5     glue_1.8.1         farver_2.1.2      
 ## [49] codetools_0.2-20   ragg_1.5.2         survival_3.8-6     rmarkdown_2.31    
-## [53] tools_4.6.0        pkgconfig_2.0.3    htmltools_0.5.9
+## [53] pkgconfig_2.0.3    tools_4.6.0        htmltools_0.5.9
 ```
