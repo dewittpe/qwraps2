@@ -27,6 +27,7 @@
   vignette spinners and utility help pages.
 * Remove stale symlink setup instructions from contributor documentation and
   update the vignette-spinner `Makefile` template to generate real `.Rmd` files.
+* Update and extend URLs and build instructions in `README.md`
 
 ## Improvements
 

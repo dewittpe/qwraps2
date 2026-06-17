@@ -1,14 +1,14 @@
 # qwraps2 <img src="man/figures/qwraps2logo.png" align="right" height="150"/>
 
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R-CMD-check](https://github.com/dewittpe/qwraps2/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dewittpe/qwraps2/actions/workflows/R-CMD-check.yaml)
-[![codecov](https://codecov.io/gh/dewittpe/qwraps2/branch/master/graph/badge.svg)](https://codecov.io/gh/dewittpe/qwraps2)
+[![codecov](https://app.codecov.io/gh/dewittpe/qwraps2/branch/master/graph/badge.svg)](https://app.codecov.io/gh/dewittpe/qwraps2)
 
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/8049/badge)](https://www.bestpractices.dev/projects/8049)
 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/qwraps2)](https://cran.r-project.org/package=qwraps2)
-[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/qwraps2)](http://www.r-pkg.org/pkg/qwraps2)
-[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/qwraps2)](http://www.r-pkg.org/pkg/qwraps2)
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/qwraps2)](https://www.r-pkg.org/pkg/qwraps2)
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/qwraps2)](https://www.r-pkg.org/pkg/qwraps2)
 
 [![License](https://img.shields.io/badge/licence-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.5.0-6666ff.svg)](https://cran.r-project.org/)
@@ -75,14 +75,14 @@ For example, building the package without the vignettes is done via:
 
 ### From CRAN
 Download and install from the RStudio
-[The Comprehensive R Archive Network (CRAN)](https://cran.rstudio.com/)
+[The Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/)
 mirror.
 
     install.packages("qwraps2", repo = "https://cran.rstudio.com")
 
 ### Developmental
 Install the development version of `qwraps2` directly from github via the
-[`remotes`](https://github.com/hadley/remotes/) package:
+[`remotes`](https://github.com/r-lib/remotes/) package:
 
     if (!("remotes" %in% rownames(installed.packages()))) {
       warning("installing remotes from https://cran.rstudio.com")
@@ -93,6 +93,10 @@ Install the development version of `qwraps2` directly from github via the
 
 *NOTE:* If you are working on a Windows machine you will need to download and
 install [`Rtools`](https://cran.r-project.org/bin/windows/Rtools/).
+
+*NOTE:* If you are using macOS and R 4.3.0 or higher, you'll need to make sure
+you have the needed compilers.  See [R for macOS Development Tools and
+Libraries](https://cran.r-project.org/bin/macosx/tools/)
 
 ### Cloned repo
 Install with GNU `make`
