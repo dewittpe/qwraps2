@@ -1,5 +1,7 @@
 # Version 0.6.3
 
+* Resubmission - additional patches to fix the errors reported on https://cran.r-project.org/web/checks/check_results_qwraps2.html
+
 * Fixes error on CRAN resulting for a suggested package being removed from CRAN.
 * bug fixes
 * minor spelling and grammar fixes
